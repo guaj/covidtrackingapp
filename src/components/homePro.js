@@ -52,7 +52,7 @@ import geometricImage from "../images/geometric_gradient.jpg";
   
   
   
-export default function Home() {
+export default function HomePro() {
     const classes = useStyles();
     return (
       <Grid container component="main">
@@ -61,19 +61,18 @@ export default function Home() {
         <Grid item xs={12} sm={10} md={8} component={Paper} elevation={6} square>
           <div className={classes.paper}>
             <Typography component="h1" variant="h4" className={classes.title} >
-              Access to your health profile 
+              Professionals 
             </Typography>
             <form className={classes.form} onSubmit={"#"}>
               <TextField
-                type="email"
+                type="orgID"
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="this.example@email.com"
-                name="email"
-                autoComplete="email"
-                helperText="Email"
+                id="orgID"
+                label="ID"
+                name="orgID"
+                helperText="Organization ID"
                 />
               <TextField
                 type="password"
@@ -110,9 +109,9 @@ export default function Home() {
               <Grid container>
                 
                 <Grid item>
-                <Typography variant="body2">Don't have an account?
+                <Typography variant="body2">Your organization is not singed up?
                     <Link href="#" variant="body2">
-                    {"  Sign Up"}
+                    {"  Register"}
                     </Link></Typography>  
                   
                 </Grid>
