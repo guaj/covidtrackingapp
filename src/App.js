@@ -10,14 +10,20 @@ import ProfilePro from './components/ProfilePro';
 
 function App() {
   return (
-    <div className='App'>
-      <Navbar/>
-    </div>
+    <Routes>
+      <Route exact path='/' element={[<Navbar/>, <Home/>]} />
+      <Route path='/about' element={<AboutUs/>} />
+      <Route path='/professionals' element={<HomePro/>} />
+      <Route path='/profile' element={<Profile/>} />
+      <Route path='/profile-pro' element={<ProfilePro/>} />
+    </Routes>
   );
 }
 
 export default App;
-  /*<Routes>
+  /*<div className='App'>
+      <Navbar/>
+    </div><Routes>
       <Route exact path='/' element={<Home/>} />
       <Route path='/about' element={<AboutUs/>} />
       <Route path='/pro' element={<HomePro/>} />

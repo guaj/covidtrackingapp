@@ -1,16 +1,25 @@
 import React, { Component } from "react";
-import { Menu } from "./Menu"
-import "./Navbar.css"
+import { Menu } from "./Menu";
+import "./Navbar.css";
+import {Button} from "../Button"
 
 class Navbar extends Component{
+    state = { clicked: false }
+
+    handleClick = () => {
+      this.setState( {clicked: !this.state.clicked})
+    }
+
     render(){
       return(
-        <nav className="navbarItems">
-          <h1 className="navbarLogo"> React<i className="fab fa-react"></i></h1>
-          <div className="menuIcon">
-
+        <nav className="navbar-items">
+          <h1 className="navbar-logo"> React
+            <i className="fab fa-react" />
+          </h1>
+          <div className="menu-icon" onClick={ this.handleClick }>
+            <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
           </div>
-          <ul>
+          <ul className={this.state.clicked ? 'nav-menu active' : 'nav-menu'}>
             {Menu.map((menu, index) => {
               return(
                 <li key={index}>
@@ -21,6 +30,7 @@ class Navbar extends Component{
               )       
             })}
           </ul>
+          <Button> Sign Up</Button>
         </nav>
       )
     }

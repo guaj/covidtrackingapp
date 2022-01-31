@@ -2,16 +2,22 @@ export const Menu =[
     {
         title: 'Home',
         url: '/',
-        cName: 'navLinks'
+        cName: 'nav-links'
     },
     {
         title: 'HomePro',
         url: '/pro',
-        cName: 'navLinks'
+        cName: 'nav-links'
     },
     {
         title: 'About Us',
         url: '/about',
-        cName: 'navLinks'
+        cName: 'nav-links'
     },
+    {
+        title: 'Sign Up',
+        url: '#',
+        cName: 'nav-links-mobile'
+    },
+
 ]
