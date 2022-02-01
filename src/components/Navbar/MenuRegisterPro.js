@@ -1,4 +1,4 @@
-export const Menu =[
+export const MenuRegisterPro =[
     {
         title: 'About Us',
         url: '/about',
@@ -10,18 +10,8 @@ export const Menu =[
         cName: 'nav-links'
     },
     {
-        title: 'Home',
-        url: '/',
-        cName: 'nav-links'
-    },
-    {
-        title: 'HomePro',
+        title: 'Log In',
         url: '/professionals',
-        cName: 'nav-links'
-    },
-    {
-        title: 'Sign Up',
-        url: '#',
         cName: 'nav-links-mobile'
     }
 ]

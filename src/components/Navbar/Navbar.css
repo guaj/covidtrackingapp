@@ -6,7 +6,7 @@
     justify-content: center;
     font-size: 1rem;
     position: absolute;
-    margin-left: 5%;
+    width: 100%;
 }
 
 .navbar-logo {
@@ -22,12 +22,12 @@
 
 .nav-menu {
     display: grid;
-    grid-template-columns: repeat(7, auto);
+    grid-template-columns: repeat(4, auto);
     grid-gap: 10ptx;
     list-style: none;
-    text-align: center;
+    text-align: right;
     justify-content: end;
-    width: 60vw;
+    width: 50vw;
     margin-right: 2rem;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .nav-links:hover {
-    background-color: rgba(1, 6, 96, 0.109);
+    background-color: rgb(196, 198, 240);
     border-radius: 4ptx;
     transition: all .2s ease-out;
 }
@@ -58,6 +58,7 @@
 @media screen and (max-width:960px) {
     .navbar-items {
         position: relative;
+        background: #fff;
     }
     .nav-menu {
         display: flex;
@@ -69,7 +70,6 @@
         left: -110%;
         opacity: 1;
         transition: all 0.5s ease;
-        margin-top: 15%;
     }
     .nav-menu.active {
         left: 0;
@@ -112,21 +112,19 @@
         display: block;
         text-align: center;
         padding: 1.5rem;
-        margin: 2rem auto;
-        border-radius: 4px;
-        width: 80%;
-        background: transparent;
+        margin: auto;
+        width: 100%;
+        background: rgba(1, 5, 96, 1);
         text-decoration: none;
-        color: rgba(1, 5, 96, 1);
+        color: #fff;
         font-size: 1.5rem;
     }
     .nav-links-mobile:hover {
-        background: white;
+        background: rgb(196, 198, 240);
         transition: 250ms;
-        color: #6568F4;
+        color: rgba(1, 5, 96, 1);
     }
     Button {
-        color: rgba(1, 5, 96, 1);
         display: none;
     }
 }

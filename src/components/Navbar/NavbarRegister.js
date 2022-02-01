@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Menu } from "./Menu";
+import { MenuRegister } from "./MenuRegister";
 import "./Navbar.css";
-import {Button} from "../Button"
+import {Button} from "../Button";
 
-class Navbar extends Component{
+class NavbarRegister extends Component{
     state = { clicked: false }
 
     handleClick = () => {
@@ -20,7 +20,7 @@ class Navbar extends Component{
             <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
           </div>
           <ul className={this.state.clicked ? 'nav-menu active' : 'nav-menu'}>
-            {Menu.map((menu, index) => {
+            {MenuRegister.map((menu, index) => {
               return(
                 <li key={index}>
                   <a className={menu.cName} href={menu.url} >
@@ -30,10 +30,10 @@ class Navbar extends Component{
               )       
             })}
           </ul>
-          <Button> Sign Up</Button>
+          <Button onClick={event =>  window.location.href='/'}>Log In</Button>
         </nav>
       )
     }
 }
 
-export default Navbar
+export default NavbarRegister
