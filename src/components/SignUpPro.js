@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -6,13 +5,10 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { dialogClasses } from "@mui/material";
 import geometricImage from "../images/geometric_gradient.jpg";
-
   
   const useStyles = makeStyles((theme) => ({
     image: {
@@ -47,32 +43,34 @@ import geometricImage from "../images/geometric_gradient.jpg";
     },
     checkboxes:{
       marginTop: theme.spacing(4),
+      align: "center",
     }
   }));
   
   
   
-export default function HomePro() {
+export default function SignUpPro() {
     const classes = useStyles();
     return (
       <Grid container component="main">
+        
         <CssBaseline />
         <Grid item xs={false} sm={2} md={4} className={classes.image} />
         <Grid item xs={12} sm={10} md={8} component={Paper} elevation={6} square>
-          <div className={classes.paper}>
+          <div className={classes.paper}> 
             <Typography component="h1" variant="h4" className={classes.title} >
-              Professionals 
+              Register your organization 
             </Typography>
             <form className={classes.form} onSubmit={"#"}>
               <TextField
-                type="orgID"
+                type="id"
                 margin="normal"
                 required
                 fullWidth
-                id="orgID"
-                label="ID"
-                name="orgID"
-                helperText="Organization ID"
+                id="id"
+                label="000000000"
+                name="id"
+                helperText="Your organization ID"
                 />
               <TextField
                 type="password"
@@ -85,17 +83,24 @@ export default function HomePro() {
                 helperText="Password"
                 autoComplete="current-password"
               />
+              <TextField
+                type="password"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="* * * *"
+                id="password"
+                helperText="Confirm your password"
+              />
               <Grid container className={classes.checkboxes}>
                   <Grid item xs>
                     <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
+                    label="Remember my password"
                     />  
                   </Grid>
-                  <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
+                  <Grid item xs={4}>
                 </Grid>
               </Grid>
               <Button
@@ -104,20 +109,20 @@ export default function HomePro() {
                 variant="contained"
                 className={classes.submit}
               >
-                Login
+                Sign up
               </Button>
               <Grid container>
                 
                 <Grid item>
-                <Typography variant="body2">Your organization is not singed up? <t/>
-                    <Link href="/sign-up-pro" variant="body2">
-                    {"Register now"}
-                    </Link></Typography>  
-                  
+                <Typography variant="body2">Already registered? <t/>
+                    <Link href="/professionals" variant="body2">
+                    {"Sign In"}
+                    </Link> 
+                </Typography>   
                 </Grid>
               </Grid>
             </form>
-          </div>
+            </div>
         </Grid>
       </Grid>
     );
