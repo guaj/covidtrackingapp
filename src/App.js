@@ -12,10 +12,10 @@ function App() {
   return (
     <Routes>
       <Route exact path='/' element={[<Navbar/>, <Home/>]} />
-      <Route path='/about' element={<AboutUs/>} />
-      <Route path='/professionals' element={<HomePro/>} />
-      <Route path='/profile' element={<Profile/>} />
-      <Route path='/profile-pro' element={<ProfilePro/>} />
+      <Route path='/about' element={[<Navbar/>, <AboutUs/>]} />
+      <Route path='/professionals' element={[<Navbar/>, <HomePro/>]} />
+      <Route path='/profile' element={[<Navbar/>, <Profile/>]} />
+      <Route path='/profile-pro' element={[<Navbar/>, <ProfilePro/>]} />
     </Routes>
   );
 }
