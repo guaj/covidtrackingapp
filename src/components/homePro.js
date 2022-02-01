@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -6,11 +5,9 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { dialogClasses } from "@mui/material";
 import geometricImage from "../images/geometric_gradient.jpg";
 
   
@@ -34,6 +31,9 @@ import geometricImage from "../images/geometric_gradient.jpg";
     form: {
       width: "75%", // Fix IE 11 issue.
       marginTop: theme.spacing(2),
+      "@media (max-width: 600px)": {
+        width:"100%"
+      }
     },
     submit: {
       margin: theme.spacing(8, 0, 5),
@@ -57,8 +57,8 @@ export default function HomePro() {
     return (
       <Grid container component="main">
         <CssBaseline />
-        <Grid item xs={false} sm={2} md={4} className={classes.image} />
-        <Grid item xs={12} sm={10} md={8} component={Paper} elevation={6} square>
+        <Grid item xs={false} sm={false} md={4} className={classes.image} />
+        <Grid item xs={12} sm={12} md={8} component={Paper} elevation={6} square>
           <div className={classes.paper}>
             <Typography component="h1" variant="h4" className={classes.title} >
               Professionals 
