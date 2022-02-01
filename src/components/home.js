@@ -10,9 +10,9 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { dialogClasses } from "@mui/material";
+import { bottomNavigationActionClasses, dialogClasses } from "@mui/material";
 import geometricImage from "../images/geometric_gradient.jpg";
-
+import Navbar from "./Navbar/Navbar";
   
   const useStyles = makeStyles((theme) => ({
     image: {
@@ -47,6 +47,7 @@ import geometricImage from "../images/geometric_gradient.jpg";
     },
     checkboxes:{
       marginTop: theme.spacing(4),
+      align: "center",
     }
   }));
   
@@ -56,10 +57,11 @@ export default function Home() {
     const classes = useStyles();
     return (
       <Grid container component="main">
+        
         <CssBaseline />
         <Grid item xs={false} sm={2} md={4} className={classes.image} />
         <Grid item xs={12} sm={10} md={8} component={Paper} elevation={6} square>
-          <div className={classes.paper}>
+          <div className={classes.paper}> 
             <Typography component="h1" variant="h4" className={classes.title} >
               Access to your health profile 
             </Typography>
@@ -93,7 +95,7 @@ export default function Home() {
                     label="Remember me"
                     />  
                   </Grid>
-                  <Grid item xs>
+                  <Grid item xs={4}>
                   <Link href="#" variant="body2">
                     Forgot password?
                   </Link>
@@ -118,7 +120,7 @@ export default function Home() {
                 </Grid>
               </Grid>
             </form>
-          </div>
+            </div>
         </Grid>
       </Grid>
     );
