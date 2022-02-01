@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### Run the app on the following website: https://main.d1mmulvvzymdin.amplifyapp.com/ 
+
 ## Available Scripts
 
 In the project directory, you can run:
