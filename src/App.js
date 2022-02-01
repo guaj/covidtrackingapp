@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import AboutUs from './components/AboutUs';
-import Home from './components/Home';
-import HomePro from './components/HomePro';
+import Home from './components/home';
+import HomePro from './components/homePro';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile';
 import ProfilePro from './components/ProfilePro';
