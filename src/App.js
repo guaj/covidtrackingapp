@@ -11,19 +11,20 @@ import SignUpPatient from './components/SignUpPatient';
 import SignUpPro from './components/SignUpPro';
 import NavbarRegister from './components/Navbar/NavbarRegister';
 import NavbarRegisterPro from './components/Navbar/NavbarRegisterPro';
-
+import Topbar from './components/Dashboard/Topbar';
+import Sidebar from './components/Dashboard/Sidebar';
+import DashboardPro from './components/Dashboard/DashboardPro';
 
 function App() {
   return (
-    <Routes>
-      <Route exact path='/' element={[<NavbarHome/>, <Home/>]} />
-      <Route path='/professionals' element={[<NavbarPro/>, <HomePro/>]} />
-      <Route path='/about' element={[<NavbarRegister/>, <AboutUs/>]} />
-      <Route path='/sign-up-patient' element={[<NavbarRegister/>, <SignUpPatient/>]} />
-      <Route path='/sign-up-pro' element={[<NavbarRegisterPro/>, <SignUpPro/>]} />
-      <Route path='/profile' element={[<NavbarHome/>, <Profile/>]} />
-      <Route path='/profile-pro' element={[<NavbarPro/>, <ProfilePro/>]} />
-    </Routes>
+    <div>
+    <Topbar />
+    <div className="container">
+        <Sidebar />
+        <DashboardPro />
+    </div>
+
+</div>
   );
 }
 
