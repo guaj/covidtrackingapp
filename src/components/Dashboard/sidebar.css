@@ -1,3 +1,4 @@
+/*  Overall sidebar*/
 .sidebar {
   flex: .7;
   height: calc(100vh - 50px);
@@ -18,10 +19,14 @@
   margin-bottom: 10px;
 }
 
+
+/* Menu Elements*/
+
 .sidebarTitle {
   font-size: 20px;
   color: #979797;
 }
+
 
 .sidebarList {
   list-style: none;
@@ -35,6 +40,10 @@
   align-items: center;
   border-radius: 10px;
 }
+
+/* */
+
+/* Adds a animation effect when hovering over List Item*/
 
 .sidebarListItem.active,
 .sidebarListItem:hover {

@@ -1,7 +1,8 @@
 import "./pchart.css";
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 
-
+//  This doesn't work atm, it will be updated to go next to the chart, on the same row 
+//  if possible
 export default function PieChart2() {
     const data = [
         { name: 'Group A', value: 400 },

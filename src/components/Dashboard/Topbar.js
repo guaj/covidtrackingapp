@@ -13,7 +13,7 @@ export default function topbar(){
                 </div>
                 <div className='topRight'>
                     <div className='topbarIconContainer'>
-                        <NotificationImportant />   
+                        <NotificationImportant />
                         <div className='alert-dropdown-content'>
                             <a href='#'>Alert 1</a>
                             <a href='#'>Alert 2</a>
