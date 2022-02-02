@@ -1,0 +1,11 @@
+.pchart {
+    margin: 20px;
+    padding: 20px;
+    -webkit-box-shadow: 5px 5px 15px 5px rgba(97,89,109,0.21);
+    box-shadow: 5px 5px 15px 5px rgba(97,89,109,0.21);
+  }
+
+  .chartTitle {
+    margin-bottom: 20px;
+  }
+/* This doesn't work atm !! Judging from debugger page, doesn't seem to load, ever..*/

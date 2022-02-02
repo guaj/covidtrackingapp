@@ -1,6 +1,14 @@
-# Getting Started with Create React App
+# Important installation commands before runnig the app (on the cmd)
+* install React packages and dependencies: **npm install**
+* install icons from Material UI: **npm install @material-ui/icons**
+* install the core of Material UI: **npm install @material-ui/core**
+* install recharts: **npm install recharts**
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+### Run the app on the following website: https://main.d1mmulvvzymdin.amplifyapp.com/ 
 
 ## Available Scripts
 
