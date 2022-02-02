@@ -23,7 +23,6 @@ on the same level*/
 
   .checkboxCases{
        position: relative;
-       cursor: pointer;
        margin-right: 10px;
        color: #4F4F4F;
      display: flex;
