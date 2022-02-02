@@ -3,7 +3,7 @@ import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
 
 //  class for the face of the dashboard, we can add more boxes as we need
 
-export default function FaceInfo() {
+export default function FeaturedInfo() {
   return <div className="face">
       <div className="faceItem">
           <span className="faceTitle">Asymptomatic</span>
