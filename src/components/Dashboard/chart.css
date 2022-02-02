@@ -3,9 +3,12 @@ on the same level*/
 
 .chart {
     margin: 25px;
-    padding: 25px;
+    padding: 50px;
     -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    border-radius: 20px;
+    -webkit-box-shadow: 5px 5px 15px 5px rgba(97,89,109,0.21);
+    box-shadow: 5px 5px 15px 5px rgba(97,89,109,0.21);
   }
 
   .chartTitle {
@@ -15,8 +18,8 @@ on the same level*/
     margin-bottom: 20px;
   }
 
-  /* Will make little checkboxes, so that user can deck types of Cases they want
-  to see, and something to toggle the dates...*/
+  /* Will make little checkboxes, so that user can check types of Cases they want
+  to see, and something to toggle the dates... it says a date rn*/
 
   .checkboxCases{
        position: relative;
@@ -28,8 +31,8 @@ on the same level*/
      }
 
 
-     /* Space for the subtitle (in this case its called New Cases
-     Its like a placeholder essentialy*/
+     /* Space for the subtitle (
+     Its like a placeholder essentialy)*/
 
 .toppart {
     height: 100%;
