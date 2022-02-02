@@ -1,24 +1,35 @@
-import "./topbar.css";
-import { NotificationsNone, Language, Settings } from "@material-ui/icons";
+import React from 'react';
+import "./topbar.css"
+import { NotificationImportant,Language, Settings } from "@material-ui/icons";
 
-export default function Topbar() {
-  return (
-    <div className="topRow">
-      <div className="topRowWrapper">
-        <div className="topLeft">
-          <span className="userName">Dr.Anya</span>
-        </div>
-        <div className="topRight">
-          <div className="topRowIconContainer">
-            <NotificationsNone />
-            <span className="topIconBadge">2</span>
-          </div>
-          <div className="topRowIconContainer">
-            <Settings />
-          </div>
 
+export default function topbar(){
+    return(
+        <div className='topbar'>
+            <div className='topbarWrapper'>
+                
+                <div className='topLeft'>
+                    <span className='logo'>Dr.Anya</span>
+                </div>
+                <div className='topRight'>
+                    <div className='topbarIconContainer'>
+                        <NotificationImportant />   
+                        <div className='alert-dropdown-content'>
+                            <a href='#'>Alert 1</a>
+                            <a href='#'>Alert 2</a>
+                        </div>  
+                        <span className='topIconBadge'></span>
+                    </div>
+                    <div className='topbarIconContainer'>
+                        <Language />
+                        <span className='selectLang'>en</span>   
+                    </div>
+                    <div className="topbarIconContainer">
+                        <Settings />   
+                    </div>
+                    <img src='https://i.imgur.com/vmLKF2B.jpg' alt="" className='topAvi'></img>
+                </div>
+            </div>          
         </div>
-      </div>
-    </div>
-  );
-}
+    );
+    }

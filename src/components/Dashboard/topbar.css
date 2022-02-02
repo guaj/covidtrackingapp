@@ -1,50 +1,148 @@
-.topRow {
-    width: 100%;
-    height: 60px;
-    background-color: white;
-    position: sticky;
-    top: 0;
-    z-index: 99;
-  }
+.topbar{
+  width: 100%;
+  height: 3.125em;
+  background-color: white;
+  position: sticky; /*force to stay top and overlay elements*/
+  top: 0;
+  z-index: 999;
 
-  .topRowWrapper {
-    height: 100%;
-    padding: 0px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+}
 
-  .userName {
-    font-weight: bold;
-    font-size: 50px;
-    color: #4F4F4F;
-    cursor: pointer;
-  }
+.topbarWrapper{
+  height: 100%;
+  padding: 0em 1.25em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .topRight{
-      display: flex;
-      align-items: center;
-  }
+.logo {
+  font-weight: bold;
+  font-size: 2em;
+  color: #4F4F4F;
+  cursor: pointer;
+}
 
-  .topRowIconContainer {
-    position: relative;
-    cursor: pointer;
-    margin-right: 30px;
-    color: #4F4F4F;
-  }
+.topRight{
+  display:flex;
+  align-items: right;
+  width: 160px;
+}
 
-  .topIconBadge{
-      width: 15px;
-      height: 15px;
-      position: absolute;
-      top: -5px;
-      right: 0px;
-      background-color: #86C4E7;
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
+.topbarIconContainer {
+  position: relative;
+  cursor: pointer;
+  margin-right: 10px;
+  color: #555;
+  width: 75px;
+}
+
+/* Stlye the dropdown box for alerts */
+/* Style the links background match */
+/* Show the dropdown menu when the user moves the mouse over the dropdown button */
+
+.alert-dropdown-content{
+  display: none;
+  position: center;
+  background-color: white;
+  min-width: 160px;
+  z-index: inherit;  
+}
+
+.alert-dropdown-content a {
+  float: none;
+  color: #555;
+  padding: 12px 16px;
+  display: block;
+  text-align: left;
+}
+
+.topbarIconContainer:hover .alert-dropdown-content {
+  display: inline-block;
+}
+
+
+.lang-dropdown-content{
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  z-index: inherit;  
+}
+
+.lang-dropdown-content a {
+  float: none;
+  color: #555;
+  padding: 12px 16px;
+  display: block;
+  text-align: left;
+}
+
+.topbarIconContainer:hover .lang-dropdown-content {
+  display: block;
+}
+/**/
+
+
+
+
+
+.topIconBadge{
+  width: 1em;
+  height: 1em;
+  position: absolute; 
+  top: 1%;
+  right: 60.7%;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.selectLang{
+  width: 2em;
+  height: 1.5em;
+  position: absolute;
+  top: 63%;
+  right: -1.5em;
+  background-color: #555;
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 400;
+  font-style: bold;
+}
+
+.topAvi{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* removing for now... to animate gear ico.
+.topbarIconContainer:nth-child(3):hover{ 
+  animation-name: spin;
+  align-self: center;
+  animation-duration: 1500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
+}
+
+@keyframes spin{
+  from {
+    transform:rotate(0deg);
   }
+  to {
+      transform:rotate(360deg);
+  }
+}
+*/
