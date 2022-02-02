@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { MenuHome } from "./MenuHome";
 import "./Navbar.css";
 import {Button} from "../Button";
-import { Link } from "@mui/material";
-import NavbarPro from "./NavbarPro";
-import SignUpPatient from "../SignUpPatient";
 
 class NavbarHome extends Component{
     state = { clicked: false }
