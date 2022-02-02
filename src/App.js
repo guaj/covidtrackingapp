@@ -11,8 +11,6 @@ import SignUpPatient from './components/SignUpPatient';
 import SignUpPro from './components/SignUpPro';
 import NavbarRegister from './components/Navbar/NavbarRegister';
 import NavbarRegisterPro from './components/Navbar/NavbarRegisterPro';
-import Topbar from './components/Dashboard/Topbar';
-import Sidebar from './components/Dashboard/Sidebar';
 import RunDashPro from './components/Dashboard/RunDashPro';
 
 ///* Make sure to update file when adding to App.css!!*/
@@ -27,7 +25,7 @@ function App() {
       <Route path='/sign-up-pro' element={[<NavbarRegisterPro/>, <SignUpPro/>]} />
       <Route path='/profile' element={[<NavbarHome/>, <Profile/>]} />
       <Route path='/profile-pro' element={[<NavbarPro/>, <ProfilePro/>]} />
-      <Route path='/dashboard' element={[<RunDashPro/>]} />
+      <Route path='/dashboard-pro' element={[<RunDashPro/>]} />
     </Routes>
   );
 }
