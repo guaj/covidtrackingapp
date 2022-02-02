@@ -15,6 +15,8 @@ import Topbar from './components/Dashboard/Topbar';
 import Sidebar from './components/Dashboard/Sidebar';
 import RunDashPro from './components/Dashboard/RunDashPro';
 
+///* Make sure to update file when adding to App.css!!*/
+
 function App() {
   return (
     <Routes>
