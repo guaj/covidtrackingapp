@@ -30,7 +30,11 @@ on the same level*/
           align-items: center;
      }
 
-
+     .forwardBackwards{
+      font-size: 14px;
+      margin-left: 5px;
+      color: #86C4E7;
+  }
      /* Space for the subtitle (
      Its like a placeholder essentialy)*/
 

@@ -1,5 +1,5 @@
 import "./faceInfo.css"
-import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
+import { TrendingDown , TrendingUp  } from "@material-ui/icons";
 
 //  class for the face of the dashboard, we can add more boxes as we need
 
@@ -10,7 +10,7 @@ export default function FeaturedInfo() {
           <div className="faceStatusContainer">
               <span className="faceStatus">200 patients</span>
               <span className="faceStatusRate">
-                  +0.7%<ArrowUpward className="faceArrow" />
+                  +0.7%<TrendingUp  className="faceArrow" />
               </span>
           </div>
       </div>
@@ -19,7 +19,7 @@ export default function FeaturedInfo() {
           <div className="faceStatusContainer">
               <span className="faceStatus">80 patients</span>
               <span className="faceStatusRate">
-                  -1.7%<ArrowDownward className="faceArrow negative" />
+                  -1.7%<TrendingDown  className="faceArrow negative" />
               </span>
           </div>
       </div>

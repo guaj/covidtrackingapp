@@ -24,11 +24,11 @@ export default function Sidebar() {
           </ul>
         </div>
         <div className="sidebarCol">
-          <h3 className="sidebarTitle">Quick Menu</h3>
+          <h3 className="sidebarTitle">Patients</h3>
           <ul className="sidebarList">
             <li className="sidebarListItem">
               <Person className="sidebarIcon" />
-              Patients
+              Patient List
             </li>
             <li className="sidebarListItem ">
               <Visibility className="sidebarIcon" />

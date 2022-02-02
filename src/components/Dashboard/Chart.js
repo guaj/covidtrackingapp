@@ -1,7 +1,7 @@
 import "./chart.css";
 import React, { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-
+import { ArrowDropDown } from "@material-ui/icons";
 export default function Chart() { //    Random data for the line chart about positive covid cases
     const data = [
         {
@@ -58,7 +58,7 @@ export default function Chart() { //    Random data for the line chart about pos
     return <div className="chart">
         <h3 className="chartTitle">New Cases</h3>
          <div className="toppart">
-            <div className="checkboxCases">Jan 4-Mar 29
+            <div className="checkboxCases">Jan 4-Mar 29  <ArrowDropDown   className="forwardBackwards" />
             </div>
                         </div>
 
