@@ -1,8 +1,8 @@
 # Important installation commands before runnig the app (on the cmd)
-* install React packages and dependencies: npm install
-* install icons from Material UI: npm install @material-ui/icons
-* install the core of Material UI: npm install @material-ui/core
-* install recharts: npm install recharts
+* install React packages and dependencies: **npm install**
+* install icons from Material UI: **npm install @material-ui/icons**
+* install the core of Material UI: **npm install @material-ui/core**
+* install recharts: **npm install recharts**
 
 ## Getting Started with Create React App
 
