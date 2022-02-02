@@ -73,3 +73,4 @@ export default function Chart() { //    Random data for the line chart about pos
 
 
 }
+//  Probably will use API info and not random stuff anyways
