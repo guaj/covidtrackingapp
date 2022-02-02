@@ -1,3 +1,6 @@
+/* Chart box on the dashbard. The piechart should go next to it, ideally 
+on the same level*/
+
 .chart {
     margin: 25px;
     padding: 25px;
@@ -12,6 +15,9 @@
     margin-bottom: 20px;
   }
 
+  /* Will make little checkboxes, so that user can deck types of Cases they want
+  to see, and something to toggle the dates...*/
+
   .checkboxCases{
        position: relative;
        cursor: pointer;
@@ -22,6 +28,9 @@
      }
 
 
+     /* Space for the subtitle (in this case its called New Cases
+     Its like a placeholder essentialy*/
+
 .toppart {
     height: 100%;
     padding: 0px 20px;
@@ -29,3 +38,4 @@
     align-items: center;
     justify-content: space-between;
   }
+  /**/

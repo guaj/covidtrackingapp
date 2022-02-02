@@ -4,6 +4,8 @@
     justify-content: space-between;
   }
 
+/* For the top boxes on the face of the dashboard*/
+
   .faceItem {
     flex: 1;
     margin: 0px 20px;

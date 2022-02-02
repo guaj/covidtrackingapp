@@ -3,6 +3,7 @@ import {
   Home  , Visibility ,Person,MenuBook,Mail, Message,  DynamicFeed, Timeline
 } from "@material-ui/icons";
 
+//  Left sidebar for different sub menus of the menu. We can easily add more.
 export default function Sidebar() {
   return (
     <div className="sidebar">
