@@ -1,0 +1,50 @@
+.face {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .faceItem {
+    flex: 1;
+    margin: 0px 20px;
+    padding: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+-webkit-box-shadow: 5px 5px 15px 5px rgba(97,89,109,0.21);
+box-shadow: 5px 5px 15px 5px rgba(97,89,109,0.21);
+  }
+
+  .faceTitle{
+      font-size: 20px;
+          color: #4F4F4F;
+  }
+
+.faceStatusContainer{
+    margin: 10px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.faceStatus{
+    font-size: 30px;
+    font-weight: 600;
+              color: #4F4F4F;
+
+}
+
+.faceStatusRate{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.faceArrow{
+    font-size: 14px;
+    margin-left: 5px;
+    color: #86C4E7;
+}
+
+.faceArrow.negative{
+    color: #7F7FD5;
+}
+
