@@ -72,8 +72,10 @@ export default function SignUpPatient() {
                 name="email"
                 autoComplete="email"
                 helperText="Email"
+                data-testid="sign-up-email"
                 />
               <TextField
+                data-testid="sign-up-psw1"
                 type="password"
                 margin="normal"
                 required
@@ -85,6 +87,7 @@ export default function SignUpPatient() {
                 autoComplete="current-password"
               />
               <TextField
+                data-testid="sign-up-psw2"
                 type="password"
                 margin="normal"
                 required
