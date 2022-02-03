@@ -174,7 +174,7 @@
         height: 425px;
         width: 100%;
         position: absolute;
-        top: 25px;
+        top: 15px;
         left: -110%;
         opacity: 1;
         transition: all 0.5s ease;
@@ -192,7 +192,7 @@
         opacity: 1;
         transition: all 0.5s ease;
         z-index: 1;
-        margin-left: -10%;
+        margin-left: -8%;
     }
     .nav-links {
         color: rgba(1, 5, 96, 1);
