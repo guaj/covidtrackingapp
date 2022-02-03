@@ -45,3 +45,13 @@
     display: flex;
     margin-top: 10px;
 }
+
+#form {
+    width: 75%;
+}
+
+@media screen and (max-width: 960px) {
+    #form {
+        width: 120%;
+    }
+}
