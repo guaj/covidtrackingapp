@@ -14,9 +14,10 @@
     height: 3rem;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: right;
     font-size: 1rem;
     position: relative;
+    padding-right: 5%;
     width: 100%;
 }
 
@@ -34,12 +35,11 @@
 .nav-menu {
     display: grid;
     grid-template-columns: repeat(4, auto);
-    grid-gap: 10ptx;
+    grid-gap: 2px;
     list-style: none;
     text-align: right;
     justify-content: end;
     width: 50vw;
-    margin-right: 2rem;
 }
 
 .nav-links {
@@ -142,9 +142,9 @@
 }
 
 @media screen and (max-width:1065px) {
-    .navbar-items {
-        position: absolute;
-        background: transparent;
+    .navbar-items-dashboard {
+        position: relative;
+        padding-right: 0;
     }
     .nav-menu {
         display: flex;
@@ -212,5 +212,8 @@
     }
     Button {
         display: none;
+    }
+    .topRight {
+        margin-right: 5%;
     }
 }

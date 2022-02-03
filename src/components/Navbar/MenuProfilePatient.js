@@ -1,4 +1,4 @@
-export const MenuDashboardPro =[
+export const MenuProfilePatient =[
     {
         title: 'Emergency',
         url: '/emergency',
@@ -10,8 +10,8 @@ export const MenuDashboardPro =[
         cName: 'nav-links'
     },
     {
-        title: 'My profile',
-        url: '/profile-pro',
+        title: 'My dashboard',
+        url: '/dashboard-patient',
         cName: 'nav-links'
     },
     {
