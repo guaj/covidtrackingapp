@@ -1,4 +1,22 @@
-# Covid-19 tracking app [![Build Status](https://app.travis-ci.com/guaj/covidtrackingapp.svg?token=qEFTktWzy5TPf2d3cfEZ&branch=main)](https://app.travis-ci.com/guaj/covidtrackingapp)
+# Covid-19 Tracking App [![Build Status](https://app.travis-ci.com/guaj/covidtrackingapp.svg?token=qEFTktWzy5TPf2d3cfEZ&branch=main)](https://app.travis-ci.com/guaj/covidtrackingapp)
+
+The goal of this project is to simulate a Software development process through the creation of a COVID-19 tracking application. The main objective of this application is to :
+* Help patients with symptoms get assessed by a Doctor
+* Track patient's health status
+* Provide Doctor appointments
+* Provide statistics on registered patients
+
+## Contributors
+ **Github ID** |   **Name**     |
+|-------------- |--------------- |
+|kikkiii21      |Judith Lombardo |
+|klivree     | Meline Deneuve      |
+|antistarM   |Ma-Ya McRae |
+|guaj |Jasmin Guay|
+|LucasCatchlove| Lucas Catchlove|
+| |Mahmoud Elsayed|
+| |ALine Kukdjian|
+| |Eyal Azimov
 
 
 ## Important installation commands before runnig the app (on the cmd)
