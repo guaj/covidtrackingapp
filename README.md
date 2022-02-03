@@ -1,3 +1,6 @@
+## Covid-19 tracking app [![Build Status](https://app.travis-ci.com/guaj/covidtrackingapp.svg?token=qEFTktWzy5TPf2d3cfEZ&branch=main)](https://app.travis-ci.com/guaj/covidtrackingapp)
+
+
 # Important installation commands before runnig the app (on the cmd)
 * install React packages and dependencies: **npm install**
 * install icons from Material UI: **npm install @material-ui/icons**
