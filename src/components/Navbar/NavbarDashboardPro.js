@@ -19,7 +19,7 @@ class NavbarDashboardPro extends Component{
           <div className="menu-icon" onClick={ this.handleClick }>
             <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
           </div>
-          <ul className={this.state.clicked ? 'nav-menu active' : 'nav-menu'}>
+          <ul className={this.state.clicked ? 'nav-menu-dashboard active' : 'nav-menu-dashboard'}>
             {MenuDashboardPro.map((menu, index) => {
               return(
                 <li key={index}>

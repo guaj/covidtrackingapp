@@ -42,6 +42,16 @@
     width: 50vw;
 }
 
+.nav-menu-dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-gap: 2px;
+    list-style: none;
+    text-align: right;
+    justify-content: end;
+    width: 50vw;
+}
+
 .nav-links {
     color: rgba(1, 5, 96, 1);
     text-decoration: none;
@@ -152,16 +162,37 @@
         height: 425px;
         width: 100%;
         position: absolute;
-        top: 60px;
+        top: 45px;
         left: -110%;
         opacity: 1;
         transition: all 0.5s ease;
+        grid-gap: 0;
+    }
+    .nav-menu-dashboard {
+        display: flex;
+        flex-direction: column;
+        height: 425px;
+        width: 100%;
+        position: absolute;
+        top: 15px;
+        left: -110%;
+        opacity: 1;
+        transition: all 0.5s ease;
+        grid-gap: 0;
     }
     .nav-menu.active {
         left: 0;
         opacity: 1;
         transition: all 0.5s ease;
         z-index: 1;
+        margin-left: -3%;
+    }
+    .nav-menu-dashboard.active {
+        left: 0;
+        opacity: 1;
+        transition: all 0.5s ease;
+        z-index: 1;
+        margin-left: -8%;
     }
     .nav-links {
         color: rgba(1, 5, 96, 1);
