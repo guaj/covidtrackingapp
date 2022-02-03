@@ -16,4 +16,4 @@ test('email should have a value', () => {
 
 afterEach(() => {
   cleanup();
-});
+}); 
