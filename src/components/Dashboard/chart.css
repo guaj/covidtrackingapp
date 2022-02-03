@@ -23,14 +23,17 @@ on the same level*/
 
   .checkboxCases{
        position: relative;
-       cursor: pointer;
        margin-right: 10px;
        color: #4F4F4F;
      display: flex;
           align-items: center;
      }
 
-
+     .forwardBackwards{
+      font-size: 14px;
+      margin-left: 5px;
+      color: #86C4E7;
+  }
      /* Space for the subtitle (
      Its like a placeholder essentialy)*/
 
