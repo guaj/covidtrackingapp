@@ -162,6 +162,7 @@
         opacity: 1;
         transition: all 0.5s ease;
         z-index: 1;
+        margin-left: -10%;
     }
     .nav-links {
         color: rgba(1, 5, 96, 1);
