@@ -29,7 +29,6 @@ import geometricImage from "../images/geometric_gradient.jpg";
       alignItems: "center",
     },
     form: {
-      width: "75%", // Fix IE 11 issue.
       marginTop: theme.spacing(2),
       "@media (max-width: 600px)": {
         width:"100%"
@@ -63,7 +62,7 @@ export default function HomePro() {
             <Typography component="h1" variant="h4" className={classes.title} >
               Professionals 
             </Typography>
-            <form className={classes.form} onSubmit={"#"}>
+            <form className={classes.form} id='form' onSubmit={"#"}>
               <TextField
                 type="orgID"
                 margin="normal"

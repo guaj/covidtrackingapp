@@ -28,7 +28,6 @@ import geometricImage from "../images/geometric_gradient.jpg";
       alignItems: "center",
     },
     form: {
-      width: "75%", // Fix IE 11 issue.
       marginTop: theme.spacing(2),
     },
     submit: {
@@ -63,7 +62,7 @@ export default function SignUpPatient() {
             <Typography component="h1" variant="h4" className={classes.title} >
               Register now 
             </Typography>
-            <form className={classes.form} onSubmit={(e) => setForm(e.target.value)}>
+            <form className={classes.form} id='form' onSubmit={(e) => setForm(e.target.value)}>
               <TextField
                 type="email"
                 margin="normal"
