@@ -47,7 +47,9 @@ import geometricImage from "../images/geometric_gradient.jpg";
     }
   }));
   
-  
+  const setForm = (event => {
+    return event.target.value;
+  })
   
 export default function SignUpPatient() {
     const classes = useStyles();
@@ -61,7 +63,7 @@ export default function SignUpPatient() {
             <Typography component="h1" variant="h4" className={classes.title} >
               Register now 
             </Typography>
-            <form className={classes.form} onSubmit={"#"}>
+            <form className={classes.form} onSubmit={(e) => setForm(e.target.value)}>
               <TextField
                 type="email"
                 margin="normal"
