@@ -3,6 +3,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import './profile.css'
 
 
   
@@ -25,10 +26,10 @@ const useStyles = makeStyles((theme) => ({
   
   
   
-export default function Profile() {
+export default function ProfilePatient() {
   const classes = useStyles();
     return (
-      <Grid container component="main">
+      <Grid container component="main" className="profile">
         <CssBaseline />
         <Grid item component={Paper} elevation={6} square>
           <div className={classes.paper}>
