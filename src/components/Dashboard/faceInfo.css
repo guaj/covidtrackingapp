@@ -1,7 +1,7 @@
 .face {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
   }
 
 /* For the top boxes on the face of the dashboard*/

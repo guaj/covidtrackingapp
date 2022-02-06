@@ -2,7 +2,25 @@ import "./chart.css";
 import React, { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { ArrowDropDown } from "@material-ui/icons";
-export default function Chart() { //    Random data for the line chart about positive covid cases
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+    root: {
+      "& .MuiPaper-root": {
+        borderRadius: 10,
+         border: 0,
+         padding : '10px 30px',
+        boxShadow: "0 0 0 4px rgba(255, 255, 255, 0.51);"
+      }
+    }
+  }));
+  
+export default function Chart() { //    Random nb for the line chart about positive covid cases
+    const classes = useStyles();
+
     const data = [
         {
             name: 'Jan 4',
@@ -55,7 +73,11 @@ export default function Chart() { //    Random data for the line chart about pos
 
     ];
 
-    return <div className="chart">
+    return <div className={classes.root}>
+        <div className="chart">
+              <Grid container> 
+              <Grid item sm={10} md={11} lg={12}>
+              <Paper>
         <h3 className="chartTitle">New Cases</h3>
          <div className="toppart">
             <div className="checkboxCases">Jan 4-Mar 29  <ArrowDropDown   className="forwardBackwards" />
@@ -71,8 +93,12 @@ export default function Chart() { //    Random data for the line chart about pos
                 <CartesianGrid stroke="#CED3DF" strokeDasharray="5 5" />
             </LineChart>
         </ResponsiveContainer>
+        </Paper>
+        </Grid> 
+        </Grid> 
+        </div>
     </div>;
 
 
 }
-//  Probably will use API info and not random stuff anyways
+//   will use API info and not random stuff anyways

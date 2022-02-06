@@ -19,7 +19,7 @@ on the same level*/
   }
 
   /* Will make little checkboxes, so that user can check types of Cases they want
-  to see, and something to toggle the dates... it says a date rn*/
+  to see, and something to toggle the dates */
 
   .checkboxCases{
        position: relative;
@@ -34,8 +34,7 @@ on the same level*/
       margin-left: 5px;
       color: #86C4E7;
   }
-     /* Space for the subtitle (
-     Its like a placeholder essentialy)*/
+     /* Space for the subtitle */
 
 .toppart {
     height: 100%;
@@ -45,3 +44,11 @@ on the same level*/
     justify-content: space-between;
   }
   /**/
+
+
+  @media (max-width: 600px) {
+    .chart {
+      display: none;
+     /* removes chart in small screen*/
+    }
+  }

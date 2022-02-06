@@ -5,7 +5,7 @@ export default function DashboardPro() {
     return (
         <div className="home">
             <FaceInfo/>
-            <Chart/>
+            { <Chart/> }
 
         </div>
     );
