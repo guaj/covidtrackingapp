@@ -16,7 +16,7 @@ The goal of this project is to simulate a Software development process through t
 |LucasCatchlove| Lucas Catchlove|
 | |Mahmoud Elsayed|
 | |ALine Kukdjian|
-| |Eyal Azimov
+|eyalthepal |Eyal Azimov
 
 
 ## Important installation commands before runnig the app (on the cmd)
