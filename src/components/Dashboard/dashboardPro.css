@@ -1,4 +1,14 @@
 .home{
-    flex: 4;
+    padding-top: 100px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.container{
+    padding-top: 100px;
+}
+
+.divHeader{
+    text-align: center;
 }
 /*test*/
