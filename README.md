@@ -14,7 +14,7 @@ The goal of this project is to simulate a Software development process through t
 |antistarM   |Ma-Ya McRae |
 |guaj |Jasmin Guay|
 |LucasCatchlove| Lucas Catchlove|
-| |Mahmoud Elsayed|
+|mnashat |Mahmoud Elsayed|
 |alinekurkdjian |Aline Kukdjian|
 |eyalthepal |Eyal Azimov
 
