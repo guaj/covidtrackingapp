@@ -14,9 +14,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
+import ErrorIcon from '@mui/icons-material/Error';
+import FlagIcon from '@mui/icons-material/Flag';
+import mockedDatas from "../../../patientsmocks.json"
+import {useEffect, useState} from "react";
 
 
-function createData(firstName, lastName, covidResult, reviewed, emergency, profileLink, priorityNumber, priorityColor) {
+
+function createData(firstName, lastName, covidResult, reviewed, emergency, profileLink, priorityNumber, isFlagged) {
     return {
         firstName,
         lastName,
@@ -25,17 +30,22 @@ function createData(firstName, lastName, covidResult, reviewed, emergency, profi
         emergency,
         profileLink,
         priorityNumber,
-        priorityColor
+        isFlagged
     };
 }
 
+
+
 const rows = [
-    createData('Mr A1', "Lastname1", 'positive', 'true', 'false',
-        'http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg', 1, "red"),
-    createData('Mr A2', "Lastname2", 'negative', 'false', 'false',
-        'http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg', 2, "green"),
-    createData('Mr A3', 'Lastname3', "positive", 'true', 'false',
-        'http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg', 3, "yellow"),
+    createData('Mr A1', "Lastname1", 'positive', true, false,
+        'http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg',
+        1, false),
+    createData('Mr A2', "Lastname2", 'negative', false, true,
+        'http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg',
+        2, false),
+    createData('Mr A3', 'Lastname3', "positive", true, true,
+        'http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg',
+        3, true),
 
 ];
 
@@ -105,6 +115,11 @@ const headCells = [
         disablePadding: false,
         label: 'Profile Link',
     },
+    {
+        id: 'isFlagged',
+        disablePadding: false,
+        label: 'Flag',
+    },
 ];
 
 
@@ -148,7 +163,6 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
     numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
@@ -166,12 +180,33 @@ export default function PatientListTable() {
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+
+
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
 
+    const handleClick = (event, name) => {
+        const selectedIndex = selected.indexOf(name);
+        let newSelected = [];
+
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, name);
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(
+                selected.slice(0, selectedIndex),
+                selected.slice(selectedIndex + 1),
+            );
+        }
+
+        setSelected(newSelected);
+    };
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -189,7 +224,8 @@ export default function PatientListTable() {
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - mockedDatas.length) : 0;
+
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -197,7 +233,7 @@ export default function PatientListTable() {
                 <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}
-                        aria-labelledby="tableTitle"
+                        aria-labelledby="patientListTable"
                         size={dense ? 'small' : 'medium'}
                     >
                         <EnhancedTableHead
@@ -205,29 +241,30 @@ export default function PatientListTable() {
                             order={order}
                             orderBy={orderBy}
                             onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
+                            rowCount={mockedDatas.length}
                         />
                         <TableBody>
                             {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                            {stableSort(rows, getComparator(order, orderBy))
+                            {stableSort(mockedDatas, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row) => {
+                                .map((item) => {
 
                                     return (
                                         <TableRow
                                             hover
                                             role="checkbox"
                                             tabIndex={-1}
-                                            key={row.name}
+                                            key={item.name}
                                         >
-                                            <TableCell></TableCell>
-                                            <TableCell align="center">{row.firstName}</TableCell>
-                                            <TableCell align="center">{row.lastName}</TableCell>
-                                            <TableCell align="center">{row.covidResult}</TableCell>
-                                            <TableCell align="center">{row.reviewed}</TableCell>
-                                            <TableCell align="center">{row.emergency}</TableCell>
-                                            <TableCell align="center" numeric component="a" href={row.profileLink}><LinkIcon/></TableCell>
+                                            <TableCell/>
+                                            <TableCell align="center">{item.firstName}</TableCell>
+                                            <TableCell align="center">{item.lastName}</TableCell>
+                                            <TableCell align="center">{item.covidResult}</TableCell>
+                                            <TableCell align="center">{item.reviewed ? "yes" : "no"}</TableCell>
+                                            <TableCell align="center">{item.emergency ? <ErrorIcon style={{fill: "red"}}/> : "" }</TableCell>
+                                            <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon/></TableCell>
+                                            <TableCell align="center">{item.isFlagged ? <FlagIcon style={{fill: "orange"}}/> : "" }</TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -246,7 +283,7 @@ export default function PatientListTable() {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={rows.length}
+                    count={mockedDatas.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
