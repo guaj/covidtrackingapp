@@ -20,9 +20,9 @@ The goal of this project is to simulate a Software development process through t
 
 
 ## How to set up the project.
-open a terminal a change directory to the one you prefer to clone the project.
-Run the following command to copy the github project
-git clone https://github.com/guaj/covidtrackingapp.git
+* open a terminal a change directory to the one you prefer to clone the project.
+* Run the following command to copy the github project
+* git clone https://github.com/guaj/covidtrackingapp.git
 
 ## Once you havew installed the project, you need to install all the dependencies with the following command
 * install React packages and dependencies: **npm install** 
