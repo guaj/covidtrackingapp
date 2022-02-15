@@ -5,8 +5,10 @@ import NavbarHome from './components/Navbar/NavbarHome';
 import NavbarPro from './components/Navbar/NavbarPro';
 import Home from './components/home';
 import HomePro from './components/homePro';
+
 import ProfilePatient from './components/UserProfile/ProfilePatient';
 import ProfilePro from './components/UserProfile/ProfilePro';
+
 import SignUpPatient from './components/SignUpPatient';
 import SignUpPro from './components/SignUpPro';
 import NavbarRegister from './components/Navbar/NavbarRegister';
