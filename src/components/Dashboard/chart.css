@@ -1,0 +1,54 @@
+/* Chart box on the dashbard. The piechart should go next to it, ideally 
+on the same level*/
+
+.chart {
+    margin: 25px;
+    padding: 50px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    border-radius: 20px;
+    -webkit-box-shadow: 5px 5px 15px 5px rgba(97,89,109,0.21);
+    box-shadow: 5px 5px 15px 5px rgba(97,89,109,0.21);
+  }
+
+  .chartTitle {
+    font-size: 25px;
+       color: #4F4F4F;
+
+    margin-bottom: 20px;
+  }
+
+  /* Will make little checkboxes, so that user can check types of Cases they want
+  to see, and something to toggle the dates */
+
+  .checkboxCases{
+       position: relative;
+       margin-right: 10px;
+       color: #4F4F4F;
+     display: flex;
+          align-items: center;
+     }
+
+     .forwardBackwards{
+      font-size: 14px;
+      margin-left: 5px;
+      color: #86C4E7;
+  }
+     /* Space for the subtitle */
+
+.toppart {
+    height: 100%;
+    padding: 0px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  /**/
+
+
+  @media (max-width: 600px) {
+    .chart {
+      display: none;
+     /* removes chart in small screen*/
+    }
+  }
