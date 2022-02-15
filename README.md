@@ -27,9 +27,7 @@ The goal of this project is to simulate a Software development process through t
 ## Once you havew installed the project, you need to install all the dependencies with the following command
 * install React packages and dependencies: **npm install** 
 
-## Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### Run the app on the following website: https://main.d1mmulvvzymdin.amplifyapp.com/ 
 ### Run the professional dashboard here: https://main.d1mmulvvzymdin.amplifyapp.com/dashboard-pro 
