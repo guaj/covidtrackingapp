@@ -16,38 +16,12 @@ import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
 import ErrorIcon from '@mui/icons-material/Error';
 import FlagIcon from '@mui/icons-material/Flag';
-import mockedDatas from "../../../patientsmocks.json"
-import {useEffect, useState} from "react";
+import mockedDatas from "./patientListTableMockData.json"
+import BasicButtons from "./addPatientButton";
 
 
 
-function createData(firstName, lastName, covidResult, reviewed, emergency, profileLink, priorityNumber, isFlagged) {
-    return {
-        firstName,
-        lastName,
-        covidResult,
-        reviewed,
-        emergency,
-        profileLink,
-        priorityNumber,
-        isFlagged
-    };
-}
 
-
-
-const rows = [
-    createData('Mr A1', "Lastname1", 'positive', true, false,
-        'http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg',
-        1, false),
-    createData('Mr A2', "Lastname2", 'negative', false, true,
-        'http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg',
-        2, false),
-    createData('Mr A3', 'Lastname3', "positive", true, true,
-        'http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg',
-        3, true),
-
-];
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -78,6 +52,7 @@ function stableSort(array, comparator) {
     });
     return stabilizedThis.map((el) => el[0]);
 }
+
 const headCells = [
     {
         id: 'priorityNumber',
@@ -131,6 +106,8 @@ function EnhancedTableHead(props) {
     };
 
     return (
+
+
         <TableHead>
             <TableRow>
 
@@ -175,7 +152,7 @@ EnhancedTableHead.propTypes = {
 export default function PatientListTable() {
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
-    const [selected, setSelected] = React.useState([]);
+    const [selected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -188,25 +165,7 @@ export default function PatientListTable() {
         setOrderBy(property);
     };
 
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected = [];
 
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        setSelected(newSelected);
-    };
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -229,6 +188,7 @@ export default function PatientListTable() {
 
     return (
         <Box sx={{ width: '100%' }}>
+            <BasicButtons/>
             <Paper sx={{ width: '100%', mb: 2 }}>
                 <TableContainer>
                     <Table
