@@ -5,74 +5,123 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import NavbarDashboardPro from '../Navbar/NavbarDashboardPro';
+import Chart from './Chart';
+
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+    const { children, value, index, ...other } = props;
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
 }
 
 TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
 };
 
 function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
 }
 
 export default function Dashboard() {
-  const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(0);
+    const mockProfiles = [
+        { name: "Tony Soprano", userType: "doctor" },
+        { name: "Tony Soprano", userType: "patient" },
+        { name: "Tony Soprano", userType: "healthOfficial" },
+        { name: "Tony Soprano", userType: "immigrationOfficial" }]
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
-  return (
 
-    <div>
-    <NavbarDashboardPro/>
-  <div className="container">
-    
- 
-    <Box sx={{ width: '80%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
-        Item One
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-    </Box>
+    function displayUserTabs() {
+        switch (mockProfiles[Math.floor(Math.random(4))].userType) { //randomization to demonstrate conditional rendering
+            case "doctor":
+                return (
+                    <>
+                        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                            <Tab label="Statistics" {...a11yProps(0)} />
+                            <Tab label="Patient List" {...a11yProps(1)} />
+                            <Tab label="doctor tab n" {...a11yProps(2)} />
+                        </Tabs>
 
-    </div>
-  </div>
-  );
+                        <TabPanel value={value} index={0}>
+                            <Chart />
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            patient list content
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                            nth doctor tab content
+                        </TabPanel>
+                    </>
+                )
+
+            case 'patient':
+                return (
+                    <>
+                        <Tab label="patient tab 1" {...a11yProps(0)} />
+                        <Tab label="patient tab 2" {...a11yProps(1)} />
+                        <Tab label="patient tab n" {...a11yProps(2)} />
+                    </>
+                )
+
+            case 'healthOfficial':
+                return (
+                    <>
+                        <Tab label="ho tab 1" {...a11yProps(0)} />
+                        <Tab label="ho tab 2" {...a11yProps(1)} />
+                        <Tab label="ho tab n" {...a11yProps(2)} />
+                    </>
+                )
+
+            case 'immigrationOfficial':
+                return (
+                    <>
+                        <Tab label="io tab 1" {...a11yProps(0)} />
+                        <Tab label="io tab 2" {...a11yProps(1)} />
+                        <Tab label="io tab n" {...a11yProps(2)} />
+                    </>
+                )
+
+            default: alert("invalid user type: something has gone *really* wrong")
+
+        }
+    }
+
+
+    return (
+
+        <div>
+            <NavbarDashboardPro />
+            <div className="container">
+                <Box sx={{ width: '80%' }}>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                        {displayUserTabs()}
+                    </Box>
+                </Box>
+
+            </div>
+        </div>
+    );
 }
