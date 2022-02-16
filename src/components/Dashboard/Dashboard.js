@@ -83,6 +83,16 @@ export default function Dashboard() {
                         <Tab label="patient tab 1" {...a11yProps(0)} />
                         <Tab label="patient tab 2" {...a11yProps(1)} />
                         <Tab label="patient tab n" {...a11yProps(2)} />
+
+                        <TabPanel value={value} index={0}>
+                            <Chart />
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            patient tab content 2
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                            nth doctor tab content
+                        </TabPanel>
                     </>
                 )
 
@@ -92,6 +102,16 @@ export default function Dashboard() {
                         <Tab label="ho tab 1" {...a11yProps(0)} />
                         <Tab label="ho tab 2" {...a11yProps(1)} />
                         <Tab label="ho tab n" {...a11yProps(2)} />
+
+                        <TabPanel value={value} index={0}>
+                            <Chart />
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            patient list content
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                            nth doctor tab content
+                        </TabPanel>
                     </>
                 )
 
@@ -101,6 +121,16 @@ export default function Dashboard() {
                         <Tab label="io tab 1" {...a11yProps(0)} />
                         <Tab label="io tab 2" {...a11yProps(1)} />
                         <Tab label="io tab n" {...a11yProps(2)} />
+
+                        <TabPanel value={value} index={0}>
+                            <Chart />
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            patient list content
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                            nth doctor tab content
+                        </TabPanel>
                     </>
                 )
 
@@ -115,7 +145,7 @@ export default function Dashboard() {
         <div>
             <NavbarDashboardPro />
             <div className="container">
-                <Box sx={{ width: '80%' }}>
+                <Box sx={{ width: '80%' , margin: '5% auto'}}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         {displayUserTabs()}
                     </Box>
