@@ -43,11 +43,12 @@ function a11yProps(index) {
 
 export default function Dashboard() {
     const [value, setValue] = React.useState(0);
+
     const mockProfiles = [
         { name: "Tony Soprano", userType: "doctor" },
         { name: "Tony Soprano", userType: "patient" },
-        { name: "Tony Soprano", userType: "healthOfficial" },
-        { name: "Tony Soprano", userType: "immigrationOfficial" }]
+        { name: "Tony Soprano", userType: "health official" },
+        { name: "Tony Soprano", userType: "immigration official" }]
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -55,7 +56,7 @@ export default function Dashboard() {
 
 
     function displayUserTabs() {
-        switch (mockProfiles[Math.floor(Math.random(4))].userType) { //randomization to demonstrate conditional rendering
+        switch (mockProfiles[0].userType) { //randomization to demonstrate conditional rendering
             case "doctor":
                 return (
                     <>
@@ -80,9 +81,11 @@ export default function Dashboard() {
             case 'patient':
                 return (
                     <>
-                        <Tab label="patient tab 1" {...a11yProps(0)} />
-                        <Tab label="patient tab 2" {...a11yProps(1)} />
-                        <Tab label="patient tab n" {...a11yProps(2)} />
+                        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                            <Tab label="patient tab 1" {...a11yProps(0)} />
+                            <Tab label="patient tab 2" {...a11yProps(1)} />
+                            <Tab label="patient tab n" {...a11yProps(2)} />
+                        </Tabs>
 
                         <TabPanel value={value} index={0}>
                             <Chart />
@@ -91,45 +94,50 @@ export default function Dashboard() {
                             patient tab content 2
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            nth doctor tab content
+                            nth patient tab content
                         </TabPanel>
                     </>
                 )
 
-            case 'healthOfficial':
+            case 'health official':
                 return (
                     <>
-                        <Tab label="ho tab 1" {...a11yProps(0)} />
-                        <Tab label="ho tab 2" {...a11yProps(1)} />
-                        <Tab label="ho tab n" {...a11yProps(2)} />
+                        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                            <Tab label="ho tab 1" {...a11yProps(0)} />
+                            <Tab label="ho tab 2" {...a11yProps(1)} />
+                            <Tab label="ho tab n" {...a11yProps(2)} />
+                        </Tabs>
 
                         <TabPanel value={value} index={0}>
                             <Chart />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            patient list content
+                            ho tab 2 content
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            nth doctor tab content
+                            ho nth tab content
                         </TabPanel>
                     </>
                 )
 
-            case 'immigrationOfficial':
+            case 'immigration official':
                 return (
                     <>
-                        <Tab label="io tab 1" {...a11yProps(0)} />
-                        <Tab label="io tab 2" {...a11yProps(1)} />
-                        <Tab label="io tab n" {...a11yProps(2)} />
+
+                        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                            <Tab label="io tab 1" {...a11yProps(0)} />
+                            <Tab label="io tab 2" {...a11yProps(1)} />
+                            <Tab label="io tab n" {...a11yProps(2)} />
+                        </Tabs>
 
                         <TabPanel value={value} index={0}>
                             <Chart />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            patient list content
+                            io tab 2 content 
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            nth doctor tab content
+                            nth io tab content
                         </TabPanel>
                     </>
                 )
@@ -145,7 +153,7 @@ export default function Dashboard() {
         <div>
             <NavbarDashboardPro />
             <div className="container">
-                <Box sx={{ width: '80%' , margin: '5% auto'}}>
+                <Box sx={{ width: '80%', margin: '5% auto' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         {displayUserTabs()}
                     </Box>
