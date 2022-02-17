@@ -6,14 +6,14 @@ import NavbarPro from './components/Navbar/NavbarPro';
 import Home from './components/home';
 import HomePro from './components/homePro';
 
-import ProfilePatient from './components/UserProfile/ProfilePatient';
-import ProfilePro from './components/UserProfile/ProfilePro';
+import ProfilePro from './components/UserProfile/DoctorProfile/DoctorProfile';
+import ProfilePatient from './components/UserProfile/patientProfile/PatientProfile';
 
 import SignUpPatient from './components/SignUpPatient';
 import SignUpPro from './components/SignUpPro';
 import NavbarRegister from './components/Navbar/NavbarRegister';
 import NavbarRegisterPro from './components/Navbar/NavbarRegisterPro';
-import RunDashPro from './components/Dashboard/RunDashPro';
+import Dashboard from './components/Dashboard/Dashboard';
 import NavbarProfilePatient from './components/Navbar/NavbarProfilePatient';
 
 ///* Make sure to update file when adding to App.css!!*/
@@ -28,7 +28,7 @@ function App() {
       <Route path='/sign-up-pro' element={[<NavbarRegisterPro/>, <SignUpPro/>]} />
       <Route path='/profile-patient' element={[<NavbarProfilePatient/>, <ProfilePatient/>]} />
       <Route path='/profile-pro' element={[<NavbarPro/>, <ProfilePro/>]} />
-      <Route path='/dashboard-pro' element={[<RunDashPro/>]} />
+      <Route path='/dashboard' element={[<Dashboard/>]} />
     </Routes>
   );
 }
