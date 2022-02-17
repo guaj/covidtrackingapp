@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import NavbarDashboardPro from '../Navbar/NavbarDashboardPro';
 import Chart from './Chart';
+import PatientListTable from "./DoctorDashboard/patientListTable";
 
 
 function TabPanel(props) {
@@ -70,7 +71,7 @@ export default function Dashboard() {
                             <Chart />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            patient list content
+                            <PatientListTable/>
                         </TabPanel>
                         <TabPanel value={value} index={2}>
                             nth doctor tab content
