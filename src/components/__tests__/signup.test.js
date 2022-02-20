@@ -1,5 +1,5 @@
 import { render, screen, cleanup } from "@testing-library/react";
-import SignUpPatient from "../SignUpPatient";
+import SignUpPatient from "../Authentification/UserRegistration/PatientRegistration";
 
 test('passwords should be the same', () => {
   render(<SignUpPatient />);

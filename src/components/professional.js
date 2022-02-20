@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import geometricImage from "../images/geometric_gradient.jpg";
+
   
   const useStyles = makeStyles((theme) => ({
     image: {
@@ -29,6 +30,9 @@ import geometricImage from "../images/geometric_gradient.jpg";
     },
     form: {
       marginTop: theme.spacing(2),
+      "@media (max-width: 600px)": {
+        width:"100%"
+      }
     },
     submit: {
       margin: theme.spacing(8, 0, 5),
@@ -42,35 +46,32 @@ import geometricImage from "../images/geometric_gradient.jpg";
     },
     checkboxes:{
       marginTop: theme.spacing(4),
-      align: "center",
     }
   }));
   
   
   
-export default function Home() {
+export default function UsersLogin() {
     const classes = useStyles();
     return (
       <Grid container component="main">
-        
         <CssBaseline />
         <Grid item xs={false} sm={false} md={4} className={classes.image} />
         <Grid item xs={12} sm={12} md={8} component={Paper} elevation={6} square>
-          <div className={classes.paper}> 
+          <div className={classes.paper}>
             <Typography component="h1" variant="h4" className={classes.title} >
-              Access to your health profile 
+              Professionals 
             </Typography>
             <form className={classes.form} id='form' onSubmit={"#"}>
               <TextField
-                type="email"
+                type="orgID"
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="this.example@email.com"
-                name="email"
-                autoComplete="email"
-                helperText="Email"
+                id="orgID"
+                label="ID"
+                name="orgID"
+                helperText="Organization ID"
                 />
               <TextField
                 type="password"
@@ -90,7 +91,7 @@ export default function Home() {
                     label="Remember me"
                     />  
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs>
                   <Link href="#" variant="body2">
                     Forgot password?
                   </Link>
@@ -107,15 +108,15 @@ export default function Home() {
               <Grid container>
                 
                 <Grid item>
-                <Typography variant="body2">Don't have an account? <t/>
-                    <Link href="/sign-up-patient" variant="body2">
-                    {"Sign Up"}
+                <Typography variant="body2">Your organization is not singed up? <t/>
+                    <Link href="/sign-up-pro" variant="body2">
+                    {"Register now"}
                     </Link></Typography>  
                   
                 </Grid>
               </Grid>
             </form>
-            </div>
+          </div>
         </Grid>
       </Grid>
     );

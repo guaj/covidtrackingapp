@@ -3,32 +3,40 @@ import {Route, Routes} from 'react-router-dom';
 import AboutUs from './components/AboutUs';
 import NavbarHome from './components/Navbar/NavbarHome';
 import NavbarPro from './components/Navbar/NavbarPro';
-import Home from './components/home';
-import HomePro from './components/homePro';
-
-import ProfilePro from './components/UserProfile/DoctorProfile/DoctorProfile';
-import ProfilePatient from './components/UserProfile/patientProfile/PatientProfile';
-
-import SignUpPatient from './components/SignUpPatient';
-import SignUpPro from './components/SignUpPro';
+import Homepage from './components/Homepage';
+import Login from './components/professional';
 import NavbarRegister from './components/Navbar/NavbarRegister';
 import NavbarRegisterPro from './components/Navbar/NavbarRegisterPro';
 import Dashboard from './components/Dashboard/Dashboard';
 import NavbarProfilePatient from './components/Navbar/NavbarProfilePatient';
+
+import ProfilePro from './components/UserProfile/DoctorProfile/DoctorProfile';
+import ProfilePatient from './components/UserProfile/PatientProfile/PatientProfile';
+import UsersLogin from './components/Authentification/UserLogin/UserLogin';
+import UsersRegistration from './components/Authentification/UserRegistration/UsersRegistration'
+import PatientRegistration from './components/Authentification/UserRegistration/PatientRegistration';
+import DoctorRegistration from './components/Authentification/UserRegistration/DoctorRegistration'
+import OrganizationRegistration from './components/Authentification/UserRegistration/OrganizationRegistration';
+
 
 ///* Make sure to update file when adding to App.css!!*/
 
 function App() {
   return (
     <Routes>
-      <Route exact path='/' element={[<NavbarHome/>, <Home/>]} />
-      <Route path='/professionals' element={[<NavbarPro/>, <HomePro/>]} />
+
+      <Route path='/professionals' element={[<NavbarPro/>, <Login/>]} />
       <Route path='/about' element={[<NavbarRegister/>, <AboutUs/>]} />
-      <Route path='/sign-up-patient' element={[<NavbarRegister/>, <SignUpPatient/>]} />
-      <Route path='/sign-up-pro' element={[<NavbarRegisterPro/>, <SignUpPro/>]} />
-      <Route path='/profile-patient' element={[<NavbarProfilePatient/>, <ProfilePatient/>]} />
-      <Route path='/profile-pro' element={[<NavbarPro/>, <ProfilePro/>]} />
       <Route path='/dashboard' element={[<Dashboard/>]} />
+
+      <Route exact path='/' element={[<NavbarHome/>, <Homepage/>]} />
+      <Route path='/patient-profile' element={[<NavbarProfilePatient/>, <ProfilePatient/>]} />
+      <Route path='/doctor-profile' element={[<NavbarPro/>, <ProfilePro/>]} />
+      <Route path='/login' element={[<UsersLogin/>]} />
+      <Route path='/user-registration' element={[<UsersRegistration/>]} />
+      <Route path='/doctor-registration' element={[<NavbarRegisterPro/>, <DoctorRegistration/>]} />
+      <Route path='/patient-registration' element={[<NavbarRegister/>, <PatientRegistration/>]} />
+      <Route path='/organization-registration' element={[<NavbarRegisterPro/>, <OrganizationRegistration/>]} />
     </Routes>
   );
 }
