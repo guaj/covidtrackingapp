@@ -75,7 +75,7 @@ export default function SignUpOrg() {
                   margin="normal"
                   required
                   fullWidth
-                  id="Employeeid"
+                  id="employeeid"
                   label="000000000"
                   name="EmployeeId"
                   helperText="Employee ID"

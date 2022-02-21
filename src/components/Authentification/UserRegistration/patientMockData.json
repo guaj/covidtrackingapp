@@ -1,0 +1,20 @@
+[
+  {
+    "email": "apatient@gmail.com",
+    "firstName" : "Lab",
+    "lastName" : "Rat",
+    "ramqNumber" : "12345",
+    "insuranceNumber": null,
+    "password1" : "p12345",
+    "password2" : "p12345"
+  },
+  {
+    "email": "anotherpatient@gmail.com",
+    "firstName" : "Lets",
+    "lastName" : "Gooooo",
+    "ramqNumber" : null,
+    "insuranceNumber": "IA123456",
+    "password1" : "p123456",
+    "password2" : "p123456"
+  }
+]
