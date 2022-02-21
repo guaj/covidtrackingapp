@@ -161,7 +161,7 @@ export default function ProfilePatient() {
                       variant="contained"
                       className={classes.submit}
                   >
-                    Update
+                    Submit
                   </Button>
                 </div>
               </div>
