@@ -10,8 +10,8 @@ import NavbarRegisterPro from './components/Navbar/NavbarRegisterPro';
 import Dashboard from './components/Dashboard/Dashboard';
 import NavbarProfilePatient from './components/Navbar/NavbarProfilePatient';
 
-import ProfilePro from './components/UserProfile/DoctorProfile/DoctorProfile';
-import ProfilePatient from './components/UserProfile/PatientProfile/PatientProfile';
+import DoctorProfile from './components/UserProfile/DoctorProfile/DoctorProfile';
+import PatientProfile from './components/UserProfile/PatientProfile/PatientProfile';
 import UsersLogin from './components/Authentification/UserLogin/UserLogin';
 import UsersRegistration from './components/Authentification/UserRegistration/UsersRegistration'
 import PatientRegistration from './components/Authentification/UserRegistration/PatientRegistration';
@@ -30,8 +30,8 @@ function App() {
       <Route path='/dashboard' element={[<Dashboard/>]} />
 
       <Route exact path='/' element={[<NavbarHome/>, <Homepage/>]} />
-      <Route path='/patient-profile' element={[<NavbarProfilePatient/>, <ProfilePatient/>]} />
-      <Route path='/doctor-profile' element={[<NavbarPro/>, <ProfilePro/>]} />
+      <Route path='/patient-profile' element={[<NavbarProfilePatient/>, <PatientProfile/>]} />
+      <Route path='/doctor-profile' element={[<NavbarPro/>, <DoctorProfile/>]} />
       <Route path='/login' element={[<UsersLogin/>]} />
       <Route path='/user-registration' element={[<UsersRegistration/>]} />
       <Route path='/doctor-registration' element={[<NavbarRegisterPro/>, <DoctorRegistration/>]} />

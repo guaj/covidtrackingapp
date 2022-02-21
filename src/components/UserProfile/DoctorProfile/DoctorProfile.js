@@ -130,31 +130,6 @@ export default function DoctorProfile() {
                                 defaultValue="Province"
                             />
                             <div>
-                                <p>Password</p>
-                                <TextField
-                                    data-testid="sign-up-psw1"
-                                    type="password"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="* * * *"
-                                    id="password"
-                                    helperText="Password"
-                                    autoComplete="current-password"
-                                />
-                                <TextField
-                                    data-testid="sign-up-psw2"
-                                    type="password"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="* * * *"
-                                    id="password"
-                                    helperText="Confirm your password"
-                                />
-
                                 <Button
                                     type="submit"
                                     fullWidth
