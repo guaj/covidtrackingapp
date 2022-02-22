@@ -130,14 +130,14 @@ export default function SignUpPatient() {
                             value={ramqNumber}
                             disabled={!ramq}
                             onChange={e => setRamqNumber(e.target.value)}
+                            data-testid="ramqNumber"
                         />
                         <Grid container className={classes.checkboxes}>
                             <Grid item xs>
                                 <FormControlLabel
                                     control={<Checkbox value="insurancePolicyNumber" color="primary"/>}
                                     label="I don't have a RAMQ number"
-                                onChange={(e) => {setRamq(!ramq); setRamqNumber("")
-}}
+                                onChange={(e) => {setRamq(!ramq); setRamqNumber("")}}
                                 />
                             </Grid>
                             <Grid item xs={4}>
@@ -153,6 +153,7 @@ export default function SignUpPatient() {
                             name="insurance number"
                             autoComplete=""
                             helperText="Insurance number"
+                            data-testid="insuranceNumber"
                         />
                         <TextField
                             data-testid="sign-up-psw1"
