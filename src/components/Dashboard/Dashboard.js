@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import NavbarDashboardPro from '../Navbar/NavbarDashboardPro';
 //tab components 
 import DoctorTabs from './DoctorDashboard/DoctorTabs';
 import PatientTabs from './PatientDashboard/PatientTabs';
