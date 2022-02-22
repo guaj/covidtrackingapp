@@ -6,9 +6,20 @@ import {makeStyles} from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import * as React from "react";
+import geometricImage from "../../../images/geometric_gradient.jpg";
 
 
 const useStyles = makeStyles((theme) => ({
+    image: {
+        backgroundImage: `url(${geometricImage})`,
+        backgroundRepeat: "no-repeat",
+        backgroundColor:
+            theme.palette.type === "light"
+                ? theme.palette.grey[50]
+                : theme.palette.grey[900],
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+    },
     paper: {
         margin: theme.spacing(17, 15, 50),
         display: "flex",
@@ -22,6 +33,11 @@ const useStyles = makeStyles((theme) => ({
     },
     paragraph: {
         marginTop: theme.spacing(6),
+    },
+    submit: {
+        margin: theme.spacing(8, 0, 5),
+        color: "white",
+        backgroundColor: "rgba(1, 5, 96, 1)",
     }
 }));
 
@@ -31,33 +47,33 @@ const setForm = (event => {
 
 export default function DoctorProfile() {
     const classes = useStyles();
+    const handleSubmit = (e)=>{
+        e.preventDefault();
+        window.location = '/dashboard'; //wrong redirect, waiting for user dashboard page
+    }
     return (
         <Grid container component="main">
             <CssBaseline/>
-            <Grid item component={Paper} elevation={6} square>
+            <Grid item xs={false} sm={false} md={4} className={classes.image}/>
+            <Grid item xs={12} sm={12} md={8} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <Typography component="h1" variant="h4" className={classes.title}>
                         profile page
                     </Typography>
-                    <form className={classes.form} id='form' onSubmit={(e) => setForm(e.target.value)}>
+                    <form className={classes.form} id='form' onSubmit={handleSubmit}>
                         <div>
                             <p>Name</p>
                             <TextField
-                                disabled
-                                id="outlined-disabled"
-                                label="Disabled"
+                                id="firstName"
                                 defaultValue="First name"
                             />
                             <TextField
-                                disabled
-                                id="outlined-disabled"
-                                label="Disabled"
+                                id="lastName"
                                 defaultValue="Last name"
                             />
                           <TextField
                               type="text"
                               margin="normal"
-                              required
                               fullWidth
                               id="doctorIdNumber"
                               label="license number"
@@ -68,7 +84,6 @@ export default function DoctorProfile() {
                           <TextField
                               type="email"
                               margin="normal"
-                              required
                               fullWidth
                               id="email"
                               label="this.example@email.com"
@@ -92,14 +107,12 @@ export default function DoctorProfile() {
                                 <p>Address</p>
                                 <TextField
                                     type="text"
-                                    required
                                     id="streetNumber"
                                     label="Required"
                                     defaultValue="Street number"
                                 />
                                 <TextField
                                     type="text"
-                                    required
                                     id="address"
                                     label="Required"
                                     defaultValue="Street name"
@@ -136,7 +149,7 @@ export default function DoctorProfile() {
                                     variant="contained"
                                     className={classes.submit}
                                 >
-                                    Submit
+                                    Complete profile
                                 </Button>
                             </div>
                         </div>

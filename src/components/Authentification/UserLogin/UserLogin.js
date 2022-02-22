@@ -111,7 +111,7 @@ export default function UsersLogin() {
 
                             <Grid item>
                                 <Typography variant="body2">Don't have an account? <t/>
-                                    <Link href="/users-registration" variant="body2">
+                                    <Link href="/user-registration" variant="body2">
                                         {"Register now"}
                                     </Link></Typography>
 

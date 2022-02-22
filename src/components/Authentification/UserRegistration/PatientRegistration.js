@@ -107,16 +107,7 @@ export default function SignUpPatient() {
                             autoComplete="lastName"
                             helperText="Last Name"
                         />
-                        <TextField 
-                            type="date"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="dateOfBirth"
-                            name="dateOfBirth"
-                            autoComplete="date"
-                            helperText="Date of birth"
-                        />
+
                         <TextField
                             type="text"
                             margin="normal"
