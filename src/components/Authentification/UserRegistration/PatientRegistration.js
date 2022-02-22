@@ -9,8 +9,10 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import geometricImage from "../../../images/geometric_gradient.jpg";
-import PasswordChecklist from "react-password-checklist"
+import PasswordChecklist from "react-password-checklist";
 import { useState } from "react";
+import PasswordStrengthBar from 'react-password-strength-bar';
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -56,7 +58,10 @@ export default function SignUpPatient() {
     const classes = useStyles();
     const [password, setPassword] = useState("")
 	const [passwordAgain, setPasswordAgain] = useState("")
-    
+    const [valid, setValid] = useState(false)
+    const [ramq, setRamq] = useState(true)
+    const [ramqNumber, setRamqNumber] = useState("")
+
     return (
         <Grid container component="main">
 
@@ -102,6 +107,16 @@ export default function SignUpPatient() {
                             autoComplete="lastName"
                             helperText="Last Name"
                         />
+                        <TextField 
+                            type="date"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="dateOfBirth"
+                            name="dateOfBirth"
+                            autoComplete="date"
+                            helperText="Date of birth"
+                        />
                         <TextField
                             type="text"
                             margin="normal"
@@ -112,12 +127,17 @@ export default function SignUpPatient() {
                             name="ramqNumber"
                             autoComplete=""
                             helperText="RAMQ number"
+                            value={ramqNumber}
+                            disabled={!ramq}
+                            onChange={e => setRamqNumber(e.target.value)}
                         />
                         <Grid container className={classes.checkboxes}>
                             <Grid item xs>
                                 <FormControlLabel
-                                    control={<Checkbox value="insurancePolicynumber" color="primary"/>}
+                                    control={<Checkbox value="insurancePolicyNumber" color="primary"/>}
                                     label="I don't have a RAMQ number"
+                                onChange={(e) => {setRamq(!ramq); setRamqNumber("")
+}}
                                 />
                             </Grid>
                             <Grid item xs={4}>
@@ -126,7 +146,7 @@ export default function SignUpPatient() {
                         <TextField
                             type="text"
                             margin="normal"
-                            required
+                            required={!ramq}
                             fullWidth
                             id="insuranceNumber"
                             label="0000000"
@@ -134,7 +154,6 @@ export default function SignUpPatient() {
                             autoComplete=""
                             helperText="Insurance number"
                         />
-
                         <TextField
                             data-testid="sign-up-psw1"
                             type="password"
@@ -161,12 +180,16 @@ export default function SignUpPatient() {
                   			onChange={e => setPasswordAgain(e.target.value)}
 
                         />
+                        <PasswordStrengthBar 
+                            password={password}
+                        />
                         <PasswordChecklist
                             rules={["minLength","specialChar","number","capital","match"]}
-                            minLength={5}
+                            minLength={8}
                             value={password}
                             valueAgain={passwordAgain}
-                            onChange={(isValid) => {}}
+                            onChange={(isValid) => {setValid(isValid)}
+                            }
                         />
                         <Grid container className={classes.checkboxes}>
                             <Grid item xs>
@@ -183,6 +206,7 @@ export default function SignUpPatient() {
                             fullWidth
                             variant="contained"
                             className={classes.submit}
+                            disabled={!valid}
                         >
                             Register
                         </Button>
