@@ -5,6 +5,7 @@ import DoctorTabs from './DoctorDashboard/DoctorTabs';
 import PatientTabs from './PatientDashboard/PatientTabs';
 import HealthOfficialTabs from './HealthOfficialDashboard/HealthOfficialTabs';
 import ImmigrationOfficialTabs from './ImmigrantOfficerDashboard/ImmigrationOfficialTabs'
+import Navbar from "../Navbar/Navbar";
 
 const mockProfiles = [
     { name: "Tony Soprano", userType: "doctor" },
@@ -34,7 +35,7 @@ export default function Dashboard() {
 
     return (
         <div>
-            <NavbarDashboardPro />
+            <Navbar />
             <div className="container">
                 <Box sx={{ width: '80%', margin: '5% auto' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
