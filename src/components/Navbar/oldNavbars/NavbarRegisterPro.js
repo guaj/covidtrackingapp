@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {MenuRegisterPro} from "./MenuRegisterPro";import "./Navbar.css";
-import {Button} from "../Button";
+import {Button} from "../../Button";
 
 class NavbarRegisterPro extends Component{
     state = { clicked: false }

@@ -1,8 +1,8 @@
 import './App.css';
 import {Route, Routes} from 'react-router-dom';
 import AboutUs from './components/AboutUs';
-import NavbarHome from './components/Navbar/NavbarHome';
-import NavbarPro from './components/Navbar/NavbarPro';
+import NavbarHome from './components/Navbar/oldNavbars/NavbarHome';
+import NavbarPro from './components/Navbar/oldNavbars/NavbarPro';
 import Home from './components/home';
 import HomePro from './components/homePro';
 
@@ -11,18 +11,18 @@ import ProfilePatient from './components/UserProfile/patientProfile/PatientProfi
 
 import SignUpPatient from './components/SignUpPatient';
 import SignUpPro from './components/SignUpPro';
-import NavbarRegister from './components/Navbar/NavbarRegister';
-import NavbarRegisterPro from './components/Navbar/NavbarRegisterPro';
+import NavbarRegister from './components/Navbar/oldNavbars/NavbarRegister';
+import NavbarRegisterPro from './components/Navbar/oldNavbars/NavbarRegisterPro';
 import Dashboard from './components/Dashboard/Dashboard';
-import NavbarProfilePatient from './components/Navbar/NavbarProfilePatient';
+import NavbarProfilePatient from './components/Navbar/oldNavbars/NavbarProfilePatient';
 
 ///* Make sure to update file when adding to App.css!!*/
 
 function App() {
   return (
     <Routes>
-      <Route exact path='/' element={[<NavbarHome/>, <Home/>]} />
-      <Route path='/professionals' element={[<NavbarPro/>, <HomePro/>]} />
+      <Route exact path='/' element={[ <Home/>]} />
+      <Route path='/professionals' element={[<HomePro/>]} />
       <Route path='/about' element={[<NavbarRegister/>, <AboutUs/>]} />
       <Route path='/sign-up-patient' element={[<NavbarRegister/>, <SignUpPatient/>]} />
       <Route path='/sign-up-pro' element={[<NavbarRegisterPro/>, <SignUpPro/>]} />

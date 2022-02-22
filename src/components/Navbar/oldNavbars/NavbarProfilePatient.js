@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {MenuProfilePatient} from "./MenuProfilePatient";
 import "./Navbar.css";
-import {Button} from "../Button";
+import {Button} from "../../Button";
 import { NotificationImportant,Language, Settings } from "@material-ui/icons";
 
 class NavbarProfilePatient extends Component{

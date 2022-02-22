@@ -1,4 +1,4 @@
-import NavbarDashboardPro from '../Navbar/NavbarDashboardPro';
+import NavbarDashboardPro from '../Navbar/oldNavbars/NavbarDashboardPro';
 import Sidebar from './Sidebar';
 import Dashboard from './components/Dashboard/Dashboard';
 

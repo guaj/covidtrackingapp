@@ -1,11 +1,12 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import NavbarDashboardPro from '../Navbar/NavbarDashboardPro';
+import NavbarDashboardPro from '../Navbar/oldNavbars/NavbarDashboardPro';
 //tab components 
 import DoctorTabs from './DoctorTabs';
 import PatientTabs from './PatientTabs';
 import HealthOfficialTabs from './HealthOfficialTabs';
 import ImmigrationOfficialTabs from './ImmigrationOfficialTabs'
+import Navbar from "../Navbar/Navbar";
 
 const mockProfiles = [
     { name: "Tony Soprano", userType: "doctor" },
@@ -35,7 +36,7 @@ export default function Dashboard() {
 
     return (
         <div>
-            <NavbarDashboardPro />
+            <Navbar />
             <div className="container">
                 <Box sx={{ width: '80%', margin: '5% auto' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { MenuPro } from "./MenuPro";
+import { MenuHome } from "./MenuHome";
 import "./Navbar.css";
-import {Button} from "../Button"
+import {Button} from "../../Button";
 
-class NavbarPro extends Component{
+class NavbarHome extends Component{
     state = { clicked: false }
 
     handleClick = () => {
@@ -20,7 +20,7 @@ class NavbarPro extends Component{
             <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
           </div>
           <ul className={this.state.clicked ? 'nav-menu active' : 'nav-menu'}>
-            {MenuPro.map((menu, index) => {
+            {MenuHome.map((menu, index) => {
               return(
                 <li key={index}>
                   <a className={menu.cName} href={menu.url} >
@@ -30,10 +30,10 @@ class NavbarPro extends Component{
               )       
             })}
           </ul>
-          <Button onClick={event =>  window.location.href='/sign-up-pro'}>Professional registration</Button>
+          <Button onClick={event =>  window.location.href='/sign-up-patient'}>Sign Up</Button>
         </nav>
       )
     }
 }
 
-export default NavbarPro
+export default NavbarHome
