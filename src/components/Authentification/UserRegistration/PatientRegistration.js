@@ -9,6 +9,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import geometricImage from "../../../images/geometric_gradient.jpg";
+import PasswordChecklist from "react-password-checklist"
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -52,6 +54,9 @@ const setForm = (event => {
 
 export default function SignUpPatient() {
     const classes = useStyles();
+    const [password, setPassword] = useState("")
+	const [passwordAgain, setPasswordAgain] = useState("")
+    
     return (
         <Grid container component="main">
 
@@ -81,7 +86,7 @@ export default function SignUpPatient() {
                             required
                             fullWidth
                             id="firstName"
-                            label="first name"
+                            label="First Name"
                             name="firstName"
                             autoComplete="firstName"
                             helperText="First Name"
@@ -92,7 +97,7 @@ export default function SignUpPatient() {
                             required
                             fullWidth
                             id="lastName"
-                            label="last name"
+                            label="Last Name"
                             name="lastName"
                             autoComplete="lastName"
                             helperText="Last Name"
@@ -103,7 +108,7 @@ export default function SignUpPatient() {
                             required
                             fullWidth
                             id="ramqNumber"
-                            label="ramq number"
+                            label="0000000"
                             name="ramqNumber"
                             autoComplete=""
                             helperText="RAMQ number"
@@ -124,7 +129,7 @@ export default function SignUpPatient() {
                             required
                             fullWidth
                             id="insuranceNumber"
-                            label="insurance number"
+                            label="0000000"
                             name="insurance number"
                             autoComplete=""
                             helperText="Insurance number"
@@ -141,6 +146,7 @@ export default function SignUpPatient() {
                             id="password"
                             helperText="Password"
                             autoComplete="current-password"
+                            onChange={e => setPassword(e.target.value)}
                         />
                         <TextField
                             data-testid="sign-up-psw2"
@@ -152,6 +158,15 @@ export default function SignUpPatient() {
                             label="* * * *"
                             id="password"
                             helperText="Confirm your password"
+                  			onChange={e => setPasswordAgain(e.target.value)}
+
+                        />
+                        <PasswordChecklist
+                            rules={["minLength","specialChar","number","capital","match"]}
+                            minLength={5}
+                            value={password}
+                            valueAgain={passwordAgain}
+                            onChange={(isValid) => {}}
                         />
                         <Grid container className={classes.checkboxes}>
                             <Grid item xs>
