@@ -1,5 +1,4 @@
 {
-    "type": "module",
     "name": "covidtrackingapp",
     "version": "0.1.0",
     "private": true,
@@ -54,5 +53,10 @@
     "devDependencies": {
         "axios": "^0.26.0",
         "jest-watch-typeahead": "^1.0.0"
+    },
+    "jest": {
+        "transformIgnorePatterns": [
+            "node_modules/(?!(<react-password-checklist>)/)"
+        ]
     }
 }
