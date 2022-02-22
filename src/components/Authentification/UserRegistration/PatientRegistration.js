@@ -137,7 +137,8 @@ export default function SignUpPatient() {
                                 <FormControlLabel
                                     control={<Checkbox value="insurancePolicyNumber" color="primary"/>}
                                     label="I don't have a RAMQ number"
-                                onChange={(e) => {setRamq(!ramq); setRamqNumber("")}}
+                                    onChange={(e) => {setRamq(!ramq); setRamqNumber("")}}
+                                    data-testid="check"
                                 />
                             </Grid>
                             <Grid item xs={4}>

@@ -14,18 +14,6 @@ test('email should have a value', () => {
   expect(email).not.toBeNull();
 })
 
-test("ramq disabled when 'not-ramq-box' checked", () => {
-  render(<SignUpPatient/>);
-  const ramq = screen.getByTestId("ramqNumber").setAttribute("value", "false");
-  expect(ramq).not.toBeEnabled();
-})
-
-test("ramq should be null when 'not-ramq-box' checked", () => {
-  render(<SignUpPatient/>);
-  const ramq = screen.getByTestId("ramqNumber").setAttribute("value", "false");
-  expect(ramq).toBeNull();
-})
-
 afterEach(() => {
   cleanup();
 }); 
