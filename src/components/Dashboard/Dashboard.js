@@ -1,10 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-//tab components 
-import DoctorTabs from './DoctorTabs';
-import PatientTabs from './PatientTabs';
-import HealthOfficialTabs from './HealthOfficialTabs';
-import ImmigrationOfficialTabs from './ImmigrationOfficialTabs'
+//tab components
+import DoctorTabs from './DoctorDashboard/DoctorTabs';
+import PatientTabs from './PatientDashboard/PatientTabs';
+import HealthOfficialTabs from './HealthOfficialDashboard/HealthOfficialTabs';
+import ImmigrationOfficialTabs from './ImmigrantOfficerDashboard/ImmigrationOfficialTabs'
 import Navbar from "../Navbar/Navbar";
 
 const mockProfiles = [
