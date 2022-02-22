@@ -9,6 +9,10 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import geometricImage from "../../../images/geometric_gradient.jpg";
+import PasswordChecklist from "react-password-checklist";
+import { useState } from "react";
+import PasswordStrengthBar from 'react-password-strength-bar';
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -52,6 +56,12 @@ const setForm = (event => {
 
 export default function SignUpPatient() {
     const classes = useStyles();
+    const [password, setPassword] = useState("")
+	const [passwordAgain, setPasswordAgain] = useState("")
+    const [valid, setValid] = useState(false)
+    const [ramq, setRamq] = useState(true)
+    const [ramqNumber, setRamqNumber] = useState("")
+
     return (
         <Grid container component="main">
 
@@ -81,7 +91,7 @@ export default function SignUpPatient() {
                             required
                             fullWidth
                             id="firstName"
-                            label="first name"
+                            label="First Name"
                             name="firstName"
                             autoComplete="firstName"
                             helperText="First Name"
@@ -92,10 +102,20 @@ export default function SignUpPatient() {
                             required
                             fullWidth
                             id="lastName"
-                            label="last name"
+                            label="Last Name"
                             name="lastName"
                             autoComplete="lastName"
                             helperText="Last Name"
+                        />
+                        <TextField 
+                            type="date"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="dateOfBirth"
+                            name="dateOfBirth"
+                            autoComplete="date"
+                            helperText="Date of birth"
                         />
                         <TextField
                             type="text"
@@ -103,16 +123,22 @@ export default function SignUpPatient() {
                             required
                             fullWidth
                             id="ramqNumber"
-                            label="ramq number"
+                            label="0000000"
                             name="ramqNumber"
                             autoComplete=""
                             helperText="RAMQ number"
+                            value={ramqNumber}
+                            disabled={!ramq}
+                            onChange={e => setRamqNumber(e.target.value)}
+                            data-testid="ramqNumber"
                         />
                         <Grid container className={classes.checkboxes}>
                             <Grid item xs>
                                 <FormControlLabel
-                                    control={<Checkbox value="insurancePolicynumber" color="primary"/>}
+                                    control={<Checkbox value="insurancePolicyNumber" color="primary"/>}
                                     label="I don't have a RAMQ number"
+                                    onChange={(e) => {setRamq(!ramq); setRamqNumber("")}}
+                                    data-testid="check"
                                 />
                             </Grid>
                             <Grid item xs={4}>
@@ -121,15 +147,15 @@ export default function SignUpPatient() {
                         <TextField
                             type="text"
                             margin="normal"
-                            required
+                            required={!ramq}
                             fullWidth
                             id="insuranceNumber"
-                            label="insurance number"
+                            label="0000000"
                             name="insurance number"
                             autoComplete=""
                             helperText="Insurance number"
+                            data-testid="insuranceNumber"
                         />
-
                         <TextField
                             data-testid="sign-up-psw1"
                             type="password"
@@ -141,6 +167,7 @@ export default function SignUpPatient() {
                             id="password"
                             helperText="Password"
                             autoComplete="current-password"
+                            onChange={e => setPassword(e.target.value)}
                         />
                         <TextField
                             data-testid="sign-up-psw2"
@@ -152,6 +179,19 @@ export default function SignUpPatient() {
                             label="* * * *"
                             id="password"
                             helperText="Confirm your password"
+                  			onChange={e => setPasswordAgain(e.target.value)}
+
+                        />
+                        <PasswordStrengthBar 
+                            password={password}
+                        />
+                        <PasswordChecklist
+                            rules={["minLength","specialChar","number","capital","match"]}
+                            minLength={8}
+                            value={password}
+                            valueAgain={passwordAgain}
+                            onChange={(isValid) => {setValid(isValid)}
+                            }
                         />
                         <Grid container className={classes.checkboxes}>
                             <Grid item xs>
@@ -168,6 +208,7 @@ export default function SignUpPatient() {
                             fullWidth
                             variant="contained"
                             className={classes.submit}
+                            disabled={!valid}
                         >
                             Register
                         </Button>

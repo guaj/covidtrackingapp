@@ -1,7 +1,6 @@
 import { render, screen, cleanup } from "@testing-library/react";
 import SignUpPatient from "../Authentification/UserRegistration/PatientRegistration";
 
-
 test('passwords should be the same', () => {
   render(<SignUpPatient />);
   const psw1 = screen.getByTestId("sign-up-psw1").setAttribute("value", "go90cxx");

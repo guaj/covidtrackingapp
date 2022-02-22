@@ -9,6 +9,9 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import geometricImage from "../../../images/geometric_gradient.jpg";
+import PasswordChecklist from "react-password-checklist";
+import { useState } from "react";
+import PasswordStrengthBar from 'react-password-strength-bar';
   
   const useStyles = makeStyles((theme) => ({
     image: {
@@ -50,6 +53,10 @@ import geometricImage from "../../../images/geometric_gradient.jpg";
   
 export default function SignUpOrg() {
     const classes = useStyles();
+    const [password, setPassword] = useState("")
+  	const [passwordAgain, setPasswordAgain] = useState("")
+    const [valid, setValid] = useState(false)
+
     return (
       <Grid container component="main">
         <CssBaseline />
@@ -102,6 +109,7 @@ export default function SignUpOrg() {
                 id="password"
                 helperText="Password"
                 autoComplete="current-password"
+                onChange={e => setPassword(e.target.value)}
               />
               <TextField
                 type="password"
@@ -112,7 +120,19 @@ export default function SignUpOrg() {
                 label="* * * *"
                 id="password"
                 helperText="Confirm your password"
+                onChange={e => setPasswordAgain(e.target.value)}
               />
+              <PasswordStrengthBar 
+                            password={password}
+                        />
+                        <PasswordChecklist
+                            rules={["minLength","specialChar","number","capital","match"]}
+                            minLength={8}
+                            value={password}
+                            valueAgain={passwordAgain}
+                            onChange={(isValid) => {setValid(isValid)}
+                            }
+                        />
               <Grid container className={classes.checkboxes}>
                   <Grid item xs>
                     <FormControlLabel
@@ -128,6 +148,7 @@ export default function SignUpOrg() {
                 fullWidth
                 variant="contained"
                 className={classes.submit}
+                disabled={!valid}
               >
                 Register
               </Button>
