@@ -3,7 +3,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import geometricImage from "../../../images/geometric_gradient.jpg";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import loginData from "./userLoginMockData";
 import LoginForm from "./LoginForm";
 import Button from "@material-ui/core/Button";
@@ -27,21 +27,42 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+
+
 export default function UsersLogin() {
     const classes = useStyles();
     const [error, setError] = useState("");
     const [user, setUser] = useState({email: "", password: ""})
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
+    useEffect(() => {
+        // Check if the user is already logged in
+        // If yes, redirect to his/her profile
+        if(localStorage.getItem("user")){
+            window.location = "/dashboard"
+        }
+        // Display the error message if the user was trying to access a page without logging in
+        if(window.location.hash === "#redirect"){
+            setSuccessMessage("");
+            setErrorMessage("You need to log in to view that page!");
+        }
+    }, [])
     
     const Login = details => {
             console.log(details);
-            for (let i = 0; i < loginData.length; i++) {
+            for (var i = 0; i < loginData.length; i++) {
                 if (loginData[i].email === details.email) {
                     if (loginData[i].password1 === details.password){
                         console.log("Logged in!");
+                        localStorage.setItem("id", JSON.stringify(loginData[i].id));
+                        localStorage.setItem("email", JSON.stringify(loginData[i].email));
+                        localStorage.setItem("type", JSON.stringify(loginData[i].type));
                         setUser( {
                             email: details.email,
                             password1: details.password
                         });
+                        window.location = "/dashboard" ;
                     } 
                     else alert("Wrong email or password !")
                     return false;

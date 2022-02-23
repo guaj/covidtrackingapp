@@ -16,15 +16,27 @@ const mockProfiles = [
     { name: "Tony Soprano", userType: "immigration official" }]
 
 function displayUserTabs() {
+
+    try {
+
+        let user = JSON.parse(localStorage.getItem("id"))
+        let userType = JSON.parse(localStorage.getItem("type"))
+
+    }catch (err) {
+        // 👇️ This runs
+        console.log('Error: ', err.message);
+        window.location.assign("/login#redirect");
+    }
+
     switch (mockProfiles[0].userType) { //randomization to demonstrate conditional rendering
         case "doctor":
             return <DoctorTabs />
-    
+
         case 'patient':
             return <PatientTabs />
-              
+
         case 'health official':
-            return <HealthOfficialTabs /> 
+            return <HealthOfficialTabs />
 
         case 'immigration official':
             return <ImmigrationOfficialTabs />
