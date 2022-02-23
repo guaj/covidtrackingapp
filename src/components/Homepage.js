@@ -48,7 +48,7 @@ import geometricImage from "../images/geometric_gradient.jpg";
   
   
   
-export default function SignUpPro() {
+export default function Home(props) {
     const classes = useStyles();
     return (
       <Grid container component="main">
@@ -58,18 +58,19 @@ export default function SignUpPro() {
         <Grid item xs={12} sm={12} md={8} component={Paper} elevation={6} square>
           <div className={classes.paper}> 
             <Typography component="h1" variant="h4" className={classes.title} >
-              Register your organization 
+              MAIN PAGE
             </Typography>
             <form className={classes.form} id='form' onSubmit={"#"}>
               <TextField
-                type="id"
+                type="email"
                 margin="normal"
                 required
                 fullWidth
-                id="id"
-                label="000000000"
-                name="id"
-                helperText="Your organization ID"
+                id="email"
+                label="this.example@email.com"
+                name="email"
+                autoComplete="email"
+                helperText="Email"
                 />
               <TextField
                 type="password"
@@ -82,24 +83,17 @@ export default function SignUpPro() {
                 helperText="Password"
                 autoComplete="current-password"
               />
-              <TextField
-                type="password"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="* * * *"
-                id="password"
-                helperText="Confirm your password"
-              />
               <Grid container className={classes.checkboxes}>
                   <Grid item xs>
                     <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
-                    label="Remember my password"
+                    label="Remember me"
                     />  
                   </Grid>
                   <Grid item xs={4}>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
                 </Grid>
               </Grid>
               <Button
@@ -108,16 +102,16 @@ export default function SignUpPro() {
                 variant="contained"
                 className={classes.submit}
               >
-                Sign up
+                Login
               </Button>
               <Grid container>
                 
                 <Grid item>
-                <Typography variant="body2">Already registered? <t/>
-                    <Link href="/professionals" variant="body2">
-                    {"Sign In"}
-                    </Link> 
-                </Typography>   
+                <Typography variant="body2">Don't have an account? <t/>
+                    <Link href="/sign-up-patient" variant="body2">
+                    {"Sign Up"}
+                    </Link></Typography>  
+                  
                 </Grid>
               </Grid>
             </form>

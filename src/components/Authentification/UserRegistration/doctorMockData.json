@@ -1,0 +1,18 @@
+[
+  {
+    "email": "theDoctor@gmail.com",
+    "firstName" : "The",
+    "lastName" : "Doctor",
+    "licenseNumber" : "12345",
+    "password1" : "p1234",
+    "password2" : "p1234"
+  },
+  {
+    "email": "theFemaleDoctor@gmail.com",
+    "firstName" : "The",
+    "lastName" : "Doctore",
+    "licenseNumber" : "12346",
+    "password1" : "p1235",
+    "password2" : "p1235"
+  }
+]
