@@ -48,29 +48,33 @@ export default function UsersLogin() {
             setErrorMessage("You need to log in to view that page!");
         }
     }, [])
-    
+
     const Login = details => {
-            console.log(details);
-            for (var i = 0; i < loginData.length; i++) {
-                if (loginData[i].email === details.email) {
-                    if (loginData[i].password1 === details.password){
-                        console.log("Logged in!");
-                        localStorage.setItem("id", JSON.stringify(loginData[i].id));
-                        localStorage.setItem("email", JSON.stringify(loginData[i].email));
-                        localStorage.setItem("type", JSON.stringify(loginData[i].type));
-                        setUser( {
-                            email: details.email,
-                            password1: details.password
-                        });
-                        window.location = "/dashboard" ;
-                    } 
-                    else alert("Wrong email or password !")
-                    return false;
+        console.log(details);
+        let notValid = true
+        for (let i = 0; i < loginData.length; i++) {
+            if (loginData[i].email === details.email) {
+                if (loginData[i].password1 === details.password){
+                    console.log("Logged in!");
+                    localStorage.setItem("id", JSON.stringify(loginData[i].id));
+                    localStorage.setItem("email", JSON.stringify(loginData[i].email));
+                    localStorage.setItem("type", JSON.stringify(loginData[i].type));
+                    notValid = false
+                    setUser( {
+                        email: details.email,
+                        password1: details.password
+                    });
+                    window.location = "/dashboard" ;
                 }
-            else alert("Wrong email or password !")
-            return false;
+
             }
         }
+        if(notValid) {
+            alert("Wrong email or password !")
+            return false;
+        }
+
+    }
     const Logout = () => {
         setUser({email: "", password: ""});
     }
