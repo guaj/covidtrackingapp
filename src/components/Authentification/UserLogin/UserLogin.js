@@ -6,8 +6,6 @@ import geometricImage from "../../../images/geometric_gradient.jpg";
 import { useState } from "react";
 import loginData from "./userLoginMockData";
 import LoginForm from "./LoginForm";
-import { Navigate } from 'react-router-dom';
-import { DetailsSharp } from "@mui/icons-material";
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
