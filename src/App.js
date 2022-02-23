@@ -16,6 +16,9 @@ import NavbarRegisterPro from './components/Navbar/oldNavbars/NavbarRegisterPro'
 import Dashboard from './components/Dashboard/Dashboard';
 import NavbarProfilePatient from './components/Navbar/oldNavbars/NavbarProfilePatient';
 
+import PatientProfileUpdate from './components/UserProfile/patientProfile/PatientProfileUpdate'
+import Navbar from './components/Navbar/Navbar'
+
 ///* Make sure to update file when adding to App.css!!*/
 
 function App() {
@@ -29,6 +32,9 @@ function App() {
       <Route path='/profile-patient' element={[<NavbarProfilePatient/>, <ProfilePatient/>]} />
       <Route path='/profile-pro' element={[<NavbarPro/>, <ProfilePro/>]} />
       <Route path='/dashboard' element={[<Dashboard/>]} />
+
+      <Route path='/patient-profile-edit' element={[<Navbar/>, <PatientProfileUpdate/>]} />
+
     </Routes>
   );
 }

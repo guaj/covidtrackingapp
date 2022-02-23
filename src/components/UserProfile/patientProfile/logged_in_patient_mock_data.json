@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "firstName": "Samantha",
+    "lastName": "Gibbens",
+    "address": "1486 software street",
+    "phoneNumber": "514-767-4883",
+    "email": "sam09@mail.com",
+    "ramQNumber": "456G7",
+    "insurance": "sunlife"
+  }
+]
