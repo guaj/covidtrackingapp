@@ -1,12 +1,12 @@
 import './App.css';
 import {Route, Routes} from 'react-router-dom';
 import AboutUs from './components/AboutUs';
-import NavbarHome from './components/Navbar/NavbarHome';
-import NavbarPro from './components/Navbar/NavbarPro';
+import NavbarHome from './components/Navbar/oldNavbars/NavbarHome';
+import NavbarPro from './components/Navbar/oldNavbars/NavbarPro';
 import Homepage from './components/Homepage';
 import Login from './components/professional';
-import NavbarRegister from './components/Navbar/NavbarRegister';
-import NavbarRegisterPro from './components/Navbar/NavbarRegisterPro';
+import NavbarRegister from './components/Navbar/oldNavbars/NavbarRegister';
+import NavbarRegisterPro from './components/Navbar/oldNavbars/NavbarRegisterPro';
 import Dashboard from './components/Dashboard/Dashboard';
 import NavbarProfilePatient from './components/Navbar/oldNavbars/NavbarProfilePatient';
 
@@ -25,8 +25,8 @@ function App() {
   return (
     <Routes>
 
-      <Route path='/professionals' element={[<NavbarPro/>, <Login/>]} />
-      <Route path='/about' element={[<NavbarRegister/>, <AboutUs/>]} />
+      <Route path='/professionals' element={[ <Login/>]} />
+      <Route path='/about' element={[ <AboutUs/>]} />
       <Route path='/dashboard' element={[<Dashboard/>]} />
 
       <Route exact path='/' element={[<NavbarHome/>, <Homepage/>]} />
