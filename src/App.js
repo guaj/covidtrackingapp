@@ -18,6 +18,7 @@ import NavbarProfilePatient from './components/Navbar/oldNavbars/NavbarProfilePa
 
 import PatientProfileUpdate from './components/UserProfile/patientProfile/PatientProfileUpdate'
 import Navbar from './components/Navbar/Navbar'
+import DoctorProfileUpdate from'./components/UserProfile/DoctorProfile/DoctorProfileUpdate'
 
 ///* Make sure to update file when adding to App.css!!*/
 
@@ -34,6 +35,7 @@ function App() {
       <Route path='/dashboard' element={[<Dashboard/>]} />
 
       <Route path='/patient-profile-edit' element={[<Navbar/>, <PatientProfileUpdate/>]} />
+      <Route path='/doctor-profile-edit' element={[<Navbar/>, <DoctorProfileUpdate/>]} />
 
     </Routes>
   );
