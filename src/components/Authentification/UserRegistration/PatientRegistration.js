@@ -111,7 +111,6 @@ export default function SignUpPatient() {
                         <TextField
                             type="text"
                             margin="normal"
-                            required
                             fullWidth
                             id="ramqNumber"
                             label="0000000"
@@ -120,6 +119,7 @@ export default function SignUpPatient() {
                             helperText="RAMQ number"
                             value={ramqNumber}
                             disabled={!ramq}
+                            required={ramq}
                             onChange={e => setRamqNumber(e.target.value)}
                             data-testid="ramqNumber"
                         />
