@@ -6,15 +6,26 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import '../../profile.css'
 import * as React from'react';
-import Box from '@mui/material/Box';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import {Checkbox, FormControlLabel, FormGroup} from "@material-ui/core";
+import geometricImage from "../../../images/geometric_gradient.jpg";
+
 
 
 
   
 const useStyles = makeStyles((theme) => ({
+  image: {
+    backgroundImage: `url(${geometricImage})`,
+    backgroundRepeat: "no-repeat",
+    backgroundColor:
+        theme.palette.type === "light"
+            ? theme.palette.grey[50]
+            : theme.palette.grey[900],
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
   paper: {
     margin: theme.spacing(17, 15, 50),
     display: "flex",
@@ -26,84 +37,86 @@ const useStyles = makeStyles((theme) => ({
     color: "rgba(1, 5, 96, 1)",
     fontWeight: "bold",
   },
+  submit: {
+    margin: theme.spacing(8, 0, 5),
+    color: "white",
+    backgroundColor: "rgba(1, 5, 96, 1)",
+  },
   paragraph:{
     marginTop: theme.spacing(6),
   }
 }));
-  
-  
+
+
   
 export default function ProfilePatient() {
   const classes = useStyles();
-    return (
+
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    window.location = '/'; //wrong redirect, waiting for user dashboard page
+  }
+  return (
       <Grid container component="main" className="profile">
         <CssBaseline />
-        <Grid item component={Paper} elevation={6} square>
+        <Grid item xs={false} sm={false} md={4} className={classes.image}/>
+        <Grid item xs={12} sm={12} md={8} component={Paper} elevation={6} square>
           <div className={classes.paper}>
             <Typography component="h1" variant="h4" className={classes.title} >
               Profile page
             </Typography>
-            <Box
-                component="form"
-                sx={{
-                  '& .MuiTextField-root': { m: 1, width: '25ch' },
-                }}
-                noValidate
-                autoComplete="off"
-            >
+            <form onSubmit={handleSubmit}>
               <div>
                 <p>Name</p>
                 <TextField
-                    disabled
-                    id="outlined-disabled"
-                    label="Disabled"
+                    id="first-name"
                     defaultValue="First name"
                 />
+
                 <TextField
-                    disabled
-                    id="outlined-disabled"
-                    label="Disabled"
+                    id="last-name"
                     defaultValue="Last name"
+                />
+                <TextField
+                    type="date"
+                    margin="normal"
+                    fullWidth
+                    id="dateOfBirth"
+                    name="dateOfBirth"
+                    autoComplete="date"
+                    helperText="Date of birth"
                 />
                 <div>
                   <p>Address</p>
                   <TextField
                       type="text"
-                      required
                       id="streetNumber"
-                      label="Required"
                       defaultValue="Street number"
                   />
                 <TextField
                     type="text"
-                    required
                     id="address"
-                    label="Required"
                     defaultValue="Street name"
                 />
                   <TextField
                       type="text"
                       id="address"
-                      label="Required"
                       defaultValue="apt"
                   />
                 </div>
                 <TextField
                     type="text"
                     id="address"
-                    label="Required"
                     defaultValue="postal code"
                 />
                 <TextField
                     type="text"
                     id="address"
-                    label="Required"
                     defaultValue="city"
                 />
                 <TextField
                     type="text"
                     id="address"
-                    label="Required"
                     defaultValue="Province"
                 />
                 <div>
@@ -137,11 +150,11 @@ export default function ProfilePatient() {
                       variant="contained"
                       className={classes.submit}
                   >
-                    Submit
+                    Complete profile
                   </Button>
                 </div>
               </div>
-            </Box>
+            </form>
           </div>
         </Grid>
       </Grid>
