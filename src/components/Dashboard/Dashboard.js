@@ -16,10 +16,12 @@ const mockProfiles = [
     { name: "Tony Soprano", userType: "health official" },
     { name: "Tony Soprano", userType: "immigration official" }]
 
-    var user 
-    var userType
 
-function DisplayUserTabs(props) {
+
+function DisplayUserTabs() {
+
+    var user
+    var userType
 
     try {
 
@@ -33,7 +35,7 @@ function DisplayUserTabs(props) {
         window.location.assign("/login#redirect");
     }
 
-    switch (props.userType) { //randomization to demonstrate conditional rendering
+    switch (userType) { //randomization to demonstrate conditional rendering
         case "doctor":
             return <DoctorTabs />
 
@@ -57,11 +59,11 @@ export default function Dashboard() {
     return (
         <div>
             <Navbar />
-          
+
             <div>
                 <Box sx={{ width: '80%', margin: '5% auto' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <DisplayUserTabs userType={mockProfiles[0].userType} />
+                        <DisplayUserTabs />
                     </Box>
                 </Box>
 

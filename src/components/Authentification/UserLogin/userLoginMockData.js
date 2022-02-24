@@ -12,13 +12,13 @@ const loginData = [{
     },
     {
         id: "3",
-        type: "healthofficial",
+        type: "health official",
         email: "anorg@gmail.com",
         password1: "p12345"
     },
     {
         id: "4",
-        type: "healthofficial",
+        type: "immigration official",
         email: "anotherorg@gmail.com",
         password1: "p12345"
     },

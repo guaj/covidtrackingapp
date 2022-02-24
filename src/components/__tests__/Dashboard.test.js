@@ -1,7 +1,7 @@
 
-import { render, screen, cleanup } from "@testing-library/react";
+import { Alert } from "@material-ui/lab";
+import { render, screen } from "@testing-library/react";
 import Dashboard from '../Dashboard/Dashboard';
-
 
 test("if the patient list tab is rendered when the user is a doctor", () => {
   render(<Dashboard />);
@@ -24,6 +24,3 @@ test("if the Doctor-Patient Pairing List is rendered when the user is a doctor",
 });
 
 
-afterEach(() => {
-  cleanup();
-}); 

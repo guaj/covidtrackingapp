@@ -79,10 +79,10 @@ export default function DoctorTabs() {
                 <PatientListTable />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <PatientListTable />
+                {/* to come in future sprints */}
             </TabPanel>
             <TabPanel value={value} index={3}>
-                <PatientListTable />
+                {/* to come in future sprints */}
             </TabPanel>
 
         </>
