@@ -17,6 +17,10 @@ import OrganizationRegistration from './components/Authentification/UserRegistra
 import UserProfile from "./components/UserProfile/UserProfile";
 
 
+import PatientProfileUpdate from './components/UserProfile/PatientProfile/PatientProfileUpdate'
+import Navbar from './components/Navbar/Navbar'
+import DoctorProfileUpdate from'./components/UserProfile/DoctorProfile/DoctorProfileUpdate'
+
 ///* Make sure to update file when adding to App.css!!*/
 
 function App() {
@@ -35,6 +39,8 @@ function App() {
             <Route path='/doctor-registration' element={[<NavbarRegister/>, <DoctorRegistration/>]} />
             <Route path='/patient-registration' element={[<NavbarRegister/>, <PatientRegistration/>]} />
             <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
+            <Route path='/patient-profile-edit' element={[<Navbar/>, <PatientProfileUpdate/>]} />
+            <Route path='/doctor-profile-edit' element={[<Navbar/>, <DoctorProfileUpdate/>]} />
         </Routes>
     );
 }
