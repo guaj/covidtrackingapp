@@ -59,14 +59,12 @@ export default function Dashboard() {
     return (
         <div>
             <Navbar />
-
             <div>
                 <Box sx={{ width: '80%', margin: '5% auto' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <DisplayUserTabs />
                     </Box>
                 </Box>
-
             </div>
         </div>
     );

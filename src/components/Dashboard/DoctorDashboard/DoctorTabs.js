@@ -82,7 +82,7 @@ export default function DoctorTabs() {
                 {/* to come in future sprints */}
             </TabPanel>
             <TabPanel value={value} index={3}>
-                {/* to come in future sprints */}
+                {/* to come in future sprints test */}
             </TabPanel>
 
         </>
