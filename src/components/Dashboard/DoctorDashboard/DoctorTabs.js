@@ -6,8 +6,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Chart from '../CommonTabs/Chart';
 import PatientListTable from "../CommonTabs/patientListTable";
-import FaceInfo from "../FaceInfo";
-import PieChart2 from '../PChart'
+import FaceInfo from "../CommonTabs/FaceInfo";
+
 
 
 
@@ -67,6 +67,8 @@ export default function DoctorTabs() {
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="Statistics" {...a11yProps(0)} />
                 <Tab label="Patient List" {...a11yProps(1)} />
+                <Tab label="Patient Emergency List" {...a11yProps(2)} />
+                <Tab label="Doctor-Patient Pairing List" {...a11yProps(3)} />
             </Tabs>
 
             <TabPanel value={value} index={0}>
@@ -74,6 +76,12 @@ export default function DoctorTabs() {
                 <Chart />
             </TabPanel>
             <TabPanel value={value} index={1}>
+                <PatientListTable />
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+                <PatientListTable />
+            </TabPanel>
+            <TabPanel value={value} index={3}>
                 <PatientListTable />
             </TabPanel>
 

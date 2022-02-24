@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Chart from '../CommonTabs/Chart';
 import PatientListTable from "../CommonTabs/patientListTable";
-import FaceInfo from '../FaceInfo'
+import FaceInfo from '../CommonTabs/FaceInfo'
 
 
 
