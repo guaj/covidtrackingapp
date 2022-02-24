@@ -4,7 +4,6 @@ import AboutUs from './components/AboutUs';
 import NavbarHome from './components/Navbar/oldNavbars/NavbarHome';
 import NavbarPro from './components/Navbar/oldNavbars/NavbarPro';
 import NavbarRegister from './components/Navbar/oldNavbars/NavbarRegister';
-import NavbarRegisterPro from './components/Navbar/oldNavbars/NavbarRegisterPro';
 import Dashboard from './components/Dashboard/Dashboard';
 import NavbarProfilePatient from './components/Navbar/oldNavbars/NavbarProfilePatient';
 
@@ -33,9 +32,9 @@ function App() {
             <Route path='/patient-profile' element={[<NavbarProfilePatient/>, <PatientProfile/>]} />
             <Route path='/doctor-profile' element={[<NavbarPro/>, <DoctorProfile/>]} />
             <Route path='/user-registration' element={[<UsersRegistration/>]} />
-            <Route path='/doctor-registration' element={[<NavbarRegisterPro/>, <DoctorRegistration/>]} />
+            <Route path='/doctor-registration' element={[<NavbarRegister/>, <DoctorRegistration/>]} />
             <Route path='/patient-registration' element={[<NavbarRegister/>, <PatientRegistration/>]} />
-            <Route path='/organization-registration' element={[<NavbarRegisterPro/>, <OrganizationRegistration/>]} />
+            <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
         </Routes>
     );
 }

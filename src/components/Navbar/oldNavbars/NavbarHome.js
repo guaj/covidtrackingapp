@@ -30,7 +30,7 @@ class NavbarHome extends Component{
               )       
             })}
           </ul>
-          <Button onClick={event =>  window.location.href='/sign-up-patient'}>Sign Up</Button>
+          <Button onClick={event =>  window.location.href='/user-registration'}>Sign Up</Button>
         </nav>
       )
     }
