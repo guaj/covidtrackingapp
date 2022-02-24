@@ -39,8 +39,8 @@ function App() {
             <Route path='/doctor-registration' element={[<NavbarRegister/>, <DoctorRegistration/>]} />
             <Route path='/patient-registration' element={[<NavbarRegister/>, <PatientRegistration/>]} />
             <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
-            <Route path='/patient-profile-edit' element={[<Navbar/>, <PatientProfileUpdate/>]} />
-            <Route path='/doctor-profile-edit' element={[<Navbar/>, <DoctorProfileUpdate/>]} />
+            <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
+            <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
         </Routes>
     );
 }

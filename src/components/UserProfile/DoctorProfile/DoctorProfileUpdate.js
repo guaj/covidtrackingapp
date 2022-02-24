@@ -9,39 +9,44 @@ import * as React from "react";
 import geometricImage from "../../../images/geometric_gradient.jpg";
 import data from "./logged_in_doctor_mock_data.json";
 import {useState, Fragment, useEffect} from "react";
+import Navbar from "../../Navbar/Navbar";
 
 
 const useStyles = makeStyles((theme) => ({
-    image: {
-        backgroundImage: `url(${geometricImage})`,
-        backgroundRepeat: "no-repeat",
-        backgroundColor:
-            theme.palette.type === "light"
-                ? theme.palette.grey[50]
-                : theme.palette.grey[900],
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-    },
-    paper: {
-        margin: theme.spacing(17, 15, 50),
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-    },
-    title: {
-        marginBottom: theme.spacing(4),
-        color: "rgba(1, 5, 96, 1)",
-        fontWeight: "bold",
-    },
-    paragraph: {
-        marginTop: theme.spacing(6)
-    },
-    submit: {
-        margin: theme.spacing(8, 0, 5),
-        color: "white",
-        backgroundColor: "rgba(1, 5, 96, 1)",
-    }
-}));
+        image: {
+            backgroundImage: `url(${geometricImage})`,
+            backgroundRepeat: "no-repeat",
+            backgroundColor:
+                theme.palette.type === "light"
+                    ? theme.palette.grey[50]
+                    : theme.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+        },
+        paper: {
+            margin: theme.spacing(17, 15, 50),
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+        },
+        title: {
+            marginBottom: theme.spacing(4),
+            color: "rgba(1, 5, 96, 1)",
+            fontWeight: "bold",
+        },
+        paragraph: {
+            marginTop: theme.spacing(6)
+        },
+        submit: {
+            margin: theme.spacing(8, 0, 5),
+            color: "white",
+            backgroundColor: "rgba(1, 5, 96, 1)",
+        },
+        centerGrid: {
+            justifyContent: "center",
+        }
+    }))
+;
 
 const setForm = (event => {
     return event.target.value;
@@ -138,132 +143,139 @@ export default function DoctorProfile() {
     }, []);
 
     return (
-        <div className="container">
-            <Grid container component="main">
-                <CssBaseline/>
+        <>
+            <Navbar/>
+            {/*<div style="text-align: center;">*/}
+            <div className="container">
+                <Grid container component="main" className={classes.centerGrid}>
+                    <CssBaseline/>
 
-                <Grid item xs={12} sm={12} md={8} component={Paper} elevation={6} square>
-                    <div className={classes.paper}>
-                        <Typography component="h1" variant="h4" className={classes.title}>
-                            profile page
-                        </Typography>
-                        <form className={classes.form} id='form' onSubmit={handleEditFormSubmit}>
-                            <div>
-                                <p>Name</p>
-                                <TextField
-                                    type="text"
-                                    placeholder="First name"
-                                    name="firstName"
-                                    value={editFormData.firstName}
-                                    onChange={handleEditFormChange}
-                                    onClick={handleInformationLoad}
-                                />
-
-
-                                <TextField
-                                    type="text"
-                                    placeholder="Last name"
-                                    name="lastName"
-                                    value={editFormData.lastName}
-                                    onChange={handleEditFormChange}
-                                />
-                                <TextField
-                                    type="text"
-                                    margin="normal"
-                                    fullWidth
-                                    placeholder="License number"
-                                    name="licenseNumber"
-                                    autoComplete=""
-                                    helperText="License number"
-                                    value={editFormData.licenseNumber}
-                                    onChange={handleEditFormChange}
-                                />
-                                <TextField
-                                    type="email"
-                                    margin="normal"
-                                    fullWidth
-                                    label="this.example@email.com"
-                                    name="email"
-                                    autoComplete="email"
-                                    helperText="Email"
-                                    data-testid="sign-up-email"
-                                    value={editFormData.email}
-                                    onChange={handleEditFormChange}
-                                />
-                                <TextField
-                                    type="text"
-                                    margin="normal"
-                                    fullWidth
-                                    label="123-145-1234"
-                                    name="phoneNumber"
-                                    autoComplete="email"
-                                    helperText="phone number"
-                                    data-testid="phone-number"
-                                    value={editFormData.phoneNumber}
-                                    onChange={handleEditFormChange}
-                                />
+                    <Grid item xs={12} sm={12} md={8} component={Paper} elevation={6} square>
+                        <div className={classes.paper}>
+                            <Typography component="h1" variant="h4" className={classes.title}>
+                                profile page
+                            </Typography>
+                            <form className={classes.form} id='form' onSubmit={handleEditFormSubmit}>
                                 <div>
-                                    <p>Address</p>
+                                    <p>Name</p>
                                     <TextField
                                         type="text"
-                                        name="streetNumber"
-                                        defaultValue="Street number"
-                                        value={editFormData.streetNumber}
+                                        placeholder="First name"
+                                        name="firstName"
+                                        value={editFormData.firstName}
+                                        onChange={handleEditFormChange}
+                                        onClick={handleInformationLoad}
+                                    />
+
+
+                                    <TextField
+                                        type="text"
+                                        placeholder="Last name"
+                                        name="lastName"
+                                        value={editFormData.lastName}
                                         onChange={handleEditFormChange}
                                     />
                                     <TextField
                                         type="text"
-                                        name="streetName"
-                                        defaultValue="Street name"
-                                        value={editFormData.streetName}
-                                        onChange={handleEditFormChange}
-                                    />
-                                    <TextField
-                                        type="text"
-                                        name="apt"
-                                        //defaultValue="apt"
-                                        value={editFormData.apt}
-                                        onChange={handleEditFormChange}
-                                    />
-                                </div>
-                                <TextField
-                                    type="text"
-                                    name="postalCode"
-                                    defaultValue="postal code"
-                                    value={editFormData.postalCode}
-                                    onChange={handleEditFormChange}
-                                />
-                                <TextField
-                                    type="text"
-                                    name="city"
-                                    defaultValue="city"
-                                    value={editFormData.city}
-                                    onChange={handleEditFormChange}
-                                />
-                                <TextField
-                                    type="text"
-                                    name="province"
-                                    label="Required"
-                                    defaultValue="Province"
-                                    value={editFormData.province}
-                                    onChange={handleEditFormChange}
-                                />
-                                <div>
-                                    <Button
-                                        type="submit"
+                                        margin="normal"
                                         fullWidth
-                                        variant="contained"
-                                        className={classes.submit}
-                                        onClick={()=>{alert('Profile information updated!');}}
-                                    >
-                                        Update profile
-                                    </Button>
+                                        placeholder="License number"
+                                        name="licenseNumber"
+                                        autoComplete=""
+                                        helperText="License number"
+                                        value={editFormData.licenseNumber}
+                                        onChange={handleEditFormChange}
+                                    />
+                                    <TextField
+                                        type="email"
+                                        margin="normal"
+                                        fullWidth
+                                        label="this.example@email.com"
+                                        name="email"
+                                        autoComplete="email"
+                                        helperText="Email"
+                                        data-testid="sign-up-email"
+                                        value={editFormData.email}
+                                        onChange={handleEditFormChange}
+                                    />
+                                    <TextField
+                                        type="text"
+                                        margin="normal"
+                                        fullWidth
+                                        label="123-145-1234"
+                                        name="phoneNumber"
+                                        autoComplete="email"
+                                        helperText="phone number"
+                                        data-testid="phone-number"
+                                        value={editFormData.phoneNumber}
+                                        onChange={handleEditFormChange}
+                                    />
+                                    <div>
+                                        <p>Address</p>
+                                        <TextField
+                                            type="text"
+                                            name="streetNumber"
+                                            defaultValue="Street number"
+                                            value={editFormData.streetNumber}
+                                            onChange={handleEditFormChange}
+                                        />
+                                        <TextField
+                                            type="text"
+                                            name="streetName"
+                                            defaultValue="Street name"
+                                            value={editFormData.streetName}
+                                            onChange={handleEditFormChange}
+                                        />
+                                        <TextField
+                                            type="text"
+                                            name="apt"
+                                            //defaultValue="apt"
+                                            value={editFormData.apt}
+                                            onChange={handleEditFormChange}
+                                        />
+                                    </div>
+                                    <TextField
+                                        type="text"
+                                        name="postalCode"
+                                        defaultValue="postal code"
+                                        value={editFormData.postalCode}
+                                        onChange={handleEditFormChange}
+                                    />
+                                    <TextField
+                                        type="text"
+                                        name="city"
+                                        defaultValue="city"
+                                        value={editFormData.city}
+                                        onChange={handleEditFormChange}
+                                    />
+                                    <TextField
+                                        type="text"
+                                        name="province"
+                                        label="Required"
+                                        defaultValue="Province"
+                                        value={editFormData.province}
+                                        onChange={handleEditFormChange}
+                                    />
+                                    <div>
+                                        <Button
+                                            type="submit"
+                                            fullWidth
+                                            variant="contained"
+                                            className={classes.submit}
+                                            onClick={() => {
+                                                alert('Profile information updated!');
+                                            }}
+                                        >
+                                            Update profile
+                                        </Button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
+                            </form>
+                        </div>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </div>
+            </div>
+            {/*</div>*/}
+        </>
     );
 }
