@@ -17,7 +17,7 @@ import OrganizationRegistration from './components/Authentification/UserRegistra
 import UserProfile from "./components/UserProfile/UserProfile";
 
 
-import PatientProfileUpdate from './components/UserProfile/patientProfile/PatientProfileUpdate'
+import PatientProfileUpdate from './components/UserProfile/PatientProfile/PatientProfileUpdate'
 import Navbar from './components/Navbar/Navbar'
 import DoctorProfileUpdate from'./components/UserProfile/DoctorProfile/DoctorProfileUpdate'
 
