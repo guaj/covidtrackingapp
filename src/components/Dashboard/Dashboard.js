@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import './Dashboard.css'
 
 //tab components 
 import DoctorTabs from './DoctorDashboard/DoctorTabs';
@@ -15,20 +16,21 @@ const mockProfiles = [
     { name: "Tony Soprano", userType: "health official" },
     { name: "Tony Soprano", userType: "immigration official" }]
 
-function displayUserTabs() {
+function DisplayUserTabs(props) {
 
     try {
 
         let user = JSON.parse(localStorage.getItem("id"))
         let userType = JSON.parse(localStorage.getItem("type"))
+        console.log(userType)
 
-    }catch (err) {
+    } catch (err) {
         // 👇️ This runs
         console.log('Error: ', err.message);
         window.location.assign("/login#redirect");
     }
 
-    switch (mockProfiles[0].userType) { //randomization to demonstrate conditional rendering
+    switch (props.userType) { //randomization to demonstrate conditional rendering
         case "doctor":
             return <DoctorTabs />
 
@@ -45,19 +47,28 @@ function displayUserTabs() {
     }
 }
 
+export function TabContainer(props) {
+
+    return (
+        <div className="container">
+
+            <Box sx={{ width: '80%', margin: '5% auto' }}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <DisplayUserTabs userType={props.userType} />
+                </Box>
+            </Box>
+
+        </div>
+    )
+}
+
 export default function Dashboard() {
 
     return (
         <div>
             <Navbar />
-            <div className="container">
-                <Box sx={{ width: '80%', margin: '5% auto' }}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        {displayUserTabs()}
-                    </Box>
-                </Box>
-
-            </div>
+            <h1>hello, {mockProfiles[0].name}</h1>
+            <TabContainer userType={mockProfiles[0].userType} />
         </div>
     );
 }

@@ -1,7 +1,7 @@
 
-import { render, screen } from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
 import Dashboard from '../Dashboard/Dashboard';
-import  { UserTabs }  from '../Dashboard/Dashboard'
+
 
 test("if patient list tab is rendered", () => {
   render(<Dashboard />);
@@ -14,3 +14,6 @@ test("if statistics tab is rendered", () => {
 });
 
 
+afterEach(() => {
+  cleanup();
+}); 

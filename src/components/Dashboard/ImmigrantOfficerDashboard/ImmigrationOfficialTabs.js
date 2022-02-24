@@ -64,19 +64,19 @@ export default function PatientTabs() {
         <>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="io tab 1" {...a11yProps(0)} />
-                <Tab label="io tab 2" {...a11yProps(1)} />
-                 <Tab label="io tab n" {...a11yProps(2)} />
+                {/* <Tab label="io tab 2" {...a11yProps(1)} />
+                 <Tab label="io tab n" {...a11yProps(2)} /> */}
             </Tabs>
 
             <TabPanel value={value} index={0}>
                 <Chart />
             </TabPanel>
-            <TabPanel value={value} index={1}>
+            {/* <TabPanel value={value} index={1}>
                 io tab 2 content 
             </TabPanel>
             <TabPanel value={value} index={2}>
                 nth io tab content
-            </TabPanel>
+            </TabPanel> */}
         </>
     )
 }

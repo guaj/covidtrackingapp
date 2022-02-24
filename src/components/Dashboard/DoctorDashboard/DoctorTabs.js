@@ -65,7 +65,7 @@ export default function DoctorTabs() {
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="Statistics" {...a11yProps(0)} />
                 <Tab label="Patient List" {...a11yProps(1)} />
-                <Tab label="doctor tab n" {...a11yProps(2)} />
+                {/* <Tab label="doctor tab n" {...a11yProps(2)} /> */}
             </Tabs>
 
             <TabPanel value={value} index={0}>
@@ -74,9 +74,9 @@ export default function DoctorTabs() {
             <TabPanel value={value} index={1}>
                 <PatientListTable/>
             </TabPanel>
-            <TabPanel value={value} index={2}>
+            {/* <TabPanel value={value} index={2}>
                 nth doctor tab content
-            </TabPanel>
+            </TabPanel> */}
         </>
     )
 }
