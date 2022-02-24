@@ -54,7 +54,7 @@ export default function DoctorProfile() {
         window.location = '/dashboard'; //wrong redirect, waiting for user dashboard page
     }
 
-     const [contacts, setContacts] = useState(data);
+     const [doctors, setDoctors] = useState(data);
 
         const [editFormData, setEditFormData] = useState({
             firstName: '',
@@ -71,24 +71,24 @@ export default function DoctorProfile() {
 
         });
 
-        const [editContactId, setEditContactId] = useState(null);
+        const [editDoctorId, setEditDoctorId] = useState(null);
 
-        const handleEditClick = (event) => {
+        const handleInformationLoad = (event) => {
             event.preventDefault();
-            const contact = contacts[0];
-            setEditContactId(contact.id);
+            const doctor = doctors[0];
+            setEditDoctorId(doctor.id);
 
             const formValues = {
-                firstName: contact.firstName,
-                lastName: contact.lastName,
-                licenseNumber: contact.licenceNumber,
-                email: contact.email,
-                phoneNumber: contact.phoneNumber,
-                streetName: contact.streetName,
-                apt: contact.apt,
-                postalCode: contact.postalCode,
-                city: contact.city,
-                province: contact.province,
+                firstName: doctor.firstName,
+                lastName: doctor.lastName,
+                licenseNumber: doctor.licenceNumber,
+                email: doctor.email,
+                phoneNumber: doctor.phoneNumber,
+                streetName: doctor.streetName,
+                apt: doctor.apt,
+                postalCode: doctor.postalCode,
+                city: doctor.city,
+                province: doctor.province,
             };
 
 
@@ -112,8 +112,8 @@ export default function DoctorProfile() {
         const handleEditFormSubmit = (event) => {
             event.preventDefault();
 
-            const editedContact = {
-                id: editContactId,
+            const editedDoctor = {
+                id: editDoctorId,
                 firstName: editFormData.firstName,
                 lastName: editFormData.lastName,
                 licenseNumber: editFormData.licenseNumber,
@@ -125,12 +125,12 @@ export default function DoctorProfile() {
                 province: editFormData.province,
 
             };
-            const newContacts = [...contacts];
-            const index = contacts.findIndex((contact) => contact.id === editContactId);
-            newContacts[0] = editedContact;
-            setContacts(newContacts);
-            setEditContactId(null);
-            console.log(JSON.stringify(newContacts));
+            const newDoctors = [...doctors];
+            const index = doctors.findIndex((doctor) => doctor.id === editDoctorId);
+            newDoctors[0] = editedDoctor;
+            setDoctors(newDoctors);
+            setEditDoctorId(null);
+            console.log(JSON.stringify(newDoctors));
         };
     return (
     <div className = "container">
@@ -142,7 +142,7 @@ export default function DoctorProfile() {
                     <Typography component="h1" variant="h4" className={classes.title}>
                         profile page
                     </Typography>
-                    <form className={classes.form} id='form' onSubmit={handleSubmit}>
+                    <form className={classes.form} id='form' onSubmit={handleEditFormSubmit}>
                         <div>
                             <p>Name</p>
                             <TextField
@@ -151,84 +151,97 @@ export default function DoctorProfile() {
                                 name="firstName"
                                 value={editFormData.firstName}
                                 onChange={handleEditFormChange}
-                                onClick={handleEditClick}
+                                onClick={handleInformationLoad}
                             />
 
 
                             <TextField
-                                id="lastName"
-                                defaultValue="Last name"
+                                type="text"
+                                 placeholder="Last name"
+                                 name="lastName"
+                                  value={editFormData.lastName}
+                                  onChange={handleEditFormChange}
                             />
                           <TextField
                               type="text"
                               margin="normal"
                               fullWidth
-                              id="doctorIdNumber"
-                              label="license number"
+                              placeholder="License number"
                               name="licenseNumber"
                               autoComplete=""
                               helperText="License number"
+                              value={editFormData.licenseNumber}
+                             onChange={handleEditFormChange}
                           />
                           <TextField
                               type="email"
                               margin="normal"
                               fullWidth
-                              id="email"
                               label="this.example@email.com"
                               name="email"
                               autoComplete="email"
                               helperText="Email"
                               data-testid="sign-up-email"
+                              value={editFormData.email}
+                               onChange={handleEditFormChange}
                           />
                           <TextField
                               type="text"
                               margin="normal"
                               fullWidth
-                              id="phoneNumber"
                               label="123-145-1234"
                               name="phoneNumber"
                               autoComplete="email"
                               helperText="phone number"
                               data-testid="phone-number"
+                              value={editFormData.phoneNumber}
+                               onChange={handleEditFormChange}
                           />
                             <div>
                                 <p>Address</p>
                                 <TextField
                                     type="text"
-                                    id="streetNumber"
-                                    label="Required"
+                                    name="streetNumber"
                                     defaultValue="Street number"
+                                    value={editFormData.streetNumber}
+                                    onChange={handleEditFormChange}
                                 />
                                 <TextField
                                     type="text"
-                                    id="address"
-                                    label="Required"
+                                    name="streetName"
                                     defaultValue="Street name"
+                                    value={editFormData.streetName}
+                                    onChange={handleEditFormChange}
                                 />
                                 <TextField
                                     type="text"
-                                    id="address"
-                                    label="Required"
-                                    defaultValue="apt"
+                                    name="apt"
+                                    //defaultValue="apt"
+                                    value={editFormData.apt}
+                                    onChange={handleEditFormChange}
                                 />
                             </div>
                             <TextField
                                 type="text"
-                                id="address"
-                                label="Required"
+                                name="postalCode"
                                 defaultValue="postal code"
+                                value={editFormData.postalCode}
+                                onChange={handleEditFormChange}
                             />
                             <TextField
                                 type="text"
-                                id="address"
-                                label="Required"
+                                name="city"
                                 defaultValue="city"
+                                value={editFormData.city}
+                                onChange={handleEditFormChange}
                             />
                             <TextField
                                 type="text"
-                                id="address"
+                                name="province"
                                 label="Required"
                                 defaultValue="Province"
+                                value={editFormData.province}
+                                onChange={handleEditFormChange}
                             />
                             <div>
                                 <Button
