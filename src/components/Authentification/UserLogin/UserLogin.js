@@ -86,7 +86,7 @@ export default function UsersLogin() {
             <Grid item xs={12} sm={12} md={8} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <LoginForm Login={Login} error={error} />
-                    <Button onClick={Logout} disabled={user.email === "" && user.password === ""}>Logout</Button>
+                    {/*<Button onClick={Logout} disabled={user.email === "" && user.password === ""}>Logout</Button>*/}
                 </div>
             </Grid>
         </Grid>

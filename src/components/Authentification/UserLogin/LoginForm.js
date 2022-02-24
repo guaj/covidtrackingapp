@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(8, 0, 5),
+        height: '200%',
         color: "white",
         backgroundColor: "rgba(1, 5, 96, 1)",
     },
