@@ -30,7 +30,6 @@ The goal of this project is to simulate a Software development process through t
 
 
 ### Run the app on the following website: https://main.d1mmulvvzymdin.amplifyapp.com/ 
-### Run the professional dashboard here: https://main.d1mmulvvzymdin.amplifyapp.com/dashboard-pro 
 
 ## Available Scripts
 
