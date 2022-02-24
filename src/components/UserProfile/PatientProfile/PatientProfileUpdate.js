@@ -441,10 +441,7 @@ export default function ProfilePatient() {
                                             type="button"
                                             fullWidth
                                             variant="contained"
-                                            onClick={handleNotifyDoctorButtonClick}
-                                            onClick={() => {
-                                                alert('Your doctor will be notified!');
-                                            }}
+                                            onClick={(event) =>[handleNotifyDoctorButtonClick(event), alert('Your doctor will be notified!')]}
                                         >
                                             Notify my doctor
                                         </Button>
