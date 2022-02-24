@@ -71,38 +71,38 @@ export default function DoctorProfile() {
                                 id="lastName"
                                 defaultValue="Last name"
                             />
-                            <TextField
-                                type="text"
-                                margin="normal"
-                                fullWidth
-                                id="doctorIdNumber"
-                                label="license number"
-                                name="licenseNumber"
-                                autoComplete=""
-                                helperText="License number"
-                            />
-                            <TextField
-                                type="email"
-                                margin="normal"
-                                fullWidth
-                                id="email"
-                                label="this.example@email.com"
-                                name="email"
-                                autoComplete="email"
-                                helperText="Email"
-                                data-testid="sign-up-email"
-                            />
-                            <TextField
-                                type="text"
-                                margin="normal"
-                                fullWidth
-                                id="phoneNumber"
-                                label="123-145-1234"
-                                name="phoneNumber"
-                                autoComplete="email"
-                                helperText="phone number"
-                                data-testid="phone-number"
-                            />
+                          <TextField
+                              type="text"
+                              margin="normal"
+                              fullWidth
+                              id="doctorIdNumber"
+                              label="license number"
+                              name="licenseNumber"
+                              autoComplete=""
+                              helperText="License number"
+                          />
+                          <TextField
+                              type="email"
+                              margin="normal"
+                              fullWidth
+                              id="email"
+                              label="this.example@email.com"
+                              name="email"
+                              autoComplete="email"
+                              helperText="Email"
+                              data-testid="sign-up-email"
+                          />
+                          <TextField
+                              type="text"
+                              margin="normal"
+                              fullWidth
+                              id="phoneNumber"
+                              label="123-145-1234"
+                              name="phoneNumber"
+                              autoComplete="email"
+                              helperText="phone number"
+                              data-testid="phone-number"
+                          />
                             <div>
                                 <p>Address</p>
                                 <TextField
@@ -157,5 +157,5 @@ export default function DoctorProfile() {
                 </div>
             </Grid>
         </Grid>
-    );
+);
 }

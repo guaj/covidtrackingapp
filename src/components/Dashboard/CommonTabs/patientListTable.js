@@ -16,7 +16,7 @@ import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
 import ErrorIcon from '@mui/icons-material/Error';
 import FlagIcon from '@mui/icons-material/Flag';
-import mockedDatas from "./patientListTableMockData.json"
+import mockedDatas from "../DoctorDashboard/patientListTableMockData.json"
 
 
 

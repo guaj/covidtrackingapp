@@ -1,0 +1,16 @@
+[
+  {
+    "organizationId":"123456789",
+    "employeeId": "012345678",
+    "email": "anorg@gmail.com",
+    "password1" : "p12345",
+    "password2" : "p12345"
+  },
+  {
+    "organizationId":"987654321",
+    "employeeId": "012365478",
+    "email": "anotherorg@gmail.com",
+    "password1" : "p12345",
+    "password2" : "p12345"
+  }
+]

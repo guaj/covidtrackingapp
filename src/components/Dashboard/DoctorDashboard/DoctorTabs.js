@@ -4,8 +4,10 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Chart from '../Chart';
-import PatientListTable from "./patientListTable";
+import Chart from '../CommonTabs/Chart';
+import PatientListTable from "../CommonTabs/patientListTable";
+import FaceInfo from "../CommonTabs/FaceInfo";
+
 
 
 
@@ -44,9 +46,9 @@ function a11yProps(index) {
 
 
 TabPanel.propTypes = {
-children: PropTypes.node,
-index: PropTypes.number.isRequired,
-value: PropTypes.number.isRequired,
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
 };
 
 
@@ -59,24 +61,30 @@ export default function DoctorTabs() {
         setValue(newValue);
     };
 
-   
+
     return (
         <>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="Statistics" {...a11yProps(0)} />
                 <Tab label="Patient List" {...a11yProps(1)} />
-                <Tab label="doctor tab n" {...a11yProps(2)} />
+                <Tab label="Patient Emergency List" {...a11yProps(2)} />
+                <Tab label="Doctor-Patient Pairing List" {...a11yProps(3)} />
             </Tabs>
 
             <TabPanel value={value} index={0}>
+                <FaceInfo />
                 <Chart />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <PatientListTable/>
+                <PatientListTable />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                nth doctor tab content
+                {/* to come in future sprints */}
             </TabPanel>
+            <TabPanel value={value} index={3}>
+                {/* to come in future sprints test */}
+            </TabPanel>
+
         </>
     )
 }

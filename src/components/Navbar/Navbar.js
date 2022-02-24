@@ -97,8 +97,8 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+            <MenuItem onClick={handleProfile}>Profile</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
     );
 
@@ -151,6 +151,16 @@ export default function PrimarySearchAppBar() {
             </MenuItem>
         </Menu>
     );
+
+    function handleLogout() {
+        localStorage.setItem("id", "");
+        localStorage.setItem("email", "");
+        window.location = "/login" ;
+    }
+    function handleProfile() {
+        let user = JSON.parse(localStorage.getItem("id"))
+        window.location = "/profile/" + user;
+    }
 
     return (
         <Box sx={{ flexGrow: 1 }}>

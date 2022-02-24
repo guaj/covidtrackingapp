@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import './Dashboard.css'
 
 //tab components 
 import DoctorTabs from './DoctorDashboard/DoctorTabs';
@@ -15,16 +16,34 @@ const mockProfiles = [
     { name: "Tony Soprano", userType: "health official" },
     { name: "Tony Soprano", userType: "immigration official" }]
 
-function displayUserTabs() {
-    switch (mockProfiles[0].userType) { //randomization to demonstrate conditional rendering
+
+
+function DisplayUserTabs() {
+
+    var user
+    var userType
+
+    try {
+
+        user = JSON.parse(localStorage.getItem("id"))
+        userType = JSON.parse(localStorage.getItem("type"))
+        console.log(userType)
+
+    } catch (err) {
+        // 👇️ This runs
+        console.log('Error: ', err.message);
+        window.location.assign("/login#redirect");
+    }
+
+    switch (userType) { //randomization to demonstrate conditional rendering
         case "doctor":
             return <DoctorTabs />
-    
+
         case 'patient':
             return <PatientTabs />
-              
+
         case 'health official':
-            return <HealthOfficialTabs /> 
+            return <HealthOfficialTabs />
 
         case 'immigration official':
             return <ImmigrationOfficialTabs />
@@ -33,18 +52,19 @@ function displayUserTabs() {
     }
 }
 
+
+
 export default function Dashboard() {
 
     return (
         <div>
             <Navbar />
-            <div className="container">
+            <div>
                 <Box sx={{ width: '80%', margin: '5% auto' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        {displayUserTabs()}
+                        <DisplayUserTabs />
                     </Box>
                 </Box>
-
             </div>
         </div>
     );

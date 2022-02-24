@@ -30,7 +30,7 @@ class NavbarPro extends Component{
               )       
             })}
           </ul>
-          <Button onClick={event =>  window.location.href='/sign-up-pro'}>Professional registration</Button>
+          <Button onClick={event =>  window.location.href='/user-registration'}>Professional registration</Button>
         </nav>
       )
     }

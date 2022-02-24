@@ -8,7 +8,10 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import geometricImage from "../images/geometric_gradient.jpg";
+import geometricImage from "../../../images/geometric_gradient.jpg";
+import PasswordChecklist from "react-password-checklist";
+import { useState } from "react";
+import PasswordStrengthBar from 'react-password-strength-bar';
   
   const useStyles = makeStyles((theme) => ({
     image: {
@@ -48,30 +51,54 @@ import geometricImage from "../images/geometric_gradient.jpg";
   
   
   
-export default function Home() {
+export default function SignUpOrg() {
     const classes = useStyles();
+    const [password, setPassword] = useState("")
+  	const [passwordAgain, setPasswordAgain] = useState("")
+    const [valid, setValid] = useState(false)
+
     return (
       <Grid container component="main">
-        
         <CssBaseline />
         <Grid item xs={false} sm={false} md={4} className={classes.image} />
         <Grid item xs={12} sm={12} md={8} component={Paper} elevation={6} square>
           <div className={classes.paper}> 
             <Typography component="h1" variant="h4" className={classes.title} >
-              Access to your health profile 
+              Register as an Organization
             </Typography>
             <form className={classes.form} id='form' onSubmit={"#"}>
               <TextField
-                type="email"
+                type="id"
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="this.example@email.com"
-                name="email"
-                autoComplete="email"
-                helperText="Email"
+                id="organizationId"
+                label="000000000"
+                name="organizationId"
+                helperText="Organization Branch ID"
                 />
+              <TextField
+                  type="id"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="employeeid"
+                  label="000000000"
+                  name="EmployeeId"
+                  helperText="Employee ID"
+              />
+              <TextField
+                  type="email"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="this.example@email.com"
+                  name="email"
+                  autoComplete="email"
+                  helperText="Email"
+                  data-testid="sign-up-email"
+              />
               <TextField
                 type="password"
                 margin="normal"
@@ -82,18 +109,38 @@ export default function Home() {
                 id="password"
                 helperText="Password"
                 autoComplete="current-password"
+                onChange={e => setPassword(e.target.value)}
               />
+              <TextField
+                type="password"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="* * * *"
+                id="password"
+                helperText="Confirm your password"
+                onChange={e => setPasswordAgain(e.target.value)}
+              />
+              <PasswordStrengthBar 
+                            password={password}
+                        />
+                        <PasswordChecklist
+                            rules={["minLength","specialChar","number","capital","match"]}
+                            minLength={8}
+                            value={password}
+                            valueAgain={passwordAgain}
+                            onChange={(isValid) => {setValid(isValid)}
+                            }
+                        />
               <Grid container className={classes.checkboxes}>
                   <Grid item xs>
                     <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
+                    label="Remember my password"
                     />  
                   </Grid>
                   <Grid item xs={4}>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
                 </Grid>
               </Grid>
               <Button
@@ -101,17 +148,18 @@ export default function Home() {
                 fullWidth
                 variant="contained"
                 className={classes.submit}
+                disabled={!valid}
               >
-                Login
+                Register
               </Button>
               <Grid container>
                 
                 <Grid item>
-                <Typography variant="body2">Don't have an account? <t/>
-                    <Link href="/sign-up-patient" variant="body2">
-                    {"Sign Up"}
-                    </Link></Typography>  
-                  
+                <Typography variant="body2">Already registered? <t/>
+                    <Link href="/professionals" variant="body2">
+                    {"Sign In"}
+                    </Link> 
+                </Typography>   
                 </Grid>
               </Grid>
             </form>

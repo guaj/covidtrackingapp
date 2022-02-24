@@ -10,13 +10,8 @@ export const MenuHome =[
         cName: 'nav-links'
     },
     {
-        title: 'Professionals',
-        url: '/professionals',
-        cName: 'nav-links'
-    },
-    {
         title: 'Sign Up',
-        url: '/sign-up-patient',
+        url: '/user-registration',
         cName: 'nav-links-mobile'
     }
 ]
