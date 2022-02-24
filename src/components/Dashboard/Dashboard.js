@@ -16,12 +16,15 @@ const mockProfiles = [
     { name: "Tony Soprano", userType: "health official" },
     { name: "Tony Soprano", userType: "immigration official" }]
 
+    var user 
+    var userType
+
 function DisplayUserTabs() {
 
     try {
 
-        var user = JSON.parse(localStorage.getItem("id"))
-        var userType = JSON.parse(localStorage.getItem("type"))
+        user = JSON.parse(localStorage.getItem("id"))
+        userType = JSON.parse(localStorage.getItem("type"))
         console.log(userType)
 
     } catch (err) {
@@ -30,7 +33,7 @@ function DisplayUserTabs() {
         window.location.assign("/login#redirect");
     }
 
-    switch (userType) { //randomization to demonstrate conditional rendering
+    switch (mockProfiles[0].userType) { //randomization to demonstrate conditional rendering
         case "doctor":
             return <DoctorTabs />
 
@@ -54,7 +57,7 @@ export default function Dashboard() {
     return (
         <div>
             <Navbar />
-            {/* <h1>hello, {user}</h1> */}
+          
             <div>
                 <Box sx={{ width: '80%', margin: '5% auto' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
