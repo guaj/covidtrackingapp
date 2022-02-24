@@ -4,8 +4,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Chart from '../Chart';
-
+import Chart from '../CommonTabs/Chart';
+import PatientListTable from "../CommonTabs/patientListTable";
+import FaceInfo from '../FaceInfo'
 
 
 
@@ -63,20 +64,17 @@ export default function PatientTabs() {
     return (
         <>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                <Tab label="ho tab 1" {...a11yProps(0)} />
-                {/* <Tab label="ho tab 2" {...a11yProps(1)} />
-                <Tab label="ho tab n" {...a11yProps(2)} /> */}
+                <Tab label="s=Statistics" {...a11yProps(0)} />
+                <Tab label="Patient List" {...a11yProps(1)} />
             </Tabs>
 
             <TabPanel value={value} index={0}>
+                <FaceInfo />
                 <Chart />
             </TabPanel>
-            {/* <TabPanel value={value} index={1}>
-                ho tab 2 content
+            <TabPanel value={value} index={1}>
+                <PatientListTable />
             </TabPanel>
-            <TabPanel value={value} index={2}>
-                ho nth tab content
-            </TabPanel> */}
         </>
     )
 }
