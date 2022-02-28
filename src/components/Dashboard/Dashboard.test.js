@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import Dashboard from '../Dashboard/Dashboard';
 
 // test("if the patient list tab is rendered when the user is a doctor", () => {
-//   render(<Dashboard />);
+//   render(<Dashboard />);s
 //   expect(screen.getByText("Patient List")).toBeInTheDocument();
 // });
 
@@ -22,5 +22,7 @@ import Dashboard from '../Dashboard/Dashboard';
 //   render(<Dashboard />);
 //   expect(screen.getByText("Doctor-Patient Pairing List")).toBeInTheDocument();
 // });
+
+
 
 
