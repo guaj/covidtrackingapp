@@ -21,6 +21,9 @@ import PatientProfileUpdate from './components/UserProfile/PatientProfile/Patien
 import Navbar from './components/Navbar/Navbar'
 import DoctorProfileUpdate from'./components/UserProfile/DoctorProfile/DoctorProfileUpdate'
 
+//importing example form that writes to db
+import ExampleFormDB from './ExampleFormDB'
+
 ///* Make sure to update file when adding to App.css!!*/
 
 function App() {
@@ -41,6 +44,7 @@ function App() {
             <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
             <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
             <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
+            <Route path='/db-example' element={[<ExampleFormDB/>]} /> {/*example form that writes to db*/}
         </Routes>
     );
 }
