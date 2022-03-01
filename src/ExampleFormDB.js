@@ -4,7 +4,9 @@ import awsConfig from './aws-config.json'
 
 AWS.config.update(awsConfig);
   
-  var docClient = new AWS.DynamoDB.DocumentClient();
+https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
+
+var docClient = new AWS.DynamoDB.DocumentClient();
 
 function ExampleFormDB() {
     const [orgId, setOrgId] = useState('')
@@ -25,7 +27,7 @@ function ExampleFormDB() {
         setPassword(event.target.value)
     };
 
-    const handleSubmit = event => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         var params = {
             TableName: "organizations",
@@ -36,15 +38,16 @@ function ExampleFormDB() {
                 "password": String(password)
             }
         }
+        try {
+            await docClient.put(params).promise()
+            alert("success!");
+        }
+        catch(err) {
+            alert("Unable to add item: " + "\n" + JSON.stringify(err, undefined, 2));
+        }
+    }
 
-        docClient.put(params, function (err, data) {
-            if (err)
-                alert("Unable to add item: " + "\n" + JSON.stringify(err, undefined, 2));
-            else
-                alert("PutItem succeeded: " + "\n" + JSON.stringify(data, undefined, 2));
-        });
-
-    };
+    
 
     return (
         <form onSubmit={handleSubmit}>
