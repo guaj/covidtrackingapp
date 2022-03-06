@@ -203,7 +203,6 @@ export default function DoctorListTable() {
                                                 tabIndex={-1}
                                                 key={item.name}
                                             >
-                                                <TableCell/>
                                                 <TableCell align="center">{item.licenseNumber}</TableCell>
                                                 <TableCell align="center">{item.address}</TableCell>
                                                 <TableCell align="center">{item.email}</TableCell>
@@ -219,7 +218,7 @@ export default function DoctorListTable() {
                                             height: (dense ? 33 : 53) * emptyRows,
                                         }}
                                     >
-                                        <TableCell colSpan={6} />
+                                        <TableCell colSpan={12} />
                                     </TableRow>
                                 )}
                             </TableBody>
