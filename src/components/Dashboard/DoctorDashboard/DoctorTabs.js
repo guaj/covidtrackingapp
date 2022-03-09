@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Chart from '../CommonTabs/Chart';
 import PatientListTable from "../CommonTabs/patientListTable";
 import FaceInfo from "../CommonTabs/FaceInfo";
-
+import DoctorScheduleSelector from "./DoctorScheduleSelector";
 
 
 
@@ -79,7 +79,7 @@ export default function DoctorTabs() {
                 <PatientListTable />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                {/* to come in future sprints */}
+                <DoctorScheduleSelector />
             </TabPanel>
             <TabPanel value={value} index={3}>
                 {/* to come in future sprints test */}
