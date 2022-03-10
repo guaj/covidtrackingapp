@@ -2,19 +2,20 @@ import * as React from 'react';
 import ScheduleSelector from 'react-schedule-selector';
 import Button from "@material-ui/core/Button";
 import "./DoctorSchedule.css";
+import {keys} from "@material-ui/core/styles/createBreakpoints";
 
 export default class DoctorScheduleSelector extends React.Component {
+    // eslint-visible-next-line react/no-find-dom-node
     state = { schedule : [] } // changed = to : ?
 
     startDate = new Date(2073, 0, 2);         // the month is 0-indexed
 
     handleChange = newSchedule => {this.setState({ schedule: newSchedule })
+
     }
 
-    handleSubmit(event) {
-        alert('A name was submitted: ');
+    handleSave = () => {
         console.log(this.state);
-        event.preventDefault();
     }
 
 
@@ -34,12 +35,13 @@ export default class DoctorScheduleSelector extends React.Component {
                             size="large"
                             variant="contained"
                             type="submit"
-                            onClick={this.handleSubmit}
+                            onClick={this.handleSave}
                     >
                         Save
                     </Button>
                 </div>
             </div>
+
 
         )
     }
