@@ -2,7 +2,8 @@ import * as React from 'react';
 import ScheduleSelector from 'react-schedule-selector';
 import Button from "@material-ui/core/Button";
 import "./DoctorSchedule.css";
-import {keys} from "@material-ui/core/styles/createBreakpoints";
+import {addDoctorSchedule} from "./DoctorScheduleDynamoDBAdapter";
+
 
 export default class DoctorScheduleSelector extends React.Component {
     // eslint-visible-next-line react/no-find-dom-node
@@ -14,9 +15,13 @@ export default class DoctorScheduleSelector extends React.Component {
 
     }
 
-    handleSave = () => {
-        console.log(this.state);
+
+    handleSave = async () => {
+        const scheduleData = this.state;
+
+        await addDoctorSchedule('DoctorSchedule' , scheduleData)
     }
+
 
 
     render() {
