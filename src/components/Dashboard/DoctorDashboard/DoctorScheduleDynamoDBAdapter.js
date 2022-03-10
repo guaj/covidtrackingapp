@@ -26,3 +26,22 @@ export const addDoctorSchedule = (tableName , data) => {
     })
 }
 
+export const retrieveDoctorSchedule = (tableName) => {
+    var params = {
+        TableName: tableName,
+        Key :{
+            "doctorID": Number(doctorID),
+        }
+    };
+
+    var result = docClient.get(params,function(err,data){
+        if(err){
+            alert('Error',err)
+            console.log(err)
+        }else {
+            console.log(data)
+        }
+    });
+
+    return result
+}
