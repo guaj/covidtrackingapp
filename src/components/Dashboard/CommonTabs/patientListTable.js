@@ -187,7 +187,7 @@ export default function PatientListTable() {
 
     return (
         <div>
-            <h2>My Patient List</h2>
+            <h2>Patients</h2>
             <Box sx={{ width: '100%' }}>
                 <Paper sx={{ width: '100%', mb: 2 }}>
                     <TableContainer>
