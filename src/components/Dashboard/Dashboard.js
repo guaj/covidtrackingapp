@@ -1,21 +1,23 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import './Dashboard.css'
+import './Dashboard.css';
+
 
 //tab components 
 import DoctorTabs from './DoctorDashboard/DoctorTabs';
 import PatientTabs from './PatientDashboard/PatientTabs';
 import HealthOfficialTabs from './HealthOfficialDashboard/HealthOfficialTabs';
-import ImmigrationOfficialTabs from './ImmigrantOfficerDashboard/ImmigrationOfficialTabs'
-
+import ImmigrationOfficialTabs from './ImmigrantOfficerDashboard/ImmigrationOfficialTabs';
+import AdminTabs from './AdminDashboard/adminDashboard';
 import Navbar from "../Navbar/Navbar";
 
 const mockProfiles = [
     { name: "Tony Soprano", userType: "doctor" },
     { name: "Tony Soprano", userType: "patient" },
     { name: "Tony Soprano", userType: "health official" },
-    { name: "Tony Soprano", userType: "immigration official" }]
-
+    { name: "Tony Soprano", userType: "immigration official" },
+    {name: "admin", userType: "admin"}
+]
 
 
 function DisplayUserTabs() {
@@ -23,7 +25,7 @@ function DisplayUserTabs() {
     var user
     var userType
 
-    try {
+    /*try {
 
         user = JSON.parse(localStorage.getItem("id"))
         userType = JSON.parse(localStorage.getItem("type"))
@@ -48,8 +50,11 @@ function DisplayUserTabs() {
         case 'immigration official':
             return <ImmigrationOfficialTabs />
 
-        default: alert("invalid user type: something has gone *really* wrong")
-    }
+        case 'admin':*/
+            return <AdminTabs/>;
+            
+       // default: alert("invalid user type: something has gone *really* wrong")
+    //}
 }
 
 
