@@ -12,6 +12,8 @@ import geometricImage from "../../../images/geometric_gradient.jpg";
 import PasswordChecklist from "react-password-checklist";
 import { useState } from "react";
 import PasswordStrengthBar from 'react-password-strength-bar';
+import AWS from "aws-sdk";
+
   
   const useStyles = makeStyles((theme) => ({
     image: {
@@ -48,15 +50,51 @@ import PasswordStrengthBar from 'react-password-strength-bar';
       align: "center",
     }
   }));
-  
-  
-  
+
+
+//to connect to DynamoDB
+var docClient = new AWS.DynamoDB.DocumentClient();
+
 export default function SignUpOrg() {
     const classes = useStyles();
+    const [orgId,setOrgId] =useState('')
+    const [empId,setEmpId] = useState('')
+    const [email,setEmail] = useState('')
     const [password, setPassword] = useState("")
   	const [passwordAgain, setPasswordAgain] = useState("")
     const [valid, setValid] = useState(false)
 
+    const handleOrgIdChange = e =>{
+        setOrgId(e.target.value);
+    };
+
+    const handleEmpIdChange = e =>{
+        setEmpId(e.target.value);
+    };
+    const handleEmailChange = e =>{
+        setEmail(e.target.value);
+    };
+
+    const handleSubmit = async(e) =>{
+        e.preventDefault();
+        const params = {
+            TableName:"organizations",
+            Item:{
+                "type": String("org"),
+                "orgId": Number(orgId),
+                "employeeId": Number(empId),
+                "email": String(email),
+                "password": String(password)
+            }
+        }
+        try {
+            await docClient.put(params).promise()
+            alert("The account is created!")
+        } catch (err) {
+            alert("unable to create the account")
+        }
+
+    }
     return (
       <Grid container component="main">
         <CssBaseline />
@@ -66,7 +104,7 @@ export default function SignUpOrg() {
             <Typography component="h1" variant="h4" className={classes.title} >
               Register as an Organization
             </Typography>
-            <form className={classes.form} id='form' onSubmit={"#"}>
+            <form className={classes.form} id='form' onSubmit={handleSubmit}>
               <TextField
                 type="id"
                 margin="normal"
@@ -76,6 +114,8 @@ export default function SignUpOrg() {
                 label="000000000"
                 name="organizationId"
                 helperText="Organization Branch ID"
+                onChange={handleOrgIdChange}
+                value={orgId}
                 />
               <TextField
                   type="id"
@@ -86,6 +126,8 @@ export default function SignUpOrg() {
                   label="000000000"
                   name="EmployeeId"
                   helperText="Employee ID"
+                  onChange={handleEmpIdChange}
+                  value={empId}
               />
               <TextField
                   type="email"
@@ -98,6 +140,8 @@ export default function SignUpOrg() {
                   autoComplete="email"
                   helperText="Email"
                   data-testid="sign-up-email"
+                  onChange={handleEmailChange}
+                  value={email}
               />
               <TextField
                 type="password"

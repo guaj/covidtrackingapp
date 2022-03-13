@@ -13,6 +13,7 @@ import PasswordChecklist from "react-password-checklist";
 import { useState } from "react";
 import PasswordStrengthBar from 'react-password-strength-bar';
 import React from 'react';
+import AWS from "aws-sdk";
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -54,13 +55,55 @@ const setForm = (event => {
     return event.target.value;
 })
 
+//to connect to DynamoDB
+const docClient = new AWS.DynamoDB.DocumentClient();
+
 export default function SignUpPatient() {
     const classes = useStyles();
+    const [email,setEmail]= useState('')
+    const [firstName,setFirstName] = useState('')
+    const [lastName,setLastName]=useState('')
     const [password, setPassword] = useState("")
 	const [passwordAgain, setPasswordAgain] = useState("")
     const [valid, setValid] = useState(false)
     const [ramq, setRamq] = useState(true)
     const [ramqNumber, setRamqNumber] = useState("")
+    const [insurance, setInsurance] =useState('')
+
+    const handleEmailChange = e =>{
+        setEmail(e.target.value)
+    };
+    const handleFirstNameChange = e =>{
+        setFirstName(e.target.value)
+    };
+    const handleLastNameChange = e =>{
+        setLastName(e.target.value)
+    };
+    const handleInsuranceChange = e =>{
+        setInsurance(e.target.value)
+    };
+
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        const params = {
+            TableName: "patients",
+            Item: {
+                "type": String("patient"),
+                "email": String(email),
+                "firstName": String(firstName),
+                "lastName": String(lastName),
+                "RAMQ": String(ramqNumber),
+                "insurance": Number(insurance),
+                "password": String(password)
+            }
+        }
+        try {
+            await docClient.put(params).promise()
+            alert("The account is created!")
+        } catch (err) {
+            alert("unable to create the account")
+        }
+    }
 
     return (
         <Grid container component="main">
@@ -72,7 +115,7 @@ export default function SignUpPatient() {
                     <Typography component="h1" variant="h4" className={classes.title}>
                         Register as a Patient
                     </Typography>
-                    <form className={classes.form} id='form' onSubmit={(e) => setForm(e.target.value)}>
+                    <form className={classes.form} id='form' onSubmit={handleSubmit}>
                         <TextField
                             type="email"
                             margin="normal"
@@ -84,6 +127,8 @@ export default function SignUpPatient() {
                             autoComplete="email"
                             helperText="Email"
                             data-testid="sign-up-email"
+                            onChange={handleEmailChange}
+                            value={email}
                         />
                         <TextField
                             type="text"
@@ -95,6 +140,8 @@ export default function SignUpPatient() {
                             name="firstName"
                             autoComplete="firstName"
                             helperText="First Name"
+                            onChange={handleFirstNameChange}
+                            value={firstName}
                         />
                         <TextField
                             type="text"
@@ -106,6 +153,8 @@ export default function SignUpPatient() {
                             name="lastName"
                             autoComplete="lastName"
                             helperText="Last Name"
+                            onChange={handleLastNameChange}
+                            value={lastName}
                         />
 
                         <TextField
@@ -122,6 +171,7 @@ export default function SignUpPatient() {
                             required={ramq}
                             onChange={e => setRamqNumber(e.target.value)}
                             data-testid="ramqNumber"
+
                         />
                         <Grid container className={classes.checkboxes}>
                             <Grid item xs>
@@ -146,6 +196,7 @@ export default function SignUpPatient() {
                             autoComplete=""
                             helperText="Insurance number"
                             data-testid="insuranceNumber"
+                            value={insurance}
                         />
                         <TextField
                             data-testid="sign-up-psw1"
