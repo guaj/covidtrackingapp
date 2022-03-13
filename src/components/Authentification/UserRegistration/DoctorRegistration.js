@@ -97,7 +97,7 @@ function SignUpDoctor() {
                 "licenseNumber": Number(licenseNumber),
                 "password": String(password)
             }
-        };
+        }
         try {
             await docClient.put(params).promise()
             alert("The account is created!");
