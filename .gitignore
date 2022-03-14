@@ -8,6 +8,7 @@ package-lock.json
 
 #aws credentials 
 aws-config.json
+*/aws-config.json
 
 # testing
 /coverage
