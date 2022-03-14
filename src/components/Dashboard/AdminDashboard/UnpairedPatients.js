@@ -138,7 +138,14 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-
+function getNumItems() {
+    var counter = 0 ;
+    mockedDatas.forEach(element => {
+        if(!element.doctor)
+            counter ++;
+    })
+    return counter;
+};
 
 export default function UnpairedPatientListTable() {
     const classes = useStyles();
@@ -148,7 +155,7 @@ export default function UnpairedPatientListTable() {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    //const [numberItems, setNumItems] = useState(0);
+    const newPatientNumber = getNumItems();
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -169,6 +176,7 @@ export default function UnpairedPatientListTable() {
         setDense(event.target.checked);
     };
 
+   
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -191,7 +199,7 @@ export default function UnpairedPatientListTable() {
                                 order={order}
                                 orderBy={orderBy}
                                 onRequestSort={handleRequestSort}
-                                rowCount={mockedDatas.length}
+                                rowCount={newPatientNumber}
                             />
                             <TableBody>
                                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
@@ -232,7 +240,7 @@ export default function UnpairedPatientListTable() {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={mockedDatas.length}
+                        count={newPatientNumber}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}

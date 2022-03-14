@@ -7,7 +7,7 @@
         "profileLink": "http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg",
         "priorityNumber": 1,
         "isFlagged": false,
-        "doctor": "234444903"
+        "doctor": null
     },
     {
         "firstName": "John",
@@ -18,7 +18,7 @@
         "profileLink": "http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg",
         "priorityNumber": 2,
         "isFlagged": false,
-        "doctor": "016632488"
+        "doctor": null
     },
     {
         "firstName": "Jack",
@@ -62,7 +62,7 @@
         "profileLink": "http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg",
         "priorityNumber": 6,
         "isFlagged": false,
-        "doctor": "081644903"
+        "doctor": null
     },
     {
         "firstName": "Micheal",
