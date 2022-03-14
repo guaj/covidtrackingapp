@@ -1,0 +1,13 @@
+.datePicker {
+    max-width: 800px;
+    padding-left: 10%;
+}
+.button {
+   padding-top:10px;
+}
+.row {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+}

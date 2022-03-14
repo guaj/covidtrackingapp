@@ -158,8 +158,9 @@ export default function PrimarySearchAppBar() {
         window.location = "/login" ;
     }
     function handleProfile() {
-        let user = JSON.parse(localStorage.getItem("id"))
-        window.location = "/profile/" + user;
+        let user = JSON.parse(localStorage.getItem("email"))
+        let url = user.split("@");
+        window.location = "/profile/" + url[0];
     }
 
     return (
@@ -174,7 +175,7 @@ export default function PrimarySearchAppBar() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
-                        <a href="dashboard" style={{textDecoration: "none", color: "#673ab7"}}>
+                        <a href="/dashboard" style={{textDecoration: "none", color: "#673ab7"}}>
                             COVID Tracking App
                         </a>
 
