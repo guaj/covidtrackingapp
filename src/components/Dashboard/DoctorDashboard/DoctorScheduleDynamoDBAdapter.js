@@ -6,6 +6,15 @@ AWS.config.update(awsConfig);
 
 var docClient = new AWS.DynamoDB.DocumentClient();
 let doctorID = JSON.parse(localStorage.getItem("id"))
+var doctorScheduleData;
+
+export function setDoctorScheduleData(schedule){
+    doctorScheduleData = schedule;
+}
+
+export function getDoctorScheduleData(){
+    return doctorScheduleData;
+}
 
 //This rewrites the entire table each iteration
 export const addDoctorSchedule = (tableName , data) => {
@@ -26,7 +35,7 @@ export const addDoctorSchedule = (tableName , data) => {
     })
 }
 
-export const retrieveDoctorSchedule = (tableName) => {
+export function retrieveDoctorSchedule (tableName) {
     var params = {
         TableName: tableName,
         Key :{
@@ -39,9 +48,8 @@ export const retrieveDoctorSchedule = (tableName) => {
             alert('Error',err)
             console.log(err)
         }else {
-            console.log(data)
+          setDoctorScheduleData(JSON.stringify(data.Item.dailyAvailabilities, null, 2))
         }
     });
-
-    return result
+    return result;
 }

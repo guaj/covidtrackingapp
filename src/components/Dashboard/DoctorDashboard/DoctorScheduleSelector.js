@@ -2,7 +2,11 @@ import * as React from 'react';
 import ScheduleSelector from 'react-schedule-selector';
 import Button from "@material-ui/core/Button";
 import "./DoctorSchedule.css";
-import {addDoctorSchedule, retrieveDoctorSchedule} from "./DoctorScheduleDynamoDBAdapter";
+import {
+    addDoctorSchedule, getDoctorScheduleData,
+    retrieveDoctorSchedule,
+} from "./DoctorScheduleDynamoDBAdapter";
+import AWS from "aws-sdk";
 
 
     let testDate1 = new Date('Wed Jan 04 2073 11:00:00 GMT-0500 (EST)');
@@ -15,6 +19,16 @@ import {addDoctorSchedule, retrieveDoctorSchedule} from "./DoctorScheduleDynamoD
     testDates.push(testDate2);
     testDates.push(testDate3);
 
+    function convertScheduleStringToArrayOfDates(scheduleStringData){
+        let stringsArray = scheduleStringData.split(",");
+        let datesArray = [];
+        for (let i = 0; i < stringsArray.length; i++) {
+            datesArray.push(new Date (stringsArray[i]))
+        }
+        console.log(datesArray)
+        return datesArray;
+    }
+
 export default class DoctorScheduleSelector extends React.Component {
 
     oldSchedule = async () => {
@@ -25,20 +39,20 @@ export default class DoctorScheduleSelector extends React.Component {
 
     startDate = new Date(2073, 0, 2);         // the month is 0-indexed
 
-
     handleChange = newSchedule => {this.setState({ schedule: newSchedule })
-
     }
 
     handleSave = async () => {
         const scheduleData = this.state;
-
         await addDoctorSchedule('DoctorSchedule' , scheduleData)
     }
 
-    retrieveData = async () => {
-        await retrieveDoctorSchedule('DoctorSchedule')
-    } ;
+    retrieveData = () => {
+        retrieveDoctorSchedule('DoctorSchedule')
+        console.log(getDoctorScheduleData())
+    };
+
+
 
     render() {
 
