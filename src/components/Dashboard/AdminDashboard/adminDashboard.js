@@ -63,7 +63,8 @@ export default function AdminTabs() {
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="Patient List" {...a11yProps(0)} />
                 <Tab label="Doctor List" {...a11yProps(1)} />
-                <Tab label="New patients pairing" {...a11yProps(2)} />
+                <Tab label="New Patients Pairing" {...a11yProps(2)} />
+                <Tab label="Doctor Emergency pairing" {...a11yProps(3)} />
             </Tabs>
 
             <TabPanel value={value} index={0}>
@@ -73,6 +74,9 @@ export default function AdminTabs() {
                 <DoctorListTable />
             </TabPanel>
             <TabPanel value={value} index={2}>
+                <UnpairedPatientListTable />
+            </TabPanel>
+            <TabPanel value={value} index={3}>
                 <UnpairedPatientListTable />
             </TabPanel>
 

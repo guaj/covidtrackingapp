@@ -17,7 +17,20 @@ import LinkIcon from '@mui/icons-material/Link';
 import mockedDatas from "../DoctorDashboard/patientListTableMockData.json"
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
-import { useState } from "react";
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
+const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
 const useStyles = makeStyles((theme) => ({
     pair: {
@@ -25,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: 'rgba(63, 81, 181, 0.5)',
             color: '#fff',
-          }
+        }
     }
 })
 );
@@ -64,7 +77,7 @@ function stableSort(array, comparator) {
 const headCells = [
     {
         id: 'priorityNumber',
-        numeric : true,
+        numeric: true,
         disablePadding: false,
         label: 'Priority',
     },
@@ -127,6 +140,8 @@ function EnhancedTableHead(props) {
                 ))}
             </TableRow>
         </TableHead>
+
+
     );
 }
 
@@ -139,10 +154,10 @@ EnhancedTableHead.propTypes = {
 };
 
 function getNumItems() {
-    var counter = 0 ;
+    var counter = 0;
     mockedDatas.forEach(element => {
-        if(!element.doctor)
-            counter ++;
+        if (!element.doctor)
+            counter++;
     })
     return counter;
 };
@@ -156,6 +171,11 @@ export default function UnpairedPatientListTable() {
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const newPatientNumber = getNumItems();
+
+    //modal 
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -176,7 +196,7 @@ export default function UnpairedPatientListTable() {
         setDense(event.target.checked);
     };
 
-   
+
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -185,6 +205,22 @@ export default function UnpairedPatientListTable() {
 
     return (
         <div>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={modalStyle}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Text in a modal
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                    </Typography>
+                </Box>
+            </Modal>
+
             <h2>Patients</h2>
             <Box sx={{ width: '100%' }}>
                 <Paper sx={{ width: '100%', mb: 2 }}>
@@ -207,9 +243,9 @@ export default function UnpairedPatientListTable() {
                                 {stableSort(mockedDatas, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((item) => {
-                                        if(!item.doctor){
+                                        if (!item.doctor) {
                                             return (
-                                               // setNumItems(prevState => (prevState+1)),
+                                                // setNumItems(prevState => (prevState+1)),
                                                 <TableRow
                                                     hover
                                                     role="checkbox"
@@ -219,8 +255,8 @@ export default function UnpairedPatientListTable() {
                                                     <TableCell align="center"> {item.priorityNumber} </TableCell>
                                                     <TableCell align="center"> {item.firstName} </TableCell>
                                                     <TableCell align="center"> {item.lastName} </TableCell>
-                                                    <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon/></TableCell>
-                                                    <TableCell><Button className={classes.pair}>Find a doctor</Button></TableCell>
+                                                    <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon /></TableCell>
+                                                    <TableCell><Button className={classes.pair} onClick={handleOpen}>Find a doctor</Button></TableCell>
                                                 </TableRow>
                                             );
                                         }
