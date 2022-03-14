@@ -131,9 +131,6 @@ EnhancedTableHead.propTypes = {
 };
 
 
-
-
-
 export default function DoctorListTable() {
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
