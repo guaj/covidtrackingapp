@@ -14,12 +14,21 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
-import ErrorIcon from '@mui/icons-material/Error';
-import FlagIcon from '@mui/icons-material/Flag';
 import mockedDatas from "../DoctorDashboard/patientListTableMockData.json"
+import Button from '@mui/material/Button';
+import { makeStyles } from '@material-ui/styles';
+import { useState } from "react";
 
+const useStyles = makeStyles((theme) => ({
+    pair: {
 
-
+        '&:hover': {
+            backgroundColor: 'rgba(63, 81, 181, 0.5)',
+            color: '#fff',
+          }
+    }
+})
+);
 
 
 function descendingComparator(a, b, orderBy) {
@@ -70,30 +79,15 @@ const headCells = [
         label: 'Last Name',
     },
     {
-        id: 'covidResult',
-        disablePadding: false,
-        label: 'Covid Result',
-    },
-    {
-        id: 'reviewed',
-        disablePadding: false,
-        label: 'Reviewed',
-    },
-    {
-        id: 'emergency',
-        disablePadding: false,
-        label: 'Emergency',
-    },
-    {
         id: 'profileLink',
         disablePadding: false,
         label: 'Profile Link',
     },
     {
-        id: 'isFlagged',
+        id: 'patient-doctor-pairing',
         disablePadding: false,
-        label: 'Flag',
-    },
+        label: 'Pair to a doctor'
+    }
 ];
 
 
@@ -113,7 +107,7 @@ function EnhancedTableHead(props) {
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
+                        align={'center'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -146,25 +140,21 @@ EnhancedTableHead.propTypes = {
 
 
 
-
-
-export default function PatientListTable() {
+export default function UnpairedPatientListTable() {
+    const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-
+    //const [numberItems, setNumItems] = useState(0);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
-
-
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -209,24 +199,23 @@ export default function PatientListTable() {
                                 {stableSort(mockedDatas, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((item) => {
-
-                                        return (
-                                            <TableRow
-                                                hover
-                                                role="checkbox"
-                                                tabIndex={-1}
-                                                key={item.name}
-                                            >
-                                                <TableCell/>
-                                                <TableCell align="center">{item.firstName}</TableCell>
-                                                <TableCell align="center">{item.lastName}</TableCell>
-                                                <TableCell align="center">{item.covidResult}</TableCell>
-                                                <TableCell align="center">{item.reviewed ? "yes" : "no"}</TableCell>
-                                                <TableCell align="center">{item.emergency ? <ErrorIcon style={{fill: "red"}}/> : "" }</TableCell>
-                                                <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon/></TableCell>
-                                                <TableCell align="center">{item.isFlagged ? <FlagIcon style={{fill: "orange"}}/> : "" }</TableCell>
-                                            </TableRow>
-                                        );
+                                        if(!item.doctor){
+                                            return (
+                                               // setNumItems(prevState => (prevState+1)),
+                                                <TableRow
+                                                    hover
+                                                    role="checkbox"
+                                                    tabIndex={-1}
+                                                    key={item.name}
+                                                >
+                                                    <TableCell align="center"> {item.priorityNumber} </TableCell>
+                                                    <TableCell align="center"> {item.firstName} </TableCell>
+                                                    <TableCell align="center"> {item.lastName} </TableCell>
+                                                    <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon/></TableCell>
+                                                    <TableCell><Button className={classes.pair}>Find a doctor</Button></TableCell>
+                                                </TableRow>
+                                            );
+                                        }
                                     })}
                                 {emptyRows > 0 && (
                                     <TableRow
