@@ -13,7 +13,7 @@ import PasswordChecklist from "react-password-checklist";
 import { useState } from "react";
 import PasswordStrengthBar from 'react-password-strength-bar';
 import AWS from 'aws-sdk';
-import awsConfig from '../../../aws-config.json'
+import awsConfig from '../../../aws-config.json';
 
   
   const useStyles = makeStyles((theme) => ({

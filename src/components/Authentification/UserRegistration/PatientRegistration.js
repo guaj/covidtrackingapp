@@ -16,6 +16,7 @@ import React from 'react';
 import AWS from "aws-sdk";
 import awsConfig from '../../../aws-config.json';
 
+
 const useStyles = makeStyles((theme) => ({
     image: {
         backgroundImage: `url(${geometricImage})`,
@@ -51,10 +52,6 @@ const useStyles = makeStyles((theme) => ({
         align: "center",
     }
 }));
-
-const setForm = (event => {
-    return event.target.value;
-})
 
 //to connect to DynamoDB
 AWS.config.update(awsConfig);
