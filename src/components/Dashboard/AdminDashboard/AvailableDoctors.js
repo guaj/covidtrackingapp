@@ -16,7 +16,34 @@ import { visuallyHidden } from '@mui/utils';
 import mockedDatas from "../DoctorDashboard/doctorListTableMockData.json";
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
+import AWS from 'aws-sdk';
+import awsConfig from '../../../aws-config.json';
 
+AWS.config.update(awsConfig);
+const docClient = new AWS.DynamoDB.DocumentClient()
+
+//database query for doctors with (< 10 patients) and (city = patient city)
+const getAvailableDoctors = async () => {
+    var params = {
+        TableName: "doctors",
+        FilterExpression: "#count < :max",
+        ExpressionAttributeNames: {
+            "#count": "patientCount"
+        },
+        ExpressionAttributeValues: {
+            ":max": 10
+        }
+    }
+      try {
+        const data = await docClient.scan(params).promise()
+        //console logged data
+        alert(JSON.stringify(data))
+        console.log(JSON.parse(JSON.stringify(data)))
+        return { body: JSON.stringify(data) }
+      } catch (err) {
+        alert("could not retrieve data >:(")
+      }
+}
 
 const useStyles = makeStyles((theme) => ({
     pair: {

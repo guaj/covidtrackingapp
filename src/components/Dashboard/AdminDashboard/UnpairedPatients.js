@@ -18,7 +18,6 @@ import mockedDatas from "../DoctorDashboard/patientListTableMockData.json"
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
 import Modal from '@mui/material/Modal';
-import DoctorListTable from '../CommonTabs/doctorListTable';
 import AWS from 'aws-sdk'
 import awsConfig from '../../../aws-config.json'
 import AvailableDoctors from './AvailableDoctors';
@@ -28,7 +27,6 @@ AWS.config.update(awsConfig);
 const docClient = new AWS.DynamoDB.DocumentClient()
 
 //database query for doctors with (< 10 patients) and (city = patient city)
-
 const getAvailableDoctors = async () => {
     var params = {
         TableName: "doctors",
@@ -51,15 +49,13 @@ const getAvailableDoctors = async () => {
       }
 }
 
+//database query for doctors with (< 10 patients) and (city = patient city)
 const getNewPatients = async () => {
     var params = {
-        TableName: "Patients",
-        FilterExpression: "#count = :zero",
-        ExpressionAttributeNames: {
-            "#count": "doctor"
-        },
+        TableName: "patients",
+        FilterExpression: "doctor = :zero",
         ExpressionAttributeValues: {
-            ":zero": 0
+            ":zero": null
         }
     }
       try {
@@ -156,6 +152,11 @@ const headCells = [
         label: 'Last Name',
     },
     {
+        id:'address',
+        disablePadding: false,
+        label: 'Address'
+    },
+    {
         id: 'profileLink',
         disablePadding: false,
         label: 'Profile Link',
@@ -179,7 +180,9 @@ function EnhancedTableHead(props) {
 
 
         <TableHead>
-            <button onClick={getAvailableDoctors}>TEST DB</button>
+            <button onClick={getAvailableDoctors}>TEST DB DOCTORS</button>
+            <button onClick={getNewPatients}>TEST DB PATIENTS</button>
+
             <TableRow>
 
                 {headCells.map((headCell) => (
@@ -316,6 +319,7 @@ export default function UnpairedPatientListTable() {
                                                     <TableCell align="center"> {item.priorityNumber} </TableCell>
                                                     <TableCell align="center"> {item.firstName} </TableCell>
                                                     <TableCell align="center"> {item.lastName} </TableCell>
+                                                    <TableCell align="center"> {item.address} </TableCell>
                                                     <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon /></TableCell>
                                                     <TableCell align="center"><Button className={classes.pair} onClick={handleOpen}>Find a doctor</Button></TableCell>
                                                 </TableRow>
