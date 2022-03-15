@@ -7,6 +7,7 @@
         "profileLink": "http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg",
         "priorityNumber": 1,
         "isFlagged": false,
+        "address": "Montreal",
         "doctor": null
     },
     {
@@ -18,7 +19,8 @@
         "profileLink": "http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg",
         "priorityNumber": 2,
         "isFlagged": false,
-        "doctor": null
+        "doctor": null,
+        "address": "Montreal"
     },
     {
         "firstName": "Jack",
@@ -29,6 +31,7 @@
         "profileLink": "http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg",
         "priorityNumber": 3,
         "isFlagged": true,
+        "address": "Montreal",
         "doctor": "016632488"
     },
     {
@@ -40,6 +43,7 @@
         "profileLink": "http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg",
         "priorityNumber": 4,
         "isFlagged": true,
+        "address": "Montreal",
         "doctor": "083444903"
     },
     {
@@ -51,6 +55,7 @@
         "profileLink": "http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg",
         "priorityNumber": 5,
         "isFlagged": false,
+        "address": "Montreal",
         "doctor": null
     },
     {
@@ -62,6 +67,7 @@
         "profileLink": "http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg",
         "priorityNumber": 6,
         "isFlagged": false,
+        "address": "Montreal",
         "doctor": null
     },
     {
@@ -73,6 +79,7 @@
         "profileLink": "http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg",
         "priorityNumber": 7,
         "isFlagged": true,
+        "address": "Montreal",
         "doctor": "081644903"
     },
     {
@@ -84,6 +91,7 @@
         "profileLink": "http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg",
         "priorityNumber": 8,
         "isFlagged": true,
+        "address": "Laval",
         "doctor": null
     },
     {
@@ -95,6 +103,7 @@
         "profileLink": "http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg",
         "priorityNumber": 9,
         "isFlagged": false,
+        "address": "Laval",
         "doctor": null
     },
     {
@@ -106,6 +115,7 @@
         "profileLink": "http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg",
         "priorityNumber": 10,
         "isFlagged": false,
+        "address": "Laval",
         "doctor": "083444903"
     },
     {
@@ -117,6 +127,7 @@
         "profileLink": "http://fosi-assets.s3.amazonaws.com/media/original_images/funny-game-of-thrones-memes-coverimage.jpg",
         "priorityNumber": 11,
         "isFlagged": false,
+        "address": "Laval",
         "doctor": "083444903"
     }
 ]
