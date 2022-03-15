@@ -13,75 +13,20 @@ import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
-import LinkIcon from '@mui/icons-material/Link';
-import mockedDatas from "../DoctorDashboard/patientListTableMockData.json"
+import mockedDatas from "../DoctorDashboard/doctorListTableMockData.json";
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
-import Modal from '@mui/material/Modal';
-import DoctorListTable from '../CommonTabs/doctorListTable';
-import AWS from 'aws-sdk'
-import awsConfig from '../../../aws-config.json'
-import AvailableDoctors from './AvailableDoctors';
-import CloseIcon from '@mui/icons-material/Close';
 
-AWS.config.update(awsConfig);
-const docClient = new AWS.DynamoDB.DocumentClient()
-
-//database query for doctors with (< 10 patients) and (city = patient city)
-
-const getAvailableDoctors = async () => {
-    var params = {
-        TableName: "doctors",
-        FilterExpression: "#count < :max",
-        ExpressionAttributeNames: {
-            "#count": "patientCount"
-        },
-        ExpressionAttributeValues: {
-            ":max": 10
-        }
-    }
-      try {
-        const data = await docClient.scan(params).promise()
-        //console logged data
-        alert(JSON.stringify(data))
-        console.log(JSON.parse(JSON.stringify(data)))
-        return { body: JSON.stringify(data) }
-      } catch (err) {
-        alert("could not retrieve data >:(")
-      }
-}
-
-const getNewPatients = async () => {
-    var params = {
-        TableName: "Patients",
-        FilterExpression: "#count = :zero",
-        ExpressionAttributeNames: {
-            "#count": "doctor"
-        },
-        ExpressionAttributeValues: {
-            ":zero": 0
-        }
-    }
-      try {
-        const data = await docClient.scan(params).promise()
-        //console logged data
-        alert(JSON.stringify(data))
-        console.log(JSON.parse(JSON.stringify(data)))
-        return { body: JSON.stringify(data) }
-      } catch (err) {
-        alert("could not retrieve data >:(")
-      }
-}
 
 const useStyles = makeStyles((theme) => ({
     pair: {
-
         '&:hover': {
             backgroundColor: 'rgba(63, 81, 181, 0.5)',
             color: '#fff',
         }
     },
-    exitButton: {
+    modal:{
+        backgroundColor:'#fff',
         position: 'absolute',
         top: '5px', 
         right: '5px' ,
@@ -92,21 +37,6 @@ const useStyles = makeStyles((theme) => ({
     }
 })
 );
-
-
-//styling for the modal
-const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-   // width: ,
-    bgcolor: 'background.paper',
-    //border: '2px solid #000',
-    boxShadow: 24,
-    borderRadius: '1%',
-    p: 4,
-};
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -140,10 +70,19 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'priorityNumber',
-        numeric: true,
+        id: 'licenseNumber',
         disablePadding: false,
-        label: 'Priority',
+        label: 'License Number',
+    },
+    {
+        id: 'address',
+        disablePadding: false,
+        label: 'Address',
+    },
+    {
+        id: 'email',
+        disablePadding: false,
+        label: 'Email',
     },
     {
         id: 'firstName',
@@ -156,14 +95,9 @@ const headCells = [
         label: 'Last Name',
     },
     {
-        id: 'profileLink',
+        id:'button',
         disablePadding: false,
-        label: 'Profile Link',
-    },
-    {
-        id: 'patient-doctor-pairing',
-        disablePadding: false,
-        label: 'Pair to a doctor'
+        label: 'Select doctor',
     }
 ];
 
@@ -179,13 +113,12 @@ function EnhancedTableHead(props) {
 
 
         <TableHead>
-            <button onClick={getAvailableDoctors}>TEST DB</button>
             <TableRow>
 
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={'center'}
+                        align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -205,8 +138,6 @@ function EnhancedTableHead(props) {
                 ))}
             </TableRow>
         </TableHead>
-
-
     );
 }
 
@@ -218,35 +149,24 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-function getNumItems() {
-    var counter = 0;
-    mockedDatas.forEach(element => {
-        if (!element.doctor)
-            counter++;
-    })
-    return counter;
-};
 
-export default function UnpairedPatientListTable() {
-    const classes = useStyles();
+export default function AvailableDoctors() {
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    const newPatientNumber = getNumItems();
+    const classes = useStyles();
 
-    //modal 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
+
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -262,7 +182,6 @@ export default function UnpairedPatientListTable() {
     };
 
 
-
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - mockedDatas.length) : 0;
@@ -270,25 +189,13 @@ export default function UnpairedPatientListTable() {
 
     return (
         <div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={modalStyle}>
-                <Button className={classes.exitButton} onClick={handleClose}><CloseIcon/></Button>
-                    <AvailableDoctors />
-                </Box>
-            </Modal>
-
-            <h2>Patients</h2>
+            <h2>Available doctors</h2>   
             <Box sx={{ width: '100%' }}>
                 <Paper sx={{ width: '100%', mb: 2 }}>
                     <TableContainer>
                         <Table
                             sx={{ minWidth: 750 }}
-                            aria-labelledby="patientListTable"
+                            aria-labelledby="doctorListTable"
                             size={dense ? 'small' : 'medium'}
                         >
                             <EnhancedTableHead
@@ -296,7 +203,7 @@ export default function UnpairedPatientListTable() {
                                 order={order}
                                 orderBy={orderBy}
                                 onRequestSort={handleRequestSort}
-                                rowCount={newPatientNumber}
+                                rowCount={mockedDatas.length}
                             />
                             <TableBody>
                                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
@@ -304,23 +211,22 @@ export default function UnpairedPatientListTable() {
                                 {stableSort(mockedDatas, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((item) => {
-                                        if (!item.doctor) {
-                                            return (
-                                                // setNumItems(prevState => (prevState+1)),
-                                                <TableRow
-                                                    hover
-                                                    role="checkbox"
-                                                    tabIndex={-1}
-                                                    key={item.name}
-                                                >
-                                                    <TableCell align="center"> {item.priorityNumber} </TableCell>
-                                                    <TableCell align="center"> {item.firstName} </TableCell>
-                                                    <TableCell align="center"> {item.lastName} </TableCell>
-                                                    <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon /></TableCell>
-                                                    <TableCell align="center"><Button className={classes.pair} onClick={handleOpen}>Find a doctor</Button></TableCell>
-                                                </TableRow>
-                                            );
-                                        }
+
+                                        return (
+                                            <TableRow
+                                                hover
+                                                role="checkbox"
+                                                tabIndex={-1}
+                                                key={item.name}
+                                            >
+                                                <TableCell align="center">{item.licenseNumber}</TableCell>
+                                                <TableCell align="center">{item.address}</TableCell>
+                                                <TableCell align="center">{item.email}</TableCell>
+                                                <TableCell align="center">{item.firstName}</TableCell>
+                                                <TableCell align="center">{item.lastName}</TableCell>
+                                                <TableCell><Button className={classes.pair} onClick='#'>Select</Button></TableCell>
+                                            </TableRow>
+                                        );
                                     })}
                                 {emptyRows > 0 && (
                                     <TableRow
@@ -328,7 +234,7 @@ export default function UnpairedPatientListTable() {
                                             height: (dense ? 33 : 53) * emptyRows,
                                         }}
                                     >
-                                        <TableCell colSpan={6} />
+                                        <TableCell colSpan={12} />
                                     </TableRow>
                                 )}
                             </TableBody>
@@ -337,7 +243,7 @@ export default function UnpairedPatientListTable() {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={newPatientNumber}
+                        count={mockedDatas.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}
