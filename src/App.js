@@ -20,6 +20,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import PatientProfileUpdate from './components/UserProfile/PatientProfile/PatientProfileUpdate'
 import Navbar from './components/Navbar/Navbar'
 import DoctorProfileUpdate from'./components/UserProfile/DoctorProfile/DoctorProfileUpdate'
+import ReportFormDb from './components/Pdf/ReportFormDB'
 
 ///* Make sure to update file when adding to App.css!!*/
 
@@ -40,6 +41,8 @@ function App() {
             <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
             <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
             <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
+            <Route path='/report-example' element={[<ReportFormDb/>]} /> {/* example form that produces pdf report*/}
+
         </Routes>
     );
 }
