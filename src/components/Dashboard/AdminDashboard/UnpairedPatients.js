@@ -17,7 +17,6 @@ import LinkIcon from '@mui/icons-material/Link';
 import mockedDatas from "../DoctorDashboard/patientListTableMockData.json"
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import DoctorListTable from '../CommonTabs/doctorListTable';
 import AWS from 'aws-sdk'
@@ -31,7 +30,6 @@ const docClient = new AWS.DynamoDB.DocumentClient()
 const getAvailableDoctors = async () => {
     var params = {
         TableName: "doctors",
-       // ProjectionExpression: "#yr, title, info.rating",
         FilterExpression: "#count < :max",
         ExpressionAttributeNames: {
             "#count": "patientCount"
@@ -44,6 +42,7 @@ const getAvailableDoctors = async () => {
         const data = await docClient.scan(params).promise()
         //console logged data
         alert(JSON.stringify(data))
+        console.log(JSON.parse(JSON.stringify(data)))
         return { body: JSON.stringify(data) }
       } catch (err) {
         alert("could not retrieve data >:(")
@@ -284,7 +283,7 @@ export default function UnpairedPatientListTable() {
                                                     <TableCell align="center"> {item.firstName} </TableCell>
                                                     <TableCell align="center"> {item.lastName} </TableCell>
                                                     <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon /></TableCell>
-                                                    <TableCell><Button className={classes.pair} onClick={handleOpen}>Find a doctor</Button></TableCell>
+                                                    <TableCell align="center"><Button className={classes.pair} onClick={handleOpen}>Find a doctor</Button></TableCell>
                                                 </TableRow>
                                             );
                                         }
