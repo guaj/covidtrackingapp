@@ -20,7 +20,37 @@ import { makeStyles } from '@material-ui/styles';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import DoctorListTable from '../CommonTabs/doctorListTable';
+import AWS from 'aws-sdk'
+import awsConfig from '../../../aws-config.json'
+ 
+AWS.config.update(awsConfig);
+const docClient = new AWS.DynamoDB.DocumentClient()
 
+//database query for doctors with (< 10 patients) and (city = patient city)
+
+const getAvailableDoctors = async () => {
+    var params = {
+        TableName: "doctors",
+       // ProjectionExpression: "#yr, title, info.rating",
+        FilterExpression: "#count < :max",
+        ExpressionAttributeNames: {
+            "#count": "patientCount"
+        },
+        ExpressionAttributeValues: {
+            ":max": 10
+        }
+    }
+      try {
+        const data = await docClient.scan(params).promise()
+        //console logged data
+        alert(JSON.stringify(data))
+        return { body: JSON.stringify(data) }
+      } catch (err) {
+        alert("could not retrieve data >:(")
+      }
+}
+
+//styling for the modal
 const modalStyle = {
     position: 'absolute',
     top: '50%',
@@ -117,6 +147,7 @@ function EnhancedTableHead(props) {
 
 
         <TableHead>
+            <button onClick={getAvailableDoctors}>TEST DB</button>
             <TableRow>
 
                 {headCells.map((headCell) => (
