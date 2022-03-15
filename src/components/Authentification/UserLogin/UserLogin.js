@@ -7,6 +7,8 @@ import {useEffect, useState} from "react";
 import loginData from "./userLoginMockData";
 import LoginForm from "./LoginForm";
 import Button from "@material-ui/core/Button";
+import AWS from 'aws-sdk';
+import awsConfig from '../../../aws-config.json';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -28,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+AWS.config.update(awsConfig);
+const docClient = new AWS.DynamoDB.DocumentClient();
 
 export default function UsersLogin() {
     const classes = useStyles();
@@ -48,6 +52,8 @@ export default function UsersLogin() {
             setErrorMessage("You need to log in to view that page!");
         }
     }, [])
+
+
 
     const Login = details => {
         console.log(details);

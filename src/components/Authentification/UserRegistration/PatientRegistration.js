@@ -14,6 +14,7 @@ import { useState } from "react";
 import PasswordStrengthBar from 'react-password-strength-bar';
 import React from 'react';
 import AWS from "aws-sdk";
+import awsConfig from '../../../aws-config.json';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -56,6 +57,7 @@ const setForm = (event => {
 })
 
 //to connect to DynamoDB
+AWS.config.update(awsConfig);
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 export default function SignUpPatient() {
@@ -99,9 +101,10 @@ export default function SignUpPatient() {
         }
         try {
             await docClient.put(params).promise()
-            alert("The account is created!")
+            alert("The account is created!");
         } catch (err) {
-            alert("unable to create the account")
+            alert("unable to create the account");
+            alert(err);
         }
     }
 

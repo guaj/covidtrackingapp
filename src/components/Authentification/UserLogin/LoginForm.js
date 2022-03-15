@@ -39,7 +39,7 @@ export default function LoginForm({Login, error}){
         <Typography component="h1" variant="h4" className={classes.title} >
             Log in
         </Typography>
-        {/* ERROR ! */}
+
         <TextField
             type="email"
             margin="normal"

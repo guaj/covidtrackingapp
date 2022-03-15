@@ -12,7 +12,8 @@ import geometricImage from "../../../images/geometric_gradient.jpg";
 import PasswordChecklist from "react-password-checklist";
 import { useState } from "react";
 import PasswordStrengthBar from 'react-password-strength-bar';
-import AWS from 'aws-sdk'
+import AWS from 'aws-sdk';
+import awsConfig from '../../../aws-config.json'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 //to connect to DynamoDB
+AWS.config.update(awsConfig);
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 function SignUpDoctor() {
@@ -94,7 +96,7 @@ function SignUpDoctor() {
                 "email": String(email),
                 "firstName": String(firstName),
                 "lastName": String(lastName),
-                "licenseNumber": Number(licenseNumber),
+                "licenseNumber": String(licenseNumber),
                 "password": String(password)
             }
         }
@@ -103,6 +105,7 @@ function SignUpDoctor() {
             alert("The account is created!");
         } catch (err) {
             alert("unable to create the account");
+            alert(err);
         }
     }
 
