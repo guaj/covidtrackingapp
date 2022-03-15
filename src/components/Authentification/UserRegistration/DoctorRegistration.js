@@ -12,6 +12,9 @@ import geometricImage from "../../../images/geometric_gradient.jpg";
 import PasswordChecklist from "react-password-checklist";
 import { useState } from "react";
 import PasswordStrengthBar from 'react-password-strength-bar';
+import AWS from 'aws-sdk';
+import awsConfig from '../../../aws-config.json';
+
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -49,15 +52,62 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const setForm = (event => {
-    return event.target.value;
-})
 
-export default function SignUpDoctor() {
+//to connect to DynamoDB
+AWS.config.update(awsConfig);
+const docClient = new AWS.DynamoDB.DocumentClient();
+
+function SignUpDoctor() {
     const classes = useStyles();
-    const [password, setPassword] = useState("")
-	const [passwordAgain, setPasswordAgain] = useState("")
+    const [email,setEmail]= useState('')
+    const [firstName,setFirstName] = useState('')
+    const [lastName,setLastName]=useState('')
+    const [licenseNumber,setLicenseNumber]=useState('')
+    const [password, setPassword] = useState('')
+	const [passwordAgain, setPasswordAgain] = useState('')
     const [valid, setValid] = useState(false)
+
+    const handleEmailChange = e =>{
+        setEmail(e.target.value)
+    };
+    const handleFirstNameChange = e =>{
+        setFirstName(e.target.value)
+    };
+    const handleLastNameChange = e =>{
+        setLastName(e.target.value)
+    };
+    const handleLicenseNumberChange = e=>{
+        setLicenseNumber(e.target.value)
+    };
+
+    const handlePasswordChange = e=>{
+        setPassword(e.target.value)
+    };
+    const handlePasswordAgainChange = e=>{
+        setPasswordAgain(e.target.value)
+    };
+
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        const params = {
+            TableName: "doctors",
+            Item: {
+                "type": String("doctor"),
+                "email": String(email),
+                "firstName": String(firstName),
+                "lastName": String(lastName),
+                "licenseNumber": String(licenseNumber),
+                "password": String(password)
+            }
+        }
+        try {
+            await docClient.put(params).promise()
+            alert("The account is created!");
+        } catch (err) {
+            alert("unable to create the account");
+            alert(err);
+        }
+    }
 
     return (
         <Grid container component="main">
@@ -69,7 +119,7 @@ export default function SignUpDoctor() {
                     <Typography component="h1" variant="h4" className={classes.title} >
                         Register as a Doctor
                     </Typography>
-                    <form className={classes.form} id='form' onSubmit={(e) => setForm(e.target.value)}>
+                    <form className={classes.form} id='form' onSubmit={handleSubmit}>
                         <TextField
                             type="email"
                             margin="normal"
@@ -81,6 +131,8 @@ export default function SignUpDoctor() {
                             autoComplete="email"
                             helperText="Email"
                             data-testid="sign-up-email"
+                            onChange={handleEmailChange}
+                            value={email}
                         />
                         <TextField
                             type="text"
@@ -92,6 +144,8 @@ export default function SignUpDoctor() {
                             name="firstName"
                             autoComplete="firstName"
                             helperText="First Name"
+                            onChange={handleFirstNameChange}
+                            value={firstName}
                         />
                         <TextField
                             type="text"
@@ -103,6 +157,8 @@ export default function SignUpDoctor() {
                             name="lastName"
                             autoComplete="lastName"
                             helperText="Last Name"
+                            onChange={handleLastNameChange}
+                            value={lastName}
                         />
                         <TextField
                             type="text"
@@ -114,6 +170,8 @@ export default function SignUpDoctor() {
                             name="licenseNumber"
                             autoComplete=""
                             helperText="License number"
+                            onChange={handleLicenseNumberChange}
+                            value={licenseNumber}
                         />
                         <TextField
                             data-testid="sign-up-psw1"
@@ -126,7 +184,8 @@ export default function SignUpDoctor() {
                             id="password"
                             helperText="Password"
                             autoComplete="current-password"
-                            onChange={e => setPassword(e.target.value)}
+                            onChange={handlePasswordChange}
+                            value={password}
                         />
                         <TextField
                             data-testid="sign-up-psw2"
@@ -138,7 +197,8 @@ export default function SignUpDoctor() {
                             label="* * * *"
                             id="password"
                             helperText="Confirm your password"
-                            onChange={e => setPasswordAgain(e.target.value)}
+                            onChange={handlePasswordAgainChange}
+                            value={passwordAgain}
                         />
                         <PasswordStrengthBar 
                             password={password}
@@ -186,3 +246,5 @@ export default function SignUpDoctor() {
         </Grid>
     );
 }
+
+export default SignUpDoctor

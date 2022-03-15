@@ -8,6 +8,7 @@ import loginData from "./userLoginMockData";
 import LoginForm from "./LoginForm";
 import Button from "@material-ui/core/Button";
 
+
 const useStyles = makeStyles((theme) => ({
     image: {
         backgroundImage: `url(${geometricImage})`,
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     }
 }));
+
 
 
 
@@ -48,6 +50,8 @@ export default function UsersLogin() {
             setErrorMessage("You need to log in to view that page!");
         }
     }, [])
+
+
 
     const Login = details => {
         console.log(details);
