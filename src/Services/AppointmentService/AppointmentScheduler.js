@@ -13,16 +13,17 @@ export default function StaticDatePickerLandscape() {
     const [value, setValue] = React.useState(new Date());
     const [dayValue, setDayValue] = React.useState(dayToString(value.getDay()))
     const [timeValue, setTimeValue] = React.useState(0);
+    const [availTimes, setAvailTimes]= React.useState([]);
 
     const todayDate = new Date();
 
-    const availTimes = (mockDoctorAvailabilities[0].mon).split(";");
 
 
     let timeButtons = [
         availTimes.map((item,i) =>
             <Button
                 key={i}
+                size="large"
                 value={item}
                 onClick={setTime}
             >{item}</Button>
@@ -34,25 +35,40 @@ export default function StaticDatePickerLandscape() {
     }
 
 
-    function dayToString(day) {
-        if(day === 0)
+    async function dayToString(day) {
+        if(day === 0) {
+            setAvailTimes((mockDoctorAvailabilities[0].sun).split(";"));
             return "sun"
-        else if(day === 1)
+        }
+        else if(day === 1) {
+            setAvailTimes((mockDoctorAvailabilities[0].mon).split(";"));
             return "mon"
-        else if(day === 2)
+        }
+        else if(day === 2) {
+            setAvailTimes((mockDoctorAvailabilities[0].tue).split(";"));
             return "tue"
-        else if(day === 3)
+        }
+        else if(day === 3) {
+            setAvailTimes((mockDoctorAvailabilities[0].wed).split(";"));
             return "wed"
-        else if(day === 4)
+        }
+        else if(day === 4) {
+            setAvailTimes((mockDoctorAvailabilities[0].thu).split(";"));
             return "thu"
-        else if(day === 5)
+        }
+        else if(day === 5) {
+            setAvailTimes((mockDoctorAvailabilities[0].fri).split(";"));
             return "fri"
-        else if(day === 6)
+        }
+        else if(day === 6) {
+            setAvailTimes((mockDoctorAvailabilities[0].sat).split(";"));
             return "sat"
+        }
+
     }
 
     function getTime() {
-        alert("Date: "+value+"\nTime: "+timeValue);
+        alert("Date: "+value.toDateString() +"\nTime: "+timeValue);
     }
 
     return (
@@ -76,13 +92,19 @@ export default function StaticDatePickerLandscape() {
 
                 </div>
                 <div className="col-md-4">
-                    <ButtonGroup
-                        orientation="vertical"
-                        variant="contained"
-                        size="large"
+                    <div className="title">
+                        <h7>SELECT TIME</h7>
+                    </div>
+                    <div className="timePicker">
+                        <ButtonGroup
+                            orientation="vertical"
+                            variant="contained"
+                            size="large"
                         >
-                        {timeButtons}
-                    </ButtonGroup>
+                            {timeButtons}
+                        </ButtonGroup>
+                    </div>
+
                 </div>
             </div>
             <div className="button">
@@ -91,7 +113,7 @@ export default function StaticDatePickerLandscape() {
                     variant="contained"
                     onClick={getTime}
                 >
-                    Select Date
+                    Select Appointment
                 </Button>
             </div>
         </div>
