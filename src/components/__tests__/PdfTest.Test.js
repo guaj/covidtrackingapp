@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import PdfTest from './App';
+import PdfTest from '../Dashboard/DoctorDashboard/PdfTest';
 
 test('renders learn react link', () => {
   const { getByText } = render(<PdfTest />);
