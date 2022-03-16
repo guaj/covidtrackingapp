@@ -75,6 +75,7 @@ export default function StaticDatePickerLandscape() {
         <div>
             <Navbar/>
             <div className="row">
+
                 <div className="col-md-8 datePicker">
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <StaticDatePicker
@@ -89,8 +90,8 @@ export default function StaticDatePickerLandscape() {
                             renderInput={(params) => <TextField {...params} />}
                         />
                     </LocalizationProvider>
-
                 </div>
+
                 <div className="col-md-4">
                     <div className="title">
                         <h7>SELECT TIME</h7>

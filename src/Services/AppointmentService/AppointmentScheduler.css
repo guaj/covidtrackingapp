@@ -4,6 +4,7 @@
 }
 .button {
    padding-top:10px;
+    position: relative;
 }
 .row {
     display: flex;
