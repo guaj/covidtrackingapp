@@ -6,13 +6,10 @@
 .pnp.js
 package-lock.json
 
-#aws credentials 
-<<<<<<< HEAD
+#aws credentials
 aws-config.json
 */aws-config.json
-=======
-src/aws-config.json
->>>>>>> 72969c9b7f2b07e4dcb5953eea06959414061ab7
+
 
 # testing
 /coverage
