@@ -21,7 +21,7 @@ import Modal from '@mui/material/Modal';
 import AvailableDoctors from './AvailableDoctors';
 import { getAvailableDoctors, getNewPatients } from './databaseFacade'
 import CloseIcon from '@mui/icons-material/Close';
-
+import {useState, useEffect} from 'react'
 
 //database query for doctors with (< 10 patients) and (city = patient city)
 
@@ -189,8 +189,17 @@ function getNumItems() {
 
 
 export default function UnpairedPatientListTable() {
-    let test = getAvailableDoctors()
-    test.then(item => console.log(item.Items[0]))
+    const [token, setToken] = useState(null);
+  useEffect(() => {
+     async function getToken() {
+         const token = await getAvailableDoctors()
+         setToken(token);
+     }
+     getToken();
+  }, [])
+   
+  console.log(token.Items[0])
+
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
