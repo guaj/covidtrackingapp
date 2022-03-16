@@ -18,59 +18,13 @@ import mockedDatas from "../DoctorDashboard/patientListTableMockData.json"
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
 import Modal from '@mui/material/Modal';
-import AWS from 'aws-sdk'
-import awsConfig from '../../../aws-config.json'
 import AvailableDoctors from './AvailableDoctors';
+import { getAvailableDoctors, getNewPatients } from './databaseFacade'
 import CloseIcon from '@mui/icons-material/Close';
 
-AWS.config.update(awsConfig);
-const docClient = new AWS.DynamoDB.DocumentClient()
 
 //database query for doctors with (< 10 patients) and (city = patient city)
-const getAvailableDoctors = async () => {
-    var params = {
-        TableName: "doctors",
-        FilterExpression: "#count < :max",
-        ExpressionAttributeNames: {
-            "#count": "patientCount"
-        },
-        ExpressionAttributeValues: {
-            ":max": 10
-        }
-    }
-      try {
-          
-        const data = await docClient.scan(params).promise()
-        alert(JSON.stringify(data))
-        return data
 
-      } catch (err) {
-        alert("could not retrieve data >:(")
-      }
-}
-
-//database query for finding new patients
-const getNewPatients = async () => {
-    var params = {
-        TableName: "patients",
-        FilterExpression: "#doc = :zero OR attribute_not_exists(#doc)",
-        ExpressionAttributeNames: {
-            "#doc": "doctor"
-        },
-        ExpressionAttributeValues: {
-            ":zero": ""
-        }
-    }
-        try {
-            const data = await docClient.scan(params).promise()
-            //console logged data
-            alert(JSON.stringify(data))
-            console.log(data.Items)
-            return (JSON.parse(data.Items));
-        } catch (err) {
-            alert("could not retrieve data >:(")
-        }
-}
 
 const useStyles = makeStyles((theme) => ({
     pair: {
