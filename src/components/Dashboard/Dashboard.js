@@ -52,7 +52,7 @@ function DisplayUserTabs() {
 
         case 'admin':
             return <AdminTabs/>;
-
+            
         default: alert("invalid user type: something has gone *really* wrong")
     }
 }
