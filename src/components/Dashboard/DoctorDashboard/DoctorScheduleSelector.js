@@ -42,7 +42,7 @@ export default class DoctorScheduleSelector extends React.Component {
         return convertScheduleStringToArrayOfDates(result.Item.dailyAvailabilities)
     };
 
-    state = { schedule : []} // changed = to : ?
+    state = { schedule :[]} // changed = to : ?
 
     async componentDidMount() {
         this.setState({schedule: await this.retrieveData()});

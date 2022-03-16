@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import AWS from 'aws-sdk';
 import awsConfig from '../../../aws-config.json';
 
@@ -43,6 +43,5 @@ export async function retrieveDoctorSchedule(tableName) {
         }
     };
 
-    var result = await docClient.get(params).promise();
-    return result;
+    return await docClient.get(params).promise();
 }
