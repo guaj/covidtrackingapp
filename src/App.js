@@ -30,7 +30,7 @@ function App() {
                     <Route path="/schedule-appointment" element={[<AppointmentScheduler/>]} />
                     <Route path='/about' element={[ <AboutUs/>]} />
                     <Route path='/dashboard' element={[<Dashboard/>]} />
-                    <Route path="/profile/:user_id" element={[<UserProfile/>]} />
+                    <Route path="/profile/:user_email" element={[<UserProfile/>]} />
                     <Route path="/login#redirect" element={[<NavbarHome/>, <UsersLogin/>]} />
                     <Route path="/login" element={[<NavbarHome/>, <UsersLogin/>]} />
                     <Route exact path='/' element={[<NavbarHome/>, <UsersLogin/>]} />
