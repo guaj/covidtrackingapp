@@ -3,7 +3,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
-import '../../profile.css'
+import '../../../components/profile.css'
 import * as React from 'react';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -12,7 +12,7 @@ import geometricImage from "../../../images/geometric_gradient.jpg";
 
 import data from "./logged_in_patient_mock_data.json";
 import {useState, Fragment, useEffect} from "react";
-import Navbar from "../../Navbar/Navbar";
+import Navbar from "../../../components/Navbar/Navbar";
 
 
 const useStyles = makeStyles((theme) => ({

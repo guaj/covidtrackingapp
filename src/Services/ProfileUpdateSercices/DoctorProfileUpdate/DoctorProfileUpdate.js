@@ -9,7 +9,7 @@ import * as React from "react";
 import geometricImage from "../../../images/geometric_gradient.jpg";
 import data from "./logged_in_doctor_mock_data.json";
 import {useState, Fragment, useEffect} from "react";
-import Navbar from "../../Navbar/Navbar";
+import Navbar from "../../../components/Navbar/Navbar";
 
 
 const useStyles = makeStyles((theme) => ({

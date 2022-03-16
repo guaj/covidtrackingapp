@@ -1,5 +1,5 @@
    import {render, screen} from "@testing-library/react"
-   import DoctorProfileUpdate from "../UserProfile/DoctorProfile/DoctorProfileUpdate"
+   import DoctorProfileUpdate from "../../Services/ProfileUpdateSercices/DoctorProfileUpdate/DoctorProfileUpdate"
 
    test("Check that the name fields in the form is rendered", () => {
        render(<DoctorProfileUpdate/>);
