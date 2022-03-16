@@ -2,11 +2,8 @@ import * as React from 'react';
 import ScheduleSelector from 'react-schedule-selector';
 import Button from "@material-ui/core/Button";
 import "./DoctorSchedule.css";
-import {
-    addDoctorSchedule, getDoctorScheduleData,
-    retrieveDoctorSchedule,
-} from "./DoctorScheduleDynamoDBAdapter";
-import AWS from "aws-sdk";
+import { addDoctorSchedule, retrieveDoctorSchedule,} from "./DoctorScheduleDynamoDBAdapter";
+
 
 
 let testDate1 = new Date('Wed Jan 04 2073 11:00:00 GMT-0500 (EST)');
@@ -31,10 +28,6 @@ function convertScheduleStringToArrayOfDates(scheduleStringData){
 
 
 export default class DoctorScheduleSelector extends React.Component {
-
-    oldSchedule = async () => {
-        return testDates
-    };
 
 
     retrieveData = async () => {

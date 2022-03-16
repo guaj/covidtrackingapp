@@ -1,20 +1,16 @@
 import React from "react";
 import AWS from 'aws-sdk';
 import awsConfig from '../../../aws-config.json';
+require('dotenv').config()
 
-AWS.config.update(awsConfig);
+AWS.config.update({
+    region: process.env.REACT_APP_region,
+    accessKeyId: process.env.REACT_APP_accessKeyId,
+    secretAccessKey: process.env.REACT_APP_secretAccessKey
+});
 
-var docClient = new AWS.DynamoDB.DocumentClient();
+const docClient = new AWS.DynamoDB.DocumentClient();
 
-var doctorScheduleData;
-
-export function setDoctorScheduleData(schedule){
-    doctorScheduleData = schedule;
-}
-
-export function getDoctorScheduleData(){
-    return doctorScheduleData;
-}
 
 //This rewrites the entire table each iteration
 export const addDoctorSchedule = (tableName , data) => {
