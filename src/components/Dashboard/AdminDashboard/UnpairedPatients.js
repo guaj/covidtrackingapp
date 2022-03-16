@@ -49,24 +49,27 @@ const getAvailableDoctors = async () => {
       }
 }
 
-//database query for doctors with (< 10 patients) and (city = patient city)
+//database query for finding new patients
 const getNewPatients = async () => {
     var params = {
         TableName: "patients",
-        FilterExpression: "doctor = :zero",
+        FilterExpression: "#doc = :zero OR attribute_not_exists(#doc)",
+        ExpressionAttributeNames: {
+            "#doc": "doctor"
+        },
         ExpressionAttributeValues: {
-            ":zero": null
+            ":zero": ""
         }
     }
-      try {
-        const data = await docClient.scan(params).promise()
-        //console logged data
-        alert(JSON.stringify(data))
-        console.log(JSON.parse(JSON.stringify(data)))
-        return { body: JSON.stringify(data) }
-      } catch (err) {
-        alert("could not retrieve data >:(")
-      }
+        try {
+            const data = await docClient.scan(params).promise()
+            //console logged data
+            alert(JSON.stringify(data))
+            console.log(data.Items)
+            return (JSON.parse(data.Items));
+        } catch (err) {
+            alert("could not retrieve data >:(")
+        }
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -230,6 +233,7 @@ function getNumItems() {
     return counter;
 };
 
+
 export default function UnpairedPatientListTable() {
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -263,7 +267,6 @@ export default function UnpairedPatientListTable() {
     const handleChangeDense = (event) => {
         setDense(event.target.checked);
     };
-
 
 
     // Avoid a layout jump when reaching the last page with empty rows.
