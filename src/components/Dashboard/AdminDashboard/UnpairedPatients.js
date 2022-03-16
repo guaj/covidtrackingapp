@@ -39,15 +39,18 @@ const getAvailableDoctors = async () => {
         }
     }
       try {
+          
         const data = await docClient.scan(params).promise()
-        //console logged data
         alert(JSON.stringify(data))
-        console.log(JSON.parse(JSON.stringify(data)))
-        return { body: JSON.stringify(data) }
+        return data
+
       } catch (err) {
         alert("could not retrieve data >:(")
       }
 }
+
+
+
 
 //database query for doctors with (< 10 patients) and (city = patient city)
 const getNewPatients = async () => {
@@ -62,7 +65,7 @@ const getNewPatients = async () => {
         const data = await docClient.scan(params).promise()
         //console logged data
         alert(JSON.stringify(data))
-        console.log(JSON.parse(JSON.stringify(data)))
+        //console.log(JSON.parse(JSON.stringify(data)))
         return { body: JSON.stringify(data) }
       } catch (err) {
         alert("could not retrieve data >:(")
@@ -231,6 +234,8 @@ function getNumItems() {
 };
 
 export default function UnpairedPatientListTable() {
+    let test = getAvailableDoctors()
+    test.then(item => console.log(item.Items[0]))
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');

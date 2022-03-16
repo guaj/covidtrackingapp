@@ -23,7 +23,7 @@ AWS.config.update(awsConfig);
 const docClient = new AWS.DynamoDB.DocumentClient()
 
 //database query for doctors with (< 10 patients) and (city = patient city)
-const getAvailableDoctors = async () => {
+const getAvailableDoctors2 = async () => {
     var params = {
         TableName: "doctors",
         FilterExpression: "#count < :max",
@@ -39,7 +39,7 @@ const getAvailableDoctors = async () => {
         //console logged data
         alert(JSON.stringify(data))
         console.log(JSON.parse(JSON.stringify(data)))
-        return { body: JSON.stringify(data) }
+        return JSON.parse(JSON.stringify(data))
       } catch (err) {
         alert("could not retrieve data >:(")
       }
