@@ -15,15 +15,16 @@ import PatientRegistration from './components/Authentification/UserRegistration/
 import DoctorRegistration from './components/Authentification/UserRegistration/DoctorRegistration'
 import OrganizationRegistration from './components/Authentification/UserRegistration/OrganizationRegistration';
 import UserProfile from "./components/UserProfile/UserProfile";
+import MUIPdf from './components/Dashboard/DoctorDashboard/muiTablePdf'
 
 
 import PatientProfileUpdate from './components/UserProfile/PatientProfile/PatientProfileUpdate'
 import Navbar from './components/Navbar/Navbar'
 import DoctorProfileUpdate from'./components/UserProfile/DoctorProfile/DoctorProfileUpdate'
 import ReportFormDb from './components/Pdf/ReportFormDB'
-
+import Scanner from './components/Pdf/Scanner'
+import pdfTester from './components/Dashboard/DoctorDashboard/PdfTest'
 ///* Make sure to update file when adding to App.css!!*/
-
 function App() {
     return (
         <Routes>
@@ -42,7 +43,11 @@ function App() {
             <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
             <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
             <Route path='/report-example' element={[<ReportFormDb/>]} /> {/* example form that produces pdf report*/}
+            <Route path='/scanner-example' element={[<Scanner/>]} /> {/* example form that produces pdf report*/}
+            <Route path='/pdfTester-example' element={[<pdfTester/>]} /> {/* example form that produces pdf report*/}
+            <Route path='/muipdf' element={[<MUIPdf/>]} /> {/* example form that produces pdf report*/}
 
+            
         </Routes>
     );
 }

@@ -1,7 +1,9 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import './Dashboard.css';
+import Pdf from "react-to-pdf";
 
+import ReactDOM from "react-dom";
 
 //tab components 
 import DoctorTabs from './DoctorDashboard/DoctorTabs';
@@ -10,14 +12,18 @@ import HealthOfficialTabs from './HealthOfficialDashboard/HealthOfficialTabs';
 import ImmigrationOfficialTabs from './ImmigrantOfficerDashboard/ImmigrationOfficialTabs';
 import AdminTabs from './AdminDashboard/adminDashboard';
 import Navbar from "../Navbar/Navbar";
+import PdfTest from './DoctorDashboard/PdfTest';
+
 
 const mockProfiles = [
     { name: "Tony Soprano", userType: "doctor" },
     { name: "Tony Soprano", userType: "patient" },
     { name: "Tony Soprano", userType: "health official" },
-    { name: "Tony Soprano", userType: "immigration official" },
+    { name: "Tony Soprano", userType: "iymmigration official" },
     {name: "admin", userType: "admin"}
 ]
+
+const ref = React.createRef();
 
 
 function DisplayUserTabs() {
@@ -59,15 +65,20 @@ function DisplayUserTabs() {
 
 
 
+
+
 export default function Dashboard() {
 
     return (
         <div>
             <Navbar />
+
             <div>
                 <Box sx={{ width: '80%', margin: '5% auto' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <DisplayUserTabs />
+                        {/* <DisplayUserTabs /> */}
+                       <PdfTest/>
+
                     </Box>
                 </Box>
             </div>
