@@ -5,7 +5,7 @@ import awsConfig from '../../../aws-config.json';
 AWS.config.update(awsConfig);
 
 var docClient = new AWS.DynamoDB.DocumentClient();
-let doctorID = JSON.parse(localStorage.getItem("id"))
+
 var doctorScheduleData;
 
 export function setDoctorScheduleData(schedule){
@@ -18,12 +18,16 @@ export function getDoctorScheduleData(){
 
 //This rewrites the entire table each iteration
 export const addDoctorSchedule = (tableName , data) => {
-    var params = {
-        TableName: tableName,
-        Item: {
-            "doctorID": Number(doctorID),
-            "dailyAvailabilities": String(data.schedule),
+    try {
+        let doctorID = JSON.parse(localStorage.getItem("id"))
+        var params = {
+            TableName: tableName,
+            Item: {
+                "doctorID": Number(doctorID),
+                "dailyAvailabilities": String(data.schedule),
+            }
         }
+    }catch (e) {
     }
 
     docClient.put(params, function (err, data) {
@@ -36,12 +40,16 @@ export const addDoctorSchedule = (tableName , data) => {
 }
 
 export async function retrieveDoctorSchedule(tableName) {
-    var params = {
-        TableName: tableName,
-        Key :{
-            "doctorID": Number(doctorID),
-        }
-    };
+    try {
+        let doctorID = JSON.parse(localStorage.getItem("id"))
+        var params = {
+            TableName: tableName,
+            Key: {
+                "doctorID": Number(doctorID),
+            }
+        };
 
-    return await docClient.get(params).promise();
+        return await docClient.get(params).promise();
+    } catch (e) {
+    }
 }

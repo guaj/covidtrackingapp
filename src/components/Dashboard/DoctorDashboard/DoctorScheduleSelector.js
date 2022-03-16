@@ -55,7 +55,8 @@ export default class DoctorScheduleSelector extends React.Component {
 
     handleSave = async () => {
         const scheduleData = this.state;
-        await addDoctorSchedule('DoctorSchedule' , scheduleData)
+        await addDoctorSchedule('DoctorSchedule' , scheduleData);
+        window.location = "/dashboard";
     }
 
 

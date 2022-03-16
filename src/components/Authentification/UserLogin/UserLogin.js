@@ -39,14 +39,17 @@ export default function UsersLogin() {
     useEffect(() => {
         // Check if the user is already logged in
         // If yes, redirect to his/her profile
-        if(localStorage.getItem("user")){
-            window.location = "/dashboard"
-        }
-        // Display the error message if the user was trying to access a page without logging in
-        if(window.location.hash === "#redirect"){
-            setSuccessMessage("");
-            setErrorMessage("You need to log in to view that page!");
-        }
+        try{
+            if(localStorage.getItem("user")){
+                window.location = "/dashboard"
+            }
+            // Display the error message if the user was trying to access a page without logging in
+            if(window.location.hash === "#redirect"){
+                setSuccessMessage("");
+                setErrorMessage("You need to log in to view that page!");
+            }
+        }catch(e) {}
+
     }, [])
 
     const Login = details => {
