@@ -16,8 +16,8 @@ import { visuallyHidden } from '@mui/utils';
 import mockedDatas from "../DoctorDashboard/doctorListTableMockData.json";
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
-import dbFunctions from './databaseFacade'
-
+import { getAvailableDoctors, getNewPatients } from './databaseFacade'
+import {useState, useEffect} from 'react'
 
 const useStyles = makeStyles((theme) => ({
     pair: {
@@ -159,6 +159,17 @@ export default function AvailableDoctors() {
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const classes = useStyles();
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+    
+        (async () => {
+          const dbData = await getAvailableDoctors();
+          setData(dbData.Items);console.log(dbData.Items[0]);
+        })();
+    
+      },[]);
+       
 
 
     const handleRequestSort = (event, property) => {
@@ -187,7 +198,7 @@ export default function AvailableDoctors() {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - mockedDatas.length) : 0;
 
-
+if(data) {
     return (
         <div>
             <h2>Available doctors</h2>   
@@ -209,7 +220,7 @@ export default function AvailableDoctors() {
                             <TableBody>
                                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                                {stableSort(mockedDatas, getComparator(order, orderBy))
+                                {stableSort(data, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((item) => {
 
@@ -258,5 +269,6 @@ export default function AvailableDoctors() {
             </Box>
         </div>
 
-    );
+    ); }
+    else return null; 
 }

@@ -189,16 +189,26 @@ function getNumItems() {
 
 
 export default function UnpairedPatientListTable() {
-    const [token, setToken] = useState(null);
-  useEffect(() => {
-     async function getToken() {
-         const token = await getAvailableDoctors()
-         setToken(token);
-     }
-     getToken();
-  }, [])
+    const [data, setData] = useState(null);
+
+//     async function getToken() {
+//         const token = await getAvailableDoctors()
+//         setToken(token);
+//     }
+//   useEffect(() => {
+    
+//      getToken();
+//   }, [])
+useEffect(() => {
+
+    (async () => {
+      const dbData = await getAvailableDoctors();
+      setData(dbData.Items);console.log(dbData.Items[0]);
+    })();
+
+  },[]);
    
-  console.log(token.Items[0])
+
 
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -239,7 +249,8 @@ export default function UnpairedPatientListTable() {
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - mockedDatas.length) : 0;
 
 
-    return (
+   if (data) { return (
+        
         <div>
             <Modal
                 open={open}
@@ -272,7 +283,7 @@ export default function UnpairedPatientListTable() {
                             <TableBody>
                                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                                {stableSort(mockedDatas, getComparator(order, orderBy))
+                                {stableSort(data, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((item) => {
                                         if (!item.doctor) {
@@ -324,4 +335,6 @@ export default function UnpairedPatientListTable() {
         </div>
 
     );
+                                    }
+                                    else return null
 }

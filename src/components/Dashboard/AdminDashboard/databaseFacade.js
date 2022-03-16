@@ -19,7 +19,7 @@ export async function getAvailableDoctors()  {
       try {
           
         const data = await docClient.scan(params).promise()
-        alert(JSON.stringify(data))
+        //alert(JSON.stringify(data))
         return data
 
       } catch (err) {
@@ -42,7 +42,7 @@ export async function getNewPatients() {
         try {
             const data = await docClient.scan(params).promise()
             //console logged data
-            alert(JSON.stringify(data))
+            //alert(JSON.stringify(data))
             console.log(data.Items)
             return (JSON.parse(data.Items));
         } catch (err) {
