@@ -25,7 +25,7 @@ function DisplayUserTabs() {
     var user
     var userType
 
-    /*try {
+    try {
 
         user = JSON.parse(localStorage.getItem("id"))
         userType = JSON.parse(localStorage.getItem("type"))
@@ -50,11 +50,11 @@ function DisplayUserTabs() {
         case 'immigration official':
             return <ImmigrationOfficialTabs />
 
-        case 'admin':*/
+        case 'admin':
             return <AdminTabs/>;
             
-       // default: alert("invalid user type: something has gone *really* wrong")
-    //}
+        default: alert("invalid user type: something has gone *really* wrong")
+    }
 }
 
 
