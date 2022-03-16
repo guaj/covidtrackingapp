@@ -1,0 +1,16 @@
+.button {
+    display: flex;
+    margin: auto;
+    padding-top: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    padding-top: 50px;
+}
+
+.row {
+    padding-top: 50px;
+}
+

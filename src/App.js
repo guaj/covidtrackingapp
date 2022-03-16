@@ -18,31 +18,32 @@ import UserProfile from "./components/UserProfile/UserProfile";
 
 
 import PatientProfileUpdate from './components/UserProfile/PatientProfile/PatientProfileUpdate'
-import Navbar from './components/Navbar/Navbar'
+
 import DoctorProfileUpdate from'./components/UserProfile/DoctorProfile/DoctorProfileUpdate'
+import AppointmentScheduler from "./Services/AppointmentService/AppointmentScheduler";
 
 ///* Make sure to update file when adding to App.css!!*/
 
 function App() {
-    return (
-        <Routes>
-
-            <Route path='/about' element={[ <AboutUs/>]} />
-            <Route path='/dashboard' element={[<Dashboard/>]} />
-            <Route path="/profile/:user_id" element={[<UserProfile/>]} />
-            <Route path="/login#redirect" element={[<NavbarHome/>, <UsersLogin/>]} />
-            <Route path="/login" element={[<NavbarHome/>, <UsersLogin/>]} />
-            <Route exact path='/' element={[<NavbarHome/>, <UsersLogin/>]} />
-            <Route path='/patient-profile' element={[<NavbarProfilePatient/>, <PatientProfile/>]} />
-            <Route path='/doctor-profile' element={[<NavbarPro/>, <DoctorProfile/>]} />
-            <Route path='/user-registration' element={[<UsersRegistration/>]} />
-            <Route path='/doctor-registration' element={[<NavbarRegister/>, <DoctorRegistration/>]} />
-            <Route path='/patient-registration' element={[<NavbarRegister/>, <PatientRegistration/>]} />
-            <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
-            <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
-            <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
-        </Routes>
-    );
+        return (
+            <Routes>
+                    <Route path="/schedule-appointment" element={[<AppointmentScheduler/>]} />
+                    <Route path='/about' element={[ <AboutUs/>]} />
+                    <Route path='/dashboard' element={[<Dashboard/>]} />
+                    <Route path="/profile/:user_id" element={[<UserProfile/>]} />
+                    <Route path="/login#redirect" element={[<NavbarHome/>, <UsersLogin/>]} />
+                    <Route path="/login" element={[<NavbarHome/>, <UsersLogin/>]} />
+                    <Route exact path='/' element={[<NavbarHome/>, <UsersLogin/>]} />
+                    <Route path='/patient-profile' element={[<NavbarProfilePatient/>, <PatientProfile/>]} />
+                    <Route path='/doctor-profile' element={[<NavbarPro/>, <DoctorProfile/>]} />
+                    <Route path='/user-registration' element={[<UsersRegistration/>]} />
+                    <Route path='/doctor-registration' element={[<NavbarRegister/>, <DoctorRegistration/>]} />
+                    <Route path='/patient-registration' element={[<NavbarRegister/>, <PatientRegistration/>]} />
+                    <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
+                    <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
+                    <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
+            </Routes>
+        );
 }
 
 export default App;

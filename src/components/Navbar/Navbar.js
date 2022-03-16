@@ -56,6 +56,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+const usersWithSearchbar = [
+    "doctor",
+    "immigration official",
+    "health official",
+    "admin"
+];
+
+const usersWithNotifications = [
+    "doctor",
+    "patient"
+];
+
 export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -125,18 +137,23 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
                 <p>Dashboard</p>
             </MenuItem>
-            <MenuItem>
-                <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                >
-                    <Badge badgeContent={17} color="error">
-                        <NotificationsIcon style={{color: "#673ab7"}}/>
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
+            {/*Conditional rendering for notifications feature */}
+            {hasNotification() ?
+                <MenuItem>
+                    <IconButton
+                        size="large"
+                        aria-label="show 17 new notifications"
+                        color="inherit"
+                    >
+                        <Badge badgeContent={17} color="error">
+                            <NotificationsIcon style={{color: "#673ab7"}}/>
+                        </Badge>
+                    </IconButton>
+                    <p>Notifications</p>
+                </MenuItem>
+                : <></>
+            }
+
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
                     size="large"
@@ -152,14 +169,25 @@ export default function PrimarySearchAppBar() {
         </Menu>
     );
 
+    function hasSearchBar() {
+        let user = JSON.parse(localStorage.getItem("type"));
+        return usersWithSearchbar.includes(user);
+    }
+
+    function hasNotification() {
+        let user = JSON.parse(localStorage.getItem("type"));
+        return usersWithNotifications.includes(user);
+    }
+
     function handleLogout() {
         localStorage.setItem("id", "");
         localStorage.setItem("email", "");
         window.location = "/login" ;
     }
     function handleProfile() {
-        let user = JSON.parse(localStorage.getItem("id"))
-        window.location = "/profile/" + user;
+        let user = JSON.parse(localStorage.getItem("email"))
+        let url = user.split("@");
+        window.location = "/profile/" + url[0];
     }
 
     return (
@@ -174,12 +202,13 @@ export default function PrimarySearchAppBar() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
-                        <a href="dashboard" style={{textDecoration: "none", color: "#673ab7"}}>
+                        <a href="/dashboard" style={{textDecoration: "none", color: "#673ab7"}}>
                             COVID Tracking App
                         </a>
 
                     </Typography>
-                    <Search>
+                    {/*conditional rendering for the searchbar*/}
+                    {hasSearchBar() ? <Search>
                         <SearchIconWrapper>
                             <SearchIcon style={{color: "#673ab7"}}/>
                         </SearchIconWrapper>
@@ -188,20 +217,27 @@ export default function PrimarySearchAppBar() {
                                          inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
+                        : <></>}
+
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton href="/dashboard" size="large" aria-label="show 4 new mails" color="inherit">
                             <HomeIcon style={{color: "#673ab7"}}/>
                         </IconButton>
-                        <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={17} color="error">
-                                <NotificationsIcon style={{color: "#673ab7"}}/>
-                            </Badge>
-                        </IconButton>
+
+                        {/*conditional rendering for notifications */}
+                        {hasNotification() ?
+                            <IconButton
+                                size="large"
+                                aria-label="show 17 new notifications"
+                                color="inherit"
+                            >
+                                <Badge badgeContent={17} color="error">
+                                    <NotificationsIcon style={{color: "#673ab7"}}/>
+                                </Badge>
+                            </IconButton>
+                            : <></>
+                        }
                         <IconButton
                             size="large"
                             edge="end"

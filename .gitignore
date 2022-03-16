@@ -7,7 +7,12 @@
 package-lock.json
 
 #aws credentials 
+<<<<<<< HEAD
 src/aws-config.json
+=======
+aws-config.json
+*/aws-config.json
+>>>>>>> 69e6650724df8125c5b8ba8398dc2779530acec5
 
 # testing
 /coverage

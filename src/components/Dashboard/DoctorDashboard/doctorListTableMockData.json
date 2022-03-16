@@ -1,0 +1,19 @@
+[{
+        "licenseNumber": "016632488",
+        "address": "address random",
+        "email": "jasonwon@hotmail.com",
+        "firstName": "Jason",
+        "lastName": "Wonderlan",
+        "password": "W0derl4nd!",
+        "phoneNumber": "4389840156"
+    },
+    {
+        "licenseNumber": "081644903",
+        "address": "random address",
+        "email": "emilie.schrutt@gmail.com",
+        "firstName": "Emilie",
+        "lastName": "Schrutt",
+        "password": "1st-Emilie",
+        "phoneNumber": "5144658801"
+    }
+]

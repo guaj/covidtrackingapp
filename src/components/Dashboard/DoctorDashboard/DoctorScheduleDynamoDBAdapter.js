@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import AWS from 'aws-sdk'
-import awsConfig from '../../../aws-config.json'
+import AWS from 'aws-sdk';
+import awsConfig from '../../../aws-config.json';
 
 AWS.config.update(awsConfig);
 
@@ -35,7 +35,7 @@ export const addDoctorSchedule = (tableName , data) => {
     })
 }
 
-export function retrieveDoctorSchedule (tableName) {
+export async function retrieveDoctorSchedule(tableName) {
     var params = {
         TableName: tableName,
         Key :{
@@ -43,13 +43,6 @@ export function retrieveDoctorSchedule (tableName) {
         }
     };
 
-    var result = docClient.get(params,function(err,data){
-        if(err){
-            alert('Error',err)
-            console.log(err)
-        }else {
-          setDoctorScheduleData(JSON.stringify(data.Item.dailyAvailabilities, null, 2))
-        }
-    });
+    var result = await docClient.get(params).promise();
     return result;
 }

@@ -23,6 +23,7 @@ The goal of this project is to simulate a Software development process through t
 * open a terminal a change directory to the one you prefer to clone the project.
 * Run the following command to copy the github project
 * git clone https://github.com/guaj/covidtrackingapp.git
+* download the aws-credentials from the discord server and paste it in the root of the src folder
 
 ## Once you havew installed the project, you need to install all the dependencies with the following command
 * install React packages and dependencies: **npm install** 
