@@ -23,8 +23,8 @@ import DoctorProfileUpdate from './Services/ProfileUpdateSercices/DoctorProfileU
 import AppointmentScheduler from "./Services/AppointmentService/AppointmentScheduler";
 
 ///* Make sure to update file when adding to App.css!!*/
-
 function App() {
+
         return (
             <Routes>
                     <Route path="/schedule-appointment" element={[<AppointmentScheduler/>]} />
@@ -44,6 +44,7 @@ function App() {
                     <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
             </Routes>
         );
+
 }
 
 export default App;

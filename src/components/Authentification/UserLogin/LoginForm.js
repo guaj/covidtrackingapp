@@ -7,6 +7,9 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+
 
 const useStyles = makeStyles((theme) => ({
     submit: {
@@ -25,13 +28,26 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+
+
 export default function LoginForm({Login, error}){
     const classes = useStyles();
-    const [details, setDetails] = useState({email: "", password: ""});
-    
+    const [details, setDetails] = useState({type:"", email: "", password: ""});
+    const [value, setValue] = useState('');
+
+    const handleRadioChange = e =>{
+        setValue(e.target.value);
+    }
     const submitHandler = e => {
         e.preventDefault();
-
+        if (value === "admin")
+            details.type = value;
+        else if (value ==="patient")
+            details.type = value;
+        else if (value ==="doctor")
+            details.type = value;
+        else if (value === "org1"||value === "org2" )
+            details.type = "org"
         Login(details);
  }
  return(
@@ -39,7 +55,20 @@ export default function LoginForm({Login, error}){
         <Typography component="h1" variant="h4" className={classes.title} >
             Log in
         </Typography>
-        {/* ERROR ! */}
+
+        <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+            value={value}
+            onChange={handleRadioChange}
+        >
+            <FormControlLabel value="patient" control={<Radio />} label="patient" />
+            <FormControlLabel value="doctor" control={<Radio />} label="doctor" />
+            <FormControlLabel value="org2" control={<Radio />} label="immigration officer" />
+            <FormControlLabel value="org1" control={<Radio />} label="health officer" />
+            <FormControlLabel value="admin" control={<Radio />} label="admin" />
+        </RadioGroup>
         <TextField
             type="email"
             margin="normal"

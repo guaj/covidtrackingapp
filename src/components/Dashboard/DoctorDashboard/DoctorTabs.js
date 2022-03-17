@@ -9,6 +9,9 @@ import PatientListTable from "../CommonTabs/patientListTable";
 import FaceInfo from "../CommonTabs/FaceInfo";
 import DoctorSchedule from "./DoctorSchedule";
 
+import Pdf from "react-to-pdf";
+import {Button} from "@mui/material";
+import "./styles.css";
 
 
 
@@ -52,7 +55,7 @@ TabPanel.propTypes = {
     value: PropTypes.number.isRequired,
 };
 
-
+const ref = React.createRef();
 
 export default function DoctorTabs() {
 
@@ -73,11 +76,25 @@ export default function DoctorTabs() {
             </Tabs>
 
             <TabPanel value={value} index={0}>
-                <FaceInfo />
-                <Chart />
+                <div ref={ref}>
+                    <FaceInfo />
+                    <Chart />
+                </div>
+                <div className="pdfButton">
+                    <Pdf targetRef = {ref} filename="code-example.pdf">
+                        {({ toPdf }) => <Button onClick={toPdf}>Generate Pdf</Button>}
+                    </Pdf>
+                </div>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <PatientListTable />
+                <div ref={ref}>
+                    <PatientListTable />
+                </div>
+                <div className="pdfButton">
+                    <Pdf targetRef = {ref} filename="code-example.pdf">
+                        {({ toPdf }) => <Button onClick={toPdf}>Generate Pdf</Button>}
+                    </Pdf>
+                </div>
             </TabPanel>
             <TabPanel value={value} index={2}>
                 <DoctorSchedule />

@@ -4,9 +4,9 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import geometricImage from "../../../images/geometric_gradient.jpg";
 import {useEffect, useState} from "react";
-import loginData from "./userLoginMockData";
 import LoginForm from "./LoginForm";
-import Button from "@material-ui/core/Button";
+import AWS from 'aws-sdk';
+import awsConfig from '../../../aws-config.json';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -27,6 +27,18 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+AWS.config.update(awsConfig);
+const docClient = new AWS.DynamoDB.DocumentClient();
+
+const doctorTable = 'doctors';
+const patientTable = 'patients';
+const orgTable = 'organizations';
+
+export function setLocalStorage(email, type) {
+    localStorage.setItem("email", JSON.stringify(email));
+    localStorage.setItem("type", JSON.stringify(type));
+    window.location = '/dashboard';
+}
 
 
 export default function UsersLogin() {
@@ -39,40 +51,88 @@ export default function UsersLogin() {
     useEffect(() => {
         // Check if the user is already logged in
         // If yes, redirect to his/her profile
-        try{
-            if(localStorage.getItem("user")){
-                window.location = "/dashboard"
-            }
-            // Display the error message if the user was trying to access a page without logging in
-            if(window.location.hash === "#redirect"){
-                setSuccessMessage("");
-                setErrorMessage("You need to log in to view that page!");
-            }
-        }catch(e) {}
-
+        if(localStorage.getItem("user")){
+            window.location = "/dashboard"
+        }
+        // Display the error message if the user was trying to access a page without logging in
+        if(window.location.hash === "#redirect"){
+            setSuccessMessage("");
+            setErrorMessage("You need to log in to view that page!");
+        }
     }, [])
 
-    const Login = details => {
+    const Login = async details => {
         console.log(details);
         let notValid = true
-        for (let i = 0; i < loginData.length; i++) {
-            if (loginData[i].email === details.email) {
-                if (loginData[i].password1 === details.password){
-                    localStorage.setItem("email", JSON.stringify(loginData[i].email));
-                    localStorage.setItem("type", JSON.stringify(loginData[i].type));
-                    notValid = false
-                    setUser( {
-                        email: details.email,
-                        password1: details.password
-                    });
-                    window.location = "/dashboard" ;
+        if(details.type ==="admin"){
+            const params = {
+                TableName: "admin",
+                Key:{
+                    "adminID":String('2')
+                }
+            }
+            try {
+                const result = await docClient.get(params).promise()
+                if(result.Item.password === details.password && result.Item.email === details.email){
+                    setLocalStorage(result.Item.email, "admin");
                 }
 
+            } catch (err) {
+                alert("wrong password or email");
+                alert(err);
             }
         }
-        if(notValid) {
-            alert("Wrong email or password !")
-            return false;
+        else if (details.type ==="patient"){
+            const param = {
+                TableName: patientTable,
+                Key:{
+                    "email":String(details.email)
+                }
+            }
+            try {
+                const result = await docClient.get(param).promise()
+                if(result.Item.password === details.password && result.Item.email === details.email){
+                    setLocalStorage(result.Item.email, "patient");
+                }
+            } catch (err) {
+                alert("wrong password or email");
+                alert(err);
+            }
+        }
+        else if (details.type ==="doctor"){
+            const param = {
+                TableName: doctorTable,
+                Key:{
+                    "email":String(details.email)
+                }
+            }
+            try {
+                const result = await docClient.get(param).promise()
+                if(result.Item.password === details.password && result.Item.email === details.email){
+                    setLocalStorage(result.Item.email, "doctor");
+                }
+            } catch (err) {
+                alert("wrong password or email");
+                alert(err);
+            }
+        }
+        else if (details.type ==="org"){
+            const param = {
+                TableName: orgTable,
+                Key:{
+                    "email":String(details.email),
+                }
+            }
+            try {
+                const result = await docClient.get(param).promise()
+                console.log(result)
+                if(result.Item.password === details.password && result.Item.email === details.email){
+                    setLocalStorage(result.Item.email, "immigration official");
+                }
+            } catch (err) {
+                alert("wrong password or email");
+                alert(err);
+            }
         }
 
     }

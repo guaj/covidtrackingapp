@@ -6,7 +6,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import PatientListTable from "../CommonTabs/patientListTable";
 import DoctorListTable from '../CommonTabs/doctorListTable';
-
+import UnpairedNewPatientListTable from './UnpairedNewPatients';
+import UnpairedPatientDoctorEmergencyListTable from './UnpairedPatientDoctorEmergency';
+//import PairedListTable from './Paired';
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -63,7 +65,8 @@ export default function AdminTabs() {
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="Patient List" {...a11yProps(0)} />
                 <Tab label="Doctor List" {...a11yProps(1)} />
-                <Tab label="Doctor-Patient Pairing List" {...a11yProps(2)} />
+                <Tab label="New Patients Pairing" {...a11yProps(2)} />
+                <Tab label="Doctor Emergency Pairing" {...a11yProps(3)} />
             </Tabs>
 
             <TabPanel value={value} index={0}>
@@ -73,9 +76,11 @@ export default function AdminTabs() {
                 <DoctorListTable />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                {/* to come in future sprints test */}
+                <UnpairedNewPatientListTable />
             </TabPanel>
-
+            <TabPanel value={value} index={3}>
+                <UnpairedPatientDoctorEmergencyListTable />
+            </TabPanel>
         </>
     )
 }
