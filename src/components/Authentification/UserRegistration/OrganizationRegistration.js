@@ -83,14 +83,15 @@ export default function SignUpOrg() {
             TableName:"organizations",
             Item:{
                 "type": String("org"),
-                "orgId": Number(orgId),
+                "orgId": String(orgId),
                 "employeeId": Number(empId),
                 "email": String(email),
                 "password": String(password)
             }
         }
         try {
-            await docClient.put(params).promise()
+            const result = await docClient.put(params).promise()
+            console.log(result)
             alert("The account is created!");
         } catch (err) {
             alert("unable to create the account");
