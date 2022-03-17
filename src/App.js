@@ -22,7 +22,6 @@ import Navbar from './components/Navbar/Navbar'
 import DoctorProfileUpdate from'./components/UserProfile/DoctorProfile/DoctorProfileUpdate'
 
 ///* Make sure to update file when adding to App.css!!*/
-
 function App() {
     return (
         <Routes>
@@ -40,6 +39,9 @@ function App() {
             <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
             <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
             <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
+
+
+            
         </Routes>
     );
 }

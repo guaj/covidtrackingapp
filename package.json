@@ -13,8 +13,13 @@
         "@testing-library/jest-dom": "^5.16.2",
         "@testing-library/react": "^12.1.2",
         "@testing-library/user-event": "^13.5.0",
-        "aws-sdk": "^2.1087.0",
+        "aws-config": "^1.4.0",
+        "aws-sdk": "^2.1093.0",
         "bufferutil": "^4.0.6",
+        "jspdf": "^2.5.1",
+        "jspdf-autotable": "^3.5.23",
+        "material-table": "^2.0.3",
+        "puppeteer": "^13.5.1",
         "react": "^17.0.2",
         "react-bootstrap-validation": "^0.1.11",
         "react-dom": "^17.0.2",
@@ -24,16 +29,22 @@
         "react-required-if": "^1.0.3",
         "react-router-dom": "^6.2.1",
         "react-scripts": "5.0.0",
+        "react-to-pdf": "^0.0.14",
         "recharts": "^2.1.8",
         "styled-components": "^5.3.3",
         "util": "^0.12.4",
-        "web-vitals": "^2.1.4"
+        "web-vitals": "^2.1.4",
+        "xlsx": "^0.18.4"
     },
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts --max_old_space_size=4096 build",
         "test": "react-scripts test",
         "precommit": "lint-staged",
+        "build:table": "node ../covidtrackingapp/src/components/Pdf/createTable.js",
+        "prebuild:pdf": "npm run build:table",
+        "build:pdf": "node ../covidtrackingapp/src/components/Pdf/createPdf.js",
+        "tbuild:pdf": "npm run build:pdf",
         "eject": "react-scripts eject"
     },
     "eslintConfig": {

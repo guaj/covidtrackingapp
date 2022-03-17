@@ -4,6 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter} from 'react-router-dom'
+import awsconfig from './aws-config.json';
+import * as AWS from 'aws-sdk'
+
+
+AWS.config.update(awsconfig)
+
 
 ReactDOM.render(
   <BrowserRouter>

@@ -1,0 +1,9 @@
+.pdfButton {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    padding-top: 30px;
+    padding-bottom: 40px;
+  }
+  
