@@ -75,52 +75,54 @@ export default function StaticDatePickerLandscape() {
     }
 
     return (
-        <div>
+        <>
             <Navbar/>
-            <div className="row">
-
-                <div className="col-md-8 datePicker">
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <StaticDatePicker
-                            orientation="landscape"
-                            openTo="day"
-                            minDate={todayDate}
-                            value={value}
-                            onChange={(newValue) => {
-                                setValue(newValue);
-                                setDayValue(dayToString(newValue.getDay()))
-                            }}
-                            renderInput={(params) => <TextField {...params} />}
-                        />
-                    </LocalizationProvider>
-                </div>
-
-                <div className="col-md-4">
-                    <div className="title">
-                        <p>SELECT TIME</p>
-                    </div>
-                    <div className="timePicker">
-                        <ButtonGroup
-                            orientation="vertical"
-                            variant="contained"
-                            size="large"
-                        >
-                            {timeButtons}
-                        </ButtonGroup>
+            <div>
+                <div className="row">
+                    <div className="col-md-8 datePicker">
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <StaticDatePicker
+                                orientation="landscape"
+                                openTo="day"
+                                minDate={todayDate}
+                                value={value}
+                                onChange={(newValue) => {
+                                    setValue(newValue);
+                                    setDayValue(dayToString(newValue.getDay()))
+                                }}
+                                renderInput={(params) => <TextField {...params} />}
+                            />
+                        </LocalizationProvider>
                     </div>
 
+                    <div className="col-md-4">
+                        <div className="title">
+                            <p>SELECT TIME</p>
+                        </div>
+                        <div className="timePicker">
+                            <ButtonGroup
+                                orientation="vertical"
+                                variant="contained"
+                                size="large"
+                            >
+                                {timeButtons}
+                            </ButtonGroup>
+                        </div>
+
+                    </div>
+                </div>
+                <div className="button">
+                    <Button
+                        type="button"
+                        variant="contained"
+                        onClick={getTime}
+                    >
+                        Select Appointment
+                    </Button>
                 </div>
             </div>
-            <div className="button">
-                <Button
-                    type="button"
-                    variant="contained"
-                    onClick={getTime}
-                >
-                    Select Appointment
-                </Button>
-            </div>
-        </div>
+
+        </>
 
     );
 }

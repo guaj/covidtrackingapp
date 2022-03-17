@@ -10,7 +10,52 @@
     padding-top: 50px;
 }
 
-.row {
-    padding-top: 50px;
+
+.myAvatar {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
 }
 
+.myName {
+    color: #010560;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+.infoButtons {
+    color: #010560;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.MuiButton-outlined {
+    width: 200px;
+    color: black !important;
+    border-radius: 15px !important;
+}
+
+.colored-button {
+    color: #7F7FD5 !important;
+}
+.myName2 {
+    color: #010560;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.infoBox {
+    background-color: #F8F8F8;
+    border-radius: 30px;
+    min-height: 500px;
+}
