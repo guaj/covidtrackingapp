@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import PdfTest from '../Dashboard/DoctorDashboard/PdfTest';
+import PdfScreenshot from '../Dashboard/DoctorDashboard/PdfScreenshot';
 import PatientListTable from '../Dashboard/CommonTabs/patientListTable';
 
 
 test("Check that the Generate Pdf button is present", () => {
-  render(<PdfTest/>);
+  render(<PdfScreenshot/>);
   const button = screen.getByText("Generate Pdf");
     expect(button).toBeTruthy()
 });

@@ -12,7 +12,7 @@ import HealthOfficialTabs from './HealthOfficialDashboard/HealthOfficialTabs';
 import ImmigrationOfficialTabs from './ImmigrantOfficerDashboard/ImmigrationOfficialTabs';
 import AdminTabs from './AdminDashboard/adminDashboard';
 import Navbar from "../Navbar/Navbar";
-import PdfTest from './DoctorDashboard/PdfScreenshot';
+import PdfScreenshot from './DoctorDashboard/PdfScreenshot';
 
 
 const mockProfiles = [
@@ -77,8 +77,10 @@ export default function Dashboard() {
                 <Box sx={{ width: '80%', margin: '5% auto' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         {/* <DisplayUserTabs /> */}
-                       <PdfTest/>
+                       <div>
+                       <PdfScreenshot/>
 
+                           </div>
                     </Box>
                 </Box>
             </div>

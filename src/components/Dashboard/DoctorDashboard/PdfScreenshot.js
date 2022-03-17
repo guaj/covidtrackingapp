@@ -1,4 +1,4 @@
-import { width } from "@mui/system";
+import { style, width } from "@mui/system";
 import React from "react";
 import ReactDOM from "react-dom";
 import Pdf from "react-to-pdf";
