@@ -1,9 +1,11 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import PdfTest from '../Dashboard/DoctorDashboard/PdfTest';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<PdfTest />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+
+test("Check that the Generate Pdf button is present", () => {
+  render(<PdfTest/>);
+  const button = screen.getByText("Generate Pdf");
+    expect(button).toBeTruthy()
 });
+

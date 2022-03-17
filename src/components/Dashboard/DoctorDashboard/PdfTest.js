@@ -17,7 +17,7 @@ export default function pdfCon(){
       </Pdf>
       <div ref={ref}>
 
-              <PatientListTable />
+              <PatientListTable/>
           
         
 
@@ -26,11 +26,5 @@ export default function pdfCon(){
   );
 }
 
-function patientListTable(){
+ 
 
-          
-}
-
-
-const rootElement = document.getElementById("root");
-ReactDOM.render(<pdfCon />, rootElement);
