@@ -8,29 +8,30 @@ import Box from "@mui/material/Box";
 
 
 try {
-    JSON.parse(localStorage.getItem("email"));
-}catch (e) {
-    localStorage.setItem("email", "");
-    console.log(e);
-    window.location = "/login#redirect";
+    let userType = JSON.parse(localStorage.getItem("type"))
+    console.log(userType)
+
+} catch (err) {
+    // 👇️ This runs
+    console.log('Error: ', err.message);
+    window.location.assign("/login#redirect");
 }
 
 
-const user = JSON.parse(localStorage.getItem("email"));
-const url = user.split("@");
 
 export default class DoctorProfilePage extends React.Component {
     userType;
     userFetch;
     userEmail;
-    user;
-    url;
+    user = JSON.parse(localStorage.getItem("email"));
+    url = this.user.split("@");
 
     constructor() {
         super();
         this.userType = JSON.parse(localStorage.getItem("type"));
         this.userFetch =  window.location.href.split("/")[4];
         this.userEmail = JSON.parse(localStorage.getItem("email"));
+        this.user = JSON.parse(localStorage.getItem("email"));
     }
 
     canEditProfile() {
@@ -42,7 +43,7 @@ export default class DoctorProfilePage extends React.Component {
 
 
     state = {
-        url: url[0]
+        url: this.url[0]
     } // changed = to : ?
 
     render() {
@@ -59,7 +60,7 @@ export default class DoctorProfilePage extends React.Component {
                         />
                         {/* eslint-disable-next-line no-undef */}
                         <div className="myName">
-                            <h2>Dr. {url[0]}</h2>
+                            <h2>Dr. {this.url[0]}</h2>
                         </div>
                         <div className="infoButtons">
                             <Button

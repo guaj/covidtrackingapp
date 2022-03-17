@@ -58,7 +58,6 @@ export default function UsersLogin() {
         for (let i = 0; i < loginData.length; i++) {
             if (loginData[i].email === details.email) {
                 if (loginData[i].password1 === details.password){
-                    console.log("Logged in!");
                     localStorage.setItem("email", JSON.stringify(loginData[i].email));
                     localStorage.setItem("type", JSON.stringify(loginData[i].type));
                     notValid = false

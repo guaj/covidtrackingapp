@@ -197,8 +197,8 @@ export default function PrimarySearchAppBar() {
     }
 
     function handleLogout() {
-        localStorage.setItem("id", "");
-        localStorage.setItem("email", "");
+        localStorage.setItem("id", undefined);
+        localStorage.setItem("email", undefined);
         window.location = "/login" ;
     }
     function handleProfile() {
