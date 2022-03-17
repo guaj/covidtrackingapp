@@ -1,19 +1,41 @@
 [{
         "licenseNumber": "016632488",
-        "address": "address random",
+        "address": "Montreal",
         "email": "jasonwon@hotmail.com",
         "firstName": "Jason",
         "lastName": "Wonderlan",
         "password": "W0derl4nd!",
-        "phoneNumber": "4389840156"
+        "phoneNumber": "4389840156",
+        "emergency": true
     },
     {
         "licenseNumber": "081644903",
-        "address": "random address",
+        "address": "Montreal",
         "email": "emilie.schrutt@gmail.com",
         "firstName": "Emilie",
         "lastName": "Schrutt",
         "password": "1st-Emilie",
-        "phoneNumber": "5144658801"
+        "phoneNumber": "5144658801",
+        "emergency": false
+    },
+    {
+        "licenseNumber": "083444903",
+        "address": "Laval",
+        "email": "emilie.schrutt@gmail.com",
+        "firstName": "Paulo",
+        "lastName": "Sole",
+        "password": "1st-Emilie",
+        "phoneNumber": "5144658801",
+        "emergency": false
+    },
+    {
+        "licenseNumber": "234444903",
+        "address": "Laval",
+        "email": "emilie.schrutt@gmail.com",
+        "firstName": "Clara",
+        "lastName": "Mamm",
+        "password": "1st-Emilie",
+        "phoneNumber": "5144658801",
+        "emergency": false
     }
 ]

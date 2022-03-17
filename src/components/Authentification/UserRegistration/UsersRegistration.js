@@ -51,6 +51,7 @@ export default function UsersRegistration() {
     const classes = useStyles();
     const [text, setText] = React.useState('Choose an option');
     const [value,setValue] = React.useState('');
+
     const handleRadioChange =(e)=>{
         setValue(e.target.value);
         setText('');

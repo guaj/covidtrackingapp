@@ -13,14 +13,32 @@ import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
-import LinkIcon from '@mui/icons-material/Link';
-import ErrorIcon from '@mui/icons-material/Error';
-import FlagIcon from '@mui/icons-material/Flag';
-import mockedDatas from "../DoctorDashboard/patientListTableMockData.json"
+import mockedDatas from "../DoctorDashboard/doctorListTableMockData.json";
+import Button from '@mui/material/Button';
+import { makeStyles } from '@material-ui/styles';
+import { getAvailableDoctors, getNewPatients, updatePatientsDoctor } from './databaseFacade'
+import {useState, useEffect} from 'react'
 
 
-
-
+const useStyles = makeStyles((theme) => ({
+    pair: {
+        '&:hover': {
+            backgroundColor: 'rgba(63, 81, 181, 0.5)',
+            color: '#fff',
+        }
+    },
+    modal:{
+        backgroundColor:'#fff',
+        position: 'absolute',
+        top: '5px', 
+        right: '5px' ,
+        '&:hover': {
+            backgroundColor: 'rgba(63, 81, 181, 0.5)',
+            color: '#fff',
+        }
+    }
+})
+);
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -54,10 +72,19 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'priorityNumber',
-        numeric : true,
+        id: 'licenseNumber',
         disablePadding: false,
-        label: 'Priority',
+        label: 'License Number',
+    },
+    {
+        id: 'address',
+        disablePadding: false,
+        label: 'Address',
+    },
+    {
+        id: 'email',
+        disablePadding: false,
+        label: 'Email',
     },
     {
         id: 'firstName',
@@ -70,30 +97,10 @@ const headCells = [
         label: 'Last Name',
     },
     {
-        id: 'covidResult',
+        id:'button',
         disablePadding: false,
-        label: 'Covid Result',
-    },
-    {
-        id: 'reviewed',
-        disablePadding: false,
-        label: 'Reviewed',
-    },
-    {
-        id: 'emergency',
-        disablePadding: false,
-        label: 'Emergency',
-    },
-    {
-        id: 'profileLink',
-        disablePadding: false,
-        label: 'Profile Link',
-    },
-    {
-        id: 'isFlagged',
-        disablePadding: false,
-        label: 'Flag',
-    },
+        label: 'Select doctor',
+    }
 ];
 
 
@@ -145,17 +152,25 @@ EnhancedTableHead.propTypes = {
 };
 
 
-
-
-
-export default function PatientListTable() {
+export default function AvailableDoctors(props) {
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const classes = useStyles();
+    const [data, setData] = useState(null);
 
+    useEffect(() => {
+    
+        (async () => {
+          const dbData = await getAvailableDoctors();
+          setData(dbData.Items);console.log(dbData.Items[0]);
+        })();
+    
+      },[]);
+       
 
 
     const handleRequestSort = (event, property) => {
@@ -182,18 +197,18 @@ export default function PatientListTable() {
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - mockedDatas.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
-
+if(data) {
     return (
         <div>
-            <h2>Patients</h2>
+            <h2>Available doctors</h2>   
             <Box sx={{ width: '100%' }}>
                 <Paper sx={{ width: '100%', mb: 2 }}>
                     <TableContainer>
                         <Table
                             sx={{ minWidth: 750 }}
-                            aria-labelledby="patientListTable"
+                            aria-labelledby="doctorListTable"
                             size={dense ? 'small' : 'medium'}
                         >
                             <EnhancedTableHead
@@ -201,12 +216,12 @@ export default function PatientListTable() {
                                 order={order}
                                 orderBy={orderBy}
                                 onRequestSort={handleRequestSort}
-                                rowCount={mockedDatas.length}
+                                rowCount={data.length}
                             />
                             <TableBody>
                                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                                {stableSort(mockedDatas, getComparator(order, orderBy))
+                                {stableSort(data, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((item) => {
 
@@ -217,14 +232,12 @@ export default function PatientListTable() {
                                                 tabIndex={-1}
                                                 key={item.name}
                                             >
-                                                <TableCell/>
+                                                <TableCell align="center">{item.licenseNumber}</TableCell>
+                                                <TableCell align="center">{item.city}</TableCell>
+                                                <TableCell align="center">{item.email}</TableCell>
                                                 <TableCell align="center">{item.firstName}</TableCell>
                                                 <TableCell align="center">{item.lastName}</TableCell>
-                                                <TableCell align="center">{item.covidResult}</TableCell>
-                                                <TableCell align="center">{item.reviewed ? "yes" : "no"}</TableCell>
-                                                <TableCell align="center">{item.emergency ? <ErrorIcon style={{fill: "red"}}/> : "" }</TableCell>
-                                                <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon/></TableCell>
-                                                <TableCell align="center">{item.isFlagged ? <FlagIcon style={{fill: "orange"}}/> : "" }</TableCell>
+                                                <TableCell><Button className={classes.pair} onClick={() => updatePatientsDoctor(props.patient, item.licenseNumber)}>Select</Button></TableCell>
                                             </TableRow>
                                         );
                                     })}
@@ -234,7 +247,7 @@ export default function PatientListTable() {
                                             height: (dense ? 33 : 53) * emptyRows,
                                         }}
                                     >
-                                        <TableCell colSpan={6} />
+                                        <TableCell colSpan={12} />
                                     </TableRow>
                                 )}
                             </TableBody>
@@ -243,7 +256,7 @@ export default function PatientListTable() {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={mockedDatas.length}
+                        count={data.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}
@@ -257,5 +270,6 @@ export default function PatientListTable() {
             </Box>
         </div>
 
-    );
-}
+    ); }
+    else return null
+    }
