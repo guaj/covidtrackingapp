@@ -7,19 +7,19 @@ import NavbarRegister from './components/Navbar/oldNavbars/NavbarRegister';
 import Dashboard from './components/Dashboard/Dashboard';
 import NavbarProfilePatient from './components/Navbar/oldNavbars/NavbarProfilePatient';
 
-import DoctorProfile from './components/UserProfile/DoctorProfile/DoctorProfile';
-import PatientProfile from './components/UserProfile/PatientProfile/PatientProfile';
+import DoctorProfile from './Services/ProfileUpdateSercices/DoctorProfileUpdate/DoctorProfile';
+import PatientProfile from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfile';
 import UsersLogin from './components/Authentification/UserLogin/UserLogin';
 import UsersRegistration from './components/Authentification/UserRegistration/UsersRegistration'
 import PatientRegistration from './components/Authentification/UserRegistration/PatientRegistration';
 import DoctorRegistration from './components/Authentification/UserRegistration/DoctorRegistration'
 import OrganizationRegistration from './components/Authentification/UserRegistration/OrganizationRegistration';
-import UserProfile from "./components/UserProfile/UserProfile";
+import UserProfileFacade from "./components/UserProfile/UserProfileFacade";
 
 
-import PatientProfileUpdate from './components/UserProfile/PatientProfile/PatientProfileUpdate'
+import PatientProfileUpdate from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdate'
 
-import DoctorProfileUpdate from'./components/UserProfile/DoctorProfile/DoctorProfileUpdate'
+import DoctorProfileUpdate from './Services/ProfileUpdateSercices/DoctorProfileUpdate/DoctorProfileUpdate'
 import AppointmentScheduler from "./Services/AppointmentService/AppointmentScheduler";
 
 ///* Make sure to update file when adding to App.css!!*/
@@ -30,7 +30,7 @@ function App() {
                     <Route path="/schedule-appointment" element={[<AppointmentScheduler/>]} />
                     <Route path='/about' element={[ <AboutUs/>]} />
                     <Route path='/dashboard' element={[<Dashboard/>]} />
-                    <Route path="/profile/:user_email" element={[<UserProfile/>]} />
+                    <Route path="/profile/:user_email" element={[<UserProfileFacade/>]} />
                     <Route path="/login#redirect" element={[<NavbarHome/>, <UsersLogin/>]} />
                     <Route path="/login" element={[<NavbarHome/>, <UsersLogin/>]} />
                     <Route exact path='/' element={[<NavbarHome/>, <UsersLogin/>]} />

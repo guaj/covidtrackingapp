@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import DoctorSchedule from "../Dashboard/DoctorDashboard/DoctorSchedule";
 import DoctorScheduleSelector, {convertScheduleStringToArrayOfDates} from "../Dashboard/DoctorDashboard/DoctorScheduleSelector";
 
+
 test("Check schedule selector is rendered correctly", () => {
     render(<DoctorSchedule/>);
     expect(screen.getByText("Mon")).toBeInTheDocument();
@@ -21,4 +22,8 @@ test("Check if stringToArrayConverter return an array", () => {
 test("Check if doctor Scheduler is rendered correctly", () => {
     render(<DoctorScheduleSelector/>);
     expect(screen.getByText("Mon")).toBeInTheDocument();
+
 })
+
+
+

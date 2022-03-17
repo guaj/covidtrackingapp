@@ -9,12 +9,15 @@ import Button from "@material-ui/core/Button";
 import mockDoctorAvailabilities from "./DoctorScheduleMock.json";
 import {ButtonGroup} from "@mui/material";
 
+
+
 export default function StaticDatePickerLandscape() {
-    const [value, setValue] = React.useState(new Date());
+    const todayDate = new Date();
+    const [value, setValue] = React.useState(todayDate);
     const [dayValue, setDayValue] = React.useState(dayToString(value.getDay()))
     const [timeValue, setTimeValue] = React.useState(0);
     const [availTimes, setAvailTimes]= React.useState([]);
-    const todayDate = new Date();
+
 
     let timeButtons = [
         availTimes.map((item,i) =>
@@ -66,55 +69,60 @@ export default function StaticDatePickerLandscape() {
 
     function getTime() {
         alert("Date: "+value.toDateString() +"\nTime: "+timeValue);
+        let user = JSON.parse(localStorage.getItem("email"))
+        let url = user.split("@");
+        window.location = "/profile/" + url[0];
     }
 
     return (
-        <div>
+        <>
             <Navbar/>
-            <div className="row">
-
-                <div className="col-md-8 datePicker">
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <StaticDatePicker
-                            orientation="landscape"
-                            openTo="day"
-                            minDate={todayDate}
-                            value={value}
-                            onChange={(newValue) => {
-                                setValue(newValue);
-                                setDayValue(dayToString(newValue.getDay()))
-                            }}
-                            renderInput={(params) => <TextField {...params} />}
-                        />
-                    </LocalizationProvider>
-                </div>
-
-                <div className="col-md-4">
-                    <div className="title">
-                        <h7>SELECT TIME</h7>
-                    </div>
-                    <div className="timePicker">
-                        <ButtonGroup
-                            orientation="vertical"
-                            variant="contained"
-                            size="large"
-                        >
-                            {timeButtons}
-                        </ButtonGroup>
+            <div>
+                <div className="row">
+                    <div className="col-md-8 datePicker">
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <StaticDatePicker
+                                orientation="landscape"
+                                openTo="day"
+                                minDate={todayDate}
+                                value={value}
+                                onChange={(newValue) => {
+                                    setValue(newValue);
+                                    setDayValue(dayToString(newValue.getDay()))
+                                }}
+                                renderInput={(params) => <TextField {...params} />}
+                            />
+                        </LocalizationProvider>
                     </div>
 
+                    <div className="col-md-4">
+                        <div className="title">
+                            <p>SELECT TIME</p>
+                        </div>
+                        <div className="timePicker">
+                            <ButtonGroup
+                                orientation="vertical"
+                                variant="contained"
+                                size="large"
+                            >
+                                {timeButtons}
+                            </ButtonGroup>
+                        </div>
+
+                    </div>
+                </div>
+                <div className="button">
+                    <Button
+                        type="button"
+                        variant="contained"
+                        onClick={getTime}
+                    >
+                        Select Appointment
+                    </Button>
                 </div>
             </div>
-            <div className="button">
-                <Button
-                    type="button"
-                    variant="contained"
-                    onClick={getTime}
-                >
-                    Select Appointment
-                </Button>
-            </div>
-        </div>
+
+        </>
 
     );
 }
