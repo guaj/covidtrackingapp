@@ -13,7 +13,8 @@ import geometricImage from "../../../images/geometric_gradient.jpg";
 import data from "./logged_in_patient_mock_data.json";
 import {useState, Fragment, useEffect} from "react";
 import Navbar from "../../Navbar/Navbar";
-
+import AWS from 'aws-sdk';
+import awsConfig from '../../../aws-config.json';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -50,11 +51,54 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+AWS.config.update(awsConfig);
+const docClient = new AWS.DynamoDB.DocumentClient;
+
+export function fetchData(tableName) {
+    const params = {
+        TableName: tableName,
+        ExpressionAttributeValues: {":email": JSON.parse(localStorage.getItem("email"))},
+        KeyConditionExpression: 'email = :email'
+    }
+
+    // const result = docClient.query(params);
+    // console.log(result);
+    // // console.log(result.$response.data.Items);
+    //
+    // // const resultData = result.$response.data.Items;
+    //
+    // return result;
+
+    docClient.query(params, function (err, dbdata) {
+        if (!err) {
+            console.log(dbdata.Items)
+            dbdata.Items.forEach(function (element, index, array) {
+                console.log(element.email);
+            });
+            return dbdata.Items[0];
+        } else {
+            console.error("Unable to query. Error:", JSON.stringify(err, null, 2))
+        }
+    })
+}
 
 export default function ProfilePatient() {
     const classes = useStyles();
 
+    const result = fetchData('patients');
+    setTimeout(() => {console.log(result); }, 2000);
+    // console.log(result);
+    console.log(data);
+
     const [patients, setPatients] = useState(data);
+
+    // async function componentDidMount() {
+    //     setPatients(await fetchData('patients').then((result) => {
+    //         handleFormInformationLoad()
+    //         console.log("-------------------------")
+    //         console.log(result)
+    //     }));
+    // };
 
     const [notifyDoctor, setNotifyDoctor] = useState({
         firstName: '',
@@ -120,10 +164,22 @@ export default function ProfilePatient() {
         handleFormInformationLoad();
     }, []);
 
+    // useEffect(async () => {
+    //     // handleFormInformationLoad();
+    //     await fetchData('patients').then((result) => {
+    //         setPatients(result.Items[0]);
+    //         handleFormInformationLoad();
+    //         console.log("-------------------------");
+    //         console.log(result);
+    //     });
+    // }, []);
+
+
     const handleFormInformationLoad = () => {
         const patient = patients[0];
-        setEditPatientId(patient.id);
+        // setEditPatientId(patient.id);
 
+        console.log(patients);
         const formValues = {
             firstName: patient.firstName,
             lastName: patient.lastName,
@@ -428,7 +484,7 @@ export default function ProfilePatient() {
                                         />
                                         <Button
                                             type="submit"
-                                            fullWidth
+                                            fullWidth="true"
                                             variant="contained"
                                             className={classes.submit}
                                             onClick={() => {
@@ -439,9 +495,9 @@ export default function ProfilePatient() {
                                         </Button>
                                         <Button
                                             type="button"
-                                            fullWidth
+                                            fullWidth="true"
                                             variant="contained"
-                                            onClick={(event) =>[handleNotifyDoctorButtonClick(event), alert('Your doctor will be notified!')]}
+                                            onClick={(event) => [handleNotifyDoctorButtonClick(event), alert('Your doctor will be notified!')]}
                                         >
                                             Notify my doctor
                                         </Button>
