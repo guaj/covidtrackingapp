@@ -2,17 +2,12 @@ import React from "react";
 import AWS from 'aws-sdk';
 import awsConfig from '../../../aws-config.json';
 
-try {
-    AWS.config.update(awsConfig);
-}catch (e) {}
-
-
-var docClient = new AWS.DynamoDB.DocumentClient();
-
 
 //This rewrites the entire table each iteration
 export const addDoctorSchedule = (tableName , data) => {
     try {
+        AWS.config.update(awsConfig);
+        var docClient = new AWS.DynamoDB.DocumentClient();
         let doctorID = JSON.parse(localStorage.getItem("id"))
         var params = {
             TableName: tableName,
@@ -21,20 +16,21 @@ export const addDoctorSchedule = (tableName , data) => {
                 "dailyAvailabilities": String(data.schedule),
             }
         }
-    }catch (e) {
-    }
+    }catch (e) {}
 
     docClient.put(params, function (err, data) {
         if (err) {
-            alert('Error', err)
+            alert('Error: '+ err)
         } else {
-            alert('Success', data)
+            alert('Success: '+ data)
         }
     })
 }
 
 export async function retrieveDoctorSchedule(tableName) {
     try {
+        AWS.config.update(awsConfig);
+        var docClient = new AWS.DynamoDB.DocumentClient();
         let doctorID = JSON.parse(localStorage.getItem("id"))
         var params = {
             TableName: tableName,

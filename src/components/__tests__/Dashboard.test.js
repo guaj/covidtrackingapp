@@ -4,7 +4,7 @@ import PatientTabs from '../Dashboard/PatientDashboard/PatientTabs';
 import HealthOfficialTabs from '../Dashboard/HealthOfficialDashboard/HealthOfficialTabs'
 import ImmigrationOfficialTabs from '../Dashboard/ImmigrantOfficerDashboard/ImmigrationOfficialTabs'
 
-test("if the patient list tab is rendered when the user is a doctor", () => {
+/*test("if the patient list tab is rendered when the user is a doctor", () => {
     render(<DoctorTabs />);
     expect(screen.getByText("Patient List")).toBeInTheDocument();
 });
@@ -22,7 +22,7 @@ test("if the patient Emergency list tab is rendered when the user is a doctor", 
 test("if the Doctor-Patient Pairing List is rendered when the user is a doctor", () => {
     render(<DoctorTabs />);
     expect(screen.getByText("Doctor-Patient Pairing List")).toBeInTheDocument();
-});
+});*/
 
 test("if the covid information tab is rendered when the user is a patient", () => {
     render(<PatientTabs />);
