@@ -109,7 +109,7 @@ export default function UserProfile() {
                     {JSON.parse(localStorage.getItem("type")) !== "patient" ?
                         <Button variant="contained" onClick={() => {
                             flagPatient(flag);
-                            alert("Patient flagged!");
+                            alert("Patient " + (flag ? 'unflagged' : 'flagged') +"!");
                         }}>{flag ? 'Unflag' : 'Flag'}</Button>
                         : <></>}
                 </div>
