@@ -201,34 +201,31 @@ export default function UnpairedNewPatientListTable() {
     const [doctorData, setDoctorData] = useState([]);
     const [patientData, setPatientData] = useState([]);
 
-
-    useEffect(() => {
+  useEffect(() => {
         (async () => {
             const dbData = await getPatientWithDoctor();
-            setData(dbData.Items);
+            setPatientData(dbData.Items);
         })();
         
     }, []);
     
-    
     useEffect(() => {
         (async () => {
             const dbData = await getDoctorEmergency();
-            setDoctorData(dbData.Items);
+                setDoctorData(dbData.Items);
         })();
 
     }, []);
-
+    
     useEffect(() => {
         var array =[];
         patientData.forEach(pat => {
             doctorData.forEach(doc => {
-                if(pat.doctor === doc.licenseNumber && doc.hasEmergency === true)
+                if(pat.doctor === doc.licenseNumber)
                     array.push(pat)
-                else;
-            });
+                setData(array);
         });
-        setData(array);
+        });
     }, []);
 
     const handleRequestSort = (event, property) => {
