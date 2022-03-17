@@ -51,7 +51,7 @@ export default function UsersLogin() {
     useEffect(() => {
         // Check if the user is already logged in
         // If yes, redirect to his/her profile
-        if(localStorage.getItem("user")){
+        if(localStorage.getItem("email")){
             window.location = "/dashboard"
         }
         // Display the error message if the user was trying to access a page without logging in
