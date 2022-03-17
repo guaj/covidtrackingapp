@@ -111,7 +111,7 @@ export default function UsersLogin() {
             try {
                 const result = await docClient.get(param).promise()
                 if(result.Item.password === details.password && result.Item.email === details.email){
-                    alert("patient retrieved");
+                    alert("doctor retrieved");
                     console.log(result.Item);
                     window.location = '/patient-registration'; //wrong page! Need admin Dashboard
                     notValid = false;
@@ -121,28 +121,49 @@ export default function UsersLogin() {
                 alert(err);
             }
         }
-
-        for (let i = 0; i < loginData.length; i++) {
-            if (loginData[i].email === details.email) {
-                if (loginData[i].password1 === details.password){
-                    console.log("Logged in!");
-                    localStorage.setItem("id", JSON.stringify(loginData[i].id));
-                    localStorage.setItem("email", JSON.stringify(loginData[i].email));
-                    localStorage.setItem("type", JSON.stringify(loginData[i].type));
-                    notValid = false
-                    setUser( {
-                        email: details.email,
-                        password1: details.password
-                    });
-                    window.location = "/dashboard" ;
+        else if (details.type ==="org"){
+            const param = {
+                TableName: orgTable,
+                Key:{
+                    "email":String(details.email),
                 }
-
+            }
+            try {
+                const result = await docClient.get(param).promise()
+                console.log(result)
+                if(result.Item.password === details.password && result.Item.email === details.email){
+                    alert("org retrieved");
+                    console.log(result.Item);
+                    window.location = '/organization-registration'; //wrong page! Need admin Dashboard
+                    notValid = false;
+                }
+            } catch (err) {
+                alert("wrong password or email");
+                alert(err);
             }
         }
-        if(notValid) {
-            alert("Wrong email or password !")
-            return false;
-        }
+        //
+        // for (let i = 0; i < loginData.length; i++) {
+        //     if (loginData[i].email === details.email) {
+        //         if (loginData[i].password1 === details.password){
+        //             console.log("Logged in!");
+        //             localStorage.setItem("id", JSON.stringify(loginData[i].id));
+        //             localStorage.setItem("email", JSON.stringify(loginData[i].email));
+        //             localStorage.setItem("type", JSON.stringify(loginData[i].type));
+        //             notValid = false
+        //             setUser( {
+        //                 email: details.email,
+        //                 password1: details.password
+        //             });
+        //             window.location = "/dashboard" ;
+        //         }
+        //
+        //     }
+        // }
+        // if(notValid) {
+        //     alert("Wrong email or password !")
+        //     return false;
+        // }
 
     }
     const Logout = () => {
