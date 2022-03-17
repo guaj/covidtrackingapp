@@ -14,10 +14,7 @@ export default function StaticDatePickerLandscape() {
     const [dayValue, setDayValue] = React.useState(dayToString(value.getDay()))
     const [timeValue, setTimeValue] = React.useState(0);
     const [availTimes, setAvailTimes]= React.useState([]);
-
     const todayDate = new Date();
-
-
 
     let timeButtons = [
         availTimes.map((item,i) =>
