@@ -72,7 +72,7 @@ export async function updateDoctorPatientCount(licenseNumber)  {
 export async function getNewPatients() {
     var params = {
         TableName: "patients",
-        FilterExpression: "#doc = :none",  // OR attribute_not_exists(#doc)
+        FilterExpression: "#doc = :none",// OR attribute_not_exists(#doc)",
         ExpressionAttributeNames: {
             "#doc": "doctor"
         },
@@ -86,4 +86,43 @@ export async function getNewPatients() {
         } catch (err) {
             alert(JSON.stringify(err))
         }
+}
+
+//database query for finding new patients
+export async function getPatientWithDoctor() {
+  var params = {
+    TableName: "patients",
+    FilterExpression: "#doc <> (:none) AND attribute_exists(#doc)",
+    ExpressionAttributeNames: {
+        "#doc": "doctor",
+    },
+    ExpressionAttributeValues: {
+        ":none": ""
+    }
+  }
+      try {
+          const data = await docClient.scan(params).promise()
+          return data
+      } catch (err) {
+          alert(JSON.stringify(err))
+      }
+}
+//database query for finding new patients
+export async function getDoctorEmergency() {
+  var params = {
+    TableName: "doctors",
+    FilterExpression: "#em <> :none AND attribute_exists(#em)",
+    ExpressionAttributeNames: {
+        "#em": "hasEmergency",
+    },
+    ExpressionAttributeValues: {
+        ":none": ""
+    }
+  }
+      try {
+          const data = await docClient.scan(params).promise()
+          return data
+      } catch (err) {
+          alert(JSON.stringify(err))
+      }
 }

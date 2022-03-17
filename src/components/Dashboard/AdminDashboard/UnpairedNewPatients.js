@@ -14,12 +14,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
-import mockedDatas from "../DoctorDashboard/patientListTableMockData.json"
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
 import Modal from '@mui/material/Modal';
 import AvailableDoctors from './AvailableDoctors';
-import { getAvailableDoctors, getNewPatients, updatePatientsDoctor } from './databaseFacade'
+import { getNewPatients } from './databaseFacade'
 import CloseIcon from '@mui/icons-material/Close';
 import { useState, useEffect } from 'react'
 
@@ -179,16 +178,6 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-// function getNumItems() {
-//     var counter = 0;
-//     mockedDatas.forEach(element => {
-//         if (!element.doctor)
-//             counter++;
-//     })
-//     return counter;
-// };
-
-
 export default function UnpairedNewPatientListTable() {
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -200,6 +189,7 @@ export default function UnpairedNewPatientListTable() {
     const [patient, setPatient] = React.useState("")
     const [open, setOpen] = React.useState(false);
     const [tableSize, setTableSize] = useState(0)
+
     const handleOpen = patient => {
         console.log("handle open() patient: " + patient);
         setOpen(true);
@@ -285,25 +275,22 @@ export default function UnpairedNewPatientListTable() {
                                     {stableSort(data, getComparator(order, orderBy))
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map((item) => {
-                                            if (!item.doctor) {
-                                                console.log(item)
-                                                return (
-                                                    // setNumItems(prevState => (prevState+1)),
-                                                    <TableRow
-                                                        hover
-                                                        role="checkbox"
-                                                        tabIndex={-1}
-                                                        key={item.name}
-                                                    >
-                                                        <TableCell align="center"> {item.priorityNumber} </TableCell>
-                                                        <TableCell align="center"> {item.firstName} </TableCell>
-                                                        <TableCell align="center"> {item.lastName} </TableCell>
-                                                        <TableCell align="center"> {item.address.city} </TableCell>
-                                                        <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon /></TableCell>
-                                                        <TableCell align="center"><Button className={classes.pair} onClick={()=>handleOpen(item.email)}>Find a doctor</Button></TableCell>
-                                                    </TableRow>
-                                                );
-                                            }
+                                            return (
+                                                // setNumItems(prevState => (prevState+1)),
+                                                <TableRow
+                                                    hover
+                                                    role="checkbox"
+                                                    tabIndex={-1}
+                                                    key={item.name}
+                                                >
+                                                    <TableCell align="center"> {item.priorityNumber} </TableCell>
+                                                    <TableCell align="center"> {item.firstName} </TableCell>
+                                                    <TableCell align="center"> {item.lastName} </TableCell>
+                                                    <TableCell align="center"> {item.address.city} </TableCell>
+                                                    <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon /></TableCell>
+                                                    <TableCell align="center"><Button className={classes.pair} onClick={()=>handleOpen(item.email)}>Find a doctor</Button></TableCell>
+                                                </TableRow>
+                                            );
                                         })}
                                     {emptyRows > 0 && (
                                         <TableRow

@@ -14,14 +14,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
-import mockedDatas from "../DoctorDashboard/patientListTableMockData.json"
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
 import Modal from '@mui/material/Modal';
 import AvailableDoctors from './AvailableDoctors';
-import { getAvailableDoctors, getNewPatients } from './databaseFacade'
+import { getPatientWithDoctor, getDoctorEmergency } from './databaseFacade'
 import CloseIcon from '@mui/icons-material/Close';
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
+
 
 //database query for doctors with (< 10 patients) and (city = patient city)
 
@@ -36,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
     },
     exitButton: {
         position: 'absolute',
-        top: '5px', 
-        right: '5px' ,
+        top: '5px',
+        right: '5px',
         '&:hover': {
             backgroundColor: 'rgba(63, 81, 181, 0.5)',
             color: '#fff',
@@ -53,7 +53,7 @@ const modalStyle = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-   // width: ,
+    // width: ,
     bgcolor: 'background.paper',
     //border: '2px solid #000',
     boxShadow: 24,
@@ -109,7 +109,7 @@ const headCells = [
         label: 'Last Name',
     },
     {
-        id:'address',
+        id: 'address',
         disablePadding: false,
         label: 'Address'
     },
@@ -137,9 +137,6 @@ function EnhancedTableHead(props) {
 
 
         <TableHead>
-            {/* <button onClick={getAvailableDoctors}>TEST DB DOCTORS</button> for troubleshooting purposes
-            <button onClick={getNewPatients}>TEST DB PATIENTS</button> */}
-
             <TableRow>
 
                 {headCells.map((headCell) => (
@@ -178,31 +175,7 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-function getNumItems() {
-    var counter = 0;
-    mockedDatas.forEach(element => {
-        if (!element.doctor)
-            counter++;
-    })
-    return counter;
-};
-
-
-export default function UnpairedPatientDoctorEmergencyListTable() {
-    const [data, setData] = useState([]);
-
-
-    useEffect(() => {
-
-        (async () => {
-        const dbData = await getNewPatients();
-        setData(dbData.Items);console.log(dbData.Items[0]);
-        })();
-
-    },[]);
-    
-
-
+export default function UnpairedNewPatientListTable() {
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -210,12 +183,53 @@ export default function UnpairedPatientDoctorEmergencyListTable() {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    const newPatientNumber = getNumItems();
-
-    //modal 
+    const [patient, setPatient] = React.useState("")
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [tableSize, setTableSize] = useState(0)
+    
+    const handleOpen = patient => {
+        console.log("handle open() patient: " + patient);
+        setOpen(true);
+        setPatient(patient);
+    };
+    const handleClose = entries => {
+        setOpen(false);
+        setTableSize(entries);
+    }
+
+    const [data, setData] = useState([]);
+    const [doctorData, setDoctorData] = useState([]);
+    const [patientData, setPatientData] = useState([]);
+
+
+    useEffect(() => {
+        (async () => {
+            const dbData = await getPatientWithDoctor();
+            setData(dbData.Items);
+        })();
+        
+    }, []);
+    
+    
+    useEffect(() => {
+        (async () => {
+            const dbData = await getDoctorEmergency();
+            setDoctorData(dbData.Items);
+        })();
+
+    }, []);
+
+    useEffect(() => {
+        var array =[];
+        patientData.forEach(pat => {
+            doctorData.forEach(doc => {
+                if(pat.doctor === doc.licenseNumber && doc.hasEmergency === true)
+                    array.push(pat)
+                else;
+            });
+        });
+        setData(array);
+    }, []);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -242,44 +256,44 @@ export default function UnpairedPatientDoctorEmergencyListTable() {
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
 
-   if (data) { return (
-        
-        <div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={modalStyle}>
-                <Button className={classes.exitButton} onClick={handleClose}><CloseIcon/></Button>
-                    <AvailableDoctors />
-                </Box>
-            </Modal>
+    if (data) {
+        //setTableSize(data.length)
+        return (
+            <div>
+                <Modal
+                    open={open}
+                    onClose={() => handleClose(data.length)}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={modalStyle}>
+                        <Button className={classes.exitButton} onClick={handleClose}><CloseIcon /></Button>
+                        <AvailableDoctors patient={patient} />
+                    </Box>
+                </Modal>
 
-            <h2>Patients</h2>
-            <Box sx={{ width: '100%' }}>
-                <Paper sx={{ width: '100%', mb: 2 }}>
-                    <TableContainer>
-                        <Table
-                            sx={{ minWidth: 750 }}
-                            aria-labelledby="patientListTable"
-                            size={dense ? 'small' : 'medium'}
-                        >
-                            <EnhancedTableHead
-                                numSelected={selected.length}
-                                order={order}
-                                orderBy={orderBy}
-                                onRequestSort={handleRequestSort}
-                                rowCount={newPatientNumber}
-                            />
-                            <TableBody>
-                                {/* if you don't need to support IE11, you can replace the `stableSort` call with:
+                <h2>Patients</h2>
+                <Box sx={{ width: '100%' }}>
+                    <Paper sx={{ width: '100%', mb: 2 }}>
+                        <TableContainer>
+                            <Table
+                                sx={{ minWidth: 750 }}
+                                aria-labelledby="patientListTable"
+                                size={dense ? 'small' : 'medium'}
+                            >
+                                <EnhancedTableHead
+                                    numSelected={selected.length}
+                                    order={order}
+                                    orderBy={orderBy}
+                                    onRequestSort={handleRequestSort}
+                                    rowCount={data.length}
+                                />
+                                <TableBody>
+                                    {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                                {stableSort(data, getComparator(order, orderBy))
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((item) => {
-                                        if (!item.doctor) {
+                                    {stableSort(data, getComparator(order, orderBy))
+                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        .map((item) => {
                                             return (
                                                 // setNumItems(prevState => (prevState+1)),
                                                 <TableRow
@@ -293,41 +307,40 @@ export default function UnpairedPatientDoctorEmergencyListTable() {
                                                     <TableCell align="center"> {item.lastName} </TableCell>
                                                     <TableCell align="center"> {item.address.city} </TableCell>
                                                     <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon /></TableCell>
-                                                    <TableCell align="center"><Button className={classes.pair} onClick={handleOpen}>Find a doctor</Button></TableCell>
+                                                    <TableCell align="center"><Button className={classes.pair} onClick={()=>handleOpen(item.email)}>Find a doctor</Button></TableCell>
                                                 </TableRow>
                                             );
-                                        }
-                                    })}
-                                {emptyRows > 0 && (
-                                    <TableRow
-                                        style={{
-                                            height: (dense ? 33 : 53) * emptyRows,
-                                        }}
-                                    >
-                                        <TableCell colSpan={6} />
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
-                        count={newPatientNumber}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                        })}
+                                    {emptyRows > 0 && (
+                                        <TableRow
+                                            style={{
+                                                height: (dense ? 33 : 53) * emptyRows,
+                                            }}
+                                        >
+                                            <TableCell colSpan={6} />
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                        <TablePagination
+                            rowsPerPageOptions={[5, 10, 25]}
+                            component="div"
+                            count={data.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            onPageChange={handleChangePage}
+                            onRowsPerPageChange={handleChangeRowsPerPage}
+                        />
+                    </Paper>
+                    <FormControlLabel
+                        control={<Switch checked={dense} onChange={handleChangeDense} />}
+                        label="Dense padding"
                     />
-                </Paper>
-                <FormControlLabel
-                    control={<Switch checked={dense} onChange={handleChangeDense} />}
-                    label="Dense padding"
-                />
-            </Box>
-        </div>
+                </Box>
+            </div>
 
-    );
-                                    }
-                                    else return null
+        );
+    }
+    else return null
 }
