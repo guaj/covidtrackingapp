@@ -1,10 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import './Dashboard.css';
-import Pdf from "react-to-pdf";
-
-import ReactDOM from "react-dom";
-
 //tab components 
 import DoctorTabs from './DoctorDashboard/DoctorTabs';
 import PatientTabs from './PatientDashboard/PatientTabs';
@@ -12,7 +8,6 @@ import HealthOfficialTabs from './HealthOfficialDashboard/HealthOfficialTabs';
 import ImmigrationOfficialTabs from './ImmigrantOfficerDashboard/ImmigrationOfficialTabs';
 import AdminTabs from './AdminDashboard/adminDashboard';
 import Navbar from "../Navbar/Navbar";
-import PdfScreenshot from './DoctorDashboard/PdfScreenshot';
 
 
 const mockProfiles = [
