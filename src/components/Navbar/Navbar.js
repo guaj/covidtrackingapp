@@ -68,6 +68,11 @@ const usersWithNotifications = [
     "patient"
 ];
 
+const usersWithProfilePage = [
+    "doctor",
+    "patient"
+]
+
 export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -109,7 +114,11 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleProfile}>Profile</MenuItem>
+            {hasAccessProfilePage() ?
+                <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                : <></>
+            }
+
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
     );
@@ -153,21 +162,29 @@ export default function PrimarySearchAppBar() {
                 </MenuItem>
                 : <></>
             }
+            {hasAccessProfilePage ?
+                <MenuItem onClick={handleProfileMenuOpen}>
+                    <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="primary-search-account-menu"
+                        aria-haspopup="true"
+                        color="inherit"
+                    >
+                        <AccountCircle style={{color: "#673ab7"}}/>
+                    </IconButton>
+                    <p>Profile</p>
+                </MenuItem>
+                : <> </>
+            }
 
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle style={{color: "#673ab7"}}/>
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
         </Menu>
     );
+
+    function hasAccessProfilePage() {
+        let user = JSON.parse(localStorage.getItem("type"));
+        return usersWithProfilePage.includes(user);
+    }
 
     function hasSearchBar() {
         let user = JSON.parse(localStorage.getItem("type"));
@@ -180,13 +197,14 @@ export default function PrimarySearchAppBar() {
     }
 
     function handleLogout() {
-        localStorage.setItem("id", "");
-        localStorage.setItem("email", "");
+        localStorage.setItem("id", undefined);
+        localStorage.setItem("email", undefined);
         window.location = "/login" ;
     }
     function handleProfile() {
-        let user = JSON.parse(localStorage.getItem("id"))
-        window.location = "/profile/" + user;
+        let user = JSON.parse(localStorage.getItem("email"))
+        let url = user.split("@");
+        window.location = "/profile/" + url[0];
     }
 
     return (
@@ -201,21 +219,21 @@ export default function PrimarySearchAppBar() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
-                        <a href="dashboard" style={{textDecoration: "none", color: "#673ab7"}}>
+                        <a href="/dashboard" style={{textDecoration: "none", color: "#673ab7"}}>
                             COVID Tracking App
                         </a>
 
                     </Typography>
                     {/*conditional rendering for the searchbar*/}
                     {hasSearchBar() ? <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon style={{color: "#673ab7"}}/>
-                        </SearchIconWrapper>
-                        <StyledInputBase style={{color: "#b39ddb"}}
-                                         placeholder="Search…"
-                                         inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
+                            <SearchIconWrapper>
+                                <SearchIcon style={{color: "#673ab7"}}/>
+                            </SearchIconWrapper>
+                            <StyledInputBase style={{color: "#b39ddb"}}
+                                             placeholder="Search…"
+                                             inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </Search>
                         : <></>}
 
                     <Box sx={{ flexGrow: 1 }} />

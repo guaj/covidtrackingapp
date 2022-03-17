@@ -6,8 +6,9 @@
 .pnp.js
 src/package-lock.json
 
-#aws credentials 
+
 */aws-config.json
+
 
 # testing
 /coverage

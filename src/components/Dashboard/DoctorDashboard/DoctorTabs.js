@@ -7,6 +7,8 @@ import Box from '@mui/material/Box';
 import Chart from '../CommonTabs/Chart';
 import PatientListTable from "../CommonTabs/patientListTable";
 import FaceInfo from "../CommonTabs/FaceInfo";
+import DoctorSchedule from "./DoctorSchedule";
+
 import Pdf from "react-to-pdf";
 import {Button} from "@mui/material";
 import "./styles.css";
@@ -69,7 +71,7 @@ export default function DoctorTabs() {
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="Statistics" {...a11yProps(0)} />
                 <Tab label="Patient List" {...a11yProps(1)} />
-                <Tab label="Patient Emergency List" {...a11yProps(2)} />
+                <Tab label="My Availabilities" {...a11yProps(2)} />
                 <Tab label="Doctor-Patient Pairing List" {...a11yProps(3)} />
             </Tabs>
 
@@ -95,11 +97,12 @@ export default function DoctorTabs() {
                 </div>
             </TabPanel>
             <TabPanel value={value} index={2}>
-                {/* to come in future sprints */}
+                <DoctorSchedule />
             </TabPanel>
             <TabPanel value={value} index={3}>
                 {/* to come in future sprints test */}
             </TabPanel>
+
 
         </>
     )

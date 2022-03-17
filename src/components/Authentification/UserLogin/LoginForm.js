@@ -65,8 +65,8 @@ export default function LoginForm({Login, error}){
         >
             <FormControlLabel value="patient" control={<Radio />} label="patient" />
             <FormControlLabel value="doctor" control={<Radio />} label="doctor" />
-            <FormControlLabel value="org1" control={<Radio />} label="immigration officer" />
-            <FormControlLabel value="org2" control={<Radio />} label="health officer" />
+            <FormControlLabel value="org2" control={<Radio />} label="immigration officer" />
+            <FormControlLabel value="org1" control={<Radio />} label="health officer" />
             <FormControlLabel value="admin" control={<Radio />} label="admin" />
         </RadioGroup>
         <TextField

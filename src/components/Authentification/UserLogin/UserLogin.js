@@ -4,9 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import geometricImage from "../../../images/geometric_gradient.jpg";
 import {useEffect, useState} from "react";
-import loginData from "./userLoginMockData";
 import LoginForm from "./LoginForm";
-import Button from "@material-ui/core/Button";
 import AWS from 'aws-sdk';
 import awsConfig from '../../../aws-config.json';
 
@@ -35,6 +33,12 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 const doctorTable = 'doctors';
 const patientTable = 'patients';
 const orgTable = 'organizations';
+
+export function setLocalStorage(email, type) {
+    localStorage.setItem("email", JSON.stringify(email));
+    localStorage.setItem("type", JSON.stringify(type));
+    window.location = '/dashboard';
+}
 
 
 export default function UsersLogin() {
@@ -70,10 +74,7 @@ export default function UsersLogin() {
             try {
                 const result = await docClient.get(params).promise()
                 if(result.Item.password === details.password && result.Item.email === details.email){
-                alert("admin retrieved");
-                console.log(result.Item);
-                window.location = '/dashboard'; //wrong page! Need admin Dashboard
-                notValid = false;
+                    setLocalStorage(result.Item.email, "admin");
                 }
 
             } catch (err) {
@@ -82,39 +83,33 @@ export default function UsersLogin() {
             }
         }
         else if (details.type ==="patient"){
-           const param = {
-               TableName: patientTable,
-               Key:{
-                   "email":String(details.email)
-               }
-           }
-           try {
-            const result = await docClient.get(param).promise()
-               if(result.Item.password === details.password && result.Item.email === details.email){
-                   alert("patient retrieved");
-                   console.log(result.Item);
-                   window.location = '/patient-registration'; //wrong page! Need admin Dashboard
-                   notValid = false;
-               }
-        } catch (err) {
-            alert("wrong password or email");
-            alert(err);
-        }
-        }
-        else if (details.type ==="doctor"){
             const param = {
-                TableName: doctorTable,
+                TableName: patientTable,
                 Key:{
-                    "licenseNumber":String(details.email)
+                    "email":String(details.email)
                 }
             }
             try {
                 const result = await docClient.get(param).promise()
                 if(result.Item.password === details.password && result.Item.email === details.email){
-                    alert("doctor retrieved");
-                    console.log(result.Item);
-                    window.location = '/patient-registration'; //wrong page! Need admin Dashboard
-                    notValid = false;
+                    setLocalStorage(result.Item.email, "patient");
+                }
+            } catch (err) {
+                alert("wrong password or email");
+                alert(err);
+            }
+        }
+        else if (details.type ==="doctor"){
+            const param = {
+                TableName: doctorTable,
+                Key:{
+                    "email":String(details.email)
+                }
+            }
+            try {
+                const result = await docClient.get(param).promise()
+                if(result.Item.password === details.password && result.Item.email === details.email){
+                    setLocalStorage(result.Item.email, "doctor");
                 }
             } catch (err) {
                 alert("wrong password or email");
@@ -132,38 +127,13 @@ export default function UsersLogin() {
                 const result = await docClient.get(param).promise()
                 console.log(result)
                 if(result.Item.password === details.password && result.Item.email === details.email){
-                    alert("org retrieved");
-                    console.log(result.Item);
-                    window.location = '/organization-registration'; //wrong page! Need admin Dashboard
-                    notValid = false;
+                    setLocalStorage(result.Item.email, "immigration official");
                 }
             } catch (err) {
                 alert("wrong password or email");
                 alert(err);
             }
         }
-        //
-        // for (let i = 0; i < loginData.length; i++) {
-        //     if (loginData[i].email === details.email) {
-        //         if (loginData[i].password1 === details.password){
-        //             console.log("Logged in!");
-        //             localStorage.setItem("id", JSON.stringify(loginData[i].id));
-        //             localStorage.setItem("email", JSON.stringify(loginData[i].email));
-        //             localStorage.setItem("type", JSON.stringify(loginData[i].type));
-        //             notValid = false
-        //             setUser( {
-        //                 email: details.email,
-        //                 password1: details.password
-        //             });
-        //             window.location = "/dashboard" ;
-        //         }
-        //
-        //     }
-        // }
-        // if(notValid) {
-        //     alert("Wrong email or password !")
-        //     return false;
-        // }
 
     }
     const Logout = () => {

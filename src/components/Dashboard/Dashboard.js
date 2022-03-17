@@ -28,7 +28,7 @@ function DisplayUserTabs() {
 
     try {
 
-        user = JSON.parse(localStorage.getItem("id"))
+        user = JSON.parse(localStorage.getItem("email"))
         userType = JSON.parse(localStorage.getItem("type"))
         console.log(userType)
 
@@ -54,7 +54,9 @@ function DisplayUserTabs() {
         case 'admin':
             return <AdminTabs/>;
             
+
        default: alert("invalid user type: something has gone *really* wrong")
+
     }
 }
 
