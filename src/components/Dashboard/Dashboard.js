@@ -37,6 +37,7 @@ function DisplayUserTabs() {
         console.log('Error: ', err.message);
         window.location.assign("/login#redirect");
     }
+    userType = JSON.parse(localStorage.getItem("type"));
 
     switch (userType) { //randomization to demonstrate conditional rendering
         case "doctor":
@@ -55,7 +56,9 @@ function DisplayUserTabs() {
             return <AdminTabs/>;
             
 
-       default: alert("invalid user type: something has gone *really* wrong")
+       default:
+           window.location.assign("/login#redirect");
+           alert("invalid user type: something has gone *really* wrong")
 
     }
 }
