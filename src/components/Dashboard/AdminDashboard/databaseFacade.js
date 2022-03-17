@@ -43,7 +43,7 @@ export async function updatePatientsDoctor(email, doctor)  {
         alert("sucess!")
 
       } catch (err) {
-        alert(JSON.stringify(err,undefined,2))
+        alert(JSON.stringify(err))
       }
 }
 
@@ -82,11 +82,6 @@ export async function getNewPatients() {
     }
         try {
             const data = await docClient.scan(params).promise()
-            // //console logged data
-             //alert(JSON.stringify(data))
-             console.log(data.Items[0].address.city)
-            // console.log(data.Items)
-            // //return (JSON.parse(data.Items));
             return data
         } catch (err) {
             alert(JSON.stringify(err))

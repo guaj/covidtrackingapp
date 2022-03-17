@@ -18,7 +18,7 @@ import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
 import { getAvailableDoctors, getNewPatients, updatePatientsDoctor } from './databaseFacade'
 import {useState, useEffect} from 'react'
-import LoadingOverlay from 'react-loading-overlay';
+
 
 const useStyles = makeStyles((theme) => ({
     pair: {

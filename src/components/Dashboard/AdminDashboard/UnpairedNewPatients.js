@@ -138,8 +138,8 @@ function EnhancedTableHead(props) {
 
 
         <TableHead>
-            <button onClick={getAvailableDoctors}>TEST DB DOCTORS</button>
-            <button onClick={getNewPatients}>TEST DB PATIENTS</button>
+            {/* <button onClick={getAvailableDoctors}>TEST DB DOCTORS</button>  for troublehsooting purposes
+            <button onClick={getNewPatients}>TEST DB PATIENTS</button> */}
 
             <TableRow>
 
