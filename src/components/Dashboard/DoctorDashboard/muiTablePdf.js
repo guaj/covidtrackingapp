@@ -30,6 +30,7 @@ const studentData = [
     fee: 784596,
   }
 ]
+
 function MUIPdf() {
   const columns = [
     { title: "Name", field: "name", },

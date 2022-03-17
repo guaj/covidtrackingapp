@@ -40,7 +40,7 @@ function App() {
             <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
             <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
             <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
-            <Route path='/muipdf' element={[<muiTablePdf/>]} /> {/* example form that produces pdf report*/}
+            <Route path='/muipdf' element={[<MUIPdf/>]} /> {/* example form that produces pdf report*/}
 
             
         </Routes>

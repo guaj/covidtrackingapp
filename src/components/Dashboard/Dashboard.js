@@ -12,7 +12,7 @@ import HealthOfficialTabs from './HealthOfficialDashboard/HealthOfficialTabs';
 import ImmigrationOfficialTabs from './ImmigrantOfficerDashboard/ImmigrationOfficialTabs';
 import AdminTabs from './AdminDashboard/adminDashboard';
 import Navbar from "../Navbar/Navbar";
-import PdfTest from './DoctorDashboard/PdfTest';
+import PdfTest from './DoctorDashboard/PdfScreenshot';
 
 
 const mockProfiles = [
