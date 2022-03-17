@@ -16,8 +16,9 @@ import { visuallyHidden } from '@mui/utils';
 import mockedDatas from "../DoctorDashboard/doctorListTableMockData.json";
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
-import { getAvailableDoctors, getNewPatients } from './databaseFacade'
+import { getAvailableDoctors, getNewPatients, updatePatientsDoctor } from './databaseFacade'
 import {useState, useEffect} from 'react'
+
 
 const useStyles = makeStyles((theme) => ({
     pair: {
@@ -151,7 +152,7 @@ EnhancedTableHead.propTypes = {
 };
 
 
-export default function AvailableDoctors() {
+export default function AvailableDoctors(props) {
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected] = React.useState([]);
@@ -196,7 +197,7 @@ export default function AvailableDoctors() {
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - mockedDatas.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
 if(data) {
     return (
@@ -215,7 +216,7 @@ if(data) {
                                 order={order}
                                 orderBy={orderBy}
                                 onRequestSort={handleRequestSort}
-                                rowCount={mockedDatas.length}
+                                rowCount={data.length}
                             />
                             <TableBody>
                                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
@@ -232,11 +233,11 @@ if(data) {
                                                 key={item.name}
                                             >
                                                 <TableCell align="center">{item.licenseNumber}</TableCell>
-                                                <TableCell align="center">{item.address}</TableCell>
+                                                <TableCell align="center">{item.city}</TableCell>
                                                 <TableCell align="center">{item.email}</TableCell>
                                                 <TableCell align="center">{item.firstName}</TableCell>
                                                 <TableCell align="center">{item.lastName}</TableCell>
-                                                <TableCell><Button className={classes.pair} onClick='#'>Select</Button></TableCell>
+                                                <TableCell><Button className={classes.pair} onClick={() => updatePatientsDoctor(props.patient, item.licenseNumber)}>Select</Button></TableCell>
                                             </TableRow>
                                         );
                                     })}
@@ -255,7 +256,7 @@ if(data) {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={mockedDatas.length}
+                        count={data.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}
@@ -270,5 +271,5 @@ if(data) {
         </div>
 
     ); }
-    else return null; 
-}
+    else return null
+    }
