@@ -13,7 +13,8 @@ import geometricImage from "../../../images/geometric_gradient.jpg";
 import data from "./logged_in_patient_mock_data.json";
 import {useState, Fragment, useEffect} from "react";
 import Navbar from "../../../components/Navbar/Navbar";
-
+import AWS from 'aws-sdk';
+import awsConfig from '../../../aws-config.json';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -50,9 +51,61 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+AWS.config.update(awsConfig);
+const docClient = new AWS.DynamoDB.DocumentClient;
 
 export default function ProfilePatient() {
     const classes = useStyles();
+
+    async function fetchData(tableName) {
+        const params = {
+            TableName: tableName,
+            ExpressionAttributeValues: {":email": JSON.parse(localStorage.getItem("email"))},
+            KeyConditionExpression: 'email = :email'
+        }
+
+        let result = null;
+        try {
+            result = await docClient.query(params).promise();
+            console.log(result.Items.at(0));
+        } finally {
+            const formValues = {
+                firstName: result.Items.at(0).firstName,
+                lastName: result.Items.at(0).lastName,
+                dob: result.Items.at(0).dob,
+                streetNumber: result.Items.at(0).address.streetNumber,
+                streetName: result.Items.at(0).address.streetName,
+                apartmentNumber: result.Items.at(0).address.apartmentNumber,
+                postalCode: result.Items.at(0).address.postalCode,
+                city: result.Items.at(0).address.city,
+                province: result.Items.at(0).address.province,
+                phoneNumber: result.Items.at(0).phoneNumber,
+                email: result.Items.at(0).email,
+                ramQNumber: result.Items.at(0).ramQNumber,
+                insurance: result.Items.at(0).insurance,
+                symptom1: result.Items.at(0).symptoms.symptom1,
+                symptom2: result.Items.at(0).symptoms.symptom2,
+                symptom3: result.Items.at(0).symptoms.symptom3,
+                symptom4: result.Items.at(0).symptoms.symptom4,
+                symptom5: result.Items.at(0).symptoms.symptom5,
+                symptom6: result.Items.at(0).symptoms.symptom6,
+                symptom7: result.Items.at(0).symptoms.symptom7,
+                symptom8: result.Items.at(0).symptoms.symptom8,
+                symptom9: result.Items.at(0).symptoms.symptom9,
+                symptom10: result.Items.at(0).symptoms.symptom10,
+                symptom11: result.Items.at(0).symptoms.symptom11,
+                comments: result.Items.at(0).comments,
+                doctorId: result.Items.at(0).doctorId,
+                flag: result.Items.at(0).flag
+            };
+            setDbdata(formValues);
+        }
+    }
+
+    const [dbdata, setDbdata] = useState({});
+
+    console.log(dbdata);
+    console.log(data);
 
     const [patients, setPatients] = useState(data);
 
@@ -117,6 +170,8 @@ export default function ProfilePatient() {
     const [editPatientId, setEditPatientId] = useState(null);
 
     useEffect(() => {
+        // setDbdata(fetchData('patients'));
+        fetchData('patients');
         handleFormInformationLoad();
     }, []);
 
@@ -124,6 +179,7 @@ export default function ProfilePatient() {
         const patient = patients[0];
         setEditPatientId(patient.id);
 
+        console.log(patients);
         const formValues = {
             firstName: patient.firstName,
             lastName: patient.lastName,
@@ -282,7 +338,7 @@ export default function ProfilePatient() {
                                     <TextField
                                         type="date"
                                         margin="normal"
-                                        fullWidth
+                                        fullWidth={true}
                                         name="dob"
                                         autoComplete="date"
                                         helperText="Date of birth"
@@ -416,7 +472,7 @@ export default function ProfilePatient() {
 
                                         </FormGroup>
                                         <p>Other comments</p>
-                                        <TextField fullwidth
+                                        <TextField fullWidth={true}
                                                    id="outlined-multiline-static"
                                                    label=""
                                                    multiline
@@ -428,7 +484,7 @@ export default function ProfilePatient() {
                                         />
                                         <Button
                                             type="submit"
-                                            fullWidth
+                                            fullWidth={true}
                                             variant="contained"
                                             className={classes.submit}
                                             onClick={() => {
@@ -439,9 +495,9 @@ export default function ProfilePatient() {
                                         </Button>
                                         <Button
                                             type="button"
-                                            fullWidth
+                                            fullWidth={true}
                                             variant="contained"
-                                            onClick={(event) =>[handleNotifyDoctorButtonClick(event), alert('Your doctor will be notified!')]}
+                                            onClick={(event) => [handleNotifyDoctorButtonClick(event), alert('Your doctor will be notified!')]}
                                         >
                                             Notify my doctor
                                         </Button>
