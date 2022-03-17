@@ -9,18 +9,13 @@ import "./styles.css";
 const ref = React.createRef();
 
 
-export default function pdfCon(){
+export default function PDFButton(){
   return (
     <div className="pdfCon">
       <Pdf targetRef = {ref} filename="code-example.pdf">
         {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
       </Pdf>
       <div ref={ref}>
-
-              <PatientListTable/>
-          
-        
-
       </div>
     </div>
   );
