@@ -27,25 +27,68 @@ export async function getAvailableDoctors()  {
       }
 }
 
+export async function updatePatientsDoctor(email, doctor)  {
+    
+    var params = {
+            TableName: 'patients',
+            Key: { email },
+            UpdateExpression: 'set doctor = :newdoctor',
+            ExpressionAttributeValues: { ':newdoctor': doctor },
+          
+    }
+      try {
+          
+        await docClient.update(params).promise()
+        //updateDoctorPatientCount(doctor)
+        alert("sucess!")
+
+      } catch (err) {
+        alert(JSON.stringify(err,undefined,2))
+      }
+}
+
+export async function updateDoctorPatientCount(licenseNumber)  {
+    
+    var params = {
+            TableName: 'patients',
+            Key: { licenseNumber },
+            UpdateExpression: 'set doctor = doctor + :val',
+            ExpressionAttributeValues: { ':val': 1 },
+          
+    }
+      try {
+          
+        await docClient.update(params).promise()
+        alert("sucess!")
+
+      } catch (err) {
+        alert(JSON.stringify(err,undefined,2))
+      }
+}
+
+
+
 //database query for finding new patients
 export async function getNewPatients() {
     var params = {
         TableName: "patients",
-        FilterExpression: "#doc = :zero OR attribute_not_exists(#doc)",
+        FilterExpression: "#doc = :none",  // OR attribute_not_exists(#doc)
         ExpressionAttributeNames: {
             "#doc": "doctor"
         },
         ExpressionAttributeValues: {
-            ":zero": ""
+            ":none": ""
         }
     }
         try {
             const data = await docClient.scan(params).promise()
-            //console logged data
-            //alert(JSON.stringify(data))
-            console.log(data.Items)
-            return (JSON.parse(data.Items));
+            // //console logged data
+             //alert(JSON.stringify(data))
+             console.log(data.Items[0].address.city)
+            // console.log(data.Items)
+            // //return (JSON.parse(data.Items));
+            return data
         } catch (err) {
-            alert("could not retrieve data >:(")
+            alert(JSON.stringify(err))
         }
 }

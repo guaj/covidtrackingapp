@@ -6,7 +6,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import PatientListTable from "../CommonTabs/patientListTable";
 import DoctorListTable from '../CommonTabs/doctorListTable';
-import UnpairedPatientListTable from './UnpairedPatients';
+import UnpairedNewPatientListTable from './UnpairedNewPatients';
+import UnpairedPatientDoctorEmergencyListTable from './UnpairedPatientDoctorEmergency';
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -74,10 +75,10 @@ export default function AdminTabs() {
                 <DoctorListTable />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <UnpairedPatientListTable />
+                <UnpairedNewPatientListTable />
             </TabPanel>
             <TabPanel value={value} index={3}>
-                <UnpairedPatientListTable />
+                <UnpairedPatientDoctorEmergencyListTable />
             </TabPanel>
 
         </>

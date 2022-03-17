@@ -188,26 +188,19 @@ function getNumItems() {
 };
 
 
-export default function UnpairedPatientListTable() {
-    const [data, setData] = useState(null);
+export default function UnpairedPatientDoctorEmergencyListTable() {
+    const [data, setData] = useState([]);
 
-//     async function getToken() {
-//         const token = await getAvailableDoctors()
-//         setToken(token);
-//     }
-//   useEffect(() => {
+
+    useEffect(() => {
+
+        (async () => {
+        const dbData = await getNewPatients();
+        setData(dbData.Items);console.log(dbData.Items[0]);
+        })();
+
+    },[]);
     
-//      getToken();
-//   }, [])
-useEffect(() => {
-
-    (async () => {
-      const dbData = await getAvailableDoctors();
-      setData(dbData.Items);console.log(dbData.Items[0]);
-    })();
-
-  },[]);
-   
 
 
     const classes = useStyles();
@@ -246,7 +239,7 @@ useEffect(() => {
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - mockedDatas.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
 
    if (data) { return (
@@ -298,7 +291,7 @@ useEffect(() => {
                                                     <TableCell align="center"> {item.priorityNumber} </TableCell>
                                                     <TableCell align="center"> {item.firstName} </TableCell>
                                                     <TableCell align="center"> {item.lastName} </TableCell>
-                                                    <TableCell align="center"> {item.address} </TableCell>
+                                                    <TableCell align="center"> {item.address.city} </TableCell>
                                                     <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon /></TableCell>
                                                     <TableCell align="center"><Button className={classes.pair} onClick={handleOpen}>Find a doctor</Button></TableCell>
                                                 </TableRow>
