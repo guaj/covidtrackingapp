@@ -7,7 +7,8 @@ import {useEffect, useState} from "react";
 import loginData from "./userLoginMockData";
 import LoginForm from "./LoginForm";
 import Button from "@material-ui/core/Button";
-
+import AWS from 'aws-sdk';
+import awsConfig from '../../../aws-config.json';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -28,7 +29,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+AWS.config.update(awsConfig);
+const docClient = new AWS.DynamoDB.DocumentClient();
 
+const doctorTable = 'doctors';
+const patientTable = 'patients';
+const orgTable = 'organizations';
 
 
 export default function UsersLogin() {
@@ -51,11 +57,71 @@ export default function UsersLogin() {
         }
     }, [])
 
-
-
-    const Login = details => {
+    const Login = async details => {
         console.log(details);
         let notValid = true
+        if(details.type ==="admin"){
+            const params = {
+                TableName: "admin",
+                Key:{
+                    "adminID":String('2')
+                }
+            }
+            try {
+                const result = await docClient.get(params).promise()
+                if(result.Item.password === details.password && result.Item.email === details.email){
+                alert("admin retrieved");
+                console.log(result.Item);
+                window.location = '/dashboard'; //wrong page! Need admin Dashboard
+                notValid = false;
+                }
+
+            } catch (err) {
+                alert("wrong password or email");
+                alert(err);
+            }
+        }
+        else if (details.type ==="patient"){
+           const param = {
+               TableName: patientTable,
+               Key:{
+                   "email":String(details.email)
+               }
+           }
+           try {
+            const result = await docClient.get(param).promise()
+               if(result.Item.password === details.password && result.Item.email === details.email){
+                   alert("patient retrieved");
+                   console.log(result.Item);
+                   window.location = '/patient-registration'; //wrong page! Need admin Dashboard
+                   notValid = false;
+               }
+        } catch (err) {
+            alert("wrong password or email");
+            alert(err);
+        }
+        }
+        else if (details.type ==="doctor"){
+            const param = {
+                TableName: doctorTable,
+                Key:{
+                    "licenseNumber":String(details.email)
+                }
+            }
+            try {
+                const result = await docClient.get(param).promise()
+                if(result.Item.password === details.password && result.Item.email === details.email){
+                    alert("patient retrieved");
+                    console.log(result.Item);
+                    window.location = '/patient-registration'; //wrong page! Need admin Dashboard
+                    notValid = false;
+                }
+            } catch (err) {
+                alert("wrong password or email");
+                alert(err);
+            }
+        }
+
         for (let i = 0; i < loginData.length; i++) {
             if (loginData[i].email === details.email) {
                 if (loginData[i].password1 === details.password){
