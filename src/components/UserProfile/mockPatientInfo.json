@@ -1,0 +1,12 @@
+{
+  "name": "Tiger Wood",
+  "address": "100 software Street, H4E 6K2, QC, Montreal",
+  "phone": "514-451-5005",
+  "email": "apatient@gmail.com",
+  "ramqNum": "No RAMQ Number",
+  "insurance": "Blue Cross Insurance",
+  "insuranceNumber": "001SQ906102",
+  "doctorName": "Anya",
+  "appointmentDate": "March 16 2022",
+  "appointmentTime": "11:00"
+}
