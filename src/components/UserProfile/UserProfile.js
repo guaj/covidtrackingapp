@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import "./UserProfile.css";
 import AWS from "aws-sdk";
 import awsConfig from "../../aws-config.json";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 export default function UserProfile() {
     try {
@@ -35,7 +35,7 @@ export default function UserProfile() {
         let userFetch = window.location.href.split("/")[4];
 
         AWS.config.update(awsConfig);
-        const docClient = new AWS.DynamoDB.DocumentClient;
+        const docClient = new AWS.DynamoDB.DocumentClient();
 
         let params = {
             TableName: "patients",
@@ -69,7 +69,7 @@ export default function UserProfile() {
         let userFetch = window.location.href.split("/")[4];
 
         AWS.config.update(awsConfig);
-        const docClient = new AWS.DynamoDB.DocumentClient;
+        const docClient = new AWS.DynamoDB.DocumentClient();
 
         let params = {
             TableName: "patients",
