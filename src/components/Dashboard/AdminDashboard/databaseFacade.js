@@ -8,7 +8,7 @@ const docClient = new AWS.DynamoDB.DocumentClient()
 export async function getAvailableDoctors()  {
     var params = {
         TableName: "doctors",
-        FilterExpression: "#count < :max AND attribute_not_exists(#em)",
+        FilterExpression: "#count < :max OR attribute_not_exists(#em)", 
         ExpressionAttributeNames: {
             "#count": "patientCount",
             "#em": "hasEmergency"
@@ -20,7 +20,6 @@ export async function getAvailableDoctors()  {
       try {
           
         const data = await docClient.scan(params).promise()
-        //alert(JSON.stringify(data))
         return data
 
       } catch (err) {
@@ -40,7 +39,7 @@ export async function updatePatientsDoctor(email, doctor)  {
       try {
           
         await docClient.update(params).promise()
-        //updateDoctorPatientCount(doctor)
+        updateDoctorPatientCount(doctor)
         alert("success!")
 
       } catch (err) {
@@ -48,12 +47,12 @@ export async function updatePatientsDoctor(email, doctor)  {
       }
 }
 
-export async function updateDoctorPatientCount(licenseNumber)  {
+export async function updateDoctorPatientCount(email)  {
     
     var params = {
-            TableName: 'patients',
-            Key: { licenseNumber },
-            UpdateExpression: 'set doctor = doctor + :val',
+            TableName: 'doctors',
+            Key: { email },
+            UpdateExpression: 'set patientCount = patientCount + :val',
             ExpressionAttributeValues: { ':val': 1 },
           
     }
@@ -83,6 +82,7 @@ export async function getNewPatients() {
     }
         try {
             const data = await docClient.scan(params).promise()
+            
             return data
         } catch (err) {
             alert(JSON.stringify(err))
