@@ -127,3 +127,24 @@ export async function getDoctorEmergency() {
           alert(JSON.stringify(err))
       }
 }
+
+export async function getPairedDoctors()  {
+  var params = {
+      TableName: "doctors",
+      FilterExpression: "#pat <> :null",
+      ExpressionAttributeNames: {
+          "#pat": "patientCount",
+      },
+      ExpressionAttributeValues: {
+          ":null": 0
+      }
+  }
+    try {
+        
+      const data = await docClient.scan(params).promise()
+      return data
+
+    } catch (err) {
+      alert("could not retrieve data >:(")
+    }
+}
