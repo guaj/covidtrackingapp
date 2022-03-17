@@ -78,4 +78,5 @@
       "node_modules/(?!(react-password-checklist)/)"
     ]
   }
+
 }
