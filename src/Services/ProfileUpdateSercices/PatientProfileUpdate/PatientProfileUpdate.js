@@ -67,9 +67,9 @@ export default function ProfilePatient() {
         let result = null;
         try {
             result = await docClient.query(params).promise();
-            console.log(result.Items.at(0));
         } finally {
             const formValues = {
+                id: 1,
                 firstName: result.Items.at(0).firstName,
                 lastName: result.Items.at(0).lastName,
                 dob: result.Items.at(0).dob,
@@ -98,16 +98,11 @@ export default function ProfilePatient() {
                 doctorId: result.Items.at(0).doctorId,
                 flag: result.Items.at(0).flag
             };
-            setDbdata(formValues);
+            return [formValues];
         }
     }
 
-    const [dbdata, setDbdata] = useState({});
-
-    console.log(dbdata);
-    console.log(data);
-
-    const [patients, setPatients] = useState(data);
+    const [patients, setPatients] = useState(null);
 
     const [notifyDoctor, setNotifyDoctor] = useState({
         firstName: '',
@@ -169,17 +164,21 @@ export default function ProfilePatient() {
 
     const [editPatientId, setEditPatientId] = useState(null);
 
-    useEffect(() => {
-        // setDbdata(fetchData('patients'));
-        fetchData('patients');
-        handleFormInformationLoad();
+    useEffect(async () => {
+        setPatients(await fetchData('patients'))
+        handleFormInformationLoad()
     }, []);
 
+    useEffect(() => {
+        if (patients !== null){}
+            handleFormInformationLoad();
+    }, [patients])
+
     const handleFormInformationLoad = () => {
+        console.log(patients);
         const patient = patients[0];
         setEditPatientId(patient.id);
 
-        console.log(patients);
         const formValues = {
             firstName: patient.firstName,
             lastName: patient.lastName,
