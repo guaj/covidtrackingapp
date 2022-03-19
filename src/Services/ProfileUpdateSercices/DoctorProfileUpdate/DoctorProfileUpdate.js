@@ -7,9 +7,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import * as React from "react";
 import geometricImage from "../../../images/geometric_gradient.jpg";
-import data from "./logged_in_doctor_mock_data.json";
-import {useState, Fragment, useEffect} from "react";
+import {useState, useEffect} from "react";
 import Navbar from "../../../components/Navbar/Navbar";
+import * as DoctorProfileUpdateDatabaseServices from "./DoctorProfileUpdateDatabaseServices";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,22 +45,12 @@ const useStyles = makeStyles((theme) => ({
         centerGrid: {
             justifyContent: "center",
         }
-    }))
-;
-
-const setForm = (event => {
-    return event.target.value;
-})
+    }));
 
 export default function DoctorProfile() {
     const classes = useStyles();
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        window.location = '/dashboard'; //wrong redirect, waiting for user dashboard page
-    }
 
-    const [doctors, setDoctors] = useState(data);
-
+    const [doctors, setDoctors] = useState(null);
 
     const [editFormData, setEditFormData] = useState({
         firstName: '',
@@ -70,7 +60,7 @@ export default function DoctorProfile() {
         phoneNumber: '',
         streetNumber: '',
         streetName: '',
-        apt: '',
+        apartmentNumber: '',
         postalCode: '',
         city: '',
         province: '',
@@ -91,7 +81,7 @@ export default function DoctorProfile() {
             phoneNumber: doctor.phoneNumber,
             streetNumber: doctor.streetNumber,
             streetName: doctor.streetName,
-            apt: doctor.apt,
+            apartmentNumber: doctor.apartmentNumber,
             postalCode: doctor.postalCode,
             city: doctor.city,
             province: doctor.province,
@@ -99,8 +89,6 @@ export default function DoctorProfile() {
 
 
         setEditFormData(formValues);
-
-        console.log("inside handleEditClick method");
     };
 
     const handleEditFormChange = (event) => {
@@ -119,28 +107,33 @@ export default function DoctorProfile() {
 
         const editedDoctor = {
             id: editDoctorId,
+            email: editFormData.email,
             firstName: editFormData.firstName,
             lastName: editFormData.lastName,
             licenseNumber: editFormData.licenseNumber,
             phoneNumber: editFormData.phoneNumber,
             streetName: editFormData.streetName,
-            apt: editFormData.apt,
+            apartmentNumber: editFormData.apartmentNumber,
             postalCode: editFormData.postalCode,
             city: editFormData.city,
             province: editFormData.province,
-
+            streetNumber: editFormData.streetNumber
         };
         const newDoctors = [...doctors];
         const index = doctors.findIndex((doctor) => doctor.id === editDoctorId);
         newDoctors[0] = editedDoctor;
         setDoctors(newDoctors);
-        // setEditDoctorId(null);
-        console.log(JSON.stringify(newDoctors));
+        DoctorProfileUpdateDatabaseServices.updateData('doctors', newDoctors[0])
     };
 
+    useEffect(async () => {
+        setDoctors(await DoctorProfileUpdateDatabaseServices.fetchData('doctors'))
+    }, [])
+
     useEffect(() => {
-        handleInformationLoad();
-    }, []);
+        if (doctors !== null)
+            handleInformationLoad();
+    }, [doctors]);
 
     return (
         <>
@@ -160,8 +153,9 @@ export default function DoctorProfile() {
                                     <p>Name</p>
                                     <TextField
                                         type="text"
-                                        placeholder="First name"
+                                        label="First Name"
                                         name="firstName"
+                                        margin = "normal"
                                         value={editFormData.firstName}
                                         onChange={handleEditFormChange}
                                         onClick={handleInformationLoad}
@@ -170,7 +164,8 @@ export default function DoctorProfile() {
 
                                     <TextField
                                         type="text"
-                                        placeholder="Last name"
+                                        margin="normal"
+                                        label="Last Name"
                                         name="lastName"
                                         value={editFormData.lastName}
                                         onChange={handleEditFormChange}
@@ -179,10 +174,9 @@ export default function DoctorProfile() {
                                         type="text"
                                         margin="normal"
                                         fullWidth
-                                        placeholder="License number"
+                                        label="License Number"
                                         name="licenseNumber"
                                         autoComplete=""
-                                        helperText="License number"
                                         value={editFormData.licenseNumber}
                                         onChange={handleEditFormChange}
                                     />
@@ -190,10 +184,10 @@ export default function DoctorProfile() {
                                         type="email"
                                         margin="normal"
                                         fullWidth
-                                        label="this.example@email.com"
+                                        helperText="this.example@email.com"
                                         name="email"
+                                        label="Email"
                                         autoComplete="email"
-                                        helperText="Email"
                                         data-testid="sign-up-email"
                                         value={editFormData.email}
                                         onChange={handleEditFormChange}
@@ -202,57 +196,65 @@ export default function DoctorProfile() {
                                         type="text"
                                         margin="normal"
                                         fullWidth
-                                        label="123-145-1234"
+                                        label="Phone Number"
                                         name="phoneNumber"
-                                        autoComplete="email"
-                                        helperText="phone number"
+                                        helperText="123-145-1234"
                                         data-testid="phone-number"
                                         value={editFormData.phoneNumber}
                                         onChange={handleEditFormChange}
                                     />
-                                    <div>
-                                        <p>Address</p>
-                                        <TextField
-                                            type="text"
-                                            name="streetNumber"
-                                            defaultValue="Street number"
-                                            value={editFormData.streetNumber}
-                                            onChange={handleEditFormChange}
-                                        />
-                                        <TextField
-                                            type="text"
-                                            name="streetName"
-                                            defaultValue="Street name"
-                                            value={editFormData.streetName}
-                                            onChange={handleEditFormChange}
-                                        />
-                                        <TextField
-                                            type="text"
-                                            name="apt"
-                                            //defaultValue="apt"
-                                            value={editFormData.apt}
-                                            onChange={handleEditFormChange}
-                                        />
-                                    </div>
+
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+
+                                    <p>Address</p>
+                                    <TextField
+                                        type="text"
+                                        name="streetNumber"
+                                        label="Street Number"
+                                        margin="normal"
+                                        value={editFormData.streetNumber}
+                                        onChange={handleEditFormChange}
+                                    />
+                                    <TextField
+                                        type="text"
+                                        name="streetName"
+                                        label="Street Name"
+                                        margin="normal"
+                                        value={editFormData.streetName}
+                                        onChange={handleEditFormChange}
+                                    />
+                                    <TextField
+                                        type="text"
+                                        name="apt"
+                                        label="Apartment Number"
+                                        margin="normal"
+                                        value={editFormData.apt}
+                                        onChange={handleEditFormChange}
+                                    />
+
                                     <TextField
                                         type="text"
                                         name="postalCode"
-                                        defaultValue="postal code"
+                                        label="Postal Code"
+                                        margin="normal"
                                         value={editFormData.postalCode}
                                         onChange={handleEditFormChange}
                                     />
                                     <TextField
                                         type="text"
                                         name="city"
-                                        defaultValue="city"
+                                        label="City"
+                                        margin="normal"
                                         value={editFormData.city}
                                         onChange={handleEditFormChange}
                                     />
                                     <TextField
                                         type="text"
                                         name="province"
-                                        label="Required"
-                                        defaultValue="Province"
+                                        label="Province"
+                                        margin="normal"
                                         value={editFormData.province}
                                         onChange={handleEditFormChange}
                                     />
@@ -262,9 +264,6 @@ export default function DoctorProfile() {
                                             fullWidth
                                             variant="contained"
                                             className={classes.submit}
-                                            onClick={() => {
-                                                alert('Profile information updated!');
-                                            }}
                                         >
                                             Update profile
                                         </Button>
