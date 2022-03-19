@@ -9,8 +9,6 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import {Checkbox, FormControlLabel, FormGroup} from "@material-ui/core";
 import geometricImage from "../../../images/geometric_gradient.jpg";
-
-import data from "./logged_in_patient_mock_data.json";
 import {useState, Fragment, useEffect} from "react";
 import Navbar from "../../../components/Navbar/Navbar";
 import AWS from 'aws-sdk';
@@ -57,6 +55,9 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 export default function ProfilePatient() {
     const classes = useStyles();
 
+    //state to check store address or symptom list undefined state
+    const [undefinedAddressOrSymptomsList, setUndefinedAddressOrSymptomsList] = useState(false);
+
     async function fetchData(tableName) {
         const params = {
             TableName: tableName,
@@ -67,18 +68,20 @@ export default function ProfilePatient() {
         let result = null;
         try {
             result = await docClient.query(params).promise();
+            if (result.Items.at(0).address === undefined || result.Items.at(0).symptoms === undefined)
+                setUndefinedAddressOrSymptomsList(true);
         } finally {
             const formValues = {
                 id: 1,
                 firstName: (result.Items.at(0).firstName !== undefined ? result.Items.at(0).firstName : ""),
                 lastName: (result.Items.at(0).lastName !== undefined ? result.Items.at(0).lastName : ""),
                 dob: (result.Items.at(0).dob !== undefined ? result.Items.at(0).dob : ""),
-                streetNumber: result.Items.at(0).address.streetNumber,
-                streetName: result.Items.at(0).address.streetName,
-                apartmentNumber: result.Items.at(0).address.apartmentNumber,
-                postalCode: result.Items.at(0).address.postalCode,
-                city: result.Items.at(0).address.city,
-                province: result.Items.at(0).address.province,
+                streetNumber: (result.Items.at(0).address !== undefined ? (result.Items.at(0).address.streetNumber !== undefined ? result.Items.at(0).address.streetNumber : "") : ""),
+                streetName: (result.Items.at(0).address !== undefined ? (result.Items.at(0).address.streetName !== undefined ? result.Items.at(0).address.streetName : "") : ""),
+                apartmentNumber: (result.Items.at(0).address !== undefined ? (result.Items.at(0).address.apartmentNumber !== undefined ? result.Items.at(0).address.apartmentNumber : "") : ""),
+                postalCode: (result.Items.at(0).address !== undefined ? (result.Items.at(0).address.postalCode !== undefined ? result.Items.at(0).address.postalCode : "") : ""),
+                city: (result.Items.at(0).address !== undefined ? (result.Items.at(0).address.city !== undefined ? result.Items.at(0).address.city : "") : ""),
+                province: (result.Items.at(0).address !== undefined ? (result.Items.at(0).address.province !== undefined ? result.Items.at(0).address.province : "") : ""),
                 phoneNumber: (result.Items.at(0).phoneNumber !== undefined ? result.Items.at(0).phoneNumber : ""),
                 email: result.Items.at(0).email,
                 ramQNumber: (result.Items.at(0).ramQNumber !== undefined ? result.Items.at(0).ramQNumber : ""),
@@ -95,8 +98,8 @@ export default function ProfilePatient() {
                 symptom10: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom10 : false) : false),
                 symptom11: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom11 : false) : false),
                 comments: (result.Items.at(0).comments !== undefined ? result.Items.at(0).comments : ""),
-                doctorId: result.Items.at(0).doctorId,
-                flag: (result.Items.at(0).flag !== undefined ? result.Items.at(0).flag : false)
+                doctor: (result.Items.at(0).doctor !== undefined ? result.Items.at(0).doctor : ""),
+                flag: (result.Items.at(0).flag !== undefined ? result.Items.at(0).flag : false),
             };
             return [formValues];
         }
@@ -109,65 +112,87 @@ export default function ProfilePatient() {
             UpdateExpression: "set firstName = :firstName," +
                 "lastName = :lastName," +
                 "dob = :dob," +
-                // "address.streetNumber = :streetNumber," +
-                // "address.streetName = :streetName," +
-                // "address.apartmentNumber = :apartmentNumber," +
-                // "address.postalCode = :postalCode," +
-                // "address.city = :city," +
-                // "address.province = :province," +
+                "address.streetNumber = :streetNumber," +
+                "address.streetName = :streetName," +
+                "address.apartmentNumber = :apartmentNumber," +
+                "address.postalCode = :postalCode," +
+                "address.city = :city," +
+                "address.province = :province," +
                 "phoneNumber = :phoneNumber," +
                 "ramQNumber = :ramQNumber," +
                 "insurance = :insurance," +
-                // "symptoms.symptom1 = :symptom1," +
-                // "symptoms.symptom2 = :symptom2," +
-                // "symptoms.symptom3 = :symptom3," +
-                // "symptoms.symptom4 = :symptom4," +
-                // "symptoms.symptom5 = :symptom5," +
-                // "symptoms.symptom6 = :symptom6," +
-                // "symptoms.symptom7 = :symptom7," +
-                // "symptoms.symptom8 = :symptom8," +
-                // "symptoms.symptom9 = :symptom9," +
-                // "symptoms.symptom10 = :symptom10," +
-                // "symptoms.symptom11 = :symptom11," +
+                "symptoms.symptom1 = :symptom1," +
+                "symptoms.symptom2 = :symptom2," +
+                "symptoms.symptom3 = :symptom3," +
+                "symptoms.symptom4 = :symptom4," +
+                "symptoms.symptom5 = :symptom5," +
+                "symptoms.symptom6 = :symptom6," +
+                "symptoms.symptom7 = :symptom7," +
+                "symptoms.symptom8 = :symptom8," +
+                "symptoms.symptom9 = :symptom9," +
+                "symptoms.symptom10 = :symptom10," +
+                "symptoms.symptom11 = :symptom11," +
                 "comments = :comments," +
-                "flag = :flag",
+                "flag = :flag," +
+                "doctor = :doctor",
             ExpressionAttributeValues: {
                 ":firstName": data.firstName,
                 ":lastName": data.lastName,
                 ":dob": data.dob,
-                // ":streetNumber": data.streetNumber,
-                // ":streetName": data.streetName,
-                // ":apartmentNumber": data.apartmentNumber,
-                // ":postalCode": data.postalCode,
-                // ":city": data.city,
-                // ":province": data.province,
+                ":streetNumber": data.streetNumber,
+                ":streetName": data.streetName,
+                ":apartmentNumber": data.apartmentNumber,
+                ":postalCode": data.postalCode,
+                ":city": data.city,
+                ":province": data.province,
                 ":phoneNumber": data.phoneNumber,
                 ":ramQNumber": data.ramQNumber,
                 ":insurance": data.insurance,
-                // ":symptom1": data.symptom1,
-                // ":symptom2": data.symptom2,
-                // ":symptom3": data.symptom3,
-                // ":symptom4": data.symptom4,
-                // ":symptom5": data.symptom5,
-                // ":symptom6": data.symptom6,
-                // ":symptom7": data.symptom7,
-                // ":symptom8": data.symptom8,
-                // ":symptom9": data.symptom9,
-                // ":symptom10": data.symptom10,
-                // ":symptom11": data.symptom11,
+                ":symptom1": data.symptom1,
+                ":symptom2": data.symptom2,
+                ":symptom3": data.symptom3,
+                ":symptom4": data.symptom4,
+                ":symptom5": data.symptom5,
+                ":symptom6": data.symptom6,
+                ":symptom7": data.symptom7,
+                ":symptom8": data.symptom8,
+                ":symptom9": data.symptom9,
+                ":symptom10": data.symptom10,
+                ":symptom11": data.symptom11,
                 ":comments": data.comments,
-                ":flag": data.flag
+                ":flag": data.flag,
+                ":doctor": data.doctor
             },
             ReturnValues: "UPDATED_NEW"
         }
 
-        console.log(params);
+        //create sublists for address or symptoms if they do not already exist for this patient; returns bad request if items already exist
+        if (undefinedAddressOrSymptomsList)
+            docClient.update({
+                TableName: tableName,
+                Key: {"email": data.email},
+                UpdateExpression: 'set address = :address, symptoms = :symptoms',
+                ConditionExpression: 'attribute_not_exists(address) or attribute_not_exists(symptoms)',
+                ExpressionAttributeValues: {
+                    ":address": {},
+                    ":symptoms": {}
+                }
+            }, function (err) {
+                if (err) {
+                    console.info("Unable to create new attributes. Attributes already exist!\nError JSON:", JSON.stringify(err, null, 2));
+                } else {
+                    setUndefinedAddressOrSymptomsList(false);
+                }
+            });
 
+        //update patient information in the database with the submitted values
         docClient.update(params, function (err, data) {
             if (err) {
                 console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+                alert('ERROR: Unable to update profile information! Contact support if issue persists.')
             } else {
                 console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+                alert('Profile information updated!');
             }
         });
     };
@@ -201,7 +226,8 @@ export default function ProfilePatient() {
         symptom10: '',
         symptom11: '',
         comments: '',
-        flag: ''
+        flag: '',
+        doctor: ''
     });
 
     const [editFormData, setEditFormData] = useState({
@@ -230,7 +256,8 @@ export default function ProfilePatient() {
         symptom10: '',
         symptom11: '',
         comments: '',
-        flag: ''
+        flag: '',
+        doctor: ''
     });
 
     const [editPatientId, setEditPatientId] = useState(null);
@@ -242,6 +269,7 @@ export default function ProfilePatient() {
     useEffect(() => {
         if (patients !== null)
             handleFormInformationLoad();
+        console.log(patients);
     }, [patients])
 
     const handleFormInformationLoad = () => {
@@ -274,7 +302,8 @@ export default function ProfilePatient() {
             symptom10: patient.symptom10,
             symptom11: patient.symptom11,
             comments: patient.comments,
-            flag: patient.flag
+            flag: patient.flag,
+            doctor: patient.doctor
         };
 
         setEditFormData(formValues);
@@ -322,14 +351,15 @@ export default function ProfilePatient() {
             symptom10: editFormData.symptom10,
             symptom11: editFormData.symptom11,
             comments: editFormData.comments,
-            flag: editFormData.flag
+            flag: editFormData.flag,
+            doctor: editFormData.doctor
         };
         const newPatients = [...patients];
         const index = patients.findIndex((patient) => patient.id === editPatientId);
         newPatients[0] = editedPatient;
         setPatients(newPatients);
-        // setEditPatientId(null);
-        //TODO: add database update function call here
+        console.log(patients);
+
         updateData('patients', newPatients[0]);
         console.log(JSON.stringify(newPatients));
         console.log("index=", index);
@@ -548,6 +578,7 @@ export default function ProfilePatient() {
                                                    rows={2}
                                                    defaultValue="add comments"
                                                    name="comments"
+                                                   placeholder="Comments"
                                                    value={editFormData.comments}
                                                    onChange={handleFormChange}
                                         />
@@ -556,9 +587,6 @@ export default function ProfilePatient() {
                                             fullWidth={true}
                                             variant="contained"
                                             className={classes.submit}
-                                            onClick={() => {
-                                                alert('Profile information updated!');
-                                            }}
                                         >
                                             Update profile
                                         </Button>
