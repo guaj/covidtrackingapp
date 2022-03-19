@@ -113,10 +113,12 @@ export default function ProfilePatient() {
         doctor: ''
     });
 
+    //fetches patient information on patient profile page render
     useEffect(async () => {
         setPatients(await PatientProfileUpdateDatabaseServices.fetchData('patients'))
     }, []);
 
+    //loads patient information on patients state change when the state is not null
     useEffect(() => {
         if (patients !== null)
             handleFormInformationLoad();
