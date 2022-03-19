@@ -227,10 +227,10 @@ export default function DoctorProfile() {
                                     />
                                     <TextField
                                         type="text"
-                                        name="apt"
+                                        name="apartmentNumber"
                                         label="Apartment Number"
                                         margin="normal"
-                                        value={editFormData.apt}
+                                        value={editFormData.apartmentNumber}
                                         onChange={handleEditFormChange}
                                     />
 
