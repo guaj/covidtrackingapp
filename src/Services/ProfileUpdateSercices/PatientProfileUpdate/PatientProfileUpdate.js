@@ -164,17 +164,16 @@ export default function ProfilePatient() {
 
     const [editPatientId, setEditPatientId] = useState(null);
 
-    useEffect(async () => {
-        setPatients(await fetchData('patients'))
+    useEffect(async() => {
+            setPatients(await fetchData('patients'))
     }, []);
 
     useEffect(() => {
-        if (patients !== null){}
+        if (patients !== null)
             handleFormInformationLoad();
     }, [patients])
 
     const handleFormInformationLoad = () => {
-        console.log(patients);
         const patient = patients[0];
         setEditPatientId(patient.id);
 
@@ -208,8 +207,6 @@ export default function ProfilePatient() {
         };
 
         setEditFormData(formValues);
-
-        console.log("inside handleFormInformationLoad method");
     };
 
     const handleFormChange = (event) => {
