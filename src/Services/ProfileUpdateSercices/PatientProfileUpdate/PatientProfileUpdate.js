@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 AWS.config.update(awsConfig);
-const docClient = new AWS.DynamoDB.DocumentClient;
+const docClient = new AWS.DynamoDB.DocumentClient();
 
 export default function ProfilePatient() {
     const classes = useStyles();
@@ -83,17 +83,17 @@ export default function ProfilePatient() {
                 email: result.Items.at(0).email,
                 ramQNumber: result.Items.at(0).ramQNumber,
                 insurance: result.Items.at(0).insurance,
-                symptom1: result.Items.at(0).symptoms.symptom1,
-                symptom2: result.Items.at(0).symptoms.symptom2,
-                symptom3: result.Items.at(0).symptoms.symptom3,
-                symptom4: result.Items.at(0).symptoms.symptom4,
-                symptom5: result.Items.at(0).symptoms.symptom5,
-                symptom6: result.Items.at(0).symptoms.symptom6,
-                symptom7: result.Items.at(0).symptoms.symptom7,
-                symptom8: result.Items.at(0).symptoms.symptom8,
-                symptom9: result.Items.at(0).symptoms.symptom9,
-                symptom10: result.Items.at(0).symptoms.symptom10,
-                symptom11: result.Items.at(0).symptoms.symptom11,
+                symptom1: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom1 : false) : false),
+                symptom2: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom2 : false) : false),
+                symptom3: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom3 : false) : false),
+                symptom4: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom4 : false) : false),
+                symptom5: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom5 : false) : false),
+                symptom6: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom6 : false) : false),
+                symptom7: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom7 : false) : false),
+                symptom8: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom8 : false) : false),
+                symptom9: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom9 : false) : false),
+                symptom10: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom10 : false) : false),
+                symptom11: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom11 : false) : false),
                 comments: result.Items.at(0).comments,
                 doctorId: result.Items.at(0).doctorId,
                 flag: result.Items.at(0).flag
@@ -164,8 +164,8 @@ export default function ProfilePatient() {
 
     const [editPatientId, setEditPatientId] = useState(null);
 
-    useEffect(async() => {
-            setPatients(await fetchData('patients'))
+    useEffect(async () => {
+        setPatients(await fetchData('patients'))
     }, []);
 
     useEffect(() => {
@@ -258,10 +258,12 @@ export default function ProfilePatient() {
         newPatients[0] = editedPatient;
         setPatients(newPatients);
         // setEditPatientId(null);
+        //TODO: add database update function call here
         console.log(JSON.stringify(newPatients));
         console.log("index=", index);
     };
 
+    //TODO: add database update function for doctor notifications once notification functionality is implemented
     const handleNotifyDoctorButtonClick = (event) => {
         event.preventDefault();
 

@@ -85,7 +85,8 @@ export default function UserProfile() {
 
         console.log(scanresult.Items.at(0).flag);
 
-        setFlag(scanresult.Items.at(0).flag ? true : false);
+        //TODO: check functionality after UserProfile page is fixed for doctors
+        setFlag(scanresult.Items.at(0).flag !== undefined ? (scanresult.Items.at(0).flag ? true : false) : false);
     }
 
     const [flag, setFlag] = useState(isFlagged);
