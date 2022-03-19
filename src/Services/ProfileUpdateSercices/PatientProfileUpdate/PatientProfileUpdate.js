@@ -154,7 +154,7 @@ export default function ProfilePatient() {
                 // ":symptom8": data.symptom8,
                 // ":symptom9": data.symptom9,
                 // ":symptom10": data.symptom10,
-                // ":symptom11": data.symptom11,
+                ":symptom11": data.symptom11,
                 ":comments": data.comments,
                 ":flag": data.flag
             },
