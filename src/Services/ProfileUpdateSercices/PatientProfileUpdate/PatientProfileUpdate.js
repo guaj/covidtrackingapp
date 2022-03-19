@@ -166,7 +166,6 @@ export default function ProfilePatient() {
 
     useEffect(async () => {
         setPatients(await fetchData('patients'))
-        handleFormInformationLoad()
     }, []);
 
     useEffect(() => {
