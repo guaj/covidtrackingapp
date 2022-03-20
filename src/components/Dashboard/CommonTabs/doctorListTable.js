@@ -14,7 +14,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import { useState, useEffect} from 'react'
-import { getAllDoctors } from '../../Dashboard/AdminDashboard/databaseFacade'
+import { getAllDoctors } from '../../../databaseServices'
 
 
 

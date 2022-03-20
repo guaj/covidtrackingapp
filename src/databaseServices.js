@@ -1,4 +1,4 @@
-import awsConfig from '../../../aws-config.json'
+import awsConfig from './aws-config.json'
 import AWS from 'aws-sdk'
 
 AWS.config.update(awsConfig);

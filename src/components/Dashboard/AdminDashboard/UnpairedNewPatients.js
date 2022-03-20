@@ -18,7 +18,7 @@ import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
 import Modal from '@mui/material/Modal';
 import AvailableDoctors from './AvailableDoctors';
-import { getNewPatients } from './databaseFacade'
+import { getNewPatients } from '../../../databaseServices'
 import CloseIcon from '@mui/icons-material/Close';
 import { useState, useEffect } from 'react'
 
