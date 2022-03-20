@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
         }
     }));
 
-export default function DoctorProfile() {
+export default function DoctorProfile(url) {
     const classes = useStyles();
 
     const [doctors, setDoctors] = useState(null);
@@ -123,7 +123,11 @@ export default function DoctorProfile() {
         const index = doctors.findIndex((doctor) => doctor.id === editDoctorId);
         newDoctors[0] = editedDoctor;
         setDoctors(newDoctors);
-        DoctorProfileUpdateDatabaseServices.updateData('doctors', newDoctors[0])
+        const user = JSON.parse(localStorage.getItem("email"))
+        const url = user.split("@");
+        DoctorProfileUpdateDatabaseServices.updateData('doctors', newDoctors[0]).then(() => {
+            window.location.assign("/profile/"+ url[0])
+        })
     };
 
     useEffect(async () => {
@@ -204,9 +208,9 @@ export default function DoctorProfile() {
                                         onChange={handleEditFormChange}
                                     />
 
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
+                                    <br/>
+                                    <br/>
+                                    <br/>
 
                                     <p>Address</p>
                                     <TextField

@@ -208,7 +208,11 @@ export default function ProfilePatient() {
         const newPatients = [...patients];
         newPatients[0] = editedPatient;
         setPatients(newPatients);
-        PatientProfileUpdateDatabaseServices.updateData('patients', newPatients[0]);
+        const user = JSON.parse(localStorage.getItem("email"))
+        const url = user.split("@");
+        PatientProfileUpdateDatabaseServices.updateData('patients', newPatients[0]).then(  () => {
+            window.location.assign("/profile/" + url[0])
+        });
     };
 
     //TODO: add database update function for doctor notifications once notification functionality is implemented
@@ -246,6 +250,7 @@ export default function ProfilePatient() {
         setNotifyDoctor(editedNotifyDoctor);
         console.log(JSON.stringify(editedNotifyDoctor));
     }
+
 
     return (
         <>

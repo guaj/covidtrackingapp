@@ -1,21 +1,12 @@
 import * as React from "react";
 import Button from "@material-ui/core/Button";
 import Avatar from "@mui/material/Avatar";
-import myImage from "../../Assets/avatar_1.jpg"
-import "./UserProfile.css";
+import myImage from "../../../Assets/avatar_1.jpg"
+import "../UserProfile.css";
 import DoctorMock from "./mockDoctorInfo.json";
 import Box from "@mui/material/Box";
 
 
-try {
-    let userType = JSON.parse(localStorage.getItem("type"))
-    console.log(userType)
-
-} catch (err) {
-    // 👇️ This runs
-    console.log('Error: ', err.message);
-    window.location.assign("/login#redirect");
-}
 
 
 
