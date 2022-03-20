@@ -9,12 +9,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import {Checkbox, FormControlLabel, FormGroup} from "@material-ui/core";
 import geometricImage from "../../../images/geometric_gradient.jpg";
-
-import data from "./logged_in_patient_mock_data.json";
 import {useState, Fragment, useEffect} from "react";
 import Navbar from "../../../components/Navbar/Navbar";
-import AWS from 'aws-sdk';
-import awsConfig from '../../../aws-config.json';
+import * as PatientProfileUpdateDatabaseServices from "./PatientProfileUpdateDatabaseServices";
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -51,63 +48,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-AWS.config.update(awsConfig);
-const docClient = new AWS.DynamoDB.DocumentClient;
-
 export default function ProfilePatient() {
     const classes = useStyles();
 
-    async function fetchData(tableName) {
-        const params = {
-            TableName: tableName,
-            ExpressionAttributeValues: {":email": JSON.parse(localStorage.getItem("email"))},
-            KeyConditionExpression: 'email = :email'
-        }
-
-        let result = null;
-        try {
-            result = await docClient.query(params).promise();
-            console.log(result.Items.at(0));
-        } finally {
-            const formValues = {
-                firstName: result.Items.at(0).firstName,
-                lastName: result.Items.at(0).lastName,
-                dob: result.Items.at(0).dob,
-                streetNumber: result.Items.at(0).address.streetNumber,
-                streetName: result.Items.at(0).address.streetName,
-                apartmentNumber: result.Items.at(0).address.apartmentNumber,
-                postalCode: result.Items.at(0).address.postalCode,
-                city: result.Items.at(0).address.city,
-                province: result.Items.at(0).address.province,
-                phoneNumber: result.Items.at(0).phoneNumber,
-                email: result.Items.at(0).email,
-                ramQNumber: result.Items.at(0).ramQNumber,
-                insurance: result.Items.at(0).insurance,
-                symptom1: result.Items.at(0).symptoms.symptom1,
-                symptom2: result.Items.at(0).symptoms.symptom2,
-                symptom3: result.Items.at(0).symptoms.symptom3,
-                symptom4: result.Items.at(0).symptoms.symptom4,
-                symptom5: result.Items.at(0).symptoms.symptom5,
-                symptom6: result.Items.at(0).symptoms.symptom6,
-                symptom7: result.Items.at(0).symptoms.symptom7,
-                symptom8: result.Items.at(0).symptoms.symptom8,
-                symptom9: result.Items.at(0).symptoms.symptom9,
-                symptom10: result.Items.at(0).symptoms.symptom10,
-                symptom11: result.Items.at(0).symptoms.symptom11,
-                comments: result.Items.at(0).comments,
-                doctorId: result.Items.at(0).doctorId,
-                flag: result.Items.at(0).flag
-            };
-            setDbdata(formValues);
-        }
-    }
-
-    const [dbdata, setDbdata] = useState({});
-
-    console.log(dbdata);
-    console.log(data);
-
-    const [patients, setPatients] = useState(data);
+    const [patients, setPatients] = useState(null);
 
     const [notifyDoctor, setNotifyDoctor] = useState({
         firstName: '',
@@ -135,7 +79,8 @@ export default function ProfilePatient() {
         symptom10: '',
         symptom11: '',
         comments: '',
-        doctorId: ''
+        flag: '',
+        doctor: ''
     });
 
     const [editFormData, setEditFormData] = useState({
@@ -164,22 +109,24 @@ export default function ProfilePatient() {
         symptom10: '',
         symptom11: '',
         comments: '',
-        doctorId: ''
+        flag: '',
+        doctor: ''
     });
 
-    const [editPatientId, setEditPatientId] = useState(null);
-
-    useEffect(() => {
-        // setDbdata(fetchData('patients'));
-        fetchData('patients');
-        handleFormInformationLoad();
+    //fetches patient information on patient profile page render
+    useEffect(async () => {
+        setPatients(await PatientProfileUpdateDatabaseServices.fetchData('patients'))
     }, []);
+
+    //loads patient information on patients state change when the state is not null
+    useEffect(() => {
+        if (patients !== null)
+            handleFormInformationLoad();
+    }, [patients])
 
     const handleFormInformationLoad = () => {
         const patient = patients[0];
-        setEditPatientId(patient.id);
 
-        console.log(patients);
         const formValues = {
             firstName: patient.firstName,
             lastName: patient.lastName,
@@ -206,12 +153,11 @@ export default function ProfilePatient() {
             symptom10: patient.symptom10,
             symptom11: patient.symptom11,
             comments: patient.comments,
-            doctorId: patient.doctorId
+            flag: patient.flag,
+            doctor: patient.doctor
         };
 
         setEditFormData(formValues);
-
-        console.log("inside handleFormInformationLoad method");
     };
 
     const handleFormChange = (event) => {
@@ -223,14 +169,13 @@ export default function ProfilePatient() {
         const newFormData = {...editFormData};
         newFormData[fieldName] = fieldValue;
         setEditFormData(newFormData);
-        console.log(event.target);
+        // console.log(event.target);
     }
 
     const handleEditFormSubmit = (event) => {
         event.preventDefault();
 
         const editedPatient = {
-            id: editPatientId,
             firstName: editFormData.firstName,
             lastName: editFormData.lastName,
             dob: editFormData.dob,
@@ -256,24 +201,25 @@ export default function ProfilePatient() {
             symptom10: editFormData.symptom10,
             symptom11: editFormData.symptom11,
             comments: editFormData.comments,
-            doctorId: editFormData.doctorId
+            flag: editFormData.flag,
+            doctor: editFormData.doctor
         };
+
         const newPatients = [...patients];
-        const index = patients.findIndex((patient) => patient.id === editPatientId);
         newPatients[0] = editedPatient;
         setPatients(newPatients);
-        // setEditPatientId(null);
-        console.log(JSON.stringify(newPatients));
-        console.log("index=", index);
+        const user = JSON.parse(localStorage.getItem("email"))
+        const url = user.split("@");
+        PatientProfileUpdateDatabaseServices.updateData('patients', newPatients[0]).then(  () => {
+            window.location.assign("/profile/" + url[0])
+        });
     };
 
+    //TODO: add database update function for doctor notifications once notification functionality is implemented
     const handleNotifyDoctorButtonClick = (event) => {
         event.preventDefault();
 
-        console.log("Notify doctor");
-
         const editedNotifyDoctor = {
-            id: editPatientId,
             firstName: editFormData.firstName,
             lastName: editFormData.lastName,
             dob: editFormData.dob,
@@ -299,11 +245,12 @@ export default function ProfilePatient() {
             symptom10: editFormData.symptom10,
             symptom11: editFormData.symptom11,
             comments: editFormData.comments,
-            doctorId: editFormData.doctorId
+            flag: editFormData.flag
         };
         setNotifyDoctor(editedNotifyDoctor);
         console.log(JSON.stringify(editedNotifyDoctor));
     }
+
 
     return (
         <>
@@ -479,6 +426,7 @@ export default function ProfilePatient() {
                                                    rows={2}
                                                    defaultValue="add comments"
                                                    name="comments"
+                                                   placeholder="Comments"
                                                    value={editFormData.comments}
                                                    onChange={handleFormChange}
                                         />
@@ -487,9 +435,6 @@ export default function ProfilePatient() {
                                             fullWidth={true}
                                             variant="contained"
                                             className={classes.submit}
-                                            onClick={() => {
-                                                alert('Profile information updated!');
-                                            }}
                                         >
                                             Update profile
                                         </Button>

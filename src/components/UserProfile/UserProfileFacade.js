@@ -1,9 +1,8 @@
 import * as React from 'react';
 import Navbar from "../Navbar/Navbar";
-import Button from "@material-ui/core/Button";
 import "./UserProfile.css";
-import DoctorProfilePage from "./DoctorProfilePage"
-import PatientProfilePage from "./PatientProfilePage";
+import DoctorProfilePage from "./DoctorProfile/DoctorProfilePage"
+import PatientProfilePage from "./PatientProfile/PatientProfilePage";
 import Box from "@mui/material/Box";
 
 
@@ -22,6 +21,8 @@ function DisplayUserProfile() {
 
         case 'patient':
             return <PatientProfilePage />
+        default:
+            alert("Error from User profile facade");
     }
 }
 
@@ -40,20 +41,6 @@ export default function UserProfileFacade() {
 
     let userFetch = window.location.href.split("/")[4]
 
-    function canScheduleMeeting() {
-        return ((userType === "patient") && userFetch === userEmail.split("@")[0]);
-    }
-
-    function scheduleRedirect() {
-        window.location = "/schedule-appointment"
-    }
-
-    function editRedirect() {
-        if (userType === "doctor")
-            window.location = "/doctor-profile-edit"
-        else if (userType === "patient")
-            window.location = "/patient-profile-edit"
-    }
 
     return (
         <>

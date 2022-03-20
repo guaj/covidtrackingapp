@@ -21,7 +21,7 @@
     "date-fns": "^2.28.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.23",
-    "material-table": "^2.0.3",
+    "material-table": "^1.63.0",
     "puppeteer": "^13.5.1",
     "react-bootstrap-validation": "^0.1.11",
     "react-dom": "^17.0.2",
@@ -29,8 +29,8 @@
     "react-password-strength-bar": "^0.4.0",
     "react-required-if": "^1.0.3",
     "react-router-dom": "^6.2.1",
-    "react-schedule-selector": "^3.0.0",
-    "react-scripts": "5.0.0",
+    "react-schedule-selector": "^2.0.0",
+    "react-scripts": "^5.0.0",
     "react-to-pdf": "^0.0.14",
     "recharts": "^2.1.8",
     "styled-components": "^5.3.3",
@@ -78,5 +78,4 @@
       "node_modules/(?!(react-password-checklist)/)"
     ]
   }
-
 }

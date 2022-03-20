@@ -1,12 +1,12 @@
 import * as React from "react";
-import "./UserProfile.css";
+import "../UserProfile.css";
 import Avatar from "@mui/material/Avatar";
-import myImage from "../../Assets/avatar_1.jpg";
+import myImage from "../../../Assets/avatar_1.jpg";
 import Button from "@material-ui/core/Button";
 import PatientMock from "./mockPatientInfo.json";
 import Box from "@mui/material/Box";
 import AWS from "aws-sdk";
-import awsConfig from "../../aws-config.json";
+import awsConfig from "../../../aws-config.json";
 
 
 
