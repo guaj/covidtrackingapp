@@ -9,16 +9,15 @@ import AWS from "aws-sdk";
 import awsConfig from "../../aws-config.json";
 
 
-
 export default class PatientProfilePage extends React.Component {
     userType = JSON.parse(localStorage.getItem("type"));
     userFetch = window.location.href.split("/")[4];
-    userEmail= JSON.parse(localStorage.getItem("email"));
+    userEmail = JSON.parse(localStorage.getItem("email"));
     user = JSON.parse(localStorage.getItem("email"));
     url = this.user.split("@");
 
     state = {
-        flag : this.isFlagged()
+        flag: this.isFlagged()
     }
 
     canEditProfile() {
@@ -62,16 +61,16 @@ export default class PatientProfilePage extends React.Component {
             ComparisonOperator: "CONTAINS",
             UpdateExpression: "set flag = :flag",
             ExpressionAttributeValues: {":flag": !flag},
-            KeyConditionExpression: 'email = :email'
+            KeyConditionExpression: 'email = :email',
+            ReturnValues: "UPDATED_NEW"
         }
 
         await docClient.update(params).promise();
-
+        alert("Patient " + (this.state.flag ? 'unflagged' : 'flagged') + "!");
         this.setState({flag: this.isFlagged()});
     }
 
     async isFlagged() {
-
         AWS.config.update(awsConfig);
         const docClient = new AWS.DynamoDB.DocumentClient();
 
@@ -87,9 +86,7 @@ export default class PatientProfilePage extends React.Component {
 
         let scanresult = await docClient.scan(params).promise();
 
-        console.log(scanresult.Items.at(0).flag);
-
-        this.setState({flag: scanresult.Items.at(0).flag ? true : false});
+        this.setState({flag: scanresult.Items.at(0).flag !== undefined ? (scanresult.Items.at(0).flag ? true : false) : false});
     }
 
     render() {
@@ -102,7 +99,7 @@ export default class PatientProfilePage extends React.Component {
                             sizes="large"
                             alt="profilePage"
                             src={myImage}
-                            sx={{ width: 152, height: 152 }}
+                            sx={{width: 152, height: 152}}
                         />
                         {/* eslint-disable-next-line no-undef */}
                         <div className="myName">
@@ -170,14 +167,14 @@ export default class PatientProfilePage extends React.Component {
                             </div>
                             <div className="button">
                                 {this.canScheduleMeeting() ?
-                                    <Button variant="contained" onClick={this.scheduleRedirect}>Make Appointment </Button>
+                                    <Button variant="contained" onClick={this.scheduleRedirect}>Make
+                                        Appointment </Button>
                                     : <></>}
                             </div>
                             <div className="button">
                                 {JSON.parse(localStorage.getItem("type")) !== "patient" ?
                                     <Button variant="contained" onClick={() => {
                                         this.flagPatient(this.state.flag);
-                                        alert("Patient " + (this.state.flag ? 'unflagged' : 'flagged') +"!");
                                     }}>{this.state.flag ? 'Unflag' : 'Flag'}</Button>
                                     : <></>}
                             </div>
