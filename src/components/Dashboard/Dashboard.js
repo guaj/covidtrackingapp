@@ -10,33 +10,31 @@ import AdminTabs from './AdminDashboard/adminDashboard';
 import Navbar from "../Navbar/Navbar";
 
 
+/* for testing
 const mockProfiles = [
     { name: "Tony Soprano", userType: "doctor" },
     { name: "Tony Soprano", userType: "patient" },
     { name: "Tony Soprano", userType: "health official" },
     { name: "Tony Soprano", userType: "iymmigration official" },
     {name: "admin", userType: "admin"}
-]
+]*/
 
-const ref = React.createRef();
 
 
 function DisplayUserTabs() {
 
-    var user
-    var userType
+    let userType;
 
     try {
 
-        user = JSON.parse(localStorage.getItem("email"))
         userType = JSON.parse(localStorage.getItem("type"))
-        console.log(userType)
 
     } catch (err) {
         // 👇️ This runs
         console.log('Error: ', err.message);
         window.location.assign("/login#redirect");
     }
+    userType = JSON.parse(localStorage.getItem("type"));
 
     switch (userType) { //randomization to demonstrate conditional rendering
         case "doctor":
@@ -55,7 +53,9 @@ function DisplayUserTabs() {
             return <AdminTabs/>;
             
 
-       default: alert("invalid user type: something has gone *really* wrong")
+       default:
+           window.location.assign("/login#redirect");
+           alert("invalid user type: something has gone *really* wrong")
 
     }
 }

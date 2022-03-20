@@ -8,11 +8,11 @@ export const addDoctorSchedule = (tableName , data) => {
     try {
         AWS.config.update(awsConfig);
         var docClient = new AWS.DynamoDB.DocumentClient();
-        let doctorID = JSON.parse(localStorage.getItem("id"))
+        let doctorEmail = JSON.parse(localStorage.getItem("email"))
         var params = {
             TableName: tableName,
             Item: {
-                "doctorID": Number(doctorID),
+                "email": String(doctorEmail),
                 "dailyAvailabilities": String(data.schedule),
             }
         }
@@ -20,7 +20,7 @@ export const addDoctorSchedule = (tableName , data) => {
 
     docClient.put(params, function (err, data) {
         if (err) {
-            alert('Error: '+ err)
+            alert('Error from put: '+ err)
         } else {
             alert('Success: '+ data)
         }
@@ -31,11 +31,11 @@ export async function retrieveDoctorSchedule(tableName) {
     try {
         AWS.config.update(awsConfig);
         var docClient = new AWS.DynamoDB.DocumentClient();
-        let doctorID = JSON.parse(localStorage.getItem("id"))
+        let doctorEmail = JSON.parse(localStorage.getItem("email"))
         var params = {
             TableName: tableName,
             Key: {
-                "doctorID": Number(doctorID),
+                "email": String(doctorEmail),
             }
         };
 

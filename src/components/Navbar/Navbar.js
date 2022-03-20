@@ -197,9 +197,9 @@ export default function PrimarySearchAppBar() {
     }
 
     function handleLogout() {
-        localStorage.setItem("id", undefined);
-        localStorage.setItem("email", undefined);
-        window.location = "/login" ;
+        localStorage.setItem("type", JSON.stringify(""));
+        localStorage.setItem("email", JSON.stringify(""));
+        window.location = "/login#redirect" ;
     }
     function handleProfile() {
         let user = JSON.parse(localStorage.getItem("email"))

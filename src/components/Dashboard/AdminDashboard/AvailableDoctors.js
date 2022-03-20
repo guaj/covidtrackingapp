@@ -237,7 +237,7 @@ if(data) {
                                                 <TableCell align="center">{item.email}</TableCell>
                                                 <TableCell align="center">{item.firstName}</TableCell>
                                                 <TableCell align="center">{item.lastName}</TableCell>
-                                                <TableCell><Button className={classes.pair} onClick={() => updatePatientsDoctor(props.patient, item.licenseNumber)}>Select</Button></TableCell>
+                                                <TableCell><Button className={classes.pair} onClick={() => updatePatientsDoctor(props.patient, item.email)}>Select</Button></TableCell>
                                             </TableRow>
                                         );
                                     })}

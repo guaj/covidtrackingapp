@@ -4,9 +4,15 @@
 /node_modules
 /.pnp
 .pnp.js
-src/package-lock.json
+package-lock.json
 
+<<<<<<< HEAD
 
+=======
+#aws credentials 
+<<<<<<< HEAD
+aws-config.json
+>>>>>>> 43d333e670a2f026cfdf622639ceb0d24c099567
 */aws-config.json
 
 

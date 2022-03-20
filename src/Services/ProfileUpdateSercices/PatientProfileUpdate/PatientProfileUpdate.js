@@ -9,11 +9,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import {Checkbox, FormControlLabel, FormGroup} from "@material-ui/core";
 import geometricImage from "../../../images/geometric_gradient.jpg";
-
-import data from "./logged_in_patient_mock_data.json";
 import {useState, Fragment, useEffect} from "react";
 import Navbar from "../../../components/Navbar/Navbar";
-
+import * as PatientProfileUpdateDatabaseServices from "./PatientProfileUpdateDatabaseServices";
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -50,11 +48,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
 export default function ProfilePatient() {
     const classes = useStyles();
 
-    const [patients, setPatients] = useState(data);
+    const [patients, setPatients] = useState(null);
 
     const [notifyDoctor, setNotifyDoctor] = useState({
         firstName: '',
@@ -82,7 +79,8 @@ export default function ProfilePatient() {
         symptom10: '',
         symptom11: '',
         comments: '',
-        doctorId: ''
+        flag: '',
+        doctor: ''
     });
 
     const [editFormData, setEditFormData] = useState({
@@ -111,18 +109,23 @@ export default function ProfilePatient() {
         symptom10: '',
         symptom11: '',
         comments: '',
-        doctorId: ''
+        flag: '',
+        doctor: ''
     });
 
-    const [editPatientId, setEditPatientId] = useState(null);
-
-    useEffect(() => {
-        handleFormInformationLoad();
+    //fetches patient information on patient profile page render
+    useEffect(async () => {
+        setPatients(await PatientProfileUpdateDatabaseServices.fetchData('patients'))
     }, []);
+
+    //loads patient information on patients state change when the state is not null
+    useEffect(() => {
+        if (patients !== null)
+            handleFormInformationLoad();
+    }, [patients])
 
     const handleFormInformationLoad = () => {
         const patient = patients[0];
-        setEditPatientId(patient.id);
 
         const formValues = {
             firstName: patient.firstName,
@@ -150,12 +153,11 @@ export default function ProfilePatient() {
             symptom10: patient.symptom10,
             symptom11: patient.symptom11,
             comments: patient.comments,
-            doctorId: patient.doctorId
+            flag: patient.flag,
+            doctor: patient.doctor
         };
 
         setEditFormData(formValues);
-
-        console.log("inside handleFormInformationLoad method");
     };
 
     const handleFormChange = (event) => {
@@ -167,14 +169,13 @@ export default function ProfilePatient() {
         const newFormData = {...editFormData};
         newFormData[fieldName] = fieldValue;
         setEditFormData(newFormData);
-        console.log(event.target);
+        // console.log(event.target);
     }
 
     const handleEditFormSubmit = (event) => {
         event.preventDefault();
 
         const editedPatient = {
-            id: editPatientId,
             firstName: editFormData.firstName,
             lastName: editFormData.lastName,
             dob: editFormData.dob,
@@ -200,24 +201,25 @@ export default function ProfilePatient() {
             symptom10: editFormData.symptom10,
             symptom11: editFormData.symptom11,
             comments: editFormData.comments,
-            doctorId: editFormData.doctorId
+            flag: editFormData.flag,
+            doctor: editFormData.doctor
         };
+
         const newPatients = [...patients];
-        const index = patients.findIndex((patient) => patient.id === editPatientId);
         newPatients[0] = editedPatient;
         setPatients(newPatients);
-        // setEditPatientId(null);
-        console.log(JSON.stringify(newPatients));
-        console.log("index=", index);
+        const user = JSON.parse(localStorage.getItem("email"))
+        const url = user.split("@");
+        PatientProfileUpdateDatabaseServices.updateData('patients', newPatients[0]).then(  () => {
+            window.location.assign("/profile/" + url[0])
+        });
     };
 
+    //TODO: add database update function for doctor notifications once notification functionality is implemented
     const handleNotifyDoctorButtonClick = (event) => {
         event.preventDefault();
 
-        console.log("Notify doctor");
-
         const editedNotifyDoctor = {
-            id: editPatientId,
             firstName: editFormData.firstName,
             lastName: editFormData.lastName,
             dob: editFormData.dob,
@@ -243,11 +245,12 @@ export default function ProfilePatient() {
             symptom10: editFormData.symptom10,
             symptom11: editFormData.symptom11,
             comments: editFormData.comments,
-            doctorId: editFormData.doctorId
+            flag: editFormData.flag
         };
         setNotifyDoctor(editedNotifyDoctor);
         console.log(JSON.stringify(editedNotifyDoctor));
     }
+
 
     return (
         <>
@@ -282,7 +285,7 @@ export default function ProfilePatient() {
                                     <TextField
                                         type="date"
                                         margin="normal"
-                                        fullWidth
+                                        fullWidth={true}
                                         name="dob"
                                         autoComplete="date"
                                         helperText="Date of birth"
@@ -416,32 +419,30 @@ export default function ProfilePatient() {
 
                                         </FormGroup>
                                         <p>Other comments</p>
-                                        <TextField fullwidth
+                                        <TextField fullWidth={true}
                                                    id="outlined-multiline-static"
                                                    label=""
                                                    multiline
                                                    rows={2}
                                                    defaultValue="add comments"
                                                    name="comments"
+                                                   placeholder="Comments"
                                                    value={editFormData.comments}
                                                    onChange={handleFormChange}
                                         />
                                         <Button
                                             type="submit"
-                                            fullWidth
+                                            fullWidth={true}
                                             variant="contained"
                                             className={classes.submit}
-                                            onClick={() => {
-                                                alert('Profile information updated!');
-                                            }}
                                         >
                                             Update profile
                                         </Button>
                                         <Button
                                             type="button"
-                                            fullWidth
+                                            fullWidth={true}
                                             variant="contained"
-                                            onClick={(event) =>[handleNotifyDoctorButtonClick(event), alert('Your doctor will be notified!')]}
+                                            onClick={(event) => [handleNotifyDoctorButtonClick(event), alert('Your doctor will be notified!')]}
                                         >
                                             Notify my doctor
                                         </Button>
