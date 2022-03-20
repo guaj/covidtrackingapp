@@ -18,7 +18,7 @@ import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
 import Modal from '@mui/material/Modal';
 import AvailableDoctors from './AvailableDoctors';
-import { getPatientWithDoctor, getDoctorEmergency } from './databaseFacade'
+import { getPatientsWithDoctorEmergency } from './databaseFacade'
 import CloseIcon from '@mui/icons-material/Close';
 import { useState, useEffect } from 'react'
 
@@ -198,35 +198,34 @@ export default function UnpairedNewPatientListTable() {
     }
 
     const [data, setData] = useState([]);
-    const [doctorData, setDoctorData] = useState([]);
-    const [patientData, setPatientData] = useState([]);
+    // const [doctorData, setDoctorData] = useState([]);
+    // const [patientData, setPatientData] = useState([]);
 
-  useEffect(() => {
-        (async () => {
-            const dbData = await getPatientWithDoctor();
-            setPatientData(dbData.Items);
-        })();
-        
-    }, []);
+    // useEffect(() => {
+    //     (async () => {
+    //         await getDoctorEmergency(setDoctorData);
+    //         console.log(doctorData)
+    //     })()}, []);
     
-    useEffect(() => {
-        (async () => {
-            const dbData = await getDoctorEmergency();
-                setDoctorData(dbData.Items);
-        })();
+    // useEffect(() => {
+    //     (async () => {
+    //         await getPatientWithDoctor(setPatientData);
+    //         console.log(patientData)
+    //     })()}, []);
+    
+    // useEffect(() => {
+    //     var array =[];
+    //     patientData.forEach(pat => {
+    //         doctorData.forEach(doc => {
+    //             if(pat.doctor === doc.email)
+    //                 array.push(pat)
+    //         });
+    //     });
+    //     setData(array)
+    //     console.log("array of: " + array)}, 
+    // []);
 
-    }, []);
-    
-    useEffect(() => {
-        var array =[];
-        patientData.forEach(pat => {
-            doctorData.forEach(doc => {
-                if(pat.doctor === doc.licenseNumber)
-                    array.push(pat)
-                setData(array);
-        });
-        });
-    }, []);
+    useEffect(() => (async () => await getPatientsWithDoctorEmergency(setData))(), []);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -253,8 +252,7 @@ export default function UnpairedNewPatientListTable() {
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
 
-    if (data) {
-        //setTableSize(data.length)
+  
         return (
             <div>
                 <Modal
@@ -288,6 +286,8 @@ export default function UnpairedNewPatientListTable() {
                                 <TableBody>
                                     {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
+        
+    
                                     {stableSort(data, getComparator(order, orderBy))
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map((item) => {
@@ -338,6 +338,4 @@ export default function UnpairedNewPatientListTable() {
             </div>
 
         );
-    }
-    else return null
 }

@@ -22,10 +22,6 @@ import { getNewPatients } from './databaseFacade'
 import CloseIcon from '@mui/icons-material/Close';
 import { useState, useEffect } from 'react'
 
-
-//database query for doctors with (< 10 patients) and (city = patient city)
-
-
 const useStyles = makeStyles((theme) => ({
     pair: {
 
@@ -189,6 +185,7 @@ export default function UnpairedNewPatientListTable() {
     const [patient, setPatient] = React.useState("")
     const [open, setOpen] = React.useState(false);
     const [tableSize, setTableSize] = useState(0)
+    const [data, setData] = useState([]);
 
     const handleOpen = patient => {
         console.log("handle open() patient: " + patient);
@@ -199,17 +196,8 @@ export default function UnpairedNewPatientListTable() {
         setOpen(false);
         setTableSize(entries);
     }
-    const [data, setData] = useState([]);
 
-
-    useEffect(() => {
-
-        (async () => {
-            const dbData = await getNewPatients();
-            setData(dbData.Items); 
-        })();
-
-    }, []);
+    useEffect(() => {(async () => await getNewPatients(setData))()}, []);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -236,8 +224,8 @@ export default function UnpairedNewPatientListTable() {
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
 
-    if (data) {
-        //setTableSize(data.length)
+   
+        
         return (
         
             <div>
@@ -283,7 +271,7 @@ export default function UnpairedNewPatientListTable() {
                                                     tabIndex={-1}
                                                     key={item.name}
                                                 >
-                                                    <TableCell align="center"> {item.priorityNumber} </TableCell>
+                                                {/* <TableCell align="center"> {item.priorityNumber} </TableCell> */}
                                                     <TableCell align="center"> {item.firstName} </TableCell>
                                                     <TableCell align="center"> {item.lastName} </TableCell>
                                                     <TableCell align="center"> {item.address.city} </TableCell>
@@ -323,5 +311,4 @@ export default function UnpairedNewPatientListTable() {
 
         );
     }
-    else return null
-}
+   

@@ -16,7 +16,8 @@ import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
 import ErrorIcon from '@mui/icons-material/Error';
 import FlagIcon from '@mui/icons-material/Flag';
-import mockedDatas from "../DoctorDashboard/patientListTableMockData.json"
+import { getAllPatients } from '../../Dashboard/AdminDashboard/databaseFacade'
+import {useState, useEffect} from 'react'
 
 
 
@@ -149,12 +150,13 @@ EnhancedTableHead.propTypes = {
 
 
 export default function PatientListTable() {
-    const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('calories');
-    const [selected] = React.useState([]);
-    const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [order, setOrder] = useState('asc');
+    const [orderBy, setOrderBy] = useState('calories');
+    const [selected] = useState([]);
+    const [page, setPage] = useState(0);
+    const [dense, setDense] = useState(false);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [data, setData] = useState([])
 
 
 
@@ -179,10 +181,12 @@ export default function PatientListTable() {
         setDense(event.target.checked);
     };
 
+    useEffect(() => (async () => await getAllPatients(setData))(), [])
+
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - mockedDatas.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
 
     return (
@@ -201,12 +205,12 @@ export default function PatientListTable() {
                                 order={order}
                                 orderBy={orderBy}
                                 onRequestSort={handleRequestSort}
-                                rowCount={mockedDatas.length}
+                                rowCount={data.length}
                             />
                             <TableBody>
                                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                                {stableSort(mockedDatas, getComparator(order, orderBy))
+                                {stableSort(data, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((item) => {
 
@@ -243,7 +247,7 @@ export default function PatientListTable() {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={mockedDatas.length}
+                        count={data.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}

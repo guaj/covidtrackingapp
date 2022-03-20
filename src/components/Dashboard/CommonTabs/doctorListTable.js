@@ -13,9 +13,8 @@ import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
-import mockedDatas from "../DoctorDashboard/doctorListTableMockData.json"
-
-
+import { useState, useEffect} from 'react'
+import { getAllDoctors } from '../../Dashboard/AdminDashboard/databaseFacade'
 
 
 
@@ -138,7 +137,10 @@ export default function DoctorListTable() {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [data, setData] = useState([])
 
+
+    useEffect(() => (async () => await getAllDoctors(setData))(), []);
 
 
     const handleRequestSort = (event, property) => {
@@ -165,7 +167,7 @@ export default function DoctorListTable() {
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - mockedDatas.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
 
     return (
@@ -184,12 +186,12 @@ export default function DoctorListTable() {
                                 order={order}
                                 orderBy={orderBy}
                                 onRequestSort={handleRequestSort}
-                                rowCount={mockedDatas.length}
+                                rowCount={data.length}
                             />
                             <TableBody>
                                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                                {stableSort(mockedDatas, getComparator(order, orderBy))
+                                {stableSort(data, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((item) => {
 
@@ -201,11 +203,11 @@ export default function DoctorListTable() {
                                                 key={item.name}
                                             >
                                                 <TableCell align="center">{item.licenseNumber}</TableCell>
-                                                <TableCell align="center">{item.address}</TableCell>
+                                                {/* <TableCell align="center">{item.address}</TableCell> */}
                                                 <TableCell align="center">{item.email}</TableCell>
-                                                <TableCell align="center">{item.firstName}</TableCell>
-                                                <TableCell align="center">{item.lastName}</TableCell>
-                                                <TableCell align="center">{item.phoneNumber}</TableCell>
+                                                {/* <TableCell align="center">{item.firstName}</TableCell> */}
+                                                {/* <TableCell align="center">{item.lastName}</TableCell> */}
+                                                {/* <TableCell align="center">{item.phoneNumber}</TableCell> */}
                                             </TableRow>
                                         );
                                     })}
@@ -224,7 +226,7 @@ export default function DoctorListTable() {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={mockedDatas.length}
+                        count={data.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}
