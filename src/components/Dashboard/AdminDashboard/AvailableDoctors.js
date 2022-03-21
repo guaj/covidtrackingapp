@@ -13,10 +13,9 @@ import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
-import mockedDatas from "../DoctorDashboard/doctorListTableMockData.json";
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
-import { getAvailableDoctors, getNewPatients, updatePatientsDoctor } from './databaseFacade'
+import { getAvailableDoctors, getNewPatients, updatePatientsDoctor } from '../../../databaseServices'
 import {useState, useEffect} from 'react'
 
 
