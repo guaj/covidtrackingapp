@@ -188,6 +188,11 @@ export default function PatientListTable() {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
+    function profileLink(email) {
+        let url = email.split("@");
+        return "/profile/" + url[0];
+    }
+
 
     return (
         <div>
@@ -225,10 +230,10 @@ export default function PatientListTable() {
                                                 <TableCell align="center">{item.firstName}</TableCell>
                                                 <TableCell align="center">{item.lastName}</TableCell>
                                                 <TableCell align="center">{item.covidResult}</TableCell>
-                                                <TableCell align="center">{item.reviewed ? "yes" : "no"}</TableCell>
+                                                <TableCell align="center">{item.reviewed ? "yes" : "no"}</TableCell> {/* TODO: check the database attributes */}
                                                 <TableCell align="center">{item.emergency ? <ErrorIcon style={{fill: "red"}}/> : "" }</TableCell>
-                                                <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon/></TableCell>
-                                                <TableCell align="center">{item.isFlagged ? <FlagIcon style={{fill: "orange"}}/> : "" }</TableCell>
+                                                <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon/></TableCell>
+                                                <TableCell align="center">{item.flag ? <FlagIcon style={{fill: "orange"}}/> : "" }</TableCell>
                                             </TableRow>
                                         );
                                     })}
