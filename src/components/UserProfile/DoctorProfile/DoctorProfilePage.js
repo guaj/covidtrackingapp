@@ -40,6 +40,9 @@ export default class DoctorProfilePage extends React.Component {
     render() {
         return (
             <>
+                <div className="container">
+                    <h2 className="myName2">Account Overview</h2>
+                </div>
                 <div className="row">
                     <div className="col-md-4">
                         <Avatar
