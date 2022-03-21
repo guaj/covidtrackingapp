@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import "./UserProfile.css";
 import AWS from "aws-sdk";
 import awsConfig from "../../aws-config.json";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function UserProfile() {
     try {
@@ -30,6 +30,7 @@ export default function UserProfile() {
         else if (userType === "patient")
             window.location = "/patient-profile-edit"
     }
+
 
     async function flagPatient(flag) {
         let userFetch = window.location.href.split("/")[4];
@@ -85,7 +86,6 @@ export default function UserProfile() {
 
         console.log(scanresult.Items.at(0).flag);
 
-        //TODO: check functionality after UserProfile page is fixed for doctors
         setFlag(scanresult.Items.at(0).flag !== undefined ? (scanresult.Items.at(0).flag ? true : false) : false);
     }
 
