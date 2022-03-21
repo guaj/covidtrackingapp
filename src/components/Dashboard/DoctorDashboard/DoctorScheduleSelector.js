@@ -3,6 +3,7 @@ import ScheduleSelector from 'react-schedule-selector';
 import Button from "@material-ui/core/Button";
 import "./DoctorSchedule.css";
 import {addDoctorSchedule, retrieveDoctorSchedule} from "./DoctorScheduleDynamoDBAdapter";
+import {CircularProgress} from "@mui/material";
 
 
 
@@ -17,8 +18,12 @@ export function convertScheduleStringToArrayOfDates(scheduleStringData){
 
 
 export default class DoctorScheduleSelector extends React.Component {
-    startDate = new Date(2073, 0, 2);         // the month is 0-indexed
-    state = { schedule :[]} // changed = to : ?
+    constructor() {
+        super();
+        this.state = { schedule : [], retrieve: false} // changed = to : ?
+        this.startDate = new Date(2073, 0, 2);         // the month is 0-indexed
+
+    }
 
 
     retrieveData = async () => {
@@ -29,6 +34,7 @@ export default class DoctorScheduleSelector extends React.Component {
 
     async componentDidMount() {
         this.setState({schedule: await this.retrieveData()});
+        this.setState( {retrieve: true});
     }
 
 
@@ -44,6 +50,9 @@ export default class DoctorScheduleSelector extends React.Component {
 
 
     render() {
+        if (this.state.retrieve === false)
+            return <CircularProgress />
+        else
         return (
             <div>
                 <ScheduleSelector

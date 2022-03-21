@@ -8,6 +8,8 @@ import "./AppointmentScheduler.css";
 import Button from "@material-ui/core/Button";
 import mockDoctorAvailabilities from "./DoctorScheduleMock.json";
 import {ButtonGroup} from "@mui/material";
+import {useEffect} from "react";
+import {findAvailAppointments} from "./AppointmentSchedulerAdapter";
 
 
 
@@ -18,6 +20,11 @@ export default function StaticDatePickerLandscape() {
     const [timeValue, setTimeValue] = React.useState(0);
     const [availTimes, setAvailTimes]= React.useState([]);
 
+    useEffect(async () => {
+        let userEmail = localStorage.getItem("email");
+        let avaiTimes = await findAvailAppointments();
+        console.log(avaiTimes.Item.doctor);
+    })
 
     let timeButtons = [
         availTimes.map((item,i) =>
