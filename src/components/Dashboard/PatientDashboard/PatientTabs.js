@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Chart from '../CommonTabs/Chart';
+import QuarantineInfos from '../CommonTabs/QuarantineInfos';
 
 
 
@@ -64,10 +65,14 @@ export default function PatientTabs() {
         <>
             <Tabs value={value} onChange={handleChange} aria-label="PatientTabs">
                 <Tab label="Covid Information" {...a11yProps(0)} />
+                <Tab label="Quarantine Information" {...a11yProps(1)} />
             </Tabs>
 
             <TabPanel value={value} index={0}>
                 <Chart />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+                <QuarantineInfos />
             </TabPanel>
         </>
     )
