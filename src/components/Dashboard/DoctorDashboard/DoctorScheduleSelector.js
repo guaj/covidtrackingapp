@@ -20,6 +20,7 @@ export default class DoctorScheduleSelector extends React.Component {
     startDate = new Date(2073, 0, 2);         // the month is 0-indexed
     state = { schedule :[]} // changed = to : ?
 
+
     retrieveData = async () => {
         const result = await retrieveDoctorSchedule('DoctorSchedule');
         return convertScheduleStringToArrayOfDates(result.Item.dailyAvailabilities)
