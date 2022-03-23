@@ -6,25 +6,27 @@ import StaticDatePicker from '@mui/lab/StaticDatePicker';
 import Navbar from "../../components/Navbar/Navbar";
 import "./AppointmentScheduler.css";
 import Button from "@material-ui/core/Button";
-import mockDoctorAvailabilities from "./DoctorScheduleMock.json";
 import {ButtonGroup} from "@mui/material";
 import {useEffect} from "react";
-import {findAvailAppointments} from "./AppointmentSchedulerAdapter";
+import {findAvailAppointments, createAppointment} from "./AppointmentSchedulerAdapter";
 
 
 
 export default function StaticDatePickerLandscape() {
     const todayDate = new Date();
     const [value, setValue] = React.useState(todayDate);
-    const [dayValue, setDayValue] = React.useState(dayToString(value.getDay()))
     const [timeValue, setTimeValue] = React.useState(0);
     const [availTimes, setAvailTimes]= React.useState([]);
+    const [availDates, setAvailDates] =  React.useState()
+    const [isAvailable, setIsAvailable] = React.useState(false)
 
-    useEffect(async () => {
-        let userEmail = localStorage.getItem("email");
-        let avaiTimes = await findAvailAppointments();
-        console.log(avaiTimes.Item.doctor);
-    })
+    useEffect(() => {
+        (async () => {
+            const dbData = await findAvailAppointments();
+            setAvailDates(dbData);
+        })();
+
+    },[]);
 
     let timeButtons = [
         availTimes.map((item,i) =>
@@ -37,47 +39,28 @@ export default function StaticDatePickerLandscape() {
         )
     ];
 
+
+
+
     function setTime(e) {
         setTimeValue(e.currentTarget.value);
     }
 
 
     async function dayToString(day) {
-        if(day === 0) {
-            setAvailTimes((mockDoctorAvailabilities[0].sun).split(";"));
-            return "sun"
-        }
-        else if(day === 1) {
-            setAvailTimes((mockDoctorAvailabilities[0].mon).split(";"));
-            return "mon"
-        }
-        else if(day === 2) {
-            setAvailTimes((mockDoctorAvailabilities[0].tue).split(";"));
-            return "tue"
-        }
-        else if(day === 3) {
-            setAvailTimes((mockDoctorAvailabilities[0].wed).split(";"));
-            return "wed"
-        }
-        else if(day === 4) {
-            setAvailTimes((mockDoctorAvailabilities[0].thu).split(";"));
-            return "thu"
-        }
-        else if(day === 5) {
-            setAvailTimes((mockDoctorAvailabilities[0].fri).split(";"));
-            return "fri"
-        }
-        else if(day === 6) {
-            setAvailTimes((mockDoctorAvailabilities[0].sat).split(";"));
-            return "sat"
-        }
-
+        let availDay = (availDates[day]).split(";");
+        if(availDay[0] !== "")
+            setIsAvailable(true);
+        else
+            setIsAvailable(false);
+        setAvailTimes(availDay);
     }
 
-    function getTime() {
-        alert("Date: "+value.toDateString() +"\nTime: "+timeValue);
+    async function getTime() {
+        alert("Date: " + value.toDateString() + "\nTime: " + timeValue);
         let user = JSON.parse(localStorage.getItem("email"))
         let url = user.split("@");
+        await createAppointment(timeValue, value.toDateString());
         window.location = "/profile/" + url[0];
     }
 
@@ -95,7 +78,7 @@ export default function StaticDatePickerLandscape() {
                                 value={value}
                                 onChange={(newValue) => {
                                     setValue(newValue);
-                                    setDayValue(dayToString(newValue.getDay()))
+                                    dayToString(newValue.getDay());
                                 }}
                                 renderInput={(params) => <TextField {...params} />}
                             />
@@ -107,13 +90,17 @@ export default function StaticDatePickerLandscape() {
                             <p>SELECT TIME</p>
                         </div>
                         <div className="timePicker">
-                            <ButtonGroup
-                                orientation="vertical"
-                                variant="contained"
-                                size="large"
-                            >
-                                {timeButtons}
-                            </ButtonGroup>
+                            {isAvailable ?
+                                <ButtonGroup
+                                    orientation="vertical"
+                                    variant="contained"
+                                    size="large"
+                                >
+                                    {timeButtons}
+                                </ButtonGroup>
+                                :
+                                <p>No Available time for this date</p>
+                            }
                         </div>
 
                     </div>
@@ -123,6 +110,7 @@ export default function StaticDatePickerLandscape() {
                         type="button"
                         variant="contained"
                         onClick={getTime}
+                        disabled={timeValue === 0}
                     >
                         Select Appointment
                     </Button>
