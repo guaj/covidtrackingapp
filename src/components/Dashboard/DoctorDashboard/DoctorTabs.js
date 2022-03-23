@@ -72,7 +72,6 @@ export default function DoctorTabs() {
                 <Tab label="Statistics" {...a11yProps(0)} />
                 <Tab label="Patient List" {...a11yProps(1)} />
                 <Tab label="My Availabilities" {...a11yProps(2)} />
-                <Tab label="Doctor-Patient Pairing List" {...a11yProps(3)} />
             </Tabs>
 
             <TabPanel value={value} index={0}>
@@ -99,9 +98,7 @@ export default function DoctorTabs() {
             <TabPanel value={value} index={2}>
                 <DoctorSchedule />
             </TabPanel>
-            <TabPanel value={value} index={3}>
-                {/* to come in future sprints test */}
-            </TabPanel>
+
 
 
         </>
