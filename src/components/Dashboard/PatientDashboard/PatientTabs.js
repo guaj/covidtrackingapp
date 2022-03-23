@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Chart from '../CommonTabs/Chart';
-import QuarantineInfos from '../CommonTabs/QuarantineInfos';
+import QuarantineTab from '../CommonTabs/QuarantineTab';
 
 
 
@@ -72,7 +72,7 @@ export default function PatientTabs() {
                 <Chart />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <QuarantineInfos />
+                <QuarantineTab />
             </TabPanel>
         </>
     )
