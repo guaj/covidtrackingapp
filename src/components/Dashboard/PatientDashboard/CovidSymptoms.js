@@ -39,7 +39,10 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: 'rgba(63, 81, 181, 0.5)',
             color: '#fff'
         }
-    }
+    }, 
+    insideText:{
+        color:"#4F4F4F"
+    },
 }));
 export function CovidSymptoms(){
     const classes = useStyles();
@@ -110,6 +113,39 @@ export function CovidSymptoms(){
                 <ListItem>
                     <ChevronRightIcon fonSize="small"/>
                     Sore throat
+                </ListItem>
+            </Grid>
+            <Grid item xs={12} component={Paper} className={classes.form}>
+                <Typography className={classes.form}><b>Severe symptoms</b>:</Typography>  
+                <ListItem>
+                    <ChevronRightIcon fontSize="small"/>
+                    <Typography className={classes.insideText}>
+                        <b>Trouble breathing</b> or severe shortness of breath.
+                    </Typography>
+                </ListItem>
+                <ListItem>
+                    <ChevronRightIcon fonSize="small"/>
+                    <Typography className={classes.insideText}>
+                        Persistent <b>pressure</b> or <b>pain in the chest</b>.
+                    </Typography>
+                </ListItem>
+                <ListItem>
+                    <ChevronRightIcon fonSize="small"/>
+                    <Typography className={classes.insideText}>
+                        New onset of <b>confusion</b>.
+                    </Typography>
+                </ListItem>
+                <ListItem>
+                    <ChevronRightIcon fonSize="small"/>
+                    <Typography className={classes.insideText}>
+                        Difficulty waking up or staying awake.
+                    </Typography>
+                </ListItem>
+                <ListItem>
+                    <ChevronRightIcon fonSize="small"/>
+                    <Typography className={classes.insideText}>
+                       <b>Pale</b>, grey or blue-coloured skin, lips or nail beds.
+                    </Typography>
                 </ListItem>
             </Grid>
             <Grid item xs={12} align="center">
