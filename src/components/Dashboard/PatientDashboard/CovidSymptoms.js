@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Grid } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 import { ListItem, Typography } from '@mui/material';
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -31,20 +31,24 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "bold",
     },
     link:{
-        marginBottom: theme.spacing(4)
+        marginTop: theme.spacing(-1),
+        marginBottom: theme.spacing(2),
+        backgroundColor: "rgba(1, 5, 96, 1)",
+        color: '#fff',
+        '&:hover': {
+            backgroundColor: 'rgba(63, 81, 181, 0.5)',
+            color: '#fff'
+        }
     }
 }));
-export default function QuarantineInfo(){
+export function CovidSymptoms(){
     const classes = useStyles();
 
     return(
         <Grid container spacing={3} className={classes.paper}>
             <Grid item xs={12}>
-                <Typography component="h1" variant="h4" className={classes.title}>Quarantine instructions</Typography>
-                <Typography component="h4" color="rgba(1, 5, 96, 1)" align="center"> 
-                    If you are tested positive, waiting for the result, or encountering covid symptoms, <b>self-quarantine</b> is required. 
-                    <br/>Please see below for the COVID-19 symptoms.
-                </Typography>
+                <Typography component="h1" variant="h4" className={classes.title}>COVID-19 symptoms</Typography>
+                <Typography component="h4" color="rgba(1, 5, 96, 1)" align="center"> If you experience some of the following symptoms, please perform a screening test.</Typography>
             </Grid>
             <Grid item xs={6} component={Paper} className={classes.col1}>
             <Typography className={classes.form}>If you have <b>two or more</b>:</Typography>
@@ -108,10 +112,10 @@ export default function QuarantineInfo(){
                     Sore throat
                 </ListItem>
             </Grid>
-            <Grid item xs={12} component={Paper} className={classes.link} align="center">
-                <a href='https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks/quarantine-isolate-home.html'>
-                    Governmental quarantine instructions
-                </a>
+            <Grid item xs={12} align="center">
+                <Button className={classes.link} align="center" href='https://www.quebec.ca/en/health/health-issues/a-z/2019-coronavirus/symptoms-transmission-treatment'>
+                        See more about Quebec's Government prevention
+                </Button>
             </Grid>
         </Grid>
     )
