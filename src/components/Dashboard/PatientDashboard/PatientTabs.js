@@ -6,8 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Chart from '../CommonTabs/Chart';
 import QuarantineTab from './QuarantineTab';
-import QuarantineInfo from "./QuarantineInfo";
-import CovidSymptoms from "./CovidSymptoms";
+import { makeStyles } from "@material-ui/core/styles";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -49,16 +48,22 @@ TabPanel.propTypes = {
     value: PropTypes.number.isRequired,
 };
 
-
+const useStyles = makeStyles(theme => ({
+    tab: { 
+        '& .MuiBox-root': {
+          padding: '5px',
+          },
+        },
+    }));
 
 export default function PatientTabs() {
 
     const [value, setValue] = React.useState(0);
+    const classes = useStyles();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
 
     return (
         <>
@@ -70,7 +75,7 @@ export default function PatientTabs() {
             <TabPanel value={value} index={0}>
                 <Chart />
             </TabPanel>
-            <TabPanel value={value} index={1}>
+            <TabPanel value={value} index={1} class={{ root: classes.tab }}>
                 <QuarantineTab />
             </TabPanel>
         </>

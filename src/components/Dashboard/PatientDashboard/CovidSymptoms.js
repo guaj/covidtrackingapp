@@ -35,9 +35,16 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
         backgroundColor: "rgba(1, 5, 96, 1)",
         color: '#fff',
+        //for button
+        boxShadow: "0px 5px 5px lightgray",
+        borderRadius: "5px",
+        transition: 'ease background-color 250ms',
+        padding: "5px 15px",
+        //end
         '&:hover': {
             backgroundColor: 'rgba(63, 81, 181, 0.5)',
-            color: '#fff'
+            color: '#fff',
+            cursor: "pointer" //for button
         }
     }, 
     insideText:{
@@ -149,9 +156,9 @@ export function CovidSymptoms(){
                 </ListItem>
             </Grid>
             <Grid item xs={12} align="center">
-                <Button className={classes.link} align="center" href='https://www.quebec.ca/en/health/health-issues/a-z/2019-coronavirus/symptoms-transmission-treatment'>
+                <button className={classes.link} align="center" href='https://www.quebec.ca/en/health/health-issues/a-z/2019-coronavirus/symptoms-transmission-treatment'>
                         See more about Quebec's Government prevention
-                </Button>
+                </button>
             </Grid>
         </Grid>
     )
