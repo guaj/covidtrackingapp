@@ -64,82 +64,80 @@ export default function UsersLogin() {
 
     const Login = async details => {
         console.log(details);
-        let notValid = true
-        if(details.type ==="admin"){
-            const params = {
-                TableName: "admin",
-                Key:{
-                    "adminID":String('2')
-                }
-            }
+        try {
+            let validCredentials = false;
             try {
+                const params = {
+                    TableName: "admin",
+                    Key: {
+                        "adminID": String('2')
+                    }
+                }
                 const result = await docClient.get(params).promise()
                 if(result.Item.password === details.password && result.Item.email === details.email){
                     setLocalStorage(result.Item.email, "admin");
+                    validCredentials = true;
                 }
 
             } catch (err) {
-                alert("wrong password or email");
-                alert(err);
-            }
-        }
-        else if (details.type ==="patient"){
-            const param = {
-                TableName: patientTable,
-                Key:{
-                    "email":String(details.email)
-                }
+                console.log("not an admin")
             }
             try {
+                const param = {
+                    TableName: patientTable,
+                    Key:{
+                        "email":String(details.email)
+                    }
+                }
                 const result = await docClient.get(param).promise()
                 if(result.Item.password === details.password && result.Item.email === details.email){
                     setLocalStorage(result.Item.email, "patient");
+                    validCredentials = true;
                 }
             } catch (err) {
-                alert("wrong password or email");
-                alert(err);
-            }
-        }
-        else if (details.type ==="doctor"){
-            const param = {
-                TableName: doctorTable,
-                Key:{
-                    "email":String(details.email)
-                }
+                console.log("not a patient")
             }
             try {
+                const param = {
+                    TableName: doctorTable,
+                    Key:{
+                        "email":String(details.email)
+                    }
+                }
                 const result = await docClient.get(param).promise()
                 if(result.Item.password === details.password && result.Item.email === details.email){
                     setLocalStorage(result.Item.email, "doctor");
+                    validCredentials = true;
                 }
             } catch (err) {
-                alert("wrong password or email");
-                alert(err);
+                console.log("not a doctor")
             }
-        }
-        else if (details.type ==="org"){
-            const param = {
-                TableName: orgTable,
-                Key:{
-                    "email":String(details.email),
-                }
-            }
+
             try {
+                const param = {
+                    TableName: orgTable,
+                    Key:{
+                        "email":String(details.email),
+                    }
+                }
                 const result = await docClient.get(param).promise()
                 console.log(result)
                 if(result.Item.password === details.password && result.Item.email === details.email){
                     setLocalStorage(result.Item.email, "immigration official");
+                    validCredentials = true;
                 }
             } catch (err) {
-                alert("wrong password or email");
-                alert(err);
+                console.log("not an org")
             }
+            if(!validCredentials)
+                alert("wrong password or email")
+        }catch (e) {
+            alert(e);
         }
 
     }
-    const Logout = () => {
-        setUser({email: "", password: ""});
-    }
+
+
 
     return (
         <Grid container component="main">
