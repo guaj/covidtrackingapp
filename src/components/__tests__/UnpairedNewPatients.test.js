@@ -1,13 +1,9 @@
 import { render, screen , act} from "@testing-library/react";
 import UnpairedPatientDoctorEmergencyListTable from '../Dashboard/AdminDashboard/UnpairedPatientDoctorEmergency'
+import PatientProfileUpdate from "../../Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdate";
 
 
 test("if the patient list tab is rendered when the user is a doctor", async () => {
-    act( () => render(<UnpairedPatientDoctorEmergencyListTable />));
-    //expect(screen.getByText("Doctor Emergency pairing")).toBeInTheDocument();
+    render(<PatientProfileUpdate/>); //TODO : develop a new test.
 });
 
-test("if the statistics tab is rendered when the user is a doctor", async () => {
-    act( () => render(<UnpairedPatientDoctorEmergencyListTable />));
-    //expect(screen.getByText("Statistics")).toBeInTheDocument();
-});
