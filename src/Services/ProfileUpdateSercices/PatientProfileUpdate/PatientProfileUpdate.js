@@ -113,6 +113,7 @@ export default function ProfilePatient() {
         doctor: ''
     });
 
+    const dateModified = new Date();
     //fetches patient information on patient profile page render
     useEffect(async () => {
         setPatients(await PatientProfileUpdateDatabaseServices.fetchData('patients'))
