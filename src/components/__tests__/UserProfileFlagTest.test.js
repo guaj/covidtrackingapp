@@ -1,8 +1,6 @@
 import {render, screen} from "@testing-library/react";
-import UserProfile from "../UserProfile/UserProfile";
+import UserProfileFacade from "../UserProfile/UserProfileFacade";
 
-/*
 test("flag button rendering for doctor on patient profile page", () => {
-    render(<UserProfile/>);
-    expect(screen.getByText("Flag")).toBeInTheDocument();
-});*/
+    render(<UserProfileFacade/>); //TODO : develop a new test.
+});
