@@ -173,7 +173,7 @@ export default function PrimarySearchAppBar() {
                     >
                         <AccountCircle style={{color: "#673ab7"}}/>
                     </IconButton>
-                    <p>Profile</p>
+                    <p>Profile-------------------test</p>
                 </MenuItem>
                 : <> </>
             }
