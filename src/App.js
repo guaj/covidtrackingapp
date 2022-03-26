@@ -15,7 +15,7 @@ import PatientRegistration from './components/Authentification/UserRegistration/
 import DoctorRegistration from './components/Authentification/UserRegistration/DoctorRegistration'
 import OrganizationRegistration from './components/Authentification/UserRegistration/OrganizationRegistration';
 import UserProfileFacade from "./components/UserProfile/UserProfileFacade";
-
+import TracingForm from './components/ContractTracing/TracingForm';
 
 import PatientProfileUpdate from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdate'
 
@@ -42,6 +42,8 @@ function App() {
                     <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
                     <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
                     <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
+                    <Route path='/tracing-form' element={[<TracingForm/>]} />
+
             </Routes>
         );
 
