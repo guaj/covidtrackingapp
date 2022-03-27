@@ -6,12 +6,14 @@ import { Card, Typography } from "@mui/material";
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 
+
+
 class TracingForm extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = { 
-       formValues: [{ name: "", locationNumb : "" }]
+       formValues: [{ name: "", locationNumb : "", date : "", time : "" }]
      };
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -24,7 +26,7 @@ class TracingForm extends React.Component {
 
   addFormFields() {
     this.setState(({
-      formValues: [...this.state.formValues, { name: "", locationNumb: "" }]
+      formValues: [...this.state.formValues, { name: "", locationNumb: "", date : "" , time : "" }]
     }))
   }
 
@@ -40,6 +42,7 @@ class TracingForm extends React.Component {
   }
 
   render() {
+    const { user } = this.props;
 
     return (
         <Box   pt={4}>
@@ -51,7 +54,7 @@ class TracingForm extends React.Component {
                     >
             <Typography sx={{ fontWeight: 'bold', color:'#724a7b', paddingLeft: 4, paddingRight: 4 }}>
                    <h1 > 
-                   Patient Contract Tracing Form
+                   Patient Contact Tracing Form 
                        </h1>
                 </Typography>
             </Grid>
@@ -60,15 +63,18 @@ class TracingForm extends React.Component {
                     alignItems="center"
                     justify="center"
                     >
-            <Card  position="static" sx={{minWidth:275, maxWidth:750 }} style={{backgroundColor:'#ffff'}} >
+            <Card  position="static" sx={{minWidth:275 }} style={{backgroundColor:'#ffff'}} >
             <Typography sx={{ fontWeight: 'medium', color:'#724a7b', paddingLeft: 4, paddingRight: 4 , paddingTop:3, paddingBottom:3}} >
                 <div>
-                Please enter public locations you have visited in the last 5 days
-                before your positive test results.
+                Please enter information about public locations you have visited in the last 5 days
+                before your positive test results. 
                 </div>
                 <div >
-                (Ex: schools, workplaces, malls, large social gatherings, group homes, health
+                (Ex: schools, workplaces, large social gatherings, group homes, health
                 care facilities, etc.)
+                </div>
+                <div>
+                This includes the name, phone number, as well as the date and time you visited the location.
                 </div>
                 </Typography> 
             <CardContent>
@@ -84,9 +90,23 @@ class TracingForm extends React.Component {
                     />
                     <TextField
                         id="outlined-textarea"
-                        label="Location Number"
+                        label="Location Phone Number"
                         multiline
                         type="text" name="locationNumb" value={element.locationNumb || ""} onChange={e => this.handleChange(index, e)} 
+                        sx={{  m:2}} 
+                    />
+                     <TextField
+                        id="outlined-textarea"
+                        label="Location Date"
+                        multiline
+                        type="text" name="date" value={element.date || ""} onChange={e => this.handleChange(index, e)}
+                        sx={{  m:2}} 
+                    />
+                     <TextField
+                        id="outlined-textarea"
+                        label="Location Time"
+                        multiline
+                        type="text" name="time" value={element.time || ""} onChange={e => this.handleChange(index, e)}
                         sx={{  m:2}} 
                     />
                     {
