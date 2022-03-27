@@ -16,7 +16,7 @@ import DoctorRegistration from './components/Authentification/UserRegistration/D
 import OrganizationRegistration from './components/Authentification/UserRegistration/OrganizationRegistration';
 import UserProfileFacade from "./components/UserProfile/UserProfileFacade";
 import TracingForm from './components/ContractTracing/TracingForm';
-
+import OrgsTabs from "./components/Dashboard/HealthOfficialDashboard/HealthOfficialTabs";
 import PatientProfileUpdate from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdate'
 
 import DoctorProfileUpdate from './Services/ProfileUpdateSercices/DoctorProfileUpdate/DoctorProfileUpdate'
@@ -43,6 +43,8 @@ function App() {
                     <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
                     <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
                     <Route path='/tracing-form' element={[<TracingForm/>]} />
+                    <Route path="/tracing-form/:user_email" element={[<UserProfileFacade/>]} />
+                    <Route path='/health-tabs' element={[<OrgsTabs/>]} />
 
             </Routes>
         );

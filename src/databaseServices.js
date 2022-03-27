@@ -36,6 +36,24 @@ export async function getAllPatients(setter) {
   }
 }
 
+export async function getAllCovidPositivePatients() {
+ try{
+const params ={
+  TableName: 'patients',
+  KeyConditionExpression: 'flag = :flag',
+  ExpressionAttributeValues: {
+    ":flag":{"BOOl" :true}
+  },
+};
+const result = await docClient.scan(params).promise()
+   console.log(result)
+   console.log(JSON.stringify(result))
+   return result
+  }catch (err){
+   console.error(err);
+ }
+}
+
 export async function getAllDoctors(setter) {
   try {
     const data = await docClient.scan({ TableName: "doctors" }).promise()

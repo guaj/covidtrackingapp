@@ -69,8 +69,10 @@
     ]
   },
   "devDependencies": {
+    "@mui/utils": "^5.4.4",
     "axios": "^0.26.0",
     "jest-watch-typeahead": "^0.6.5",
+    "prop-types": "^15.8.1",
     "react": "^17.0.2"
   },
   "jest": {
