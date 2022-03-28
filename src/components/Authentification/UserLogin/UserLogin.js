@@ -122,7 +122,7 @@ export default function UsersLogin() {
                 const result = await docClient.get(param).promise()
                 console.log(result)
                 if(result.Item.password === details.password && result.Item.email === details.email){
-                    setLocalStorage(result.Item.email, "health official");
+                    setLocalStorage(result.Item.email,result.Item.type);
                     validCredentials = true;
                 }
             } catch (err) {
@@ -138,7 +138,7 @@ export default function UsersLogin() {
                 const result = await docClient.get(param).promise()
                 console.log(result)
                 if(result.Item.password === details.password && result.Item.email === details.email){
-                    setLocalStorage(result.Item.email, "immigration official");
+                    setLocalStorage(result.Item.email, result.Item.type);
                     validCredentials = true;
                 }
             } catch (err) {
