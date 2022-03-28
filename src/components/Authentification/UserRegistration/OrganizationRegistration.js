@@ -12,9 +12,9 @@ import geometricImage from "../../../images/geometric_gradient.jpg";
 import PasswordChecklist from "react-password-checklist";
 import { useState } from "react";
 import PasswordStrengthBar from 'react-password-strength-bar';
-import UsersRegistration from "./UsersRegistration";
 import AWS from 'aws-sdk';
 import awsConfig from '../../../aws-config.json';
+import {setLocalStorage} from "../UserLogin/UserLogin";
 
   
   const useStyles = makeStyles((theme) => ({
@@ -77,7 +77,10 @@ export default function SignUpOrg() {
     const handleEmailChange = e =>{
         setEmail(e.target.value);
     };
-  const orgType = JSON.parse(localStorage.getItem("type"));
+
+  var orgType = localStorage.getItem("type");
+  //var orgEmail;
+
 
     const handleSubmit = async(e) =>{
         e.preventDefault();
@@ -93,10 +96,7 @@ export default function SignUpOrg() {
         }
         try {
             const result = await docClient.put(params).promise()
-            console.log(result)
-            alert("The account is created!");
-            console.log(result)
-            window.location= "/dashboard"
+            setLocalStorage(email,orgType)
         } catch (err) {
             alert("unable to create the account");
             alert(err);

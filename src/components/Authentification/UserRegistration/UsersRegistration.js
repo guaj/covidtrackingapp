@@ -60,18 +60,15 @@ export default function UsersRegistration() {
         e.preventDefault();
 
         if(value === "patient"){
-        setText('Im in patient');
         window.location = '/patient-registration';
 
         }
         else if (value === "doctor"){
-            setText('Im in doctor');
             window.location = '/doctor-registration';
         }
         else if (value === "immigration official" || value === "health official"){
-            setText('Im in the rest');
+            localStorage.setItem("type",value);
             window.location = '/organization-registration';
-            sessionStorage.setItem("orgType",value);
 
         }
 

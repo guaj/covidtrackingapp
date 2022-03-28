@@ -67,6 +67,7 @@ export default function OrgsTabs() {
 
     return (
         <>
+            <h2>Health Officials Dashboard</h2>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="Statistics" {...a11yProps(0)} />
                 <Tab label="Patient List" {...a11yProps(1)} />

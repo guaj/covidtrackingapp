@@ -126,7 +126,7 @@ export default function UsersLogin() {
                     validCredentials = true;
                 }
             } catch (err) {
-                console.log("not an org")
+                console.log("not a health official")
             }
             try {
                 const param = {
@@ -142,7 +142,7 @@ export default function UsersLogin() {
                     validCredentials = true;
                 }
             } catch (err) {
-                console.log("not an org")
+                console.log("not an immigration official")
             }
 
             if(!validCredentials)
