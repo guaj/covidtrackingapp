@@ -1,7 +1,5 @@
 .listItem {
-    line-height: inherit;
-    display: flex;
-    align-items: center;
+    white-space: normal;
 }
 
 .date-text {
@@ -11,4 +9,5 @@
 
 .notif-text {
     color: black;
+    white-space: normal;
 }

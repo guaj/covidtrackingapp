@@ -11,7 +11,8 @@ import {retrieveNotifications} from "./NotificationsService";
 import {makeStyles} from "@material-ui/styles";
 import "./Notifications.css";
 
-const useStyles = makeStyles((theme) => ({
+
+const useStyles = makeStyles({
         listItem: {
             whiteSpace: "normal",
         },
@@ -28,9 +29,9 @@ const useStyles = makeStyles((theme) => ({
             },
         }
     }
-));
+);
 
-export default function NotificationList(props) {
+export default function NotificationList() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [notificationList, setNotificationList] = React.useState([])
     const [numberOfNotifications, setNumberOfNotifications] = React.useState(0)
@@ -64,21 +65,19 @@ export default function NotificationList(props) {
     },[]);
     let notificationItems = [
         notificationList.map((item,i) =>
-            <>
-                <MenuItem
-                    className={classes.listItem}
-                    key={i}
-                    data-my-value={item.type}
-                    onClick={notificationRedirect}
-                >
-                    <p className="notif-text">{item.content}
-                        <br/><span className="date-text">{formatDate(item.date)}</span>
-                    </p>
+                <>
+                    <MenuItem
+                        key={i}
+                        data-my-value={item.type}
+                        onClick={notificationRedirect}
+                        style={{whiteSpace: 'normal'}}
+                    >
+                        <p className="notif-text">{item.content}
+                            <br/><span className="date-text">{formatDate(item.date)}</span>
+                        </p>
 
-                </MenuItem>
-
-            </>
-
+                    </MenuItem>
+                </>
         )
     ];
     return (
