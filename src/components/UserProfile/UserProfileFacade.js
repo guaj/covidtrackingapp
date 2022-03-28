@@ -8,7 +8,9 @@ import {useEffect, useState} from "react";
 import AWS from "aws-sdk";
 import awsConfig from "../../aws-config.json";
 import ErrorProfilePage from "./ErrorProfilePage";
+import {makeStyles} from "@material-ui/core/styles";
 
+const useStyles = makeStyles((theme) => {});
 
 function DisplayUserProfile(userType) {
 
@@ -54,6 +56,8 @@ async function fetchProfileData() {
 }
 
 export default function UserProfileFacade() {
+    useStyles();
+
     try {
         JSON.parse(localStorage.getItem("email"));
         let userEmail = JSON.parse(localStorage.getItem("email"));
