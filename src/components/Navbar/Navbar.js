@@ -14,6 +14,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import HomeIcon from '@mui/icons-material/Home';
+import NotificationMenu from "./Notification";
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -149,15 +150,7 @@ export default function PrimarySearchAppBar() {
             {/*Conditional rendering for notifications feature */}
             {hasNotification() ?
                 <MenuItem>
-                    <IconButton
-                        size="large"
-                        aria-label="show 17 new notifications"
-                        color="inherit"
-                    >
-                        <Badge badgeContent={17} color="error">
-                            <NotificationsIcon style={{color: "#673ab7"}}/>
-                        </Badge>
-                    </IconButton>
+                    <NotificationMenu isMobile={true}/>
                     <p>Notifications</p>
                 </MenuItem>
                 : <></>
@@ -244,15 +237,7 @@ export default function PrimarySearchAppBar() {
 
                         {/*conditional rendering for notifications */}
                         {hasNotification() ?
-                            <IconButton
-                                size="large"
-                                aria-label="show 17 new notifications"
-                                color="inherit"
-                            >
-                                <Badge badgeContent={17} color="error">
-                                    <NotificationsIcon style={{color: "#673ab7"}}/>
-                                </Badge>
-                            </IconButton>
+                            <NotificationMenu isMobile={false}/>
                             : <></>
                         }
                         <IconButton

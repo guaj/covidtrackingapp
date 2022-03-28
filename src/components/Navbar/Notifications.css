@@ -1,0 +1,14 @@
+.listItem {
+    line-height: inherit;
+    display: flex;
+    align-items: center;
+}
+
+.date-text {
+    font-size: small;
+    color: #7F7FD5;
+}
+
+.notif-text {
+    color: black;
+}
