@@ -40,9 +40,9 @@ export async function getAllCovidPositivePatients() {
  try{
 const params ={
   TableName: 'patients',
-  KeyConditionExpression: 'flag = :flag',
+  KeyConditionExpression: 'covidResult = :covidResult',
   ExpressionAttributeValues: {
-    ":flag":{"BOOl" :true}
+    ":covidResult":'positive'
   },
 };
 const result = await docClient.scan(params).promise()

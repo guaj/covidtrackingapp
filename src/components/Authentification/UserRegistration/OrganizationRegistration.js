@@ -85,8 +85,8 @@ export default function SignUpOrg() {
     const handleSubmit = async(e) =>{
         e.preventDefault();
         const params = {
-            TableName:"organizations",
-            Item:{
+            TableName: "organizations",
+            Item: {
                 "type": String(orgType),
                 "orgId": String(orgId),
                 "employeeId": Number(empId),
@@ -94,14 +94,14 @@ export default function SignUpOrg() {
                 "password": String(password)
             }
         }
-        try {
-            const result = await docClient.put(params).promise()
-            setLocalStorage(email,orgType)
-        } catch (err) {
-            alert("unable to create the account");
-            alert(err);
-        }
-
+            await docClient.put(params,function(error, data){
+                if(error){
+                    console.log(error)
+                }
+                //TODO: check the db that the email(key) is not already there then can't register an account
+                else
+                    setLocalStorage(email,orgType)
+            })
     }
     return (
       <Grid container component="main">
