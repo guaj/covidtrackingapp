@@ -7,6 +7,8 @@ import PatientMock from "./mockPatientInfo.json";
 import Box from "@mui/material/Box";
 import AWS from "aws-sdk";
 import awsConfig from "../../../aws-config.json";
+import SymptomDialogForm from "./SymptomDialogForm";
+
 
 
 export default class PatientProfilePage extends React.Component {
@@ -15,10 +17,19 @@ export default class PatientProfilePage extends React.Component {
     userEmail = JSON.parse(localStorage.getItem("email"));
     user = JSON.parse(localStorage.getItem("email"));
     url = this.user.split("@");
+    title = "Hello from parent component"
 
     state = {
-        flag: this.isFlagged()
+        flag: this.isFlagged(),
+        open: false
     }
+
+    handleOpenDialog = () => {
+       if(this.state.open)
+           this.setState({open: false})
+        else
+            this.setState({open:true})
+    };
 
     canEditProfile() {
         return ((this.userType === "patient") && this.userFetch === this.userEmail.split("@")[0]);
@@ -181,7 +192,13 @@ export default class PatientProfilePage extends React.Component {
                                     }}>{this.state.flag ? 'Unflag' : 'Flag'}</Button>
                                     : <></>}
                             </div>
-
+                            <div className="button">
+                                <SymptomDialogForm
+                                handleOpenDialog={this.state.open}
+                                handleCloseDialog={() =>this.setState({open :false})}
+                                title={this.title}
+                                />
+                            </div>
                         </Box>
                     </div>
                 </div>
