@@ -8,6 +8,8 @@ import HealthOfficialTabs from './HealthOfficialDashboard/HealthOfficialTabs';
 import ImmigrationOfficialTabs from './ImmigrantOfficerDashboard/ImmigrationOfficialTabs';
 import AdminTabs from './AdminDashboard/adminDashboard';
 import Navbar from "../Navbar/Navbar";
+import {makeStyles} from "@material-ui/core/styles";
+
 
 
 /* for testing
@@ -60,11 +62,10 @@ function DisplayUserTabs() {
     }
 }
 
-
-
-
+const useStyles = makeStyles((theme) => {});
 
 export default function Dashboard() {
+    useStyles();
 
     return (
         <div>
