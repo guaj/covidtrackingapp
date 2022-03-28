@@ -12,6 +12,7 @@ import geometricImage from "../../../images/geometric_gradient.jpg";
 import PasswordChecklist from "react-password-checklist";
 import { useState } from "react";
 import PasswordStrengthBar from 'react-password-strength-bar';
+import UsersRegistration from "./UsersRegistration";
 import AWS from 'aws-sdk';
 import awsConfig from '../../../aws-config.json';
 
@@ -76,13 +77,14 @@ export default function SignUpOrg() {
     const handleEmailChange = e =>{
         setEmail(e.target.value);
     };
+  const orgType = JSON.parse(localStorage.getItem("type"));
 
     const handleSubmit = async(e) =>{
         e.preventDefault();
         const params = {
             TableName:"organizations",
             Item:{
-                "type": String("org"),
+                "type": String(orgType),
                 "orgId": String(orgId),
                 "employeeId": Number(empId),
                 "email": String(email),
@@ -93,6 +95,8 @@ export default function SignUpOrg() {
             const result = await docClient.put(params).promise()
             console.log(result)
             alert("The account is created!");
+            console.log(result)
+            window.location= "/dashboard"
         } catch (err) {
             alert("unable to create the account");
             alert(err);
