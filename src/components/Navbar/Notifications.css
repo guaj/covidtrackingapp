@@ -1,0 +1,13 @@
+.listItem {
+    white-space: normal;
+}
+
+.date-text {
+    font-size: small;
+    color: #7F7FD5;
+}
+
+.notif-text {
+    color: black;
+    white-space: normal;
+}
