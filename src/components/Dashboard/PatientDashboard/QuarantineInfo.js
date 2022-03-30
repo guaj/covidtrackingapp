@@ -67,12 +67,6 @@ export function QuarantineInfo(){
                     Self-isolation is required for any of the following situation:
                 </Typography>
                     <ListItem>
-                        <ChevronRightIcon fontSize="small"/>
-                        <Typography className={classes.insideText}>
-                            You have <u>no symptoms</u> but have been <u>in contact</u> with someone <u>positive</u> to COVID-19: <b>do a screening test</b>.
-                        </Typography>
-                    </ListItem>
-                    <ListItem>
                         <ChevronRightIcon fonSize="small"/>
                         <Typography className={classes.insideText}>
                             You have been tested and are <u>waiting for the result</u>. Please <b>quarantine until you receive a negative result</b>.
@@ -96,6 +90,23 @@ export function QuarantineInfo(){
                             If you <u>traveled recently</u>, please see the <a href="https://travel.gc.ca/travel-covid">governmental guidelines</a> for situational quarantine instructions.
                         </Typography>
                     </ListItem>         
+            </Grid>
+            <Grid item xs={12} component={Paper} className={classes.form}>
+                <Typography className={classes.form}>
+                    Self-isolation is not required for the following situations:
+                </Typography>
+                <ListItem>
+                        <ChevronRightIcon fontSize="small"/>
+                        <Typography className={classes.insideText}>
+                            You have <u>symptoms</u> and have been <u>in contact</u> with someone <u>positive</u> to COVID-19: <b>do a screening test</b>.
+                        </Typography>
+                    </ListItem>
+                    <ListItem>
+                        <ChevronRightIcon fontSize="small"/>
+                        <Typography className={classes.insideText}>
+                            You have <u>no symptoms</u> but have been <u>in contact</u> with someone <u>positive</u> to COVID-19: it is <b>not required</b> to quarantine neither do a screening test.
+                        </Typography>
+                    </ListItem>
             </Grid>
             <Grid item xs={12} component={Paper} className={classes.form}>
                 <Typography className={classes.form}>
