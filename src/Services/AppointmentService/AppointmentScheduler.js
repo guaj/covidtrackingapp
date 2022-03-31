@@ -9,10 +9,14 @@ import Button from "@material-ui/core/Button";
 import {ButtonGroup} from "@mui/material";
 import {useEffect} from "react";
 import {findAvailAppointments, createAppointment} from "./AppointmentSchedulerAdapter";
+import {makeStyles} from "@material-ui/core/styles";
 
 
+
+const useStyles = makeStyles((theme) => {});
 
 export default function StaticDatePickerLandscape() {
+    useStyles();
     const todayDate = new Date();
     const [value, setValue] = React.useState(todayDate);
     const [timeValue, setTimeValue] = React.useState(0);
