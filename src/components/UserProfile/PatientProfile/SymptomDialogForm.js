@@ -42,7 +42,7 @@ export default function SymptomDialogForm(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose}>Subscribe</Button>
+                    <Button onClick={handleClose}>Submit</Button>
                 </DialogActions>
             </Dialog>
         </div>

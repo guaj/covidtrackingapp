@@ -1,14 +1,12 @@
 import * as React from "react";
 import "../UserProfile.css";
-import Avatar from "@mui/material/Avatar";
-import myImage from "../../../Assets/avatar_1.jpg";
 import Button from "@material-ui/core/Button";
 import PatientMock from "./mockPatientInfo.json";
 import Box from "@mui/material/Box";
 import AWS from "aws-sdk";
 import awsConfig from "../../../aws-config.json";
 import SymptomDialogForm from "./SymptomDialogForm";
-
+import PatientProfilePageInfoSideBarLeft from "./PatientProfilePageInfoSideBarLeft";
 
 
 export default class PatientProfilePage extends React.Component {
@@ -30,14 +28,6 @@ export default class PatientProfilePage extends React.Component {
         else
             this.setState({open:true})
     };
-
-    canEditProfile() {
-        return ((this.userType === "patient") && this.userFetch === this.userEmail.split("@")[0]);
-    }
-
-    editRedirect() {
-        window.location = "/patient-profile-edit"
-    }
 
     scheduleRedirect() {
         window.location = "/schedule-appointment"
@@ -106,72 +96,15 @@ export default class PatientProfilePage extends React.Component {
                 <div className="container">
                     <h2 className="myName2">Account Overview</h2>
                 </div>
+
                 <div className="row">
+
                     <div className="col-md-4">
-                        <Avatar
-                            className="myAvatar"
-                            sizes="large"
-                            alt="profilePage"
-                            src={myImage}
-                            sx={{width: 152, height: 152}}
+                        <PatientProfilePageInfoSideBarLeft
+                            userType={this.userType}
+                            userFetch={this.userFetch}
+                            userEmail={this.userEmail}
                         />
-                        {/* eslint-disable-next-line no-undef */}
-                        <div className="myName">
-                            <h2>{PatientMock.name}</h2>
-                        </div>
-                        <div className="infoButtons">
-                            <Button
-                                variant="outlined"
-                                aria-label="address"
-                                disabled>
-                                {PatientMock.address}
-                            </Button>
-                        </div>
-                        <div className="infoButtons">
-                            <Button
-                                variant="outlined"
-                                aria-label="email"
-                                disabled>
-                                {PatientMock.email}
-                            </Button>
-                        </div>
-                        <div className="infoButtons">
-                            <Button
-                                variant="outlined"
-                                aria-label="phone_number"
-                                disabled>
-                                {PatientMock.phone}
-                            </Button>
-                        </div>
-                        <div className="infoButtons">
-                            <Button
-                                variant="outlined"
-                                aria-label="license"
-                                disabled>
-                                {PatientMock.ramqNum}
-                            </Button>
-                        </div>
-                        <div className="infoButtons">
-                            <Button
-                                variant="outlined"
-                                aria-label="license"
-                                disabled>
-                                {PatientMock.insurance}
-                            </Button>
-                        </div>
-                        <div className="infoButtons">
-                            <Button
-                                variant="outlined"
-                                aria-label="license"
-                                disabled>
-                                {PatientMock.insuranceNumber}
-                            </Button>
-                        </div>
-                        <div className="infoButtons">
-                            {this.canEditProfile() ?
-                                <Button className="colored-button" onClick={this.editRedirect}>Edit Profile</Button>
-                                : <> </>}
-                        </div>
 
                     </div>
                     <div className="col-md-8">
@@ -194,14 +127,17 @@ export default class PatientProfilePage extends React.Component {
                             </div>
                             <div className="button">
                                 <SymptomDialogForm
-                                handleOpenDialog={this.state.open}
-                                handleCloseDialog={() =>this.setState({open :false})}
-                                title={this.title}
+                                    handleOpenDialog={this.state.open}
+                                    handleCloseDialog={() =>this.setState({open :false})}
+                                    title={this.title} //Using props to transfer the title var into SymptomDialogForm
                                 />
                             </div>
                         </Box>
                     </div>
+
                 </div>
+
+
             </>
 
         )

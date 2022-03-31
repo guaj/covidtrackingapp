@@ -8,7 +8,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import NavbarProfilePatient from './components/Navbar/oldNavbars/NavbarProfilePatient';
 
 import DoctorProfile from './Services/ProfileUpdateSercices/DoctorProfileUpdate/DoctorProfile';
-import PatientProfile from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfile';
+import PatientProfile from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileNotBeingUsed';
 import UsersLogin from './components/Authentification/UserLogin/UserLogin';
 import UsersRegistration from './components/Authentification/UserRegistration/UsersRegistration'
 import PatientRegistration from './components/Authentification/UserRegistration/PatientRegistration';
@@ -34,7 +34,7 @@ function App() {
                     <Route path="/login#redirect" element={[<NavbarHome/>, <UsersLogin/>]} />
                     <Route path="/login" element={[<NavbarHome/>, <UsersLogin/>]} />
                     <Route exact path='/' element={[<NavbarHome/>, <UsersLogin/>]} />
-                    <Route path='/patient-profile' element={[<NavbarProfilePatient/>, <PatientProfile/>]} />
+                    {/*<Route path='/patient-profile' element={[<NavbarProfilePatient/>, <PatientProfile/>]} />*/}
                     <Route path='/doctor-profile' element={[<NavbarPro/>, <DoctorProfile/>]} />
                     <Route path='/user-registration' element={[<UsersRegistration/>]} />
                     <Route path='/doctor-registration' element={[<NavbarRegister/>, <DoctorRegistration/>]} />
