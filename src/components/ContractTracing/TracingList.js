@@ -20,6 +20,7 @@ import {useState, useEffect} from 'react';
 import FlagIcon from "@mui/icons-material/Flag";
 import Link from "@material-ui/core/Link";
 import Button from "@mui/material/Button";
+import {SendNotificationButton} from "./SendNotificationButton";
 
 
 function descendingComparator(a, b, orderBy) {
@@ -146,6 +147,7 @@ export default function TracingListTable() {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState([]);
     const [email, setEmail] = useState([]);
+    const [isDisabled, setIsDisabled] = React.useState(false);
     let valid = false;
 
 
@@ -188,12 +190,7 @@ export default function TracingListTable() {
         return "/profile/" + url[0];
     }
 
-    function isNotified(email){
-        valid = isInNotificationList(email);
-        console.log("hey");
-        console.log(valid);
-        return valid;
-    }
+
 
     function tracingForm(email) {
         let url = email.split("@");
@@ -244,22 +241,26 @@ export default function TracingListTable() {
 
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Button
-                                                        type="submit"
-                                                        id={item.email}
+                                                    <SendNotificationButton data={item}>
 
-                                                        //disabled={()=> {async() =>{return await isInNotificationList(item.email)}}}
-                                                        //disabled= {isNotified(item.email)}
-                                                        //disabled={console.log(isNotified(item.email))}
-                                                        //disabled ={isNotified(item.email)}
-                                                        disabled = {isInNotificationList(item.email)}
-                                                        onClick={()=>{
-                                                            handleSubmitChange();
-                                                            //isInNotificationList(item.email)
-                                                        }}
-                                                    >
-                                                        send
-                                                    </Button>
+                                                    </SendNotificationButton>
+                                                    {/*<Button*/}
+                                                    {/*    type="submit"*/}
+                                                    {/*    id={item.email}*/}
+
+                                                    {/*    //disabled={()=> {async() =>{return await isInNotificationList(item.email)}}}*/}
+                                                    {/*    //disabled= {isNotified(item.email)}*/}
+                                                    {/*    //disabled={console.log(isNotified(item.email))}*/}
+                                                    {/*    //disabled={isNotified(item.email)}*/}
+                                                    {/*    disabled={false}*/}
+                                                    {/*    //disabled = {isInNotificationList(item.email)}*/}
+                                                    {/*    onClick={()=>{*/}
+                                                    {/*        handleSubmitChange();*/}
+                                                    {/*        //isInNotificationList(item.email)*/}
+                                                    {/*    }}*/}
+                                                    {/*>*/}
+                                                    {/*    send*/}
+                                                    {/*</Button>*/}
 
                                                 </TableCell>
                                             </TableRow>
