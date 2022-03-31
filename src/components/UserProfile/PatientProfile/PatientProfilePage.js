@@ -9,6 +9,7 @@ import AWS from "aws-sdk";
 import awsConfig from "../../../aws-config.json";
 import {sendMail} from "../../../Services/EmailService/EmailService";
 import EmailFormDialog from "../../../Services/EmailService/EmailDialog";
+import QRCode from "react-qr-code";
 
 
 export default class PatientProfilePage extends React.Component {
@@ -190,6 +191,10 @@ export default class PatientProfilePage extends React.Component {
                                         this.flagPatient(this.state.flag);
                                     }}>{this.state.flag ? 'Unflag' : 'Flag'}</Button>
                                     : <></>}
+                            </div>
+
+                            <div style={{ background: 'white', padding: '16px' }}>
+                                <QRCode value= {"https://main.d1mmulvvzymdin.amplifyapp.com/" + this.userEmail + "/summary"} />
                             </div>
 
                         </Box>
