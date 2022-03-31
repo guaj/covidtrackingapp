@@ -7,6 +7,8 @@ import PatientMock from "./mockPatientInfo.json";
 import Box from "@mui/material/Box";
 import AWS from "aws-sdk";
 import awsConfig from "../../../aws-config.json";
+import {sendMail} from "../../../Services/EmailService/EmailService";
+import EmailFormDialog from "../../../Services/EmailService/EmailDialog";
 
 
 export default class PatientProfilePage extends React.Component {
@@ -18,6 +20,9 @@ export default class PatientProfilePage extends React.Component {
 
     state = {
         flag: this.isFlagged()
+    }
+    async sendEmail() {
+        await sendMail("TEST!!")
     }
 
     canEditProfile() {
@@ -172,6 +177,11 @@ export default class PatientProfilePage extends React.Component {
                                 {this.canScheduleMeeting() ?
                                     <Button variant="contained" onClick={this.scheduleRedirect}>Make
                                         Appointment </Button>
+                                    : <></>}
+                            </div>
+                            <div className="button">
+                                {this.canScheduleMeeting() ?
+                                    <EmailFormDialog/>
                                     : <></>}
                             </div>
                             <div className="button">
