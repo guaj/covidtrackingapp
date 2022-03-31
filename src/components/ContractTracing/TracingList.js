@@ -15,14 +15,11 @@ import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
 import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
-import {getAllCovidPositivePatients, getAllPatients} from '../../databaseServices';
+import {getAllCovidPositivePatients, getAllPatients, isInNotificationList} from '../../databaseServices';
 import {useState, useEffect} from 'react';
 import FlagIcon from "@mui/icons-material/Flag";
 import Link from "@material-ui/core/Link";
-
-
-
-
+import Button from "@mui/material/Button";
 
 
 function descendingComparator(a, b, orderBy) {
@@ -81,6 +78,11 @@ const headCells = [
         id: 'contactTracing',
         disablePadding: false,
         label: 'Contact Tracing Form',
+    },
+    {
+        id: 'notifyPatient',
+        disablePadding: false,
+        label: 'send notification',
     },
 ];
 
@@ -142,7 +144,9 @@ export default function TracingListTable() {
     const [page, setPage] = useState(0);
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [data, setData] = useState([])
+    const [data, setData] = useState([]);
+    const [email, setEmail] = useState([]);
+    let valid = false;
 
 
     const handleRequestSort = (event, property) => {
@@ -165,7 +169,14 @@ export default function TracingListTable() {
         setDense(event.target.checked);
     };
 
-    useEffect(() => (async () => await getAllPatients(setData))(), [])
+    const handleSubmitChange =(event)=>{
+    //add patient info to notifications database
+        alert("notification sent")
+       // setValid(true);
+
+    };
+
+    useEffect(() => (async () =>await getAllCovidPositivePatients(setData))(), [])
 
 
     // Avoid a layout jump when reaching the last page with empty rows.
@@ -177,14 +188,18 @@ export default function TracingListTable() {
         return "/profile/" + url[0];
     }
 
-    const filled = "yes"
+    function isNotified(email){
+        valid = isInNotificationList(email);
+        console.log("hey");
+        console.log(valid);
+        return valid;
+    }
 
     function tracingForm(email) {
         let url = email.split("@");
         return "/tracing-form/" + url[0];
 
     }
-
 
     return (
         <div>
@@ -217,16 +232,36 @@ export default function TracingListTable() {
                                                 role="checkbox"
                                                 tabIndex={-1}
                                                 key={item.name}
+                                                id={item.name}
                                             >
+
                                                 <TableCell>{item.firstName}</TableCell>
                                                 <TableCell>{item.lastName}</TableCell>
-                                                <TableCell>{item.flag ? "yes" : "no"}</TableCell>
+                                                <TableCell>{item.covidResult}</TableCell>
                                                 <TableCell numeric component="a"
                                                            href={profileLink(item.email)}><LinkIcon/></TableCell>
-                                                <TableCell>{item.flag ?
-                                                    < LibraryAddCheckIcon color="success" numeric component="a"
-                                                                          href={tracingForm(item.email)}/> :
-                                                    < LibraryAddCheckIcon color="disabled"/>} </TableCell>
+                                                <TableCell>
+
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Button
+                                                        type="submit"
+                                                        id={item.email}
+
+                                                        //disabled={()=> {async() =>{return await isInNotificationList(item.email)}}}
+                                                        //disabled= {isNotified(item.email)}
+                                                        //disabled={console.log(isNotified(item.email))}
+                                                        //disabled ={isNotified(item.email)}
+                                                        disabled = {isInNotificationList(item.email)}
+                                                        onClick={()=>{
+                                                            handleSubmitChange();
+                                                            //isInNotificationList(item.email)
+                                                        }}
+                                                    >
+                                                        send
+                                                    </Button>
+
+                                                </TableCell>
                                             </TableRow>
                                         );
                                     })}

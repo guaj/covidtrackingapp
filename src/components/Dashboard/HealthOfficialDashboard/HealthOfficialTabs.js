@@ -11,6 +11,8 @@ import Pdf from "react-to-pdf";
 import {Button} from "@mui/material";
 import "../DoctorDashboard/styles.css";
 import TracingListTable from "../../ContractTracing/TracingList";
+import {useEffect, useState} from "react";
+import {getAllCovidPositivePatients} from "../../../databaseServices";
 
 
 
@@ -57,7 +59,6 @@ TabPanel.propTypes = {
 const ref = React.createRef();
 
 export default function OrgsTabs() {
-
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
