@@ -34,17 +34,18 @@ export default function PatientSummaryPageQrCode() {
                         <Grid item md={6} sx={{ height: "60%"}} justifyContent="center">
                             <Typography variant="h5" component="div" color="text.secondary" sx={{ textAlign: "center" }}>Symptoms</Typography>
                             <ul>
-                                {data.symptoms.symptom1 ? <li>new or worsening cough</li> : null}
-                                {data.symptoms.symptom2 ? <li>shortness of breath</li> : null}
-                                {data.symptoms.symptom3 ? <li>loss</li> : null}
-                                {data.symptoms.symptom4 ? <li>chest pain</li> : null}
-                                {data.symptoms.symptom5 ? <li>chills</li> : null}
-                                {data.symptoms.symptom6 ? <li>fatigue and/or weakness</li> : null}
-                                {data.symptoms.symptom7 ? <li>muscles and/or body aches</li> : null}
-                                {data.symptoms.symptom8 ? <li>headache</li> : null}
-                                {data.symptoms.symptom9 ? <li>abdominal pain</li> : null}
-                                {data.symptoms.symptom10 ? <li>diarrhea and/or vomiting</li> : null}
-                                {data.symptoms.symptom11 ? <li>feelings of malaise</li> : null}
+                                {/* {console.log(((data || {}).symptoms || {}).symptom1)} */}
+                                {((data || {}).symptoms || {}).symptom1 ? <li>new or worsening cough</li> : null}
+                                {((data || {}).symptoms || {}).symptom2 ? <li>shortness of breath</li> : null}
+                                {((data || {}).symptoms || {}).symptom3 ? <li>loss</li> : null}
+                                {((data || {}).symptoms || {}).symptom4 ? <li>chest pain</li> : null}
+                                {((data || {}).symptoms || {}).symptom5 ? <li>chills</li> : null}
+                                {((data || {}).symptoms || {}).symptom6 ? <li>fatigue and/or weakness</li> : null}
+                                {((data || {}).symptoms || {}).symptom7 ? <li>muscles and/or body aches</li> : null}
+                                {((data || {}).symptoms || {}).symptom8 ? <li>headache</li> : null}
+                                {((data || {}).symptoms || {}).symptom9 ? <li>abdominal pain</li> : null}
+                                {((data || {}).symptoms || {}).symptom10 ? <li>diarrhea and/or vomiting</li> : null}
+                                {((data || {}).symptoms || {}).symptom11 ? <li>feelings of malaise</li> : null}
                             </ul>
 
 
