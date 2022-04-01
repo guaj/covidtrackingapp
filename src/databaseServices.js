@@ -197,21 +197,21 @@ export async function getPairedDoctors() {
 
 //////////////////////////////////////////////////////////////////////////////
 
-export async function getPatientInfo(setter){
-  let userEmail = window.location.href.split("/")[4];
+export async function getPatientInfo(setter, email){
 
   let params = {
     TableName: "patients",
     ScanFilter: {
       "email": {
         ComparisonOperator: "CONTAINS",
-        AttributeValueList: [userEmail]
+        AttributeValueList: [email]
       }
     }
   };
     try{
       let scanresult = await docClient.scan(params).promise();
-      setter(scanresult.Items) //setter modifies the instance of the passed paremeter
+      console.log(scanresult.Items)
+      setter(scanresult.Items[0]) //setter modifies the instance of the passed paremeter
     } catch(e){
       alert(JSON.stringify(e))
     }
