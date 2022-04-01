@@ -15,7 +15,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import HomeIcon from '@mui/icons-material/Home';
 import NotificationMenu from "./Notification";
-import PatientSearch from "../PatientSearch/PatientSearch"
+import PatientSearch from "../SearchEngine/PatientSearch/PatientSearch"
 
 
 const Search = styled('div')(({theme}) => ({

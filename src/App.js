@@ -15,7 +15,6 @@ import PatientRegistration from './components/Authentification/UserRegistration/
 import DoctorRegistration from './components/Authentification/UserRegistration/DoctorRegistration'
 import OrganizationRegistration from './components/Authentification/UserRegistration/OrganizationRegistration';
 import UserProfileFacade from "./components/UserProfile/UserProfileFacade";
-import PatientSearch from "./components/PatientSearch/PatientSearch";
 
 
 
@@ -44,8 +43,6 @@ function App() {
                     <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
                     <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
                     <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
-                    <Route path='/patient-search' element={[<PatientSearch/>]} />
-
             </Routes>
         );
 
