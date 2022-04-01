@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Grid, Button } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { ListItem, Typography } from '@mui/material';
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
         color:"#4F4F4F"
     },
 }));
+
 export function CovidSymptoms(){
     const classes = useStyles();
 
