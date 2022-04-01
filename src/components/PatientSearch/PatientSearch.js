@@ -3,6 +3,8 @@ import {useEffect, useState} from 'react'
 import {styled} from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import {getAllPatients} from './PatientSearchDatabaseServices'
+import SearchIcon from "@mui/icons-material/Search";
+import * as React from "react";
 
 const StyledInputBase = styled(InputBase)(({theme}) => ({
     color: 'inherit',
@@ -25,7 +27,7 @@ function PatientSearch() {
     useEffect(() => (async () => await getAllPatients(setData))(), [])
 
     return (
-        <div>
+        <>
             <StyledInputBase style={{color: "#b39ddb"}}
                              placeholder="Search…"
                              inputProps={{'aria-label': 'search'}}
@@ -37,21 +39,19 @@ function PatientSearch() {
             {data !== null ? (data.filter((value) => {
                 if (searchingTerm === "") {
                     return null
-                } else if (value.firstName.toLocaleLowerCase().includes(searchingTerm.toLowerCase())) {
+                } else if (value.firstName.toLocaleLowerCase().includes(searchingTerm.toLowerCase()) || value.lastName.toLocaleLowerCase().includes(searchingTerm.toLowerCase()) || value.email.toLocaleLowerCase().includes(searchingTerm.toLowerCase()) || (value.firstName.toLocaleLowerCase() +" "+ value.lastName.toLocaleLowerCase()).includes(searchingTerm.toLowerCase())) {
                     return value
                 } else
                     return null
             }).map((value, key) => {
-
                 return (
                     <div className="user" key={key}>
-                        <p style={{paddingLeft: "15%"}}><a href={"/profile/" + value.email.split("@")[0]} style={{textDecoration:"none", color:"inherit"}}>{value.firstName}</a></p>
+                        <p style={{paddingLeft:"38px", width:"300%"}}><a href={"/profile/" + value.email.split("@")[0]} style={{textDecoration:"none", color:"inherit"}}>{value.firstName.trim() + " " + value.lastName + " [" + value.email + "]"}</a></p>
                     </div>
                 );
-            })) : <></>}
+            })) : null}
 
-
-        </div>
+        </>
     );
 }
 
