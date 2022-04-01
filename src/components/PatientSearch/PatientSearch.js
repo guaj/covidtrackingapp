@@ -1,35 +1,58 @@
 import './PatientSearch.css';
-import PatientMock from './mockPatient.json'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
+import {styled} from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+import {getAllPatients} from './PatientSearchDatabaseServices'
+
+const StyledInputBase = styled(InputBase)(({theme}) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+            width: '20ch',
+        },
+    },
+}));
 
 function PatientSearch() {
- const[searchingTerm, settingSearchTerm] =useState ('')
- return (
-   <div className="PatientSearch">
-     <input type="text" placeholder= "Search..."
-     onChange={(event) =>
-     {settingSearchTerm(event.target.value);
-     }}
-     />
-     {PatientMock.filter((value)=>{
-       if (searchingTerm == ""){
-         return value
-     } else if (value.first_name.toLocaleLowerCase().includes(searchingTerm.toLowerCase())){
-       return value
-     }
-   }).map((value,key)=>{
+    const [searchingTerm, setSearchTerm] = useState('')
+    const [data, setData] = useState(null)
 
-       return (
-       <div className= "user" key={key}>
-       <p>{value.first_name}</p>
-       </div>
-       );
-     })}
+    useEffect(() => (async () => await getAllPatients(setData))(), [])
+
+    return (
+        <div>
+            <StyledInputBase style={{color: "#b39ddb"}}
+                             placeholder="Search…"
+                             inputProps={{'aria-label': 'search'}}
+                             onChange={(event) => {
+                                 setSearchTerm(event.target.value);
+                             }}
+            />
+
+            {data !== null ? (data.filter((value) => {
+                if (searchingTerm === "") {
+                    return null
+                } else if (value.firstName.toLocaleLowerCase().includes(searchingTerm.toLowerCase())) {
+                    return value
+                } else
+                    return null
+            }).map((value, key) => {
+
+                return (
+                    <div className="user" key={key}>
+                        <p style={{paddingLeft: "15%"}}><a href={"/profile/" + value.email.split("@")[0]} style={{textDecoration:"none", color:"inherit"}}>{value.firstName}</a></p>
+                    </div>
+                );
+            })) : <></>}
 
 
-
-   </div>
- );
+        </div>
+    );
 }
 
 export default PatientSearch;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import {styled, alpha} from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,9 +15,10 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import HomeIcon from '@mui/icons-material/Home';
 import NotificationMenu from "./Notification";
+import PatientSearch from "../PatientSearch/PatientSearch"
 
 
-const Search = styled('div')(({ theme }) => ({
+const Search = styled('div')(({theme}) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -33,7 +34,7 @@ const Search = styled('div')(({ theme }) => ({
     },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled('div')(({theme}) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -43,7 +44,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(InputBase)(({theme}) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -192,8 +193,9 @@ export default function PrimarySearchAppBar() {
     function handleLogout() {
         localStorage.setItem("type", JSON.stringify(""));
         localStorage.setItem("email", JSON.stringify(""));
-        window.location = "/login#redirect" ;
+        window.location = "/login#redirect";
     }
+
     function handleProfile() {
         let user = JSON.parse(localStorage.getItem("email"))
         let url = user.split("@");
@@ -201,7 +203,7 @@ export default function PrimarySearchAppBar() {
     }
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{flexGrow: 1}}>
             <AppBar position="static" color="transparent">
                 <Toolbar>
 
@@ -210,7 +212,7 @@ export default function PrimarySearchAppBar() {
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
+                        sx={{display: {xs: 'none', sm: 'block'}}}
                     >
                         <a href="/dashboard" style={{textDecoration: "none", color: "#673ab7"}}>
                             COVID Tracking App
@@ -222,15 +224,12 @@ export default function PrimarySearchAppBar() {
                             <SearchIconWrapper>
                                 <SearchIcon style={{color: "#673ab7"}}/>
                             </SearchIconWrapper>
-                            <StyledInputBase style={{color: "#b39ddb"}}
-                                             placeholder="Search…"
-                                             inputProps={{ 'aria-label': 'search' }}
-                            />
+                            <PatientSearch/>
                         </Search>
                         : <></>}
 
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{flexGrow: 1}}/>
+                    <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                         <IconButton href="/dashboard" size="large" aria-label="show 4 new mails" color="inherit">
                             <HomeIcon style={{color: "#673ab7"}}/>
                         </IconButton>
@@ -252,7 +251,7 @@ export default function PrimarySearchAppBar() {
                             <AccountCircle style={{color: "#673ab7"}}/>
                         </IconButton>
                     </Box>
-                    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                    <Box sx={{display: {xs: 'flex', md: 'none'}}}>
                         <IconButton
                             size="large"
                             aria-label="show more"
