@@ -10,6 +10,9 @@ import FaceInfo from '../CommonTabs/FaceInfo'
 import Pdf from "react-to-pdf";
 import {Button} from "@mui/material";
 import "../DoctorDashboard/styles.css";
+import TracingListTable from "../../ContractTracing/TracingList";
+import {useEffect, useState} from "react";
+import {getAllCovidPositivePatients} from "../../../databaseServices";
 
 
 
@@ -55,8 +58,7 @@ TabPanel.propTypes = {
 
 const ref = React.createRef();
 
-export default function PatientTabs() {
-
+export default function OrgsTabs() {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -66,10 +68,12 @@ export default function PatientTabs() {
 
     return (
         <>
+            <h2>Health Officials Dashboard</h2>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="Statistics" {...a11yProps(0)} />
                 <Tab label="Patient List" {...a11yProps(1)} />
                 <Tab label="Doctor-Patient Pairing List" {...a11yProps(2)} />
+                <Tab label="Contact Tracing List" {...a11yProps(3)} />
             </Tabs>
             <TabPanel value={value} index={0}>
                 <div ref={ref}>
@@ -94,6 +98,9 @@ export default function PatientTabs() {
             </TabPanel>
             <TabPanel value={value} index={2}>
                 {/* to be implemented in future sprints */}
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+                    <TracingListTable />
             </TabPanel>
         </>
     )
