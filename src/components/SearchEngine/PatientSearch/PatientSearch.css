@@ -2,9 +2,9 @@
     position: absolute;
     background-color: white;
     width: 300%;
-    border-color: black;
-    border-style: solid;
-    border-top-color: white;
+    border-color: transparent;
+    border-style: none;
+    border-top-color: transparent;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     z-index: 1;

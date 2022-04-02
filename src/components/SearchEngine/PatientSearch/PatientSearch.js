@@ -4,6 +4,7 @@ import {styled} from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import {getAllPatients} from './PatientSearchDatabaseServices'
 import * as React from "react";
+import {renderIntoDocument} from "react-dom/test-utils";
 
 const StyledInputBase = styled(InputBase)(({theme}) => ({
     color: 'inherit',
@@ -19,28 +20,50 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
     },
 }));
 
-function PatientSearch() {
-    const [searchingTerm, setSearchTerm] = useState('')
+export default function PatientSearch() {
+    const [searchTerm, setSearchTerm] = useState('')
     const [data, setData] = useState(null)
 
     useEffect(() => (async () => await getAllPatients(setData))(), [])
 
+    const searchBarInFocus = document.querySelector(".searchbar") //const that stores the searchbar element
+    document.addEventListener("click", (event) => { //event listener for mouse clicks
+            if (searchBarInFocus !== null)
+                if (!searchBarInFocus.contains(event.target)) { //if click event is not on searchbar, reset searchTerm value
+                    setSearchTerm('')
+                    searchBarIsActive(false)
+                }
+        }
+    )
+
+    function searchBarIsActive(status) {
+        if (status)
+            document.getElementById("search-list").setAttribute("style", "border-color:black;border-style: solid;border-top-color: white")
+        else
+            document.getElementById("search-list").setAttribute("style", "border-color:transparent;border-style: none;border-top-color: transparent") //clear black borders when searchbar is out of focus
+    }
+
     return (
-        <>
+        <div>
             <StyledInputBase style={{color: "#b39ddb"}}
                              placeholder="Search…"
                              inputProps={{'aria-label': 'search'}}
                              onChange={(event) => {
                                  setSearchTerm(event.target.value);
                              }}
+                             value={searchTerm}
+                             className="searchbar"
+                             onClick={() => {
+                                 searchBarIsActive(true)
+                             }}
             />
 
-            <div className="PatientResultList">
+            <div id="search-list" className="PatientResultList">
                 {data !== null ?
                     (data.filter((value) => {
-                        if (searchingTerm === "") {
+                        if (searchTerm === "") {
                             return null
-                        } else if (value.firstName.toLocaleLowerCase().includes(searchingTerm.toLowerCase()) || value.lastName.toLocaleLowerCase().includes(searchingTerm.toLowerCase()) || value.email.toLocaleLowerCase().includes(searchingTerm.toLowerCase()) || (value.firstName.toLocaleLowerCase() + " " + value.lastName.toLocaleLowerCase()).includes(searchingTerm.toLowerCase())) {
+                        } else if (value.firstName.toLocaleLowerCase().includes(searchTerm.toLowerCase()) || value.lastName.toLocaleLowerCase().includes(searchTerm.toLowerCase()) || value.email.toLocaleLowerCase().includes(searchTerm.toLowerCase()) || (value.firstName.toLocaleLowerCase() + " " + value.lastName.toLocaleLowerCase()).includes(searchTerm.toLowerCase())) {
                             return value
                         } else
                             return null
@@ -58,9 +81,6 @@ function PatientSearch() {
                         );
                     })) : null}
             </div>
-
-        </>
+        </div>
     );
 }
-
-export default PatientSearch;
