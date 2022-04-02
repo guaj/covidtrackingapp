@@ -21,7 +21,13 @@ import FlagIcon from "@mui/icons-material/Flag";
 import Link from "@material-ui/core/Link";
 import Button from "@mui/material/Button";
 import {SendNotificationButton} from "./SendNotificationButton";
+import {formatDate} from "../Navbar/Notification";
+import AWS from "aws-sdk";
+import awsConfig from "../../aws-config.json";
 
+//to connect to DynamoDB
+AWS.config.update(awsConfig);
+const docClient = new AWS.DynamoDB.DocumentClient();
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -171,9 +177,28 @@ export default function TracingListTable() {
         setDense(event.target.checked);
     };
 
-    const handleSubmitChange =(event)=>{
+    const handleSubmitChange =async()=>{
     //add patient info to notifications database
-        alert("notification sent")
+        //event.preventDefault();
+        var currentDate = Date().toLocaleString();
+        const params ={
+            TableName: "notifications",
+            Item:{
+                "email": String(data.email),
+                "type": String("contact tracing"),
+                "content":String("You have been requested to share your location history"),
+                "date": String(currentDate)
+            }
+        }
+        try{
+            const result=await docClient.put(params).promise()
+            console.log(params)
+            alert("notification sent")
+        }catch(err){
+            alert("cannot send notification")
+            alert(err)
+        }
+
        // setValid(true);
 
     };
@@ -228,8 +253,9 @@ export default function TracingListTable() {
                                                 hover
                                                 role="checkbox"
                                                 tabIndex={-1}
-                                                key={item.name}
-                                                id={item.name}
+                                                // key={item.name}
+                                                // id={item.name}
+                                                key ={item.email}
                                             >
 
                                                 <TableCell>{item.firstName}</TableCell>
@@ -241,26 +267,27 @@ export default function TracingListTable() {
 
                                                 </TableCell>
                                                 <TableCell>
-                                                    <SendNotificationButton data={item}>
+                                                    {/*<SendNotificationButton data={item}>*/}
 
-                                                    </SendNotificationButton>
-                                                    {/*<Button*/}
-                                                    {/*    type="submit"*/}
-                                                    {/*    id={item.email}*/}
+                                                    {/*</SendNotificationButton>*/}
+                                                    <Button
+                                                        type="submit"
+                                                        id={item.email}
 
-                                                    {/*    //disabled={()=> {async() =>{return await isInNotificationList(item.email)}}}*/}
-                                                    {/*    //disabled= {isNotified(item.email)}*/}
-                                                    {/*    //disabled={console.log(isNotified(item.email))}*/}
-                                                    {/*    //disabled={isNotified(item.email)}*/}
-                                                    {/*    disabled={false}*/}
-                                                    {/*    //disabled = {isInNotificationList(item.email)}*/}
-                                                    {/*    onClick={()=>{*/}
-                                                    {/*        handleSubmitChange();*/}
-                                                    {/*        //isInNotificationList(item.email)*/}
-                                                    {/*    }}*/}
-                                                    {/*>*/}
-                                                    {/*    send*/}
-                                                    {/*</Button>*/}
+                                                        //disabled={()=> {async() =>{return await isInNotificationList(item.email)}}}
+                                                        //disabled= {isNotified(item.email)}
+                                                        //disabled={console.log(isNotified(item.email))}
+                                                        //disabled={isNotified(item.email)}
+                                                        disabled={false}
+                                                        //disabled = {isInNotificationList(item.email)}
+                                                        onClick={(event)=>{
+                                                            //handleSubmitChange();
+                                                            console.log(data.email)
+                                                            //isInNotificationList(item.email)
+                                                        }}
+                                                    >
+                                                        send
+                                                    </Button>
 
                                                 </TableCell>
                                             </TableRow>
