@@ -22,7 +22,6 @@ import PatientProfileUpdate from './Services/ProfileUpdateSercices/PatientProfil
 import DoctorProfileUpdate from './Services/ProfileUpdateSercices/DoctorProfileUpdate/DoctorProfileUpdate'
 import AppointmentScheduler from "./Services/AppointmentService/AppointmentScheduler";
 import QuarantineTab from './components/Dashboard/PatientDashboard/QuarantineTab';
-import Navbar from './components/Navbar/Navbar';
 
 ///* Make sure to update file when adding to App.css!!*/
 function App() {

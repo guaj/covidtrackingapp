@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     },
     title: {
-        marginBottom: theme.spacing(4),
+        marginBottom: theme.spacing(3),
         color: "rgba(1, 5, 96, 1)",
         fontWeight: "bold",
     },
@@ -41,10 +41,13 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "rgba(1, 5, 96, 1)",
     },
     paragraph: {
-        marginTop: theme.spacing(6),
+        marginTop: theme.spacing(4),
     },
     centerGrid: {
         justifyContent: "center",
+    },
+    field:{
+        marginTop: theme.spacing(3)
     }
 }));
 
@@ -268,20 +271,24 @@ export default function ProfilePatient() {
                                 <div>
                                     <p>Name</p>
                                     <TextField
+                                        helperText="First name"
                                         type="text"
                                         placeholder="First name"
                                         name="firstName"
                                         id="firstName"
                                         value={editFormData.firstName}
                                         onChange={handleFormChange}
+                                        disabled={true}
                                     />
 
                                     <TextField
+                                        helperText="Last name"
                                         type="text"
                                         placeholder="Last name"
                                         name="lastName"
                                         value={editFormData.lastName}
                                         onChange={handleFormChange}
+                                        disabled={true}
                                     />
                                     <TextField
                                         type="date"
@@ -292,10 +299,12 @@ export default function ProfilePatient() {
                                         helperText="Date of birth"
                                         value={editFormData.dob}
                                         onChange={handleFormChange}
+                                        disabled={true}
                                     />
-                                    <div>
+                                    <div className={classes.field}>
                                         <p>Address</p>
                                         <TextField
+                                            helperText="Street number"
                                             type="text"
                                             name="streetNumber"
                                             placeholder="Street number"
@@ -303,6 +312,7 @@ export default function ProfilePatient() {
                                             onChange={handleFormChange}
                                         />
                                         <TextField
+                                            helperText="Street name"
                                             type="text"
                                             name="streetName"
                                             placeholder="Street name"
@@ -310,6 +320,7 @@ export default function ProfilePatient() {
                                             onChange={handleFormChange}
                                         />
                                         <TextField
+                                            helperText="Apartment number"
                                             type="text"
                                             name="apartmentNumber"
                                             placeholder="Apartment number"
@@ -318,6 +329,7 @@ export default function ProfilePatient() {
                                         />
                                     </div>
                                     <TextField
+                                        helperText="Postal code"
                                         type="text"
                                         name="postalCode"
                                         placeholder="Postal code"
@@ -325,6 +337,7 @@ export default function ProfilePatient() {
                                         onChange={handleFormChange}
                                     />
                                     <TextField
+                                        helperText="City"
                                         type="text"
                                         name="city"
                                         placeholder="City"
@@ -332,13 +345,53 @@ export default function ProfilePatient() {
                                         onChange={handleFormChange}
                                     />
                                     <TextField
+                                        helperText="Province"
                                         type="text"
                                         name="province"
                                         placeholder="Province"
                                         value={editFormData.province}
                                         onChange={handleFormChange}
                                     />
-                                    <div>
+                                    <div className={classes.field}>
+                                        <p> Other contact details</p>
+                                        <TextField
+                                            helperText="Email"
+                                            type="text"
+                                            name="email"
+                                            placeholder="Email"
+                                            value={editFormData.email}
+                                            onChange={handleFormChange}
+                                        />
+                                        <TextField
+                                            helperText="Phone number"
+                                            type="text"
+                                            name="phoneNumber"
+                                            placeholder="Phone"
+                                            value={editFormData.phoneNumber}
+                                            onChange={handleFormChange}
+                                        />
+                                    </div>
+                                    <div className={classes.field}>
+                                        <p>RAMQ number</p>
+                                        <TextField
+                                            type="text"
+                                            name="ramQNumber"
+                                            placeholder="RAMQ Number"
+                                            value={editFormData.ramQNumber}
+                                            onChange={handleFormChange}
+                                        />
+                                    <div className={classes.field}>
+                                        <p>Insurance Number</p>
+                                        <TextField
+                                            type="text"
+                                            name="insurance"
+                                            placeholder="insurance"
+                                            value={editFormData.insurance}
+                                            onChange={handleFormChange}
+                                        />
+                                    </div>
+                                    </div>
+                                    <div className={classes.field}>
                                         <p> Covid symptoms</p>
                                         <FormGroup>
                                             <FormControlLabel control={<Checkbox/>}
