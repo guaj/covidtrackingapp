@@ -9,6 +9,7 @@
     "doctorName": "Anya",
     "appointmentDate": "March 16 2022",
     "appointmentTime": "11:00",
+    "covidResult": "positive",
     "symptom1": true,
     "symptom2": false,
     "symptom3": false,

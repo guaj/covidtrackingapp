@@ -162,6 +162,7 @@ export default class PatientProfilePage extends React.Component {
                     </div>
                     <div className="col-md-4 pt-3">
                         <Box className="infoBox">
+                            {PatientMock.covidResult === "positive" ? <h4 className="positive">Positive to COVID-19</h4> : <h4 className="negative">Negative to COVID-19</h4>}
                             <h5 className="myName">
                             My Symptoms:
                             </h5>
@@ -178,7 +179,7 @@ export default class PatientProfilePage extends React.Component {
                             {PatientMock.symptom11 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Feelings of malaise</div> : null}
                             <div className="infoButtons">
                             {this.canEditProfile() ?
-                                <Button className="colored-button" onClick={this.editSymptomsRedirect}>Edit my symptoms</Button>
+                                <Button className="colored-button" onClick={this.editSymptomsRedirect}>Edit my health status</Button>
                                 : <> </>}
                             </div>
                         </Box>

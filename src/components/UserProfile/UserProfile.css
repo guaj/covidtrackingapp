@@ -71,6 +71,18 @@ p {
     font-size: large;
 }
 
+.positive {
+    color: darkred;
+    padding-top: 1em;
+    text-align: center;
+}
+
+.negative {
+    color: darkgreen;
+    padding-top: 1em;
+    text-align: center;
+}
+
 .boxText {
     display: flex;
     margin: auto;
