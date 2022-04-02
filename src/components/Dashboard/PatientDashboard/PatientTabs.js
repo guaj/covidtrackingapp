@@ -1,14 +1,12 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import LinkTab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Chart from '../CommonTabs/Chart';
-
-
-
-
+import { QuarantineInfo } from './QuarantineInfo';
+import { CovidSymptoms } from './CovidSymptoms';
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -63,11 +61,17 @@ export default function PatientTabs() {
     return (
         <>
             <Tabs value={value} onChange={handleChange} aria-label="PatientTabs">
-                <Tab label="Covid Information" {...a11yProps(0)} />
+                <LinkTab label="Covid Information" {...a11yProps(0)}  />
+                <LinkTab label="Quarantine Information" {...a11yProps(1)} />
             </Tabs>
 
             <TabPanel value={value} index={0}>
                 <Chart />
+            </TabPanel>
+
+            <TabPanel value={value} index={1}>
+                <QuarantineInfo/>
+                <CovidSymptoms/>
             </TabPanel>
         </>
     )

@@ -21,6 +21,8 @@ import PatientProfileUpdate from './Services/ProfileUpdateSercices/PatientProfil
 
 import DoctorProfileUpdate from './Services/ProfileUpdateSercices/DoctorProfileUpdate/DoctorProfileUpdate'
 import AppointmentScheduler from "./Services/AppointmentService/AppointmentScheduler";
+import QuarantineTab from './components/Dashboard/PatientDashboard/QuarantineTab';
+import Navbar from './components/Navbar/Navbar';
 
 ///* Make sure to update file when adding to App.css!!*/
 function App() {
@@ -42,6 +44,7 @@ function App() {
                     <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
                     <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
                     <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
+                    <Route path='/quarantine' element={[<QuarantineTab/>]} />
             </Routes>
         );
 
