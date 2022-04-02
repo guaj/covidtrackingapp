@@ -70,6 +70,7 @@ export default function ProfilePatient() {
         email: '',
         ramQNumber: '',
         insurance: '',
+        insuranceNumber: '',
         symptom1: '',
         symptom2: '',
         symptom3: '',
@@ -100,6 +101,7 @@ export default function ProfilePatient() {
         email: '',
         ramQNumber: '',
         insurance: '',
+        insuranceNumber: '',
         symptom1: '',
         symptom2: '',
         symptom3: '',
@@ -145,6 +147,7 @@ export default function ProfilePatient() {
             email: patient.email,
             ramQNumber: patient.ramQNumber,
             insurance: patient.insurance,
+            insuranceNumber: patient.insuranceNumber,
             symptom1: patient.symptom1,
             symptom2: patient.symptom2,
             symptom3: patient.symptom3,
@@ -193,6 +196,7 @@ export default function ProfilePatient() {
             email: editFormData.email,
             ramQNumber: editFormData.ramQNumber,
             insurance: editFormData.insurance,
+            insuranceNumber: editFormData.insuranceNumber,
             symptom1: editFormData.symptom1,
             symptom2: editFormData.symptom2,
             symptom3: editFormData.symptom3,
@@ -237,6 +241,7 @@ export default function ProfilePatient() {
             email: editFormData.email,
             ramQNumber: editFormData.ramQNumber,
             insurance: editFormData.insurance,
+            insuranceNumber: editFormData.insuranceNumber,
             symptom1: editFormData.symptom1,
             symptom2: editFormData.symptom2,
             symptom3: editFormData.symptom3,
@@ -391,7 +396,7 @@ export default function ProfilePatient() {
                                         />
                                         <TextField
                                             type="text"
-                                            name="insuranceNum"
+                                            name="insuranceNumber"
                                             placeholder="Insurance Number"
                                             value={editFormData.insuranceNumber}
                                             onChange={handleFormChange}

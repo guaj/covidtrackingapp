@@ -179,7 +179,7 @@ export default class PatientProfilePage extends React.Component {
                             {PatientMock.symptom11 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Feelings of malaise</div> : null}
                             <div className="infoButtons">
                             {this.canEditProfile() ?
-                                <Button className="colored-button" onClick={this.editSymptomsRedirect}>Edit my health status</Button>
+                                <Button className="colored-button" onClick={this.editSymptomsRedirect}>Edit Symptoms</Button>
                                 : <> </>}
                             </div>
                         </Box>
