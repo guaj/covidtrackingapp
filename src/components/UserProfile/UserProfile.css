@@ -10,7 +10,6 @@
     padding-top: 50px;
 }
 
-
 .myAvatar {
     display: flex;
     margin: auto;
@@ -19,7 +18,7 @@
 }
 
 .myName {
-    color: #010560;
+    color: #7F7FD5;
     display: flex;
     margin: auto;
     justify-content: center;
@@ -33,7 +32,7 @@
     display: flex;
     margin: auto;
     justify-content: center;
-    align-items: center;
+    text-align: center;
     padding-bottom: 20px;
 }
 
@@ -44,8 +43,15 @@
 }
 
 .colored-button {
-    color: #7F7FD5 !important;
+    color: white !important;
+    background-color: #4c4c7f !important;
 }
+
+.colored-button:hover {
+    background-color: #7F7FD5;
+    opacity: 80%;
+}
+
 .myName2 {
     color: #010560;
     display: flex;

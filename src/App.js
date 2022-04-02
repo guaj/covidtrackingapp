@@ -18,7 +18,7 @@ import UserProfileFacade from "./components/UserProfile/UserProfileFacade";
 
 
 import PatientProfileUpdate from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdate'
-
+import PatientSymptomsUpdate from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientSymptomsUpdate'
 import DoctorProfileUpdate from './Services/ProfileUpdateSercices/DoctorProfileUpdate/DoctorProfileUpdate'
 import AppointmentScheduler from "./Services/AppointmentService/AppointmentScheduler";
 import QuarantineTab from './components/Dashboard/PatientDashboard/QuarantineTab';
@@ -42,6 +42,7 @@ function App() {
                     <Route path='/patient-registration' element={[<NavbarRegister/>, <PatientRegistration/>]} />
                     <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
                     <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
+                    <Route path='/patient-symptoms-edit' element={[<PatientSymptomsUpdate/>]} />
                     <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
                     <Route path='/quarantine' element={[<QuarantineTab/>]} />
             </Routes>
