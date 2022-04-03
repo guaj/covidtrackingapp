@@ -38,6 +38,23 @@ export async function getAllPatients(setter) {
 
 //////////////////////////////////////////////////////////////////////////////
                     // HO contact tracing queries //
+export async function addSentContactTracingFormTime(email){
+    try{
+        const params ={
+            TableName: 'patients',
+            Key: {email},
+            UpdateExpression: 'set sentContactTracingForm = :contactTracingForm',
+            ExpressionAttributeValues: {':contactTracingForm': "sent"},
+        };
+        await docClient.update(params).promise()
+        console.log(params)
+
+    }catch(err){
+        console.log(err)
+
+    }
+
+}
 export async function getAllCovidPositivePatients(setter) {
     try {
         const params = {
