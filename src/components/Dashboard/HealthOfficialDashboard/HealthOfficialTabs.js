@@ -11,6 +11,7 @@ import Pdf from "react-to-pdf";
 import {Button} from "@mui/material";
 import "../DoctorDashboard/styles.css";
 import TracingListTable from "../../ContractTracing/TracingList";
+import LocationListTable from '../../ContractTracing/LocationsList';
 import {useEffect, useState} from "react";
 import {getAllCovidPositivePatients} from "../../../databaseServices";
 
@@ -74,6 +75,8 @@ export default function OrgsTabs() {
                 <Tab label="Patient List" {...a11yProps(1)} />
                 <Tab label="Doctor-Patient Pairing List" {...a11yProps(2)} />
                 <Tab label="Contact Tracing List" {...a11yProps(3)} />
+                <Tab label="Locations Contact List" {...a11yProps(4)} />
+
             </Tabs>
             <TabPanel value={value} index={0}>
                 <div ref={ref}>
@@ -101,6 +104,9 @@ export default function OrgsTabs() {
             </TabPanel>
             <TabPanel value={value} index={3}>
                     <TracingListTable />
+            </TabPanel>
+            <TabPanel value={value} index={4}>
+                    <LocationListTable />
             </TabPanel>
         </>
     )

@@ -36,6 +36,7 @@ export async function getAllPatients(setter) {
     }
 }
 
+
 //////////////////////////////////////////////////////////////////////////////
                     // HO contact tracing queries //
 export async function getAllCovidPositivePatients(setter) {
@@ -86,6 +87,20 @@ export async function isInNotificationList(email){
     }
 
 }
+
+// To get all locations from table
+
+export async function getAllLocations(setter) {
+    try {
+        const data = await docClient.scan({TableName: "locations"}).promise()
+        setter(data.Items)
+    } catch (err) {
+        alert(JSON.stringify(err))
+    }
+}
+
+
+
 //////////////////////////////////////////////////////////////////////////////
 
 export async function getAllDoctors(setter) {

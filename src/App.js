@@ -43,7 +43,7 @@ function App() {
                     <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
                     <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
                     <Route path='/tracing-form' element={[<TracingForm/>]} />
-                    <Route path="/tracing-form/:user_email" element={[<UserProfileFacade/>]} />
+                    <Route path="/tracing-form/:user_email" element={[<TracingForm/>]} />
                     <Route path='/health-tabs' element={[<OrgsTabs/>]} />
 
             </Routes>

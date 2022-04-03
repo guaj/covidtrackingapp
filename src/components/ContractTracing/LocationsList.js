@@ -12,22 +12,22 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import {visuallyHidden} from '@mui/utils';
+import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
 import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
-import {getAllCovidPositivePatients, getAllPatients, isInNotificationList} from '../../databaseServices';
-import {useState, useEffect} from 'react';
+import { getAllLocations } from '../../databaseServices';
+import { useState, useEffect } from 'react';
 import FlagIcon from "@mui/icons-material/Flag";
 import Link from "@material-ui/core/Link";
 import Button from "@mui/material/Button";
-import {SendNotificationButton} from "./SendNotificationButton";
-import {formatDate} from "../Navbar/Notification";
+import { SendNotificationButton } from "./SendNotificationButton";
+import { formatDate } from "../Navbar/Notification";
 import AWS from "aws-sdk";
 import awsConfig from "../../aws-config.json";
 
 //to connect to DynamoDB
-AWS.config.update(awsConfig);
-const docClient = new AWS.DynamoDB.DocumentClient();
+// AWS.config.update(awsConfig);
+// const docClient = new AWS.DynamoDB.DocumentClient();
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -61,43 +61,27 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'firstName',
+        id: 'locationName',
         disablePadding: false,
-        label: 'First Name',
+        label: 'Location Name',
     },
     {
-        id: 'lastName',
+        id: 'date',
         disablePadding: false,
-        label: 'Last Name',
-    },
-    {
-        id: 'covidResult',
-        disablePadding: false,
-        label: 'Covid Positive',
+        label: 'Location Date',
     },
 
     {
-        id: 'profileLink',
+        id: 'time',
         disablePadding: false,
-        label: 'Profile Link',
+        label: 'Location Time',
     },
     {
-        id: 'contactTracing',
+        id: 'locationNumber',
         disablePadding: false,
-        label: 'Contact Tracing Form',
-    },
-    // {
-    //     id: 'alreadyNotified',
-    //     disablePadding: false,
-    //     label: 'Sent Notification',
-    // },
-    {
-        id: 'notifyPatient',
-        disablePadding: false,
-        label: 'send notification',
+        label: 'Location Number',
     },
 ];
-
 
 function EnhancedTableHead(props) {
     const { order, orderBy, onRequestSort } =
@@ -145,8 +129,7 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-
-export default function TracingListTable() {
+export default function LocationListTable() {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('calories');
     const [selected] = useState([]);
@@ -154,17 +137,15 @@ export default function TracingListTable() {
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState([]);
-    const [email, setEmail] = useState([]);
-    const [isDisabled, setIsDisabled] = React.useState(false);
-    let valid = false;
-
+    // const [locationName, setEmail] = useState([]);
+    // const [isDisabled, setIsDisabled] = React.useState(false);
+    // let valid = false;
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
-
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -179,63 +160,28 @@ export default function TracingListTable() {
         setDense(event.target.checked);
     };
 
-    const handleSubmitChange = async (email) => {
-        //add patient info to notifications database
-        //event.preventDefault();
-        var currentDate = Date().toLocaleString();
-        const params ={
-            TableName: "notifications",
-            Item:{
-                "email": String(email),
-                "type": String("contact tracing"),
-                "content": String("You have been requested to share your location history. Please fill out the form in the following link : http://localhost:3000/tracing-form "),
-                "date": String(currentDate)
-            }
-        }
-        try {
-            const result = await docClient.put(params).promise()
-            console.log(params)
-            alert("notification sent")
-        }catch(err){
-            alert("cannot send notification")
-            alert(err)
-        }
-       // setValid(true);
+    const [tableValues, setTableValues] = useState([{ locationName: '', locationNumber: "", locationDate: "", locationTime: "" }]);
 
+    const handleElementsRemove = (index) => {
+        const list = [...tableValues];
+        list.splice(index, 1);
+        setTableValues(list);
     };
+  
 
-    useEffect(() => (async () => await getAllCovidPositivePatients(setData))(), [])
-
-
-    // Avoid a layout jump when reaching the last page with empty rows.
+    useEffect(() => (async () => await getAllLocations(setData))(), [])
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
-    function profileLink(email) {
-        let url = email.split("@");
-        return "/profile/" + url[0];
-    }
-
-
-    function tracingForm(email) {
-        let url = email.split("@");
-        return "/tracing-form/" + url[0];
-    }
-
-    async function isEnabled(email) {
-        const enabled = await isInNotificationList(email);
-        document.getElementById(email).hidden = enabled;
-    }
-
     return (
         <div>
-            <h2>Patients</h2>
-            <Box sx={{width: '75%'}}>
-                <Paper sx={{width: '100%', mb: 2}}>
+            <h2>Locations</h2>
+            <Box sx={{ width: '75%' }}>
+                <Paper sx={{ width: '100%', mb: 2 }}>
                     <TableContainer>
                         <Table
-                            sx={{minWidth: 750}}
-                            aria-labelledby="patientListTable"
+                            sx={{ minWidth: 750 }}
+                            aria-labelledby="locationListTable"
                             size={dense ? 'small' : 'medium'}
                         >
                             <EnhancedTableHead
@@ -261,23 +207,26 @@ export default function TracingListTable() {
                                                 tabIndex={-1}
                                                 // key={item.name}
                                                 // id={item.name}
-                                                key={item.email}
+                                                key={item.locationName}
                                             >
 
-                                                <TableCell>{item.firstName}</TableCell>
-                                                <TableCell>{item.lastName}</TableCell>
-                                                <TableCell>{item.covidResult}</TableCell>
-                                                <TableCell numeric component="a"
-                                                           href={profileLink(item.email)}><LinkIcon/></TableCell>
-                                                <TableCell numeric component ="a" href={tracingForm(item.email)}><LinkIcon/>
-                                                    {/*contact tracing form : isFilled*/}
-                                                    {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
-                                                </TableCell>
-                                                {/*<TableCell>{isInNotificationList(item.email) ? <FlagIcon style={{fill: "green"}}/> : "" }*/}
-                                                {/*</TableCell>*/}
+                                                <TableCell>{item.locationName}</TableCell>
+                                                <TableCell>{item.date}</TableCell>
+                                                <TableCell>{item.time}</TableCell>
+                                                <TableCell>{item.locationNumber}</TableCell>
                                                 <TableCell>
-                                                    {/*<SendNotificationButton data={item}>*/}
-                                                    {/*</SendNotificationButton>*/}
+                                                    <Button type="button" 
+                                                    className="button remove" 
+                                                    color="secondary" 
+                                                    onClick={handleElementsRemove}>Remove</Button>
+                                                
+
+                                                </TableCell>
+                                                {/* <TableCell numeric component ="a" href={tracingForm(item.email)}><LinkIcon/> */}
+                                                {/*contact tracing form : isFilled*/}
+                                                {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+                                                {/* </TableCell> */}
+                                                {/* <TableCell>
                                                     <Button
                                                         type="submit"
                                                         id={item.email}
@@ -305,7 +254,7 @@ export default function TracingListTable() {
                                                         send
                                                     </Button>
 
-                                                </TableCell>
+                                                </TableCell> */}
                                             </TableRow>
                                         );
                                     })}
@@ -315,7 +264,7 @@ export default function TracingListTable() {
                                             height: (dense ? 33 : 53) * emptyRows,
                                         }}
                                     >
-                                        <TableCell colSpan={6}/>
+                                        <TableCell colSpan={6} />
                                     </TableRow>
                                 )}
                             </TableBody>
@@ -332,7 +281,7 @@ export default function TracingListTable() {
                     />
                 </Paper>
                 <FormControlLabel
-                    control={<Switch checked={dense} onChange={handleChangeDense}/>}
+                    control={<Switch checked={dense} onChange={handleChangeDense} />}
                     label="Dense padding"
                 />
             </Box>

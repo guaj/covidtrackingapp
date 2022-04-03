@@ -68,7 +68,7 @@ export default function NotificationList() {
                 <>
                     <MenuItem
                         key={i}
-                        data-my-value={item.type}
+                        //data-my-value={item.type}
                         onClick={notificationRedirect}
                         style={{whiteSpace: 'normal'}}
                     >
