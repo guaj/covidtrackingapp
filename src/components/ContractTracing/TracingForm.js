@@ -15,27 +15,12 @@ import Navbar from "../Navbar/Navbar";
 AWS.config.update(awsConfig);
 const docClient = new AWS.DynamoDB.DocumentClient()
 
-function getUser(){
-  let user = JSON.parse(localStorage.getItem("type"));
-  return user;
 
-}
 
 function profileLink(email) {
   
   let url = email.split("@");
   return "/profile/" + url[0];
-}
-
-
-function getUser2(){
-  let user = JSON.parse(localStorage.getItem("email"))
-  return (
-   
-    <div>
-      <h2>Welcome, {user.key}!</h2>
-
-    </div>)
 }
 
 
@@ -154,7 +139,6 @@ export default function TracingformTest() {
               {formValues.map((element, index) => (
                 <div className="first-division">
                   <Typography>
-                    Hi {getUser2(element.email)} 
 
                   </Typography>
                   <TextField
