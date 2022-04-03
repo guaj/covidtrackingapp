@@ -20,13 +20,9 @@ import {
     isInNotificationList
 } from '../../databaseServices';
 import {useState, useEffect} from 'react';
-import FlagIcon from "@mui/icons-material/Flag";
-import Link from "@material-ui/core/Link";
-import Button from "@mui/material/Button";
-import {SendNotificationButton} from "./SendNotificationButton";
-import {formatDate} from "../Navbar/Notification";
 import AWS from "aws-sdk";
 import awsConfig from "../../aws-config.json";
+import '../ContractTracing/button.css';
 
 //to connect to DynamoDB
 AWS.config.update(awsConfig);
@@ -88,11 +84,6 @@ const headCells = [
         id: 'contactTracing',
         disablePadding: false,
         label: 'Contact Tracing Form',
-    },
-    {
-        id: 'alreadyNotified',
-        disablePadding: false,
-        label: 'Sent Notification',
     },
     {
         id: 'notifyPatient',
@@ -157,8 +148,6 @@ export default function TracingListTable() {
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState([]);
-    const [email, setEmail] = useState([]);
-    const [isDisabled, setIsDisabled] = React.useState(false);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -197,6 +186,9 @@ export default function TracingListTable() {
             const result = await docClient.put(params).promise()
             console.log(params)
             alert("notification sent")
+            document.getElementById(email).disabled = true;
+            document.getElementById(email).style.color = "grey";
+            document.getElementById(email).innerText = "SENT!";
         }catch(err){
             alert("cannot send notification")
             alert(err)
@@ -204,7 +196,6 @@ export default function TracingListTable() {
     };
 
     useEffect(() => (async () => await getAllCovidPositivePatients(setData))(), [])
-    //useEffect(() => (async () => await isInNotificationList(setEmail)) (),[])
 
 
     // Avoid a layout jump when reaching the last page with empty rows.
@@ -222,10 +213,14 @@ export default function TracingListTable() {
         return "/tracing-form/" + url[0];
     }
 
-    // async function isEnabled(email) {
-    //     const enabled = await isInNotificationList(email);
-    //     document.getElementById(email).hidden = enabled;
-    // }
+    async function isEnabled(email) {
+        const enabled = await isInNotificationList(email);
+        document.getElementById(email).disabled = enabled;
+        if(enabled){
+            document.getElementById(email).innerText = "SENT!";
+            document.getElementById(email).style.color = "grey";
+        }
+    }
 
     return (
         <div>
@@ -251,15 +246,11 @@ export default function TracingListTable() {
                                 {stableSort(data, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((item) => {
-                                        // const value = {'email': item.email,'value': isInNotificationList(item.email)}
-                                        // setEnabled([value])
                                         return (
                                             <TableRow
                                                 hover
                                                 role="checkbox"
                                                 tabIndex={-1}
-                                                // key={item.name}
-                                                // id={item.name}
                                                 key={item.email}
                                             >
 
@@ -271,16 +262,14 @@ export default function TracingListTable() {
                                                 <TableCell numeric component ="a" href={tracingForm(item.email)}><LinkIcon/>
                                                     {/*contact tracing form : isFilled*/}
                                                 </TableCell>
-                                                <TableCell>{item.sentContactTracingForm}
-
-                                                </TableCell>
                                                 {/*<TableCell>{isInNotificationList(item.email) ? <FlagIcon style={{fill: "green"}}/> : "" }*/}
                                                 {/*</TableCell>*/}
                                                 <TableCell>
-                                                    <Button
+                                                    <button
+                                                        class="button"
                                                         type="submit"
                                                         id={item.email}
-                                                        //onLoad={isEnabled(item.email)}
+                                                        onLoad={isEnabled(item.email)}
                                                         onClick={(event) => {
                                                             handleSubmitChange(event.target.id);
                                                             console.log(addSentContactTracingFormTime(item.email));
@@ -299,8 +288,8 @@ export default function TracingListTable() {
                                                             //isInNotificationList(item.email)
                                                         }}
                                                     >
-                                                        send
-                                                    </Button>
+                                                        SEND
+                                                    </button>
 
                                                 </TableCell>
                                             </TableRow>
