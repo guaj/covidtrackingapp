@@ -11,7 +11,12 @@
 }
 
 .PatientResultList > div {
-    padding-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 1px;
+}
+
+.PatientResultList > div:hover{
+    background: rgba(211, 211, 211, 0.3);
 }
 
 .PatientResultList > div > p {
