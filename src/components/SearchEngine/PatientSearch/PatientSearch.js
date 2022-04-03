@@ -4,7 +4,6 @@ import {styled} from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import {getAllPatients} from './PatientSearchDatabaseServices'
 import * as React from "react";
-import {renderIntoDocument} from "react-dom/test-utils";
 
 const StyledInputBase = styled(InputBase)(({theme}) => ({
     color: 'inherit',
@@ -38,9 +37,9 @@ export default function PatientSearch() {
 
     function searchBarIsActive(status) {
         if (status)
-            document.getElementById("search-list").setAttribute("style", "border-color:black;border-style: solid;border-top-color: white")
+            document.getElementById("search-list").setAttribute("style", "border-color:lightgrey")
         else
-            document.getElementById("search-list").setAttribute("style", "border-color:transparent;border-style: none;border-top-color: transparent") //clear black borders when searchbar is out of focus
+            document.getElementById("search-list").setAttribute("style", "border-color:transparent") //clear black borders when searchbar is out of focus
     }
 
     return (
@@ -59,6 +58,7 @@ export default function PatientSearch() {
             />
 
             <div id="search-list" className="PatientResultList">
+                {/*"above div classes: MuiPaper-root MuiPaper-elevation1 MuiPaper-rounded"*/}
                 {data !== null ?
                     (data.filter((value) => {
                         if (searchTerm === "") {
@@ -69,10 +69,10 @@ export default function PatientSearch() {
                             return null
                     }).map((value, key) => {
                         return (
-                            <div key={key}>
-                                <p onClick={() => {
-                                    window.location.href = "/profile/" + value.email.split("@")[0]
-                                }}>
+                            <div key={key} onClick={() => {
+                                window.location.href = "/profile/" + value.email.split("@")[0]
+                            }}>
+                                <p>
                                     <a href={"/profile/" + value.email.split("@")[0]}>
                                         {value.firstName.trim() + " " + value.lastName + " [" + value.email + "]"}
                                     </a>

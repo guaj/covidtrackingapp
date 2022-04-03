@@ -8,7 +8,6 @@ import Box from "@mui/material/Box";
 import AWS from "aws-sdk";
 import awsConfig from "../../../aws-config.json";
 
-
 export default class PatientProfilePage extends React.Component {
     userType = JSON.parse(localStorage.getItem("type"));
     userFetch = window.location.href.split("/")[4];
