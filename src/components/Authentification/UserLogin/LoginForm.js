@@ -53,7 +53,6 @@ export default function LoginForm({Login, error}){
             helperText="Email"
             data-testid="sign-up-email"
             onChange={e => setDetails({...details, email:e.target.value})}
-            value = {details.email}
         />
         <TextField
             type="password"
@@ -66,7 +65,6 @@ export default function LoginForm({Login, error}){
             helperText="Password"
             autoComplete="current-password"
             onChange={e => setDetails({...details, password:e.target.value})}
-            value = {details.password}
         />
         <Grid container className={classes.checkboxes}>
             <Grid item xs>

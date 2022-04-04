@@ -2,16 +2,18 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import '../../../components/profile.css'
 import * as React from 'react';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {Checkbox, FormControlLabel, FormGroup} from "@material-ui/core";
+import { Checkbox, FormControlLabel, FormGroup } from "@material-ui/core";
 import geometricImage from "../../../images/geometric_gradient.jpg";
-import {useState, Fragment, useEffect} from "react";
+import { useState, Fragment, useEffect } from "react";
 import Navbar from "../../../components/Navbar/Navbar";
 import * as PatientProfileUpdateDatabaseServices from "./PatientProfileUpdateDatabaseServices";
+import RadioGroup from '@mui/material/RadioGroup';
+import Radio from '@mui/material/Radio';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -71,6 +73,7 @@ export default function ProfilePatient() {
         ramQNumber: '',
         insurance: '',
         insuranceNumber: '',
+        covidResult: '',
         symptom1: '',
         symptom2: '',
         symptom3: '',
@@ -102,6 +105,7 @@ export default function ProfilePatient() {
         ramQNumber: '',
         insurance: '',
         insuranceNumber: '',
+        covidResult: '',
         symptom1: '',
         symptom2: '',
         symptom3: '',
@@ -148,6 +152,7 @@ export default function ProfilePatient() {
             ramQNumber: patient.ramQNumber,
             insurance: patient.insurance,
             insuranceNumber: patient.insuranceNumber,
+            covidResult: patient.covidResult,
             symptom1: patient.symptom1,
             symptom2: patient.symptom2,
             symptom3: patient.symptom3,
@@ -197,6 +202,7 @@ export default function ProfilePatient() {
             ramQNumber: editFormData.ramQNumber,
             insurance: editFormData.insurance,
             insuranceNumber: editFormData.insuranceNumber,
+            covidResult: editFormData.covidResult,
             symptom1: editFormData.symptom1,
             symptom2: editFormData.symptom2,
             symptom3: editFormData.symptom3,
@@ -242,6 +248,7 @@ export default function ProfilePatient() {
             ramQNumber: editFormData.ramQNumber,
             insurance: editFormData.insurance,
             insuranceNumber: editFormData.insuranceNumber,
+            covidResult: editFormData.covidResult,
             symptom1: editFormData.symptom1,
             symptom2: editFormData.symptom2,
             symptom3: editFormData.symptom3,
@@ -274,8 +281,26 @@ export default function ProfilePatient() {
                             </Typography>
                             <form onSubmit={handleEditFormSubmit}>
                                 <div className={classes.field}>
-                                    <p> Covid symptoms</p>
                                     <FormGroup>
+                                        <p>Health status</p>
+                                        <RadioGroup
+                                        >
+                                            <FormControlLabel control={<Radio/>} 
+                                                label="Positive" 
+                                                checked= {editFormData.covidResult === "positive"}
+                                                onClick={() => setEditFormData((val) => {
+                                                return {...val, covidResult: "positive"}
+                                            })}
+                                                />
+                                            <FormControlLabel control={<Radio/>}
+                                                label="Negative" 
+                                                checked= {editFormData.covidResult !== "positive"}
+                                                onClick={() => setEditFormData((val) => {
+                                                return {...val, covidResult: "negative"}
+                                            })}
+                                                />
+                                        </RadioGroup>
+                                        <p> Covid symptoms</p>
                                         <FormControlLabel control={<Checkbox/>}
                                             checked={editFormData.symptom1}
                                             onChange={() => setEditFormData((val) => {
