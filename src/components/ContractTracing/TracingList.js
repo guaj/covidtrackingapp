@@ -14,16 +14,15 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import {visuallyHidden} from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
-import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
-import {getAllCovidPositivePatients, getAllPatients, isInNotificationList} from '../../databaseServices';
+import {
+    addSentContactTracingFormTime,
+    getAllCovidPositivePatients,
+    isInNotificationList
+} from '../../databaseServices';
 import {useState, useEffect} from 'react';
-import FlagIcon from "@mui/icons-material/Flag";
-import Link from "@material-ui/core/Link";
-import Button from "@mui/material/Button";
-import {SendNotificationButton} from "./SendNotificationButton";
-import {formatDate} from "../Navbar/Notification";
 import AWS from "aws-sdk";
 import awsConfig from "../../aws-config.json";
+import '../ContractTracing/button.css';
 
 //to connect to DynamoDB
 AWS.config.update(awsConfig);
@@ -86,11 +85,6 @@ const headCells = [
         disablePadding: false,
         label: 'Contact Tracing Form',
     },
-    // {
-    //     id: 'alreadyNotified',
-    //     disablePadding: false,
-    //     label: 'Sent Notification',
-    // },
     {
         id: 'notifyPatient',
         disablePadding: false,
@@ -156,17 +150,12 @@ export default function TracingListTable() {
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState([]);
-    const [email, setEmail] = useState([]);
-    const [isDisabled, setIsDisabled] = React.useState(false);
-    let valid = false;
-
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
-
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -180,6 +169,7 @@ export default function TracingListTable() {
     const handleChangeDense = (event) => {
         setDense(event.target.checked);
     };
+
 
     const handleSubmitChange = async (email) => {
         //add patient info to notifications database
@@ -198,12 +188,13 @@ export default function TracingListTable() {
             const result = await docClient.put(params).promise()
             console.log(params)
             alert("notification sent")
+            document.getElementById(email).disabled = true;
+            document.getElementById(email).style.color = "grey";
+            document.getElementById(email).innerText = "SENT!";
         }catch(err){
             alert("cannot send notification")
             alert(err)
         }
-       // setValid(true);
-
     };
 
     useEffect(() => (async () => await getAllCovidPositivePatients(setData))(), [])
@@ -226,7 +217,11 @@ export default function TracingListTable() {
 
     async function isEnabled(email) {
         const enabled = await isInNotificationList(email);
-        document.getElementById(email).hidden = enabled;
+        document.getElementById(email).disabled = enabled;
+        if(enabled){
+            document.getElementById(email).innerText = "SENT!";
+            document.getElementById(email).style.color = "grey";
+        }
     }
 
     return (
@@ -253,16 +248,11 @@ export default function TracingListTable() {
                                 {stableSort(data, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((item) => {
-                                        // const value = {'email': item.email,'value': isInNotificationList(item.email)}
-                                        // setEnabled([value])
-
                                         return (
                                             <TableRow
                                                 hover
                                                 role="checkbox"
                                                 tabIndex={-1}
-                                                // key={item.name}
-                                                // id={item.name}
                                                 key={item.email}
                                             >
 
@@ -282,19 +272,16 @@ export default function TracingListTable() {
                                                 <TableCell>{isInNotificationList(item.email) ?  "completed": "incomplete" }
                                                 </TableCell>
                                                 <TableCell>
-                                                    {/*<SendNotificationButton data={item}>*/}
-                                                    {/*</SendNotificationButton>*/}
-                                                    <Button
+                                                    <button
+                                                        class="button"
                                                         type="submit"
                                                         id={item.email}
-                                                        //onLoad={isEnabled(item.email)}
+                                                        onLoad={isEnabled(item.email)}
                                                         onClick={(event) => {
                                                             handleSubmitChange(event.target.id);
-                                                            isInNotificationList(email);
+                                                            console.log(addSentContactTracingFormTime(item.email));
                                                             console.log(event.target.id)
                                                             //isInNotificationList(item.email
-
-
                                                         //disabled={()=> {async() =>{return await isInNotificationList(item.email)}}}
                                                         //disabled= {isNotified(item.email)}
                                                         //disabled={console.log(isNotified(item.email))}
@@ -308,8 +295,8 @@ export default function TracingListTable() {
                                                             //isInNotificationList(item.email)
                                                         }}
                                                     >
-                                                        send
-                                                    </Button>
+                                                        SEND
+                                                    </button>
 
                                                 </TableCell>
                                             </TableRow>
