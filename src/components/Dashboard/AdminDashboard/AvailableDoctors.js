@@ -15,7 +15,7 @@ import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
-import { getAvailableDoctors, getNewPatients, updatePatientsDoctor } from '../../../databaseServices'
+import { getAvailableDoctors, updatePatientsDoctor } from '../../../databaseServices'
 import {useState, useEffect} from 'react'
 
 

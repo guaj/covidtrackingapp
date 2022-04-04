@@ -35,8 +35,9 @@ export async function fetchData(tableName) {
             email: result.Items.at(0).email,
             ramQNumber: (result.Items.at(0).ramQNumber !== undefined ? result.Items.at(0).ramQNumber : ""),
             insurance: (result.Items.at(0).insurance !== undefined ? result.Items.at(0).insurance : ""),
+            insuranceNumber: (result.Items.at(0).insuranceNumber !== undefined ? result.Items.at(0).insuranceNumber : ""),            covidResult: (result.Items.at(0).covidResult !== undefined ? result.Items.at(0).covidResult : ""),
             covidResult: (result.Items.at(0).covidResult !== undefined ? result.Items.at(0).covidResult : ""),
-            insuranceNumber: (result.Items.at(0).insuranceNumber !== undefined ? result.Items.at(0).insuranceNumber : ""),
+            type: (result.Items.at(0).type !== undefined ? result.Items.at(0).type : ""),
             symptom1: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom1 : false) : false),
             symptom2: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom2 : false) : false),
             symptom3: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom3 : false) : false),
@@ -74,6 +75,7 @@ export async function updateData(tableName, data) {
             "insurance = :insurance," +
             "insuranceNumber = :insuranceNumber," +
             "covidResult = :covidResult," +
+            "type = :type," +
             "symptoms.symptom1 = :symptom1," +
             "symptoms.symptom2 = :symptom2," +
             "symptoms.symptom3 = :symptom3," +
@@ -103,6 +105,7 @@ export async function updateData(tableName, data) {
             ":insurance": data.insurance,
             ":insuranceNumber": data.insuranceNumber,
             ":covidResult": data.covidResult,
+            ":type": data.type,
             ":symptom1": data.symptom1,
             ":symptom2": data.symptom2,
             ":symptom3": data.symptom3,

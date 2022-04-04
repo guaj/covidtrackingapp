@@ -9,64 +9,82 @@ import AWS from "aws-sdk";
 import awsConfig from "../../../aws-config.json";
 import {sendMail} from "../../../Services/EmailService/EmailService";
 import EmailFormDialog from "../../../Services/EmailService/EmailDialog";
+import {getSpecificPatients} from "../../../databaseServices";
+import {useState, Fragment, useEffect} from "react";
+import * as PatientProfileUpdateDatabaseServices from "../../../Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdateDatabaseServices";
 
+AWS.config.update(awsConfig);
+const docClient = new AWS.DynamoDB.DocumentClient();
 
-export default class PatientProfilePage extends React.Component {
-    userType = JSON.parse(localStorage.getItem("type"));
-    userFetch = window.location.href.split("/")[4];
+//variable to check store address or symptom list undefined state
+let undefinedAddressOrSymptomsList = false;
+
+export default function PatientProfilePage() {
+    //userType = JSON.parse(localStorage.getItem("type"));
+    const [patients, setPatients] = useState(null);
+    const [flag, setFlag] = useState(null);
+    const userFetch = window.location.href.split("/")[4];
+
+    /*;
     userEmail = JSON.parse(localStorage.getItem("email"));
     user = JSON.parse(localStorage.getItem("email"));
-    url = this.user.split("@");
+    url = this.user.split("@");*/
 
-    state = {
+    /*state = {
         flag: this.isFlagged()
+    }*/
+    
+    const flagHandler = e => {
+        
+        setFlag(flag);
+        
     }
-    async sendEmail() {
+    /*
+
+    useEffect(async () => {
         await sendMail("TEST!!")
-    }
+    }, [])*/
 
-    canEditProfile() {
-        return ((this.userType === "patient") && this.userFetch === this.userEmail.split("@")[0]);
-    }
+    const canEditProfile = () => {
+        return ((FormValues.type === "patient") && userFetch === FormValues.email.split("@")[0]);
+    };
 
-    editProfileRedirect() {
+    const editProfileRedirect = () => {
         window.location = "/patient-profile-edit"
-    }
+    };
 
-    editSymptomsRedirect() {
+    const editSymptomsRedirect = () => {
         window.location = "/patient-symptoms-edit"
-    }
+    };
 
-    scheduleRedirect() {
+    const scheduleRedirect = () => {
         window.location = "/schedule-appointment"
-    }
+    };
 
-    canScheduleMeeting() {
-        return ((this.userType === "patient") && this.userFetch === this.userEmail.split("@")[0]);
-    }
+    const canScheduleMeeting = () => {
+        return ((FormValues.type === "patient") && userFetch === FormValues.email.split("@")[0]);
+    };
 
-    async flagPatient(flag) {
-
+    const flagPatients = async (flag) => {
         AWS.config.update(awsConfig);
-        const docClient = new AWS.DynamoDB.DocumentClient();
 
         let params = {
             TableName: "patients",
             ScanFilter: {
                 "email": {
                     ComparisonOperator: "CONTAINS",
-                    AttributeValueList: [this.userFetch]
+                    AttributeValueList: [FormValues.email]
                 }
             }
         };
 
         let scanresult = await docClient.scan(params).promise();
+        flagHandler({flag: scanresult.Items.at(0).flag !== undefined ? (scanresult.Items.at(0).flag ? true : false) : false});
 
-        this.userFetch = scanresult.Items.at(0).email;
 
         params = {
             TableName: 'patients',
-            Key: {"email": this.userFetch},
+            Key: {"email": FormValues.email},
             ComparisonOperator: "CONTAINS",
             UpdateExpression: "set flag = :flag",
             ExpressionAttributeValues: {":flag": !flag},
@@ -75,11 +93,11 @@ export default class PatientProfilePage extends React.Component {
         }
 
         await docClient.update(params).promise();
-        alert("Patient " + (this.state.flag ? 'unflagged' : 'flagged') + "!");
-        this.setState({flag: this.isFlagged()});
+        alert("Patient " + (flag ? 'unflagged' : 'flagged') + "!");
+        flagHandler({flag})
     }
 
-    async isFlagged() {
+    const isFlagged = async () => {
         AWS.config.update(awsConfig);
         const docClient = new AWS.DynamoDB.DocumentClient();
 
@@ -88,17 +106,100 @@ export default class PatientProfilePage extends React.Component {
             ScanFilter: {
                 "email": {
                     ComparisonOperator: "CONTAINS",
-                    AttributeValueList: [this.userFetch]
+                    AttributeValueList: [userFetch]
                 }
             }
         };
 
         let scanresult = await docClient.scan(params).promise();
 
-        this.setState({flag: scanresult.Items.at(0).flag !== undefined ? (scanresult.Items.at(0).flag ? true : false) : false});
+        flagHandler({flag: scanresult.Items.at(0).flag !== undefined ? (scanresult.Items.at(0).flag ? true : false) : false});
     }
 
-    render() {
+    
+    const [FormValues, setFormValues] = useState({
+        firstName: '',
+        lastName: '',
+        dob: '',
+        streetNumber: '',
+        streetName: '',
+        apartmentNumber: '',
+        postalCode: '',
+        city: '',
+        province: '',
+        phoneNumber: '',
+        email: '',
+        ramQNumber: '',
+        insurance: '',
+        insuranceNumber: '',
+        covidResult: '',
+        type: '',
+        symptom1: '',
+        symptom2: '',
+        symptom3: '',
+        symptom4: '',
+        symptom5: '',
+        symptom6: '',
+        symptom7: '',
+        symptom8: '',
+        symptom9: '',
+        symptom10: '',
+        symptom11: '',
+        comments: '',
+        flag: '',
+        doctor: ''
+    });
+
+     //fetches patient information on patient profile page render
+     useEffect(async () => {
+        setPatients(await PatientProfileUpdateDatabaseServices.fetchData('patients'))
+    }, []);
+
+    //loads patient information on patients state change when the state is not null
+    useEffect(() => {
+        if (patients !== null)
+            handleFormInformationLoad();
+    }, [patients])
+
+    const handleFormInformationLoad = () => {
+        const patient = patients[0];
+
+        const formData = {
+            firstName: patient.firstName,
+            lastName: patient.lastName,
+            dob: patient.dob,
+            streetNumber: patient.streetNumber,
+            streetName: patient.streetName,
+            apartmentNumber: patient.apartmentNumber,
+            postalCode: patient.postalCode,
+            city: patient.city,
+            province: patient.province,
+            phoneNumber: patient.phoneNumber,
+            email: patient.email,
+            ramQNumber: patient.ramQNumber,
+            insurance: patient.insurance,
+            insuranceNumber: patient.insuranceNumber,
+            covidResult: patient.covidResult,
+            type: patient.type,
+            symptom1: patient.symptom1,
+            symptom2: patient.symptom2,
+            symptom3: patient.symptom3,
+            symptom4: patient.symptom4,
+            symptom5: patient.symptom5,
+            symptom6: patient.symptom6,
+            symptom7: patient.symptom7,
+            symptom8: patient.symptom8,
+            symptom9: patient.symptom9,
+            symptom10: patient.symptom10,
+            symptom11: patient.symptom11,
+            comments: patient.comments,
+            flag: patient.flag,
+            doctor: patient.doctor
+        };
+
+        setFormValues(formData);
+    };
+    
         return (
             <>
                 <div className="container">
@@ -115,71 +216,72 @@ export default class PatientProfilePage extends React.Component {
                         />
                         {/* eslint-disable-next-line no-undef */}
                         <div className="myName">
-                            <h2>{PatientMock.name}</h2>
+                            <h5>{FormValues.firstName} {FormValues.lastName}</h5>
                         </div>
                         <div className="infoButtons"
-                                variant="outlined"
-                                aria-label="address"
-                                disabled>
-                                {PatientMock.address}
+                            variant="outlined"
+                            aria-label="address"
+                            disabled>
+                            {FormValues.streetNumber} {FormValues.streetName} {FormValues.apartmentNumber} <br/>
+                            {FormValues.postalCode} {FormValues.city} {FormValues.province}
                         </div>
                         <div className="infoButtons"
                                 variant="outlined"
                                 aria-label="email"
                                 disabled>
-                                {PatientMock.email}
+                                {FormValues.email}
                         </div>
                         <div className="infoButtons"
                                 variant="outlined"
                                 aria-label="phone_number"
                                 disabled>
-                                {PatientMock.phone}
+                                ({FormValues.phoneNumber[0]}{FormValues.phoneNumber[1]}{FormValues.phoneNumber[2]}) {FormValues.phoneNumber[3]}{FormValues.phoneNumber[4]}{FormValues.phoneNumber[5]} - {FormValues.phoneNumber[6]}{FormValues.phoneNumber[7]}{FormValues.phoneNumber[8]}{FormValues.phoneNumber[9]}
                         </div>
                         <div className="infoButtons"
                                 variant="outlined"
                                 aria-label="ramqNum"
                                 disabled>
-                                {PatientMock.ramqNum !== "" ? PatientMock.ramqNum : "No RAMQ number"}
+                                {FormValues.ramQNumber !== "" ? FormValues.ramQNumber : "No RAMQ number"}
                         </div>
                         <div className="infoButtons"
                                 variant="outlined"
                                 aria-label="insurance"
                                 disabled>
-                                {PatientMock.insurance !== "" ? PatientMock.insurance : "No private insurance"}
+                                {FormValues.insurance !== "" ? FormValues.insurance : "No private insurance"}
                         </div>
                         <div className="infoButtons"
                                 variant="outlined"
                                 aria-label="insuranceNumber"
                                 disabled>
-                                {PatientMock.insuranceNumber !== "" ? PatientMock.insuranceNumber : "No insurance number"}
+                                {FormValues.insuranceNumber !== "" ? FormValues.insuranceNumber : "No insurance number"}
                         </div>
                         <div className="infoButtons">
-                            {this.canEditProfile() ?
-                                <Button className="colored-button" onClick={this.editProfileRedirect}>Edit Profile</Button>
+                            {canEditProfile() ?
+                                <Button className="colored-button" onClick={editProfileRedirect}>Edit Profile</Button>
                                 : <> </>}
                         </div>
 
                     </div>
                     <div className="col-md-4 pt-3">
                         <Box className="infoBox">
-                            {PatientMock.covidResult === "positive" ? <h4 className="positive">Positive to COVID-19</h4> : <h4 className="negative">Negative to COVID-19</h4>}
+                            {FormValues.covidResult === "positive" ? <h4 className="positive">Positive to COVID-19</h4> : <h4 className="negative">Negative to COVID-19</h4>}
                             <h5 className="myName">
                             My Symptoms:
                             </h5>
-                            {PatientMock.symptom1 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>New or worsening cough</div> : null}
-                            {PatientMock.symptom2 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Shortness of breath or difficulty breathing</div> : null}
-                            {PatientMock.symptom3 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Temperature equal or more than 38 C</div> : null}
-                            {PatientMock.symptom4 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Feeling feverish</div> : null}
-                            {PatientMock.symptom5 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Chills</div> : null}
-                            {PatientMock.symptom6 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Fatigue and/or weakness</div> : null}
-                            {PatientMock.symptom7 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Muscles and/or body ache</div> : null}
-                            {PatientMock.symptom8 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Headache</div> : null}
-                            {PatientMock.symptom9 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Abdominal pain</div> : null}
-                            {PatientMock.symptom10 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Diarrhea and vomiting</div> :null}
-                            {PatientMock.symptom11 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Feelings of malaise</div> : null}
+                            {FormValues.symptom1 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>New or worsening cough</div> : null}
+                            {FormValues.symptom2 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Shortness of breath or difficulty breathing</div> : null}
+                            {FormValues.symptom3 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Temperature equal or more than 38 C</div> : null}
+                            {FormValues.symptom4 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Feeling feverish</div> : null}
+                            {FormValues.symptom5 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Chills</div> : null}
+                            {FormValues.symptom6 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Fatigue and/or weakness</div> : null}
+                            {FormValues.symptom7 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Muscles and/or body ache</div> : null}
+                            {FormValues.symptom8 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Headache</div> : null}
+                            {FormValues.symptom9 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Abdominal pain</div> : null}
+                            {FormValues.symptom10 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Diarrhea and vomiting</div> :null}
+                            {FormValues.symptom11 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Feelings of malaise</div> : null}
                             <div className="infoButtons">
-                            {this.canEditProfile() ?
-                                <Button className="colored-button" onClick={this.editSymptomsRedirect}>Edit Symptoms</Button>
+                            {canEditProfile() ?
+                                <Button className="colored-button" onClick={editSymptomsRedirect}>Edit Symptoms</Button>
                                 : <> </>}
                             </div>
                         </Box>
@@ -187,24 +289,24 @@ export default class PatientProfilePage extends React.Component {
                     <div className="col-md-4 pt-3">
                         <Box className="infoBox">
                             <div className="boxText">
-                                <p>My doctor : Dr. {PatientMock.doctorName} </p>
+                                <p>My doctor : Dr. {FormValues.doctor} </p>
                             </div>
                             <div className="button">
-                                {this.canScheduleMeeting() ?
-                                    <Button variant="contained" onClick={this.scheduleRedirect}>Make
+                                {canScheduleMeeting() ?
+                                    <Button variant="contained" onClick={scheduleRedirect}>Make
                                         Appointment </Button>
                                     : <></>}
                             </div>
                             <div className="button">
-                                {this.canScheduleMeeting() ?
+                                {canScheduleMeeting() ?
                                     <EmailFormDialog/>
                                     : <></>}
                             </div>
                             <div className="button">
                                 {JSON.parse(localStorage.getItem("type")) !== "patient" ?
                                     <Button variant="contained" onClick={() => {
-                                        this.flagPatient(this.state.flag);
-                                    }}>{this.state.flag ? 'Unflag' : 'Flag'}</Button>
+                                        flagHandler(flag);
+                                    }}>{flag ? 'Unflag' : 'Flag'}</Button>
                                     : <></>}
                             </div>
 
@@ -214,5 +316,4 @@ export default class PatientProfilePage extends React.Component {
             </>
 
         )
-    }
 }
