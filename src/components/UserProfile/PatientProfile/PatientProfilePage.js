@@ -3,13 +3,12 @@ import "../UserProfile.css";
 import Avatar from "@mui/material/Avatar";
 import myImage from "../../../Assets/avatar_1.jpg";
 import Button from "@material-ui/core/Button";
-import PatientMock from "./mockPatientInfo.json";
 import Box from "@mui/material/Box";
 import AWS from "aws-sdk";
 import awsConfig from "../../../aws-config.json";
 import {sendMail} from "../../../Services/EmailService/EmailService";
 import EmailFormDialog from "../../../Services/EmailService/EmailDialog";
-import {getSpecificPatients} from "../../../databaseServices";
+import {getSpecificDoctor} from "../../../databaseServices";
 import {useState, Fragment, useEffect} from "react";
 import * as PatientProfileUpdateDatabaseServices from "../../../Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdateDatabaseServices";
 
@@ -20,30 +19,13 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 let undefinedAddressOrSymptomsList = false;
 
 export default function PatientProfilePage() {
-    //userType = JSON.parse(localStorage.getItem("type"));
     const [patients, setPatients] = useState(null);
     const [flag, setFlag] = useState(null);
     const userFetch = window.location.href.split("/")[4];
 
-    /*;
-    userEmail = JSON.parse(localStorage.getItem("email"));
-    user = JSON.parse(localStorage.getItem("email"));
-    url = this.user.split("@");*/
-
-    /*state = {
-        flag: this.isFlagged()
-    }*/
-    
     const flagHandler = e => {
-        
         setFlag(flag);
-        
     }
-    /*
-
-    useEffect(async () => {
-        await sendMail("TEST!!")
-    }, [])*/
 
     const canEditProfile = () => {
         return ((FormValues.type === "patient") && userFetch === FormValues.email.split("@")[0]);
@@ -150,6 +132,8 @@ export default function PatientProfilePage() {
         doctor: ''
     });
 
+    const [doc, setDoc] = useState(FormValues);
+
      //fetches patient information on patient profile page render
      useEffect(async () => {
         setPatients(await PatientProfileUpdateDatabaseServices.fetchData('patients'))
@@ -199,6 +183,16 @@ export default function PatientProfilePage() {
 
         setFormValues(formData);
     };
+
+    useEffect(() => {    
+        (async () => {
+          const dbData = await getSpecificDoctor(FormValues.doctor);
+          if(dbData.Items != null)
+            setDoc(dbData.Items[0]);
+        })();
+    
+      },[FormValues]);
+
     
         return (
             <>
@@ -289,7 +283,7 @@ export default function PatientProfilePage() {
                     <div className="col-md-4 pt-3">
                         <Box className="infoBox">
                             <div className="boxText">
-                                <p>My doctor : Dr. {FormValues.doctor} </p>
+                                {doc === undefined ? <p>My doctor: Dr.</p> : <p>My doctor: Dr. {doc.lastName}</p>}
                             </div>
                             <div className="button">
                                 {canScheduleMeeting() ?
