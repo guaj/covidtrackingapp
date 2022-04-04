@@ -15,7 +15,7 @@ import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
 import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
-import { getAllLocations } from '../../databaseServices';
+import { getAllLocations ,getAllPatients,isInNotificationList} from '../../databaseServices';
 import { useState, useEffect } from 'react';
 import FlagIcon from "@mui/icons-material/Flag";
 import Link from "@material-ui/core/Link";
@@ -45,6 +45,12 @@ function getComparator(order, orderBy) {
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
+
+function profileLink(email) {
+    let url = email.split("@");
+    return  url[0];
+}
+
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
@@ -60,6 +66,16 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
+    {
+        id: 'patientName',
+        disablePadding: false,
+        label: 'Patient Name',
+    },
+    {
+        id: 'patientEmail',
+        disablePadding: false,
+        label: 'Patient Email',
+    },
     {
         id: 'locationName',
         disablePadding: false,
@@ -137,10 +153,7 @@ export default function LocationListTable() {
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState([]);
-    // const [locationName, setEmail] = useState([]);
-    // const [isDisabled, setIsDisabled] = React.useState(false);
-    // let valid = false;
-
+   
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -160,7 +173,7 @@ export default function LocationListTable() {
         setDense(event.target.checked);
     };
 
-    const [tableValues, setTableValues] = useState([{ locationName: '', locationNumber: "", locationDate: "", locationTime: "" }]);
+    const [tableValues, setTableValues] = useState([{ firstName: '', patientEmail: '', locationName: '', locationNumber: "", locationDate: "", locationTime: "" }]);
 
     const handleElementsRemove = (index) => {
         const list = [...tableValues];
@@ -170,6 +183,10 @@ export default function LocationListTable() {
   
 
     useEffect(() => (async () => await getAllLocations(setData))(), [])
+    useEffect(() => (async () => await isInNotificationList(setData))(), [])
+
+   // useEffect(() => (async () => await isInNotificationList(localStorage.getItem("email").split("\"")[1]))().then(console.log), [])
+
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
@@ -207,21 +224,18 @@ export default function LocationListTable() {
                                                 tabIndex={-1}
                                                 // key={item.name}
                                                 // id={item.name}
-                                                key={item.locationName}
+                                                key={item.firstName}
                                             >
 
+{/* // useEffect(() => (async () => await isInNotificationList(localStorage.getItem("email").split("\"")[1]))().then(console.log), []) */}
+
+                                                <TableCell>{profileLink(item.email) }</TableCell>
+                                                <TableCell>{item.email}</TableCell>
                                                 <TableCell>{item.locationName}</TableCell>
                                                 <TableCell>{item.date}</TableCell>
                                                 <TableCell>{item.time}</TableCell>
                                                 <TableCell>{item.locationNumber}</TableCell>
-                                                <TableCell>
-                                                    <Button type="button" 
-                                                    className="button remove" 
-                                                    color="secondary" 
-                                                    onClick={handleElementsRemove}>Remove</Button>
                                                 
-
-                                                </TableCell>
                                                 {/* <TableCell numeric component ="a" href={tracingForm(item.email)}><LinkIcon/> */}
                                                 {/*contact tracing form : isFilled*/}
                                                 {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}

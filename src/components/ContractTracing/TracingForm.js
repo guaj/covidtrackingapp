@@ -1,6 +1,5 @@
 import React from "react";
 
-import { useState } from "react";
 import awsConfig from 'C:/Users/Maya-School/Desktop/Covid_Tracking_App/covidtrackingapp/src/aws-config.json'
 import AWS from "aws-sdk";
 import Button from '@mui/material/Button';
@@ -10,21 +9,19 @@ import { Card, Typography } from "@mui/material";
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import Navbar from "../Navbar/Navbar";
+import {useState, useEffect} from 'react';
+
+import {
+  addSentContactTracingFormTime,
+  getAllCovidPositivePatients,getAllLocations,
+  isInNotificationList, getCompletedCovidTracingForm, isInTrackingList
+} from '../../databaseServices';
+import { hi } from "date-fns/locale";
+
 
 
 AWS.config.update(awsConfig);
 const docClient = new AWS.DynamoDB.DocumentClient()
-
-
-
-function profileLink(email) {
-  
-  let url = email.split("@");
-  return "/profile/" + url[0];
-}
-
-
-
 
 
 
@@ -35,9 +32,12 @@ export default function TracingformTest() {
   const [locationNumber, setLocationNumber] = useState('')
   const [locationDate, setLocationDate] = useState('')
   const [locationTime, setLocationTime] = useState('')
+  const [data, setData] = useState([]);
+  const [email, setEmail] = useState([]);
 
 
   const [formValues, setFormList] = useState([{ locationName: '', locationNumber: "", locationDate: "", locationTime: "" }]);
+
 
   const handleLocationName = e => {
     setLocationName(e.target.value)
@@ -68,32 +68,68 @@ export default function TracingformTest() {
     setFormList([...formValues, { locationName: "", locationNumber: "", locationDate: "", locationTime: "" }]);
   };
 
-  // Submit button
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // Submit button that adds items one at a time
+  const handleAdd = async (email) => {
 
     const params = {
-      TableName: "locations",
+      TableName: "locations2",
       Item: {
         "locationName": String(locationName),
         "locationNumber": String(locationNumber),
         "date": String(locationDate),
         "time": String(locationTime),
-      }
+        "email": String(email)
+      },
     }
-
-    // https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/dynamodb-example-table-read-write-batch.html
+    console.log(email.toString())
     try {
-      await docClient.put(params).promise()
-      alert("Success! You added the following location(s)" + JSON.stringify(locationName) + " on date " + JSON.stringify(locationDate) + ".");
+     // await docClient.put(params).promise()
+     // alert("Success! You added the following location(s)" + JSON.stringify(locationName) + " on date " + JSON.stringify(locationDate) + ".");
+    await docClient.put(params).promise()
+     console.log(params)
+     alert("Success! You added the following location(s)" + JSON.stringify(locationName) + " on date " + JSON.stringify(locationDate) + ".");
     } catch (err) {
       alert("Please enter at least the location name and date.");
       alert(err);
     }
   }
 
+  //click this when you want to signmal that you finished with the form
+  const handleSubmitCompleteForm = async (email) => {
+    var currentDate = Date().toLocaleString();
+    const params = {
+      TableName: "completedTracingForm",
+      Item: {
+        "email": String(email),
+        "date": String(currentDate),
+        "type": String("contact tracing"),
+      },
+    }
+    try {
+     const result = await docClient.put(params).promise()
+     console.log(params)
+     alert("Success! ");
+    } catch (err) {
+      alert("Cannot add to table.");
+      alert(err);
+    }
+  };
+
+  //useEffect(() => (async () => await getAllCovidPositivePatients(setData))(), [])
+   useEffect(() => (async () => await getAllLocations(setData))(), [])
+   useEffect(() => (async () => await isInNotificationList(localStorage.getItem("email").split("\"")[1]))().then(console.log), [])
 
 
+  function profileLink(email) {
+    let url = email.split("@");
+    return "/profile/" + url[0];
+}
+
+
+function tracingForm(email) {
+    let url = email.split("@");
+    return "/tracing-form/" + url[0];
+}
   return (
     <>
     <Navbar/>
@@ -107,7 +143,7 @@ export default function TracingformTest() {
 
         <Typography  sx={{ fontWeight: 'bold', color: '#724a7b', paddingLeft: 4, paddingRight: 4 }}>
           <h1 >
-          Patient Contact Tracing Form 
+          Patient Contact Tracing Form
         
           </h1>
         </Typography>
@@ -119,7 +155,7 @@ export default function TracingformTest() {
       >
 
         <Card position="static" sx={{ minWidth: 275 }} style={{ backgroundColor: '#ffff' }} >
-          <Typography sx={{ fontWeight: 'medium', color: '#724a7b', paddingLeft: 4, paddingRight: 4, paddingTop: 3, paddingBottom: 3 }} >
+          <Typography sx={{ fontWeight: 'medium', paddingLeft: 4, paddingRight: 4, paddingTop: 3, paddingBottom: 3 }} >
             <div>
               Please enter information about public locations you have visited in the last 5 days
               before your positive test results.
@@ -128,14 +164,13 @@ export default function TracingformTest() {
               (Ex: schools, workplaces, large social gatherings, group homes, health
               care facilities, etc.)
             </div>
-            <div>
-              This includes the name, phone number, as well as the date and time you visited the location.
-            </div>
+          
           </Typography>
           <CardContent>
 
+{/* make an array to add multiple items */}
 
-            <form className="TracingformTest" autoComplete="off" onSubmit={handleSubmit}>
+            <form className="TracingformTest" autoComplete="off" >
               {formValues.map((element, index) => (
                 <div className="first-division">
                   <Typography>
@@ -188,7 +223,6 @@ export default function TracingformTest() {
                     sx={{ m: 2 }}
                     required
                   />
-
                   {
                     index ?
                       <Button type="button" className="button remove" color="secondary" onClick={handleElementsRemove}>Remove</Button>
@@ -198,8 +232,26 @@ export default function TracingformTest() {
                 </div>
               ))}
               <div className="button-section">
-                <Button className="buttonAdd" sx={{ m: 6 }} style={{ backgroundColor: '#cbacd7', borderRadius: 15 }} variant="contained" type="button" onClick={handleElementAdd}>Add</Button>
-                <Button className="button submit" sx={{ m: 6 }} style={{ backgroundColor: '#cbacd7', borderRadius: 15 }} variant="contained" type="submit">Submit</Button>
+                <Button className="buttonAdd" sx={{ m: 6 }} style={{ backgroundColor: '#cbacd7', borderRadius: 15 }} 
+                variant="contained" type="button" 
+                onClick={()=> {handleAdd(localStorage.getItem("email").split("\"")[1])}}>Add</Button>
+               
+               
+                <Button className="button submit"  
+
+                sx={{ m: 6 }} style={{ backgroundColor: '#cbacd7', borderRadius: 15 }} variant="contained" 
+                type="submit"
+                
+                onClick={(event) =>
+                  {handleSubmitCompleteForm(localStorage.getItem("email").split("\"")[1]);
+                 isInTrackingList(email);
+                  console.log(event.target.id)
+                
+                } }>Submit</Button>
+
+
+
+
               </div>
             </form>
           </CardContent>
