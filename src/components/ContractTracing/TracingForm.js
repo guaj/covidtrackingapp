@@ -34,6 +34,7 @@ export default function TracingformTest() {
   const [locationTime, setLocationTime] = useState('')
   const [data, setData] = useState([]);
   const [email, setEmail] = useState([]);
+  const [firstName, setNirstName] = useState([]);
 
 
   const [formValues, setFormList] = useState([{ locationName: '', locationNumber: "", locationDate: "", locationTime: "" }]);
@@ -78,10 +79,12 @@ export default function TracingformTest() {
         "locationNumber": String(locationNumber),
         "date": String(locationDate),
         "time": String(locationTime),
-        "email": String(email)
+        "email": String(email),
+        "firstName": String(firstName)
+
       },
     }
-    console.log(email.toString())
+    console.log(email.toString(), firstName.toString())
     try {
      // await docClient.put(params).promise()
      // alert("Success! You added the following location(s)" + JSON.stringify(locationName) + " on date " + JSON.stringify(locationDate) + ".");
@@ -234,9 +237,15 @@ function tracingForm(email) {
               <div className="button-section">
                 <Button className="buttonAdd" sx={{ m: 6 }} style={{ backgroundColor: '#cbacd7', borderRadius: 15 }} 
                 variant="contained" type="button" 
-                onClick={()=> {handleAdd(localStorage.getItem("email").split("\"")[1])}}>Add</Button>
-               
-               
+                onClick={()=> {
+                  console.log(email)
+                  handleAdd(localStorage.getItem("email"))
+                  console.log(firstName)
+
+                  }}>Add</Button>
+                               {/* onClick={()=> {handleAdd(localStorage.getItem("email").split("\"")[1],localStorage.getItem("firstName"))}}>Add</Button> */}
+
+                               {/* https://blog.logrocket.com/localstorage-javascript-complete-guide/#howdoeslocalstoragework */}
                 <Button className="button submit"  
 
                 sx={{ m: 6 }} style={{ backgroundColor: '#cbacd7', borderRadius: 15 }} variant="contained" 

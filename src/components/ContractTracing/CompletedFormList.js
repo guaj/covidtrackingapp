@@ -12,18 +12,17 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { visuallyHidden } from '@mui/utils';
+import {visuallyHidden} from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
-import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
-import { getAllLocations ,getAllPatients,isInNotificationList} from '../../databaseServices';
-import { useState, useEffect } from 'react';
-import FlagIcon from "@mui/icons-material/Flag";
-import Link from "@material-ui/core/Link";
-import Button from "@mui/material/Button";
-import { SendNotificationButton } from "./SendNotificationButton";
-import { formatDate } from "../Navbar/Notification";
+import {
+    addSentContactTracingFormTime,
+    getAllCovidPositivePatients,
+    isInNotificationList, isInTracingList
+} from '../../databaseServices';
+import {useState, useEffect} from 'react';
 import AWS from "aws-sdk";
 import awsConfig from "../../aws-config.json";
+import '../ContractTracing/button.css';
 
 //to connect to DynamoDB
 AWS.config.update(awsConfig);
@@ -61,37 +60,29 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'patientName',
+        id: 'firstName',
         disablePadding: false,
-        label: 'Patient Name',
+        label: 'Email',
     },
     {
-        id: 'patientEmail',
+        id: 'lastName',
         disablePadding: false,
-        label: 'Patient Name',
+        label: 'Completed',
     },
     {
-        id: 'locationName',
+        id: 'covidResult',
         disablePadding: false,
-        label: 'Location Name',
-    },
-    {
-        id: 'date',
-        disablePadding: false,
-        label: 'Location Date',
+        label: 'Date',
     },
 
     {
-        id: 'time',
+        id: 'Type',
         disablePadding: false,
-        label: 'Location Time',
+        label: 'Profile Link',
     },
-    {
-        id: 'locationNumber',
-        disablePadding: false,
-        label: 'Location Number',
-    },
+   
 ];
+
 
 function EnhancedTableHead(props) {
     const { order, orderBy, onRequestSort } =
@@ -138,8 +129,7 @@ EnhancedTableHead.propTypes = {
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
 };
-
-export default function LocationListTable() {
+export default function CompletedListTable() {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('calories');
     const [selected] = useState([]);
@@ -147,10 +137,7 @@ export default function LocationListTable() {
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState([]);
-    // const [locationName, setEmail] = useState([]);
-    // const [isDisabled, setIsDisabled] = React.useState(false);
-    // let valid = false;
-
+   
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -170,7 +157,7 @@ export default function LocationListTable() {
         setDense(event.target.checked);
     };
 
-    const [tableValues, setTableValues] = useState([{ patientName: '', patientEmail: '', locationName: '', locationNumber: "", locationDate: "", locationTime: "" }]);
+    const [tableValues, setTableValues] = useState([{ firstName: '', patientEmail: '', locationName: '', locationNumber: "", locationDate: "", locationTime: "" }]);
 
     const handleElementsRemove = (index) => {
         const list = [...tableValues];
@@ -180,9 +167,9 @@ export default function LocationListTable() {
   
 
     useEffect(() => (async () => await getAllLocations(setData))(), [])
-  //  useEffect(() => (async () => await getAllPatients(setData))(), [])
+    useEffect(() => (async () => await isInNotificationList(setData))(), [])
 
-    useEffect(() => (async () => await getAllPatients(localStorage.getItem("email").split("\"")[1]))().then(console.log), [])
+   // useEffect(() => (async () => await isInNotificationList(localStorage.getItem("email").split("\"")[1]))().then(console.log), [])
 
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
@@ -221,9 +208,12 @@ export default function LocationListTable() {
                                                 tabIndex={-1}
                                                 // key={item.name}
                                                 // id={item.name}
-                                                key={item.email}
+                                                key={item.firstName}
                                             >
-                                                <TableCell>{item.firstName}</TableCell>
+
+{/* // useEffect(() => (async () => await isInNotificationList(localStorage.getItem("email").split("\"")[1]))().then(console.log), []) */}
+
+                                                <TableCell>{profileLink(item.email) }</TableCell>
                                                 <TableCell>{item.email}</TableCell>
                                                 <TableCell>{item.locationName}</TableCell>
                                                 <TableCell>{item.date}</TableCell>

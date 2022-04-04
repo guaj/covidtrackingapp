@@ -17,7 +17,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import {
     addSentContactTracingFormTime,
     getAllCovidPositivePatients,
-    isInNotificationList, isInTracingList
+    isInNotificationList, isInTracingList, getCompletedCovidTracingForm
 } from '../../databaseServices';
 import {useState, useEffect} from 'react';
 import AWS from "aws-sdk";
@@ -198,6 +198,7 @@ export default function TracingListTable() {
     };
 
     useEffect(() => (async () => await getAllCovidPositivePatients(setData))(), [])
+    // useEffect(() => (async () => await getCompletedCovidTracingForm(setData))(), [])
 
 
     // Avoid a layout jump when reaching the last page with empty rows.
