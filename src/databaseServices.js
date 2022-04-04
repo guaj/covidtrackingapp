@@ -54,6 +54,24 @@ export async function getSpecificDoctor(email) {
   }
 }
 
+export async function getSpecificPatient(email) {
+  var params = {
+    TableName: "patients",
+    FilterExpression: "#email = :specific",
+    ExpressionAttributeNames: {
+      "#email" : "email"
+    },
+    ExpressionAttributeValues: { ":specific": email }
+  }
+  try {
+    const data = await docClient.scan(params).promise()
+    return data
+
+  } catch (err) {
+    alert("could not retrieve data >:(")
+  }
+}
+
 export async function getAllDoctors(setter) {
   try {
     const data = await docClient.scan({ TableName: "doctors" }).promise()

@@ -7,7 +7,6 @@ import '../../../components/profile.css'
 import * as React from 'react';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {Checkbox, FormControlLabel, FormGroup} from "@material-ui/core";
 import geometricImage from "../../../images/geometric_gradient.jpg";
 import {useState, Fragment, useEffect} from "react";
 import Navbar from "../../../components/Navbar/Navbar";
@@ -72,7 +71,6 @@ export default function ProfilePatient() {
         insurance: '',
         insuranceNumber: '',
         covidResult: '',
-        type: '',
         symptom1: '',
         symptom2: '',
         symptom3: '',
@@ -105,7 +103,6 @@ export default function ProfilePatient() {
         insurance: '',
         insuranceNumber: '',
         covidResult: '',
-        type: '',
         symptom1: '',
         symptom2: '',
         symptom3: '',
@@ -153,7 +150,6 @@ export default function ProfilePatient() {
             insurance: patient.insurance,
             insuranceNumber: patient.insuranceNumber,
             covidResult: patient.covidResult,
-            type: patient.type,
             symptom1: patient.symptom1,
             symptom2: patient.symptom2,
             symptom3: patient.symptom3,
@@ -204,7 +200,6 @@ export default function ProfilePatient() {
             insurance: editFormData.insurance,
             insuranceNumber: editFormData.insuranceNumber,            
             covidResult: editFormData.covidResult,
-            type: editFormData.type,
             symptom1: editFormData.symptom1,
             symptom2: editFormData.symptom2,
             symptom3: editFormData.symptom3,
@@ -251,7 +246,6 @@ export default function ProfilePatient() {
             insurance: editFormData.insurance,
             insuranceNumber: editFormData.insuranceNumber,            
             covidResult: editFormData.covidResult,
-            type: editFormData.type,
             symptom1: editFormData.symptom1,
             symptom2: editFormData.symptom2,
             symptom3: editFormData.symptom3,

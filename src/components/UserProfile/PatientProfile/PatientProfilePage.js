@@ -8,7 +8,7 @@ import AWS from "aws-sdk";
 import awsConfig from "../../../aws-config.json";
 import {sendMail} from "../../../Services/EmailService/EmailService";
 import EmailFormDialog from "../../../Services/EmailService/EmailDialog";
-import {getSpecificDoctor} from "../../../databaseServices";
+import {getSpecificDoctor, getSpecificPatient} from "../../../databaseServices";
 import {useState, Fragment, useEffect} from "react";
 import * as PatientProfileUpdateDatabaseServices from "../../../Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdateDatabaseServices";
 
@@ -28,7 +28,7 @@ export default function PatientProfilePage() {
     }
 
     const canEditProfile = () => {
-        return ((FormValues.type === "patient") && userFetch === FormValues.email.split("@")[0]);
+        return(userFetch === FormValues.email.split("@")[0]);
     };
 
     const editProfileRedirect = () => {
@@ -44,7 +44,7 @@ export default function PatientProfilePage() {
     };
 
     const canScheduleMeeting = () => {
-        return ((FormValues.type === "patient") && userFetch === FormValues.email.split("@")[0]);
+        return(userFetch === FormValues.email.split("@")[0]);
     };
 
     const flagPatients = async (flag) => {
@@ -115,7 +115,6 @@ export default function PatientProfilePage() {
         insurance: '',
         insuranceNumber: '',
         covidResult: '',
-        type: '',
         symptom1: '',
         symptom2: '',
         symptom3: '',
@@ -164,7 +163,6 @@ export default function PatientProfilePage() {
             insurance: patient.insurance,
             insuranceNumber: patient.insuranceNumber,
             covidResult: patient.covidResult,
-            type: patient.type,
             symptom1: patient.symptom1,
             symptom2: patient.symptom2,
             symptom3: patient.symptom3,
@@ -193,7 +191,6 @@ export default function PatientProfilePage() {
     
       },[FormValues]);
 
-    
         return (
             <>
                 <div className="container">
