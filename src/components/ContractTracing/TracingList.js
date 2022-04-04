@@ -17,7 +17,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import {
     addSentContactTracingFormTime,
     getAllCovidPositivePatients,
-    isInNotificationList
+    isInNotificationList, isInTracingList
 } from '../../databaseServices';
 import {useState, useEffect} from 'react';
 import AWS from "aws-sdk";
@@ -81,9 +81,9 @@ const headCells = [
         label: 'Profile Link',
     },
     {
-        id: 'contactTracing',
+        id: 'contactTracingFormStatus',
         disablePadding: false,
-        label: 'Contact Tracing Form',
+        label: 'Contact Tracing Form Status',
     },
     {
         id: 'notifyPatient',
@@ -269,7 +269,8 @@ export default function TracingListTable() {
                                                     value ={isInNotificationList}*/}
                                                 {/* </TableCell> */}
                                                 {/* This currently shows only completed, so I needa fix this */}
-                                                <TableCell>{isInNotificationList(item.email) ?  "completed": "incomplete" }
+                                                
+                                                <TableCell>{isInTracingList(item.email) ?  "completed": "incomplete" }
                                                 </TableCell>
                                                 <TableCell>
                                                     <button

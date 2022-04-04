@@ -1,6 +1,6 @@
 import React from "react";
 
-import awsConfig from 'C:/Users/Maya-School/Desktop/Covid_Tracking_App/covidtrackingapp/src/aws-config.json'
+import awsConfig from "../../aws-config.json";
 import AWS from "aws-sdk";
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -14,7 +14,7 @@ import {useState, useEffect} from 'react';
 import {
   addSentContactTracingFormTime,
   getAllCovidPositivePatients,getAllLocations,
-  isInNotificationList, getCompletedCovidTracingForm, isInTrackingList
+  isInNotificationList, getCompletedCovidTracingForm, isInTracingList
 } from '../../databaseServices';
 import { hi } from "date-fns/locale";
 
@@ -117,7 +117,7 @@ export default function TracingformTest() {
 
   //useEffect(() => (async () => await getAllCovidPositivePatients(setData))(), [])
    useEffect(() => (async () => await getAllLocations(setData))(), [])
-   useEffect(() => (async () => await isInNotificationList(localStorage.getItem("email").split("\"")[1]))().then(console.log), [])
+  //  useEffect(() => (async () => await isInNotificationList(localStorage.getItem("email").split("\"")[1]))().then(console.log), [])
 
 
   function profileLink(email) {
@@ -244,7 +244,7 @@ function tracingForm(email) {
                 
                 onClick={(event) =>
                   {handleSubmitCompleteForm(localStorage.getItem("email").split("\"")[1]);
-                 isInTrackingList(email);
+                 isInTracingList(email);
                   console.log(event.target.id)
                 
                 } }>Submit</Button>

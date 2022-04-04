@@ -84,18 +84,18 @@ const headCells = [
     {
         id: 'date',
         disablePadding: false,
-        label: 'Location Date',
+        label: 'Visited On',
     },
 
     {
         id: 'time',
         disablePadding: false,
-        label: 'Location Time',
+        label: 'Visited Time',
     },
     {
         id: 'locationNumber',
         disablePadding: false,
-        label: 'Location Number',
+        label: 'Location Phone Number',
     },
 ];
 

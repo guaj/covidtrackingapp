@@ -122,18 +122,15 @@ export async function isInNotificationList(email){
 
 }
 
-export async function isInTrackingList(email){
+export async function isInTracingList(email){
     try {
         const params = {
             TableName: 'completedTracingForm',
             Key:{email},
-            KeyConditionExpression: "email = :email and #type = :type " ,
-            ExpressionAttributeNames: {
-                 "#type": "type",
-             },
+            KeyConditionExpression: "email = :email " ,
+            
             ExpressionAttributeValues:{
                 ":email":email,
-               ":type":"contact tracing"
             }
         };
         const result = await docClient.query(params).promise()
