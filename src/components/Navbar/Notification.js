@@ -10,7 +10,7 @@ import {useEffect} from "react";
 import {retrieveNotifications} from "./NotificationsService";
 import {makeStyles} from "@material-ui/styles";
 import "./Notifications.css";
-
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
         listItem: {
@@ -38,6 +38,8 @@ export default function NotificationList() {
     const open = Boolean(anchorEl);
     const ITEM_HEIGHT = 48;
     const classes = useStyles();
+    const navigate = useNavigate();
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -47,7 +49,9 @@ export default function NotificationList() {
 
     function notificationRedirect(item) {
         const { myValue } = item.currentTarget.dataset;
-        alert(myValue);
+        if(myValue === "quarantine information"){
+            navigate("/quarantine");
+        }        
     }
 
     function formatDate(date) {

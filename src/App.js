@@ -6,7 +6,6 @@ import NavbarPro from './components/Navbar/oldNavbars/NavbarPro';
 import NavbarRegister from './components/Navbar/oldNavbars/NavbarRegister';
 import Dashboard from './components/Dashboard/Dashboard';
 import NavbarProfilePatient from './components/Navbar/oldNavbars/NavbarProfilePatient';
-
 import DoctorProfile from './Services/ProfileUpdateSercices/DoctorProfileUpdate/DoctorProfile';
 import PatientProfile from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfile';
 import UsersLogin from './components/Authentification/UserLogin/UserLogin';
@@ -15,13 +14,13 @@ import PatientRegistration from './components/Authentification/UserRegistration/
 import DoctorRegistration from './components/Authentification/UserRegistration/DoctorRegistration'
 import OrganizationRegistration from './components/Authentification/UserRegistration/OrganizationRegistration';
 import UserProfileFacade from "./components/UserProfile/UserProfileFacade";
-
-
 import PatientProfileUpdate from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdate'
-
 import DoctorProfileUpdate from './Services/ProfileUpdateSercices/DoctorProfileUpdate/DoctorProfileUpdate'
 import AppointmentScheduler from "./Services/AppointmentService/AppointmentScheduler";
 import PatientSummaryPageQrCode from "./components/UserProfile/PatientProfile/PatientSummaryPageQrCode";
+import QuarantineTab from './components/Dashboard/PatientDashboard/QuarantineTab';
+import Navbar from './components/Navbar/Navbar';
+
 
 ///* Make sure to update file when adding to App.css!!*/
 function App() {
@@ -44,6 +43,7 @@ function App() {
                     <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
                     <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
                     <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
+                    <Route path='/quarantine' element={[<QuarantineTab/>]} />
             </Routes>
         );
 
