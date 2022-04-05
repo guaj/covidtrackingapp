@@ -11,9 +11,6 @@ export default function PatientSummaryPageQrCode() {
 
     const [data, setData] = useState({});
 
-    //create an array of 10 random intergers
-
-
     useEffect(() => {
         (async () => {
             let userEmail = window.location.href.split("/")[3];
@@ -21,26 +18,45 @@ export default function PatientSummaryPageQrCode() {
         })()
     }, []);
 
-
-
     return (
         <Container maxWidth="md" >
-            <Card sx={{ minWidth: "35%", minHeight: "800px", marginTop: "10%", boxShadow: 3, height: "800px" }}>
-                <CardContent sx={{ display: 'flex', alignItems: "center", flexDirection: "column", justifyContent: "center", paddingBottom: "10%", marginTop: "2%", height: "100%"}}>
-                    <Typography variant="h3" component="div" color="#3f51b5">
+            <Card sx={{ minWidth: "25%", minHeight: "700px", marginTop: "10%", boxShadow: 3, height: "700px" }}>
+                <CardContent sx={{ display: 'flex', alignItems: "center", flexDirection: "column", justifyContent: "center", paddingBottom: "10%", marginTop: "2%", height: "100%" }}>
+                    <Typography variant="h4" component="div" color="#3f51b5">
                         {data.firstName} {data.lastName}
                     </Typography>
 
                     <Grid container spacing={3} justifyContent="center" sx={{ marginTop: "2%", height: "80%" }}>
                         <Grid item md={6} sx={{ height: "60%" }}>
-                            <Typography variant="h4" component="div" color="text.secondary" sx={{ textAlign: "center" }}>Patient Information<hr style={{width: "70%"}}></hr></Typography>
+                            <Typography variant="h5" component="div" color="text.secondary" sx={{ textAlign: "center" }}>Patient Information<hr style={{ width: "70%" }}></hr></Typography>
+                            <div style={{paddingLeft: "15%", margin: "2% auto", lineHeight: "2", width: "80%", color: "#666666" }}>
+                                <div>
+                                    <b>covid result </b>
+                                    <br></br>
+                                    {data.covidResult === "positive" ? <a style={{color: '#DB4120'}}>positive</a> : <a style={{color: '#4CAF50'}}>negative</a>}
+                                </div>
+                                <div>
+                                    <b>Date of birth </b>
+                                    <br></br>
+                                    {data.dob}
+                                </div>
+                                <div>
+                                    <b>Address</b>
+                                    <br></br>
+                                    {((data || {}).address || {}).streetNumber}, {((data || {}).address || {}).streetName}, {((data || {}).address || {}).city}, Quebec, {((data || {}).address || {}).postalCode}
+                                </div>
+                                <div>
+                                    <b>RAMQ number </b>
+                                    <br></br>
+                                    {data.RAMQ}
+                                </div>
+                            </div>
 
-                            {/* user inforomation here */}
 
 
                         </Grid>
                         <Grid item md={6} sx={{ height: "60%" }} justifyContent="center">
-                            <Typography variant="h4" component="div" color="text.secondary" sx={{ textAlign: "center" }}>Symptoms<hr style={{width: "70%"}}></hr></Typography>
+                            <Typography variant="h5" component="div" color="text.secondary" sx={{ textAlign: "center" }}>Symptoms<hr style={{ width: "70%" }}></hr></Typography>
                             <ul style={{ paddingLeft: "15%", margin: "2% auto", lineHeight: "3", width: "70%", color: "#666666" }}>
                                 {((data || {}).symptoms || {}).symptom1 ? <li style={{ margin: "0 auto" }}>new or worsening cough</li> : null}
                                 {((data || {}).symptoms || {}).symptom2 ? <li>shortness of breath</li> : null}
