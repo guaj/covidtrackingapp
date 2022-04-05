@@ -254,23 +254,23 @@ export default function PatientProfilePage() {
                         </div>
 
                     </div>
-                    <div className="col-md-4 pt-3">
-                        <Box className="infoBox">
+                    <div className="col-md-4 pt-3" name="symptoms">
+                        <Box className="infoBox" data-testid="symptoms">
                             {FormValues.covidResult === "positive" ? <h4 className="positive">Positive to COVID-19</h4> : <h4 className="negative">Negative to COVID-19</h4>}
                             <h5 className="myName">
                             My Symptoms:
                             </h5>
                             {FormValues.symptom1 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>New or worsening cough</div> : null}
-                            {FormValues.symptom2 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Shortness of breath or difficulty breathing</div> : null}
-                            {FormValues.symptom3 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Temperature equal or more than 38 C</div> : null}
-                            {FormValues.symptom4 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Feeling feverish</div> : null}
-                            {FormValues.symptom5 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Chills</div> : null}
-                            {FormValues.symptom6 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Fatigue and/or weakness</div> : null}
-                            {FormValues.symptom7 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Muscles and/or body ache</div> : null}
-                            {FormValues.symptom8 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Headache</div> : null}
-                            {FormValues.symptom9 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Abdominal pain</div> : null}
-                            {FormValues.symptom10 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Diarrhea and vomiting</div> :null}
-                            {FormValues.symptom11 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>Feelings of malaise</div> : null}
+                            {FormValues.symptom2 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom2" disabled>Shortness of breath or difficulty breathing</div> : null}
+                            {FormValues.symptom3 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom3" disabled>Temperature equal or more than 38 C</div> : null}
+                            {FormValues.symptom4 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom4" disabled>Feeling feverish</div> : null}
+                            {FormValues.symptom5 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom5" data-testid="chills" disabled>Chills</div> : null}
+                            {FormValues.symptom6 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom6" disabled>Fatigue and/or weakness</div> : null}
+                            {FormValues.symptom7 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom7" disabled>Muscles and/or body ache</div> : null}
+                            {FormValues.symptom8 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom8" disabled>Headache</div> : null}
+                            {FormValues.symptom9 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom9" disabled>Abdominal pain</div> : null}
+                            {FormValues.symptom10 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom10" disabled>Diarrhea and vomiting</div> :null}
+                            {FormValues.symptom11 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom11" disabled>Feelings of malaise</div> : null}
                             <div className="infoButtons">
                             {canEditProfile() ?
                                 <Button className="colored-button" onClick={editSymptomsRedirect}>Edit Symptoms</Button>

@@ -303,55 +303,57 @@ export default function ProfilePatient() {
                                         <p> Covid symptoms</p>
                                         <FormControlLabel control={<Checkbox/>}
                                             checked={editFormData.symptom1}
-                                            onChange={() => setEditFormData((val) => {
+                                            onClick={() => setEditFormData((val) => {
                                                 return {...val, symptom1: !val.symptom1}
                                             })}
                                             name="symptom1" label="New or worsening cough"/>
                                         <FormControlLabel control={<Checkbox/>}
                                             checked={editFormData.symptom2}
-                                            onChange={() => setEditFormData((val) => {
+                                            onClick={() => setEditFormData((val) => {
                                                 return {...val, symptom2: !val.symptom2}
                                             })}
                                             name="symptom2"
                                             label="Shortness of breath or difficulty breathing"/>
                                         <FormControlLabel control={<Checkbox/>}
                                             checked={editFormData.symptom3}
-                                            onChange={() => setEditFormData((val) => {
+                                            onClick={() => setEditFormData((val) => {
                                                 return {...val, symptom3: !val.symptom3}
                                             })}
                                             name="symptom3"
                                             label="Temperature equal or more than 38 C"/>
                                         <FormControlLabel control={<Checkbox/>}
                                             checked={editFormData.symptom4}
-                                            onChange={() => setEditFormData((val) => {
+                                            onClick={() => setEditFormData((val) => {
                                                 return {...val, symptom4: !val.symptom4}
                                             })}
                                             name="symptom4"
                                             label="Feeling feverish"/>
                                         <FormControlLabel control={<Checkbox/>}
+                                            type= 'checkbox'
+                                            data-testid="checkbox-1234"
                                             checked={editFormData.symptom5}
-                                            onChange={() => setEditFormData((val) => {
+                                            onClick={() => setEditFormData((val) => {
                                                 return {...val, symptom5: !val.symptom5}
                                             })}
                                             name="symptom5"
                                             label="Chills"/>
                                         <FormControlLabel control={<Checkbox/>}
                                             checked={editFormData.symptom6}
-                                            onChange={() => setEditFormData((val) => {
+                                            onClick={() => setEditFormData((val) => {
                                                 return {...val, symptom6: !val.symptom6}
                                             })}
                                             name="symptom6"
                                             label="Fatigue and/or weakness"/>
                                         <FormControlLabel control={<Checkbox/>}
                                             checked={editFormData.symptom7}
-                                            onChange={() => setEditFormData((val) => {
+                                            onClick={() => setEditFormData((val) => {
                                                 return {...val, symptom7: !val.symptom7}
                                             })}
                                             name="symptom7"
                                             label="Muscles and/or body ache"/>
                                         <FormControlLabel control={<Checkbox/>}
                                             checked={editFormData.symptom8}
-                                            onChange={() => setEditFormData((val) => {
+                                            onClick={() => setEditFormData((val) => {
                                                 return {...val, symptom8: !val.symptom8}
                                             })}
                                             name="symptom8"
@@ -365,14 +367,14 @@ export default function ProfilePatient() {
                                             label="Abdominal pain"/>
                                         <FormControlLabel control={<Checkbox/>}
                                             checked={editFormData.symptom10}
-                                            onChange={() => setEditFormData((val) => {
+                                            onClick={() => setEditFormData((val) => {
                                                 return {...val, symptom10: !val.symptom10}
                                             })}
                                             name="symptom10"
                                             label="Diarrhea and vomiting"/>
                                         <FormControlLabel control={<Checkbox/>}
                                             checked={editFormData.symptom11}
-                                            onChange={() => setEditFormData((val) => {
+                                            onClick={() => setEditFormData((val) => {
                                                 return {...val, symptom11: !val.symptom11}
                                             })}
                                             name="symptom11"
