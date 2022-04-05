@@ -17,7 +17,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import ErrorIcon from '@mui/icons-material/Error';
 import FlagIcon from '@mui/icons-material/Flag';
 import { getAllPatients } from '../../../databaseServices'
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import Button from '@mui/material/Button';
 
 
@@ -57,7 +57,7 @@ function stableSort(array, comparator) {
 const headCells = [
     {
         id: 'priorityNumber',
-        numeric : true,
+        numeric: true,
         disablePadding: false,
         label: 'Priority',
     },
@@ -207,9 +207,15 @@ export default function PatientListTable() {
 
     return (
         <div>
-            <h2>Patients</h2>
+            <div style={{minWidth: "100%", display: 'flex', flexDirection: "row"}}>
+                <h2>Patients</h2>
+                <Button variant="contained" color="primary" style={{margin: "0 0 1% auto"}}>add patient</Button>
+            </div>
+
             <Box sx={{ width: '100%' }}>
+
                 <Paper sx={{ width: '100%', mb: 2 }}>
+
                     <TableContainer>
                         <Table
                             sx={{ minWidth: 750 }}
@@ -237,14 +243,14 @@ export default function PatientListTable() {
                                                 tabIndex={-1}
                                                 key={item.name}
                                             >
-                                                <TableCell/>
+                                                <TableCell />
                                                 <TableCell align="center">{item.firstName}</TableCell>
                                                 <TableCell align="center">{item.lastName}</TableCell>
                                                 <TableCell align="center">{item.covidResult}</TableCell>
                                                 <TableCell align="center">{item.reviewed ? "yes" : "no"}</TableCell> {/* TODO: check the database attributes */}
-                                                <TableCell align="center">{item.emergency ? <ErrorIcon style={{fill: "red"}}/> : "" }</TableCell>
-                                                <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon/></TableCell>
-                                                <TableCell align="center">{item.flag ? <FlagIcon style={{fill: "orange"}}/> : "" }</TableCell>
+                                                <TableCell align="center">{item.emergency ? <ErrorIcon style={{ fill: "red" }} /> : ""}</TableCell>
+                                                <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon /></TableCell>
+                                                <TableCell align="center">{item.flag ? <FlagIcon style={{ fill: "orange" }} /> : ""}</TableCell>
                                                 <TableCell align="center"><Button>update</Button></TableCell>
                                                 <TableCell align="center"><Button>delete</Button></TableCell>
                                             </TableRow>
