@@ -13,6 +13,15 @@ import Navbar from "../../../components/Navbar/Navbar";
 import * as PatientProfileUpdateDatabaseServices from "./PatientProfileUpdateDatabaseServices";
 
 const useStyles = makeStyles((theme) => ({
+    inputLabelRoot: {
+        clip: "rect(0 0 0 0)",
+        clipPath: "inset(50%)",
+        height: 1,
+        overflow: "hidden",
+        position: "absolute",
+        whiteSpace: "nowrap",
+        width: 1
+      },
     image: {
         backgroundImage: `url(${geometricImage})`,
         backgroundRepeat: "no-repeat",
@@ -47,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
     },
     field:{
         marginTop: theme.spacing(3)
+    },
+    field1:{
+        marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(-1)
     }
 }));
 
@@ -277,153 +290,153 @@ export default function ProfilePatient() {
                                 Profile page
                             </Typography>
                             <form onSubmit={handleEditFormSubmit}>
-                                <div>
-                                    <p>Name</p>
-                                    <TextField
-                                        helperText="First name"
-                                        type="text"
-                                        placeholder="First name"
-                                        name="firstName"
-                                        id="firstName"
-                                        value={editFormData.firstName}
-                                        onChange={handleFormChange}
-                                        disabled={true}
-                                    />
-
-                                    <TextField
-                                        helperText="Last name"
-                                        type="text"
-                                        placeholder="Last name"
-                                        name="lastName"
-                                        value={editFormData.lastName}
-                                        onChange={handleFormChange}
-                                        disabled={true}
-                                    />
-                                    <TextField
-                                        type="date"
-                                        margin="normal"
-                                        fullWidth={true}
-                                        name="dob"
-                                        autoComplete="date"
-                                        helperText="Date of birth"
-                                        value={editFormData.dob}
-                                        onChange={handleFormChange}
-                                        disabled={true}
-                                    />
-                                    <div className={classes.field}>
-                                        <p>Address</p>
-                                        <TextField
-                                            helperText="Street number"
-                                            type="text"
-                                            name="streetNumber"
-                                            placeholder="Street number"
-                                            value={editFormData.streetNumber}
-                                            onChange={handleFormChange}
-                                        />
-                                        <TextField
-                                            helperText="Street name"
-                                            type="text"
-                                            name="streetName"
-                                            placeholder="Street name"
-                                            value={editFormData.streetName}
-                                            onChange={handleFormChange}
-                                        />
-                                        <TextField
-                                            helperText="Apartment number"
-                                            type="text"
-                                            name="apartmentNumber"
-                                            placeholder="Apartment number"
-                                            value={editFormData.apartmentNumber}
-                                            onChange={handleFormChange}
-                                        />
-                                    </div>
-                                    <TextField
-                                        helperText="Postal code"
-                                        type="text"
-                                        name="postalCode"
-                                        placeholder="Postal code"
-                                        value={editFormData.postalCode}
-                                        onChange={handleFormChange}
-                                    />
-                                    <TextField
-                                        helperText="City"
-                                        type="text"
-                                        name="city"
-                                        placeholder="City"
-                                        value={editFormData.city}
-                                        onChange={handleFormChange}
-                                    />
-                                    <TextField
-                                        helperText="Province"
-                                        type="text"
-                                        name="province"
-                                        placeholder="Province"
-                                        value={editFormData.province}
-                                        onChange={handleFormChange}
-                                    />
-                                    <div className={classes.field}>
-                                        <p> Other contact details</p>
-                                        <TextField
-                                            helperText="Email"
-                                            type="text"
-                                            name="email"
-                                            placeholder="Email"
-                                            value={editFormData.email}
-                                            onChange={handleFormChange}
-                                        />
-                                        <TextField
-                                            helperText="Phone number"
-                                            type="text"
-                                            name="phoneNumber"
-                                            placeholder="Phone"
-                                            value={editFormData.phoneNumber}
-                                            onChange={handleFormChange}
-                                        />
-                                    </div>
-                                    <div className={classes.field}>
-                                        <p>RAMQ number</p>
-                                        <TextField
-                                            type="text"
-                                            name="ramQNumber"
-                                            placeholder="RAMQ Number"
-                                            value={editFormData.ramQNumber}
-                                            onChange={handleFormChange}
-                                        />
-                                    <div className={classes.field}>
-                                        <p>Private insurance</p>
-                                        <TextField
-                                            type="text"
-                                            name="insurance"
-                                            placeholder="Organization name"
-                                            value={editFormData.insurance}
-                                            onChange={handleFormChange}
-                                        />
-                                        <TextField
-                                            type="text"
-                                            name="insuranceNumber"
-                                            placeholder="Insurance Number"
-                                            value={editFormData.insuranceNumber}
-                                            onChange={handleFormChange}
-                                        />
-                                    </div>
-                                    <Button
-                                        type="submit"
-                                        fullWidth={true}
-                                        variant="contained"
-                                        className={classes.submit}
-                                    >
-                                        Update profile
-                                    </Button>
-                                    <Button
-                                        type="button"
-                                        fullWidth={true}
-                                        variant="contained"
-                                        onClick={(event) => [handleNotifyDoctorButtonClick(event), alert('Your doctor will be notified!')]}
-                                    >
-                                        Notify my doctor
-                                    </Button>
-                                </div>
-                                </div>
+                                <p>Name</p>
+                                <TextField
+                                    helperText="First name"
+                                    type="text"
+                                    placeholder="First name"
+                                    name="firstName"
+                                    id="firstName"
+                                    value={editFormData.firstName}
+                                    onChange={handleFormChange}
+                                    disabled={true}
+                                />
+                                <TextField
+                                    helperText="Last name"
+                                    type="text"
+                                    placeholder="Last name"
+                                    name="lastName"
+                                    value={editFormData.lastName}
+                                    onChange={handleFormChange}
+                                    disabled={true}
+                                />
+                                <TextField
+                                    type="date"
+                                    margin="normal"
+                                    fullWidth={true}
+                                    name="dob"
+                                    autoComplete="date"
+                                    helperText="Date of birth"
+                                    value={editFormData.dob}
+                                    onChange={handleFormChange}
+                                    disabled={true}
+                                />
+                                <p className={classes.field}>Address</p>
+                                <TextField
+                                    helperText="Street number"
+                                    type="text"
+                                    name="streetNumber"
+                                    placeholder="Street number"
+                                    value={editFormData.streetNumber}
+                                    onChange={handleFormChange}
+                                />
+                                <TextField
+                                    helperText="Street name"
+                                    type="text"
+                                    name="streetName"
+                                    placeholder="Street name"
+                                    value={editFormData.streetName}
+                                    onChange={handleFormChange}
+                                />
+                                <TextField
+                                    helperText="Apartment number"
+                                    type="text"
+                                    name="apartmentNumber"
+                                    placeholder="Apartment number"
+                                    value={editFormData.apartmentNumber}
+                                    onChange={handleFormChange}
+                                />
+                                <TextField
+                                    helperText="Postal code"
+                                    type="text"
+                                    name="postalCode"
+                                    placeholder="Postal code"
+                                    value={editFormData.postalCode}
+                                    onChange={handleFormChange}
+                                />
+                                <TextField
+                                    helperText="City"
+                                    type="text"
+                                    name="city"
+                                    placeholder="City"
+                                    value={editFormData.city}
+                                    onChange={handleFormChange}
+                                />
+                                <TextField
+                                    helperText="Province"
+                                    type="text"
+                                    name="province"
+                                    placeholder="Province"
+                                    value={editFormData.province}
+                                    onChange={handleFormChange}
+                                />
+                                <p className={classes.field1}> Other contact details</p>
+                                <TextField
+                                    helperText="Email"
+                                    label="email"
+                                    type="text"
+                                    InputLabelProps={{
+                                    className: classes.inputLabelRoot
+                                    }}
+                                    name="email"
+                                    placeholder="Email"
+                                    value={editFormData.email}
+                                    onChange={handleFormChange}
+                                    disabled = {true}
+                                />
+                                <TextField
+                                    label="phoneNumber"
+                                    InputLabelProps={{
+                                    className: classes.inputLabelRoot
+                                    }} 
+                                    helperText="Phone number"
+                                    type="phoneNumber"
+                                    name="phoneNumber"
+                                    id="phoneNumber"
+                                    data-testid="phoneNumber"
+                                    placeholder="Phone"
+                                    value={editFormData.phoneNumber}
+                                    onChange={handleFormChange}
+                                />
+                                <p className={classes.field}>RAMQ number</p>
+                                <TextField
+                                    type="text"
+                                    name="ramQNumber"
+                                    placeholder="RAMQ Number"
+                                    value={editFormData.ramQNumber}
+                                    onChange={handleFormChange}
+                                />
+                                <p className={classes.field}>Private insurance</p>
+                                <TextField
+                                    type="text"
+                                    name="insurance"
+                                    placeholder="Organization name"
+                                    value={editFormData.insurance}
+                                    onChange={handleFormChange}
+                                />
+                                <TextField
+                                    type="text"
+                                    name="insuranceNumber"
+                                    placeholder="Insurance Number"
+                                    value={editFormData.insuranceNumber}
+                                    onChange={handleFormChange}
+                                />
+                                <Button
+                                    type="submit"
+                                    fullWidth={true}
+                                    variant="contained"
+                                    className={classes.submit}
+                                >
+                                    Update profile
+                                </Button>
+                                <Button
+                                    type="button"
+                                    fullWidth={true}
+                                    variant="contained"
+                                    onClick={(event) => [handleNotifyDoctorButtonClick(event), alert('Your doctor will be notified!')]}
+                                >
+                                    Notify my doctor
+                                </Button>
                             </form>
                         </div>
                     </Grid>

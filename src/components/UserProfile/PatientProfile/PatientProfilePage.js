@@ -223,12 +223,15 @@ export default function PatientProfilePage() {
                                 disabled>
                                 {FormValues.email}
                         </div>
-                        <div className="infoButtons"
-                                variant="outlined"
-                                aria-label="phone_number"
-                                disabled>
-                                ({FormValues.phoneNumber[0]}{FormValues.phoneNumber[1]}{FormValues.phoneNumber[2]}) {FormValues.phoneNumber[3]}{FormValues.phoneNumber[4]}{FormValues.phoneNumber[5]} - {FormValues.phoneNumber[6]}{FormValues.phoneNumber[7]}{FormValues.phoneNumber[8]}{FormValues.phoneNumber[9]}
-                        </div>
+                        {FormValues.phoneNumber !== "" ? 
+                            <div className="infoButtons"
+                                    variant="outlined"
+                                    aria-label="phoneNumber"
+                                    data-testid="phoneNumber"
+                                    disabled>
+                                    ({FormValues.phoneNumber[0]}{FormValues.phoneNumber[1]}{FormValues.phoneNumber[2]}) {FormValues.phoneNumber[3]}{FormValues.phoneNumber[4]}{FormValues.phoneNumber[5]} - {FormValues.phoneNumber[6]}{FormValues.phoneNumber[7]}{FormValues.phoneNumber[8]}{FormValues.phoneNumber[9]}
+                            </div>
+                            : null }
                         <div className="infoButtons"
                                 variant="outlined"
                                 aria-label="ramqNum"
@@ -254,7 +257,7 @@ export default function PatientProfilePage() {
                         </div>
 
                     </div>
-                    <div className="col-md-4 pt-3" name="symptoms">
+                    <div className="col-md-4 pt-3">
                         <Box className="infoBox" data-testid="symptoms">
                             {FormValues.covidResult === "positive" ? <h4 className="positive">Positive to COVID-19</h4> : <h4 className="negative">Negative to COVID-19</h4>}
                             <h5 className="myName">

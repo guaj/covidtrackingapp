@@ -1,7 +1,7 @@
 import "@testing-library/cypress/add-commands";
 
 describe("Patient can update his/her symptom status", () => {
-    it("Patient modifies one symptom: 'chills'", () => {
+    it("Patient modifies his/her health status", () => {
         // open browser to localhost:3000
         cy.visit("http://localhost:3000/")
 
@@ -19,29 +19,29 @@ describe("Patient can update his/her symptom status", () => {
         cy.wait(600)
         
         cy.findByTestId('symptoms').then(($element) => {
-            // checks whether the symptom exist or nor and add or remove it 
-            // with a verification on the profile page (present or not present as symptom) after the edition
+            // checks whether the status is positive or negative 
+            // with a verification on the profile page (positive or negative is displayed) after the edition
             if ($element.text().includes("Negative")) {
-                // removes the symptom since it already exist and verifies that it has been removed
+                // verifies the button positive since the patient is negative
                 // click on button to go to symptom edition
                 cy.findByText(/edit symptoms/i).click()
-                // uncheck the symptom "chills"
+                // check the button "positive"
                 cy.findByRole('radio', {name: /positive/i}).click()
                 // save the modifications by clicking on the button update profile
                 cy.findByText(/update profile/i).click()        
                 cy.wait(600)
-                // verifies if the symptom has been removed
+                // verifies that the patient profile shows the new positive status
                 cy.findByText(/positive/i)
             } else {
-                // add the 'chills' symptoms since it does not exist and verifies that it has been added
+                // verifies the button negative since the patient is positive
                 // click on button to go to symptom edition
                 cy.findByText(/edit symptoms/i).click()
-                // uncheck the symptom "chills"
+                // check the button "negative"
                 cy.findByRole('radio', {name: /negative/i}).click()
                 // save the modifications by clicking on the button update profile
                 cy.findByText(/update profile/i).click()  
                 cy.wait(600)
-                // verifies if the symptom has been added  
+                // verifies that the patient profile shows the new negative status
                 cy.findByText(/negative/i)
             }
           })
