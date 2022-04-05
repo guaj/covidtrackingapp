@@ -7,8 +7,9 @@ import PatientMock from "./mockPatientInfo.json";
 import Box from "@mui/material/Box";
 import AWS from "aws-sdk";
 import awsConfig from "../../../aws-config.json";
-import {sendMail} from "../../../Services/EmailService/EmailService";
+import { sendMail } from "../../../Services/EmailService/EmailService";
 import EmailFormDialog from "../../../Services/EmailService/EmailDialog";
+import QRCode from "react-qr-code";
 
 
 export default class PatientProfilePage extends React.Component {
@@ -62,17 +63,17 @@ export default class PatientProfilePage extends React.Component {
 
         params = {
             TableName: 'patients',
-            Key: {"email": this.userFetch},
+            Key: { "email": this.userFetch },
             ComparisonOperator: "CONTAINS",
             UpdateExpression: "set flag = :flag",
-            ExpressionAttributeValues: {":flag": !flag},
+            ExpressionAttributeValues: { ":flag": !flag },
             KeyConditionExpression: 'email = :email',
             ReturnValues: "UPDATED_NEW"
         }
 
         await docClient.update(params).promise();
         alert("Patient " + (this.state.flag ? 'unflagged' : 'flagged') + "!");
-        this.setState({flag: this.isFlagged()});
+        this.setState({ flag: this.isFlagged() });
     }
 
     async isFlagged() {
@@ -91,7 +92,7 @@ export default class PatientProfilePage extends React.Component {
 
         let scanresult = await docClient.scan(params).promise();
 
-        this.setState({flag: scanresult.Items.at(0).flag !== undefined ? (scanresult.Items.at(0).flag ? true : false) : false});
+        this.setState({ flag: scanresult.Items.at(0).flag !== undefined ? (scanresult.Items.at(0).flag ? true : false) : false });
     }
 
     render() {
@@ -107,7 +108,7 @@ export default class PatientProfilePage extends React.Component {
                             sizes="large"
                             alt="profilePage"
                             src={myImage}
-                            sx={{width: 152, height: 152}}
+                            sx={{ width: 152, height: 152 }}
                         />
                         {/* eslint-disable-next-line no-undef */}
                         <div className="myName">
@@ -168,7 +169,7 @@ export default class PatientProfilePage extends React.Component {
                         </div>
 
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-4" style={{ position: "bottom" }}>
                         <Box className="infoBox">
                             <div className="boxText">
                                 <p>My doctor : Dr. {PatientMock.doctorName} </p>
@@ -181,7 +182,7 @@ export default class PatientProfilePage extends React.Component {
                             </div>
                             <div className="button">
                                 {this.canScheduleMeeting() ?
-                                    <EmailFormDialog/>
+                                    <EmailFormDialog />
                                     : <></>}
                             </div>
                             <div className="button">
@@ -192,8 +193,17 @@ export default class PatientProfilePage extends React.Component {
                                     : <></>}
                             </div>
 
+
+                            <div>
+                                <QRCode value={"http://localhost:3000/" + this.userEmail + "/summary"} style={{ display: "block", margin: "5% auto", }} />
+                            </div>
+
+
+
                         </Box>
+
                     </div>
+
                 </div>
             </>
 
