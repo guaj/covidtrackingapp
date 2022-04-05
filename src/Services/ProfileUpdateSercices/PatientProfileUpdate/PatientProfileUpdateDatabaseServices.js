@@ -51,6 +51,7 @@ export async function fetchData(tableName) {
             comments: (result.Items.at(0).comments !== undefined ? result.Items.at(0).comments : ""),
             doctor: (result.Items.at(0).doctor !== undefined ? result.Items.at(0).doctor : ""),
             flag: (result.Items.at(0).flag !== undefined ? result.Items.at(0).flag : false),
+            type: (result.Items.at(0).type !== undefined ? result.Items.at(0).type : ""),
         };
         return [formValues];
     }

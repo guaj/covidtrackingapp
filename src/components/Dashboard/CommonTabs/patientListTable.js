@@ -17,11 +17,8 @@ import LinkIcon from '@mui/icons-material/Link';
 import ErrorIcon from '@mui/icons-material/Error';
 import FlagIcon from '@mui/icons-material/Flag';
 import { getAllPatients } from '../../../databaseServices'
-import {useState, useEffect} from 'react'
-
-
-
-
+import {useState, useEffect} from 'react';
+import { useNavigate } from "react-router";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -157,7 +154,7 @@ export default function PatientListTable() {
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState([])
-
+    const navigate = useNavigate();
 
 
     const handleRequestSort = (event, property) => {
@@ -188,10 +185,13 @@ export default function PatientListTable() {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
-    function profileLink(email) {
-        let url = email.split("@");
-        return "/profile/" + url[0];
-    }
+    const profileLink = (email, e) => {
+        let url = email.split("@")
+        e.target.reset();
+        navigate({
+            pathname:  "/profile/" + url[0],
+            state: email,
+    })};
 
 
     return (

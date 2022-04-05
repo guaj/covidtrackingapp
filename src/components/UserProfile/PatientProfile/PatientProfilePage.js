@@ -19,7 +19,7 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 let undefinedAddressOrSymptomsList = false;
 
 export default function PatientProfilePage() {
-    const [patients, setPatients] = useState(null);
+    const [user, setUser] = useState(null);    
     const [flag, setFlag] = useState(null);
     const userFetch = window.location.href.split("/")[4];
 
@@ -135,17 +135,18 @@ export default function PatientProfilePage() {
 
      //fetches patient information on patient profile page render
      useEffect(async () => {
-        setPatients(await PatientProfileUpdateDatabaseServices.fetchData('patients'))
+        setUser(await PatientProfileUpdateDatabaseServices.fetchData('patients'))
     }, []);
 
     //loads patient information on patients state change when the state is not null
     useEffect(() => {
-        if (patients !== null)
+        console.log(userFetch)
+        if (user !== null)
             handleFormInformationLoad();
-    }, [patients])
+    }, [user])
 
     const handleFormInformationLoad = () => {
-        const patient = patients[0];
+        const patient = user[0];
 
         const formData = {
             firstName: patient.firstName,
