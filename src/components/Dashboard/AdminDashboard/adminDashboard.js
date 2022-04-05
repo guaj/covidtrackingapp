@@ -8,6 +8,7 @@ import PatientListTable from "../CommonTabs/patientListTable";
 import DoctorListTable from '../CommonTabs/doctorListTable';
 import UnpairedNewPatientListTable from './UnpairedNewPatients';
 import UnpairedPatientDoctorEmergencyListTable from './UnpairedPatientDoctorEmergency';
+import UserManagement from './UserManagement';
 //import PairedListTable from './Paired';
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -67,6 +68,7 @@ export default function AdminTabs() {
                 <Tab label="Doctor List" {...a11yProps(1)} />
                 <Tab label="New Patients Pairing" {...a11yProps(2)} />
                 <Tab label="Doctor Emergency Pairing" {...a11yProps(3)} />
+                <Tab label="User Management" {...a11yProps(3)} />
             </Tabs>
 
             <TabPanel value={value} index={0}>
@@ -80,6 +82,9 @@ export default function AdminTabs() {
             </TabPanel>
             <TabPanel value={value} index={3}>
                 <UnpairedPatientDoctorEmergencyListTable />
+            </TabPanel>
+            <TabPanel value={value} index={4}>
+                <UserManagement />
             </TabPanel>
         </>
     )
