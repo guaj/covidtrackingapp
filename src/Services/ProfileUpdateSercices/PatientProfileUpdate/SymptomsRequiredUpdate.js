@@ -90,6 +90,13 @@ export default function SymptomsRequiredUpdate() {
             handleFormInformationLoad();
     }, [patients])
 
+
+    function redirectProfile() {
+        const user = window.location.href.split("/")[4];
+        window.location = "/profile/" + user
+    }
+
+
     const handleFormInformationLoad = () => {
         const patient = patients[0];
 
@@ -131,7 +138,7 @@ export default function SymptomsRequiredUpdate() {
         const newPatients = [patients];
         newPatients[0] = editedPatient;
         setPatients(newPatients);
-        updateRequiredSymptoms(newPatients[0], patientEmail).then();
+        updateRequiredSymptoms(newPatients[0], patientEmail).then(() => redirectProfile());
 
     };
 
@@ -240,6 +247,7 @@ export default function SymptomsRequiredUpdate() {
                                         type="button"
                                         fullWidth={true}
                                         variant="contained"
+                                        onClick={redirectProfile}
                                     >
                                         Cancel
                                     </Button>

@@ -185,13 +185,10 @@ export default function PatientListTable() {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
-    const profileLink = (email, e) => {
+    const profileLink = (email) => {
         let url = email.split("@")
-        e.target.reset();
-        navigate({
-            pathname:  "/profile/" + url[0],
-            state: email,
-    })};
+        return ("/profile/" + url[0]);
+    };
 
 
     return (

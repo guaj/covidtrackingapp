@@ -58,10 +58,9 @@ class PatientProfilePage extends React.Component {
     }
 
    redirectSymptomsRequired() {
-       const userEmail = JSON.parse(localStorage.getItem("email"));
-       const urlToFetch = userEmail.split("@")[0]
-       alert(urlToFetch)
-       window.location = "/update-required-symptoms/" + urlToFetch
+       const user = window.location.href.split("/")[4];
+
+       window.location = "/update-required-symptoms/" + user
    }
 
     scheduleRedirect() {
@@ -238,11 +237,11 @@ class PatientProfilePage extends React.Component {
                             </Box>
 
                             <Box className="button" sx={{pt: 5}}>
-                                {/*{JSON.parse(localStorage.getItem("type")) !== "patient" ?*/}
+                                {JSON.parse(localStorage.getItem("type")) !== "patient" ?
                                     <Button
                                         variant="contained"
                                         name="update-required-symptoms"
-                                        onClick={this.redirectSymptomsRequired}>Update required Symptoms</Button> {/* : <></> *}*/}
+                                        onClick={this.redirectSymptomsRequired}>Update required Symptoms</Button>  : <></> }
                             </Box>
 
 
