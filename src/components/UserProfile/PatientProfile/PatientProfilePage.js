@@ -175,7 +175,7 @@ export default class PatientProfilePage extends React.Component {
                                     : <></>}
                             </div>
                              <div className="button">
-                                    <Button variant="contained" href="/tracing-form">Complete
+                                    <Button label="tracingformbutton" name="tracingformbutton" key={1} variant="contained" href="/tracing-form">Complete
                                         Tracing Form </Button>
                                     
 
