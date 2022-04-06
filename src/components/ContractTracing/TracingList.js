@@ -224,6 +224,14 @@ export default function TracingListTable() {
             document.getElementById(email).style.color = "grey";
         }
     }
+    async function formIsCompleted(email){
+
+        const isCompleted  = await isInTracingList(email) 
+        if(isCompleted){
+            document.getElementsByClassName(email).item(0).innerText="completed"
+
+        }
+    }
 
     return (
         <div>
@@ -271,13 +279,14 @@ export default function TracingListTable() {
                                                 {/* </TableCell> */}
                                                 {/* This currently shows only completed, so I needa fix this */}
                                                 
-                                                <TableCell>{isInTracingList(item.email) ?  "completed": "incomplete" }
+                                                <TableCell  className={item.email} onLoad={formIsCompleted(item.email) }>
                                                 </TableCell>
                                                 <TableCell>
                                                     <button
                                                         class="button"
                                                         type="submit"
                                                         id={item.email}
+
                                                         onLoad={isEnabled(item.email)}
                                                         onClick={(event) => {
                                                             handleSubmitChange(event.target.id);

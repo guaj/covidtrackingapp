@@ -90,13 +90,7 @@ export async function getCompletedCovidTracingForm(setter) {
         console.error(err);
     }
 
-    // try {
-    //     const data = await docClient.scan({TableName: "completedTracingForm"}).promise()
-    //     setter(data.Items)
-        
-    // } catch (err) {
-    //     alert(JSON.stringify(err))
-    // }
+    
 }
 
 
@@ -137,13 +131,10 @@ export async function isInTracingList(email){
         const params = {
             TableName: 'completedTracingForm',
             Key:{email},
-            KeyConditionExpression: "email = :email and #type = :type " ,
-            ExpressionAttributeNames: {
-                 "#type": "type",
-             },
+            KeyConditionExpression: "email = :email ] " ,
+            
             ExpressionAttributeValues:{
                 ":email":email,
-               ":type":"contact tracing"
             }
         };
         const result = await docClient.query(params).promise()

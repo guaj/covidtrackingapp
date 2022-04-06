@@ -113,12 +113,12 @@ export default function TracingformTest() {
      console.log(params)
      alert("Success! ");
     } catch (err) {
-      alert("Cannot add to table.");
+      alert("Cannot add to table``````````````-------.");
       alert(err);
     }
   };
 
-  useEffect(() => (async () => await getAllCovidPositivePatients(setData))(), [])
+  //useEffect(() => (async () => await getAllCovidPositivePatients(setData))(), [])
    useEffect(() => (async () => await getAllLocations(setData))(), [])
   //  useEffect(() => (async () => await isInNotificationList(localStorage.getItem("email").split("\"")[1]))().then(console.log), [])
 
@@ -239,7 +239,7 @@ function tracingForm(email) {
                 variant="contained" type="button" 
                 onClick={()=> {
                   console.log(email)
-                  handleAdd(localStorage.getItem("email").split("\"")[1]);
+                  handleAdd(localStorage.getItem("email"))
                   console.log(firstName)
 
                   }}>Add</Button>
