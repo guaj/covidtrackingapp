@@ -16,9 +16,10 @@ import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
 import ErrorIcon from '@mui/icons-material/Error';
 import FlagIcon from '@mui/icons-material/Flag';
-import { getAllPatients } from '../../../databaseServices'
+import { getAllPatients, deletePatient } from '../../../databaseServices'
 import { useState, useEffect } from 'react'
 import Button from '@mui/material/Button';
+
 
 
 
@@ -252,7 +253,7 @@ export default function PatientListTable() {
                                                 <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon /></TableCell>
                                                 <TableCell align="center">{item.flag ? <FlagIcon style={{ fill: "orange" }} /> : ""}</TableCell>
                                                 <TableCell align="center"><Button>update</Button></TableCell>
-                                                <TableCell align="center"><Button>delete</Button></TableCell>
+                                                <TableCell align="center"><Button onClick={() => deletePatient(item.email, data, setData)}>delete</Button></TableCell>
                                             </TableRow>
                                         );
                                     })}
