@@ -23,6 +23,7 @@ import { makeStyles } from '@material-ui/styles';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import PatientUpdate from './PatientUpdate'
+import PatientAdd from './PatientAdd'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -216,7 +217,8 @@ export default function PatientListTable() {
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState([])
-    const [open, setOpen] = useState(false)
+    const [updateModalOpen, setUpdateModalOpen] = useState(false)
+    const [addModalOpen, setAddModalOpen] = useState(false)
     const [patient, setPatient] = useState(null)
 
 
@@ -244,15 +246,21 @@ export default function PatientListTable() {
 
     useEffect(() => (async () => await getAllPatients(setData))(), [])
 
-    const handleOpen = patient => {
-        console.log('open')
+    const updateModalHandleOpen = patient => {
         setPatient(patient)
-        setOpen(true);
+        setUpdateModalOpen(true);
 
     };
-    const handleClose = () => {
-        setOpen(false);
+    const updateModalHandleClose = () => {
+        setUpdateModalOpen(false);
+    }
 
+    const addModalHandleOpen = patient => {
+        setAddModalOpen(true);
+
+    };
+    const addModalHandleClose = () => {
+        setAddModalOpen(false);
     }
 
 
@@ -271,21 +279,34 @@ export default function PatientListTable() {
             
             <div>
             <Modal
-                open={open}
-                onClose={handleClose}
+                open={updateModalOpen}
+                onClose={updateModalHandleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
                 sx={{overflow: "scroll"}}
                 className={classes.modal}
             >
                 <Box sx={modalStyle}>
-                    <Button className={classes.exitButton} onClick={handleClose}><CloseIcon /></Button>
+                    <Button className={classes.exitButton} onClick={updateModalHandleClose}><CloseIcon /></Button>
                     <PatientUpdate patient={patient} />
+                </Box>
+            </Modal>
+            <Modal
+                open={addModalOpen}
+                onClose={addModalHandleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                sx={{overflow: "scroll"}}
+                className={classes.modal}
+            >
+                <Box sx={modalStyle}>
+                    <Button className={classes.exitButton} onClick={addModalHandleClose}><CloseIcon /></Button>
+                    <PatientAdd />
                 </Box>
             </Modal>
                 <div style={{ minWidth: "100%", display: 'flex', flexDirection: "row" }}>
                     <h2>Patients</h2>
-                    <Button variant="contained" color="primary" style={{ margin: "0 0 1% auto" }}>add patient</Button>
+                    <Button variant="contained" color="primary" style={{ margin: "0 0 1% auto" }} onClick={addModalHandleOpen}>add patient</Button>
                 </div>
 
                 <Box sx={{ width: '100%' }}>
@@ -327,7 +348,7 @@ export default function PatientListTable() {
                                                     <TableCell align="center">{item.emergency ? <ErrorIcon style={{ fill: "red" }} /> : ""}</TableCell>
                                                     <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon /></TableCell>
                                                     <TableCell align="center">{item.flag ? <FlagIcon style={{ fill: "orange" }} /> : ""}</TableCell>
-                                                    <TableCell align="center"><Button onClick={()=> handleOpen(item)}>update</Button></TableCell>
+                                                    <TableCell align="center"><Button onClick={()=> updateModalHandleOpen(item)}>update</Button></TableCell>
                                                     <TableCell align="center"><Button onClick={() => deletePatient(item.email, data, setData)}>delete</Button></TableCell>
                                                 </TableRow>
                                             );
