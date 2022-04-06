@@ -227,11 +227,11 @@ export default function DoctorListTable() {
         console.log('open')
         setDoctor(doctor)
         setOpen(true);
-
     };
+
     const handleClose = () => {
         setOpen(false);
-
+        getAllDoctors(setData)
     }
 
     const handleOpenAdd = () => {
@@ -240,6 +240,7 @@ export default function DoctorListTable() {
 
     const handleCloseAdd = () => {
         setOpenAdd(false);
+        getAllDoctors(setData)
     }
 
 
