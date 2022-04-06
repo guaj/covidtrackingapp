@@ -20,6 +20,8 @@ import {makeStyles} from '@material-ui/styles';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import DoctorUpdate from './DoctorUpdate'
+import DoctorAdd from './DoctorAdd'
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -195,6 +197,7 @@ export default function DoctorListTable() {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState([])
     const [open, setOpen] = useState(false)
+    const [openAdd, setOpenAdd] = useState(false)
     const [doctor, setDoctor] = useState(null)
 
 
@@ -231,6 +234,14 @@ export default function DoctorListTable() {
 
     }
 
+    const handleOpenAdd = () => {
+        setOpenAdd(true);
+    }
+
+    const handleCloseAdd = () => {
+        setOpenAdd(false);
+    }
+
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -259,9 +270,22 @@ export default function DoctorListTable() {
                         <DoctorUpdate doctor={doctor}/>
                     </Box>
                 </Modal>
+                <Modal
+                    open={openAdd}
+                    onClose={handleCloseAdd}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                    sx={{overflow: "scroll"}}
+                    className={classes.modal}
+                >
+                    <Box sx={modalStyle}>
+                        <Button className={classes.exitButton} onClick={handleCloseAdd}><CloseIcon/></Button>
+                        <DoctorAdd/>
+                    </Box>
+                </Modal>
                 <div style={{minWidth: "100%", display: 'flex', flexDirection: "row"}}>
                     <h2>Doctors</h2>
-                    <Button variant="contained" color="primary" style={{margin: "0 0 1% auto"}}>add doctor</Button>
+                    <Button variant="contained" color="primary" style={{margin: "0 0 1% auto"}} onClick={()=>{handleOpenAdd()}}>add doctor</Button>
                 </div>
 
                 <Box sx={{width: '100%'}}>
