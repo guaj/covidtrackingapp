@@ -237,7 +237,7 @@ export default function PrimarySearchAppBar() {
 
                         {/*conditional rendering for notifications */}
                         {hasNotification() ?
-                            <NotificationMenu isMobile={false}/>
+                            <NotificationMenu isMobile={false} data-testid="notification"/>
                             : <></>
                         }
                         <IconButton

@@ -11,6 +11,7 @@ describe("Patient can update his/her symptom status", () => {
         cy.findByTestId('sign-up-password').type('Patient1!')
         // click on login
         cy.findByText(/login/i).click()
+        cy.wait(600)       
 
         // click on profile icon
         cy.findByRole('button', { name: /account of current user/i }).click() 
@@ -25,6 +26,7 @@ describe("Patient can update his/her symptom status", () => {
                 // removes the symptom since it already exist and verifies that it has been removed
                 // click on button to go to symptom edition
                 cy.findByText(/edit symptoms/i).click()
+                cy.wait(600)
                 // uncheck the symptom "chills"
                 cy.findByRole('checkbox', {name: /chills/i}).click()
                 // save the modifications by clicking on the button update profile
@@ -36,6 +38,7 @@ describe("Patient can update his/her symptom status", () => {
                 // add the 'chills' symptoms since it does not exist and verifies that it has been added
                 // click on button to go to symptom edition
                 cy.findByText(/edit symptoms/i).click()
+                cy.wait(600)
                 // uncheck the symptom "chills"
                 cy.findByRole('checkbox', {name: /chills/i}).click()
                 // save the modifications by clicking on the button update profile

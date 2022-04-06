@@ -11,6 +11,7 @@ describe("Patient can update his/her symptom status", () => {
         cy.findByTestId('sign-up-password').type('Patient1!')
         // click on login
         cy.findByText(/login/i).click()
+        cy.wait(600)       
 
         // click on profile icon
         cy.findByRole('button', { name: /account of current user/i }).click() 
@@ -25,6 +26,7 @@ describe("Patient can update his/her symptom status", () => {
                 // verifies the button positive since the patient is negative
                 // click on button to go to symptom edition
                 cy.findByText(/edit symptoms/i).click()
+                cy.wait(600)
                 // check the button "positive"
                 cy.findByRole('radio', {name: /positive/i}).click()
                 // save the modifications by clicking on the button update profile
@@ -36,6 +38,7 @@ describe("Patient can update his/her symptom status", () => {
                 // verifies the button negative since the patient is positive
                 // click on button to go to symptom edition
                 cy.findByText(/edit symptoms/i).click()
+                cy.wait(600)
                 // check the button "negative"
                 cy.findByRole('radio', {name: /negative/i}).click()
                 // save the modifications by clicking on the button update profile

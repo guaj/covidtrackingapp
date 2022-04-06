@@ -11,6 +11,7 @@ describe("Patient can update his/her symptom status", () => {
         cy.findByTestId('sign-up-password').type('Patient1!')
         // click on login
         cy.findByText(/login/i).click()
+        cy.wait(600)       
 
         // click on profile icon
         cy.findByRole('button', { name: /account of current user/i }).click() 
@@ -23,6 +24,7 @@ describe("Patient can update his/her symptom status", () => {
         // clear the previous phone number and verifies it is not displayed on the profile
         // click on button to go to profile edition
         cy.findByText(/edit profile/i).click()
+        cy.wait(600)
         // removes the phone number
         cy.findByRole('textbox', { name: /phoneNumber/i }).clear()
             // save the modifications by clicking on the button update profile
@@ -33,6 +35,7 @@ describe("Patient can update his/her symptom status", () => {
         cy.findByTestId("phoneNumber").should('not.exist')
         // enters a new phone number 1112223333 and verifies it is displayed in the profile page
         cy.findByText(/edit profile/i).click()
+        cy.wait(600)
         // enters the new phone number
         cy.findByRole('textbox', { name: /phoneNumber/i }).type('1112223333')
         // save the modifications by clicking on the button update profile
