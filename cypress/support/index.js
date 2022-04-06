@@ -18,8 +18,11 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+<<<<<<< HEAD
 /*
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from failing the test
     return false
 })*/
+=======
+>>>>>>> a7b2020 (completed cypress test for QRcode)
