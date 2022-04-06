@@ -235,11 +235,11 @@ function tracingForm(email) {
                 </div>
               ))}
               <div className="button-section">
-                <Button className="buttonAdd" sx={{ m: 6 }} style={{ backgroundColor: '#cbacd7', borderRadius: 15 }} 
+                <Button label="buttonAdd" name="buttonadd2" key={1} className="buttonAdd" sx={{ m: 6 }} style={{ backgroundColor: '#cbacd7', borderRadius: 15 }} 
                 variant="contained" type="button" 
                 onClick={()=> {
                   console.log(email)
-                  handleAdd(localStorage.getItem("email"))
+                  handleAdd(localStorage.getItem("email").split("\"")[1]);
                   console.log(firstName)
 
                   }}>Add</Button>
@@ -247,7 +247,7 @@ function tracingForm(email) {
 
                                {/* https://blog.logrocket.com/localstorage-javascript-complete-guide/#howdoeslocalstoragework */}
                 <Button className="button submit"  
-
+                label="buttonsubmit" name="buttonsubmit2" key={2} 
                 sx={{ m: 6 }} style={{ backgroundColor: '#cbacd7', borderRadius: 15 }} variant="contained" 
                 type="submit"
                 
