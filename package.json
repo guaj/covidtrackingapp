@@ -71,6 +71,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/cypress": "^8.0.2",
     "axios": "^0.26.0",
     "jest-watch-typeahead": "^0.6.5",
     "react": "^17.0.2"
