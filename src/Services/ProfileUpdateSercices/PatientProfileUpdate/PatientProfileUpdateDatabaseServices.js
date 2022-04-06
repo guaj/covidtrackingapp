@@ -58,6 +58,7 @@ export async function fetchData(tableName) {
 }
 
 export async function updateData(tableName, data) {
+    alert(data.email)
     const params = {
         TableName: tableName,
         Key: {"email": data.email},
@@ -152,3 +153,87 @@ export async function updateData(tableName, data) {
         }
     });
 };
+
+export async function UpdateRequiredSymptoms(email, data) {
+    // fetch User Email
+    // Update his form.
+}
+
+export async function getPatientEmail(email) {
+    let params = {
+        TableName: "patients",
+        ScanFilter: {
+            "email": {
+                ComparisonOperator: "CONTAINS",
+                AttributeValueList: [email]
+            }
+        }
+    };
+    try{
+        let scanresult = await docClient.scan(params).promise();
+        let resultsArray = scanresult.Items
+        let userEmail;
+        resultsArray.forEach( (item, index) => {
+            const fetchEmail = String(item.email).split("@")[0]
+            if(email === fetchEmail) {
+                userEmail = String(scanresult.Items.at(index).email)
+            }
+
+        })
+        return userEmail;
+            } catch(e){
+        alert(JSON.stringify(e))
+    }
+}
+
+
+
+export async function  updateRequiredSymptoms(data, patientEmail) {
+    const email = patientEmail
+    const params = {
+        TableName: 'patients',
+        Key: {"email": email},
+        UpdateExpression: "SET requiredSymptoms = :requiredSymptoms",
+        ExpressionAttributeValues: {
+            ":requiredSymptoms": [
+                data.symptom1,
+                data.symptom2,
+                data.symptom3,
+                data.symptom4,
+                data.symptom5,
+                data.symptom6,
+                data.symptom7,
+                data.symptom9,
+                data.symptom10,
+                data.symptom11,
+            ],
+        },
+
+    }
+    docClient.update(params, function (err, data) {
+        if (err) {
+            console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+            alert('ERROR: Unable to update profile information! Contact support if issue persists.')
+        } else {
+            console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+            alert('Required symptoms updated!');
+        }
+    });
+
+}
+
+
+export async function fetchRequiredSymptoms(patientEmail) {
+    const email = patientEmail
+    const params = {
+        TableName: "patients",
+        ExpressionAttributeValues: {":email": email},
+        KeyConditionExpression: 'email = :email'
+    }
+
+    let result = null;
+    try {
+        result = await docClient.query(params).promise();
+    }catch (e)
+    {console.log(e)}
+}

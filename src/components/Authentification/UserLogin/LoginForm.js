@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginForm({Login, error}){
     const classes = useStyles();
-    const [details, setDetails] = useState({type:'Controlled', email: 'Controlled', password: 'Controlled'});
+    const [details, setDetails] = useState({type:'', email: '', password: ''});
 
     const submitHandler = e => {
         e.preventDefault();

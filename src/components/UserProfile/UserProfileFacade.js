@@ -2,7 +2,7 @@ import * as React from 'react';
 import Navbar from "../Navbar/Navbar";
 import "./UserProfile.css";
 import DoctorProfilePage from "./DoctorProfile/DoctorProfilePage"
-import PatientProfilePage from "./PatientProfile/PatientProfilePage";
+import { DisplayProfilePage } from "./PatientProfile/PatientProfilePage";
 import Box from "@mui/material/Box";
 import {useEffect, useState} from "react";
 import AWS from "aws-sdk";
@@ -18,7 +18,7 @@ function DiplayUserProfile(userType) {
         case "doctor":
             return <DoctorProfilePage/>;
         case "patient":
-            return <PatientProfilePage />
+            return <DisplayProfilePage />
         default:
             return <ErrorProfilePage />
 
@@ -27,7 +27,6 @@ function DiplayUserProfile(userType) {
 
 async function fetchProfileDoctorData() {
     let userEmail = window.location.href.split("/")[4];
-    let userType = null;
 
     AWS.config.update(awsConfig);
     const docClient = new AWS.DynamoDB.DocumentClient();
@@ -75,7 +74,6 @@ async function fetchProfileData(setter) {
 
 async function fetchProfilePatientData() {
     let userEmail = window.location.href.split("/")[4];
-    let userType = null;
 
     AWS.config.update(awsConfig);
     const docClient = new AWS.DynamoDB.DocumentClient();
@@ -101,7 +99,6 @@ async function fetchProfilePatientData() {
             }
         })
         if(userIndex >= 0) {
-            console.log("YESS")
             return "patient"
         }
         return "not a patient";

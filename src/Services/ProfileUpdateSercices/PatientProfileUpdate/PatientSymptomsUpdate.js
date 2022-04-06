@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ProfilePatient() {
+export default function ProfileSymptomsPatient() {
     const classes = useStyles();
 
     const [patients, setPatients] = useState(null);
@@ -277,7 +277,7 @@ export default function ProfilePatient() {
                     <Grid item xs={12} sm={12} md={8} component={Paper} elevation={6} square>
                         <div className={classes.paper}>
                             <Typography component="h1" variant="h4" className={classes.title}>
-                                Profile page
+                                Symptoms Update
                             </Typography>
                             <form onSubmit={handleEditFormSubmit}>
                                 <div className={classes.field}>
