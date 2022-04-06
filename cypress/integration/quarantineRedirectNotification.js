@@ -1,4 +1,3 @@
-import "@testing-library/cypress/add-commands";
 
 describe("Patient can go to the quarantine page after clicking a notification", () => {
     it("Patient clicks on the notification that redirects to the quarantine page", () => {

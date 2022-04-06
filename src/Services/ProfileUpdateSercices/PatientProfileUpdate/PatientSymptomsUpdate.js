@@ -396,7 +396,7 @@ export default function ProfileSymptomsPatient() {
                                         fullWidth={true}
                                         variant="contained"
                                         className={classes.submit}>
-                                        Update profile
+                                        Edit symptoms
                                     </Button>
                                     <Button
                                         type="button"

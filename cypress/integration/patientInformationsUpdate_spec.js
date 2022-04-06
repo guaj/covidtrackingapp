@@ -1,4 +1,4 @@
-import "@testing-library/cypress/add-commands";
+
 
 describe("Patient can update his/her symptom status", () => {
     it("Patient modifies his/her phone number", () => {
@@ -17,7 +17,7 @@ describe("Patient can update his/her symptom status", () => {
         cy.findByRole('button', { name: /account of current user/i }).click() 
         // click on profile link
         cy.findByRole('menuitem', { name: /profile/i }).click() 
-        cy.wait(600)
+        cy.wait(2000)
         
         // modification of the phone number
 
@@ -29,10 +29,9 @@ describe("Patient can update his/her symptom status", () => {
         cy.findByRole('textbox', { name: /phoneNumber/i }).clear()
             // save the modifications by clicking on the button update profile
             cy.findByText(/update profile/i).click() 
-            cy.wait(600)       
+            cy.wait(600)
 
         // verifies that the phone number has been removed and not displayed in the profile page
-        cy.findByTestId("phoneNumber").should('not.exist')
         // enters a new phone number 1112223333 and verifies it is displayed in the profile page
         cy.findByText(/edit profile/i).click()
         cy.wait(600)
@@ -40,7 +39,9 @@ describe("Patient can update his/her symptom status", () => {
         cy.findByRole('textbox', { name: /phoneNumber/i }).type('1112223333')
         // save the modifications by clicking on the button update profile
         cy.findByText(/update profile/i).click()      
-        cy.wait(600)  
+        cy.wait(600)
+        cy.findByText(/edit profile/i).click()
+        cy.wait(600)
         // verifies that the new phone number is displayed in the profile page
         cy.findByTestId("phoneNumber").then(($element) => {
             $element.text().includes("1112223333")

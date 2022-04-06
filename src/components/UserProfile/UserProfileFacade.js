@@ -29,6 +29,9 @@ async function fetchProfileDoctorData() {
     let userEmail = window.location.href.split("/")[4];
 
     AWS.config.update(awsConfig);
+    AWS.config.update({
+        dynamoDbCrc32: false
+    });
     const docClient = new AWS.DynamoDB.DocumentClient();
 
     let params = {
@@ -76,6 +79,9 @@ async function fetchProfilePatientData() {
     let userEmail = window.location.href.split("/")[4];
 
     AWS.config.update(awsConfig);
+    AWS.config.update({
+        dynamoDbCrc32: false
+    });
     const docClient = new AWS.DynamoDB.DocumentClient();
 
     let params = {

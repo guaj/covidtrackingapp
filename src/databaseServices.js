@@ -2,6 +2,9 @@ import awsConfig from './aws-config.json'
 import AWS from 'aws-sdk'
 
 AWS.config.update(awsConfig);
+AWS.config.update({
+  dynamoDbCrc32: false
+});
 const docClient = new AWS.DynamoDB.DocumentClient()
 
 

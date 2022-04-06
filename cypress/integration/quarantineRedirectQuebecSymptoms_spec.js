@@ -1,4 +1,4 @@
-import "@testing-library/cypress/add-commands";
+
 
 describe("Patient can find a link to the Quebec prevention website", () => {
     it("Patient goes to the Quebec's website for more info about Covid symptoms", () => {

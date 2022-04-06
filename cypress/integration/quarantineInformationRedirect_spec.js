@@ -1,4 +1,3 @@
-import "@testing-library/cypress/add-commands";
 
 describe("Patient can find a link to the governmental quarantine information", () => {
     it("Patient goes to the government website for more info about quarantine", () => {
