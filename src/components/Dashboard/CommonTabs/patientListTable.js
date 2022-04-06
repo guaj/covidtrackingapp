@@ -12,15 +12,12 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { visuallyHidden } from '@mui/utils';
+import {visuallyHidden} from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
 import ErrorIcon from '@mui/icons-material/Error';
 import FlagIcon from '@mui/icons-material/Flag';
-import { getAllPatients } from '../../../databaseServices'
+import {getAllPatients} from '../../../databaseServices'
 import {useState, useEffect} from 'react'
-
-
-
 
 
 function descendingComparator(a, b, orderBy) {
@@ -56,7 +53,7 @@ function stableSort(array, comparator) {
 const headCells = [
     {
         id: 'priorityNumber',
-        numeric : true,
+        numeric: true,
         disablePadding: false,
         label: 'Priority',
     },
@@ -99,7 +96,7 @@ const headCells = [
 
 
 function EnhancedTableHead(props) {
-    const { order, orderBy, onRequestSort } =
+    const {order, orderBy, onRequestSort} =
         props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
@@ -146,9 +143,6 @@ EnhancedTableHead.propTypes = {
 };
 
 
-
-
-
 export default function PatientListTable() {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('calories');
@@ -159,13 +153,11 @@ export default function PatientListTable() {
     const [data, setData] = useState([])
 
 
-
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
-
 
 
     const handleChangePage = (event, newPage) => {
@@ -193,15 +185,14 @@ export default function PatientListTable() {
         return "/profile/" + url[0];
     }
 
-
     return (
         <div>
             <h2>Patients</h2>
-            <Box sx={{ width: '100%' }}>
-                <Paper sx={{ width: '100%', mb: 2 }}>
+            <Box sx={{width: '100%'}}>
+                <Paper sx={{width: '100%', mb: 2}}>
                     <TableContainer>
                         <Table
-                            sx={{ minWidth: 750 }}
+                            sx={{minWidth: 750}}
                             aria-labelledby="patientListTable"
                             size={dense ? 'small' : 'medium'}
                         >
@@ -230,10 +221,14 @@ export default function PatientListTable() {
                                                 <TableCell align="center">{item.firstName}</TableCell>
                                                 <TableCell align="center">{item.lastName}</TableCell>
                                                 <TableCell align="center">{item.covidResult}</TableCell>
-                                                <TableCell align="center">{item.reviewed ? "yes" : "no"}</TableCell> {/* TODO: check the database attributes */}
-                                                <TableCell align="center">{item.emergency ? <ErrorIcon style={{fill: "red"}}/> : "" }</TableCell>
-                                                <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon/></TableCell>
-                                                <TableCell align="center">{item.flag ? <FlagIcon style={{fill: "orange"}}/> : "" }</TableCell>
+                                                <TableCell
+                                                    align="center">{item.reviewed ? "yes" : "no"}</TableCell> {/* TODO: check the database attributes */}
+                                                <TableCell align="center">{item.emergency ?
+                                                    <ErrorIcon style={{fill: "red"}}/> : ""}</TableCell>
+                                                <TableCell align="center" numeric component="a"
+                                                           href={profileLink(item.email)}><LinkIcon/></TableCell>
+                                                <TableCell align="center">{item.flag ?
+                                                    <FlagIcon style={{fill: "orange"}}/> : ""}</TableCell>
                                             </TableRow>
                                         );
                                     })}
@@ -243,7 +238,7 @@ export default function PatientListTable() {
                                             height: (dense ? 33 : 53) * emptyRows,
                                         }}
                                     >
-                                        <TableCell colSpan={6} />
+                                        <TableCell colSpan={6}/>
                                     </TableRow>
                                 )}
                             </TableBody>
@@ -260,7 +255,7 @@ export default function PatientListTable() {
                     />
                 </Paper>
                 <FormControlLabel
-                    control={<Switch checked={dense} onChange={handleChangeDense} />}
+                    control={<Switch checked={dense} onChange={handleChangeDense}/>}
                     label="Dense padding"
                 />
             </Box>
