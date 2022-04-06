@@ -195,7 +195,7 @@ export default class PatientProfilePage extends React.Component {
 
 
                             <div>
-                                <QRCode value={"http://localhost:3000/" + this.userEmail + "/summary"} style={{ display: "block", margin: "5% auto", }} />
+                                <QRCode value={"https://main.d1mmulvvzymdin.amplifyapp.com/" + this.userEmail + "/summary"} style={{ display: "block", margin: "5% auto", }} />
                             </div>
 
 
