@@ -6,11 +6,14 @@ import Button from "@material-ui/core/Button";
 import Box from "@mui/material/Box";
 import AWS from "aws-sdk";
 import awsConfig from "../../../aws-config.json";
-import {sendMail} from "../../../Services/EmailService/EmailService";
+import { sendMail } from "../../../Services/EmailService/EmailService";
 import EmailFormDialog from "../../../Services/EmailService/EmailDialog";
+
 import {getSpecificDoctor, getSpecificPatient} from "../../../databaseServices";
 import {useState, Fragment, useEffect} from "react";
 import * as PatientProfileUpdateDatabaseServices from "../../../Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdateDatabaseServices";
+
+import QRCode from "react-qr-code";
 
 AWS.config.update(awsConfig);
 const docClient = new AWS.DynamoDB.DocumentClient();
@@ -67,9 +70,10 @@ export default function PatientProfilePage() {
         params = {
             TableName: 'patients',
             Key: {"email": FormValues.email},
+
             ComparisonOperator: "CONTAINS",
             UpdateExpression: "set flag = :flag",
-            ExpressionAttributeValues: {":flag": !flag},
+            ExpressionAttributeValues: { ":flag": !flag },
             KeyConditionExpression: 'email = :email',
             ReturnValues: "UPDATED_NEW"
         }
@@ -204,7 +208,7 @@ export default function PatientProfilePage() {
                             sizes="large"
                             alt="profilePage"
                             src={myImage}
-                            sx={{width: 152, height: 152}}
+                            sx={{ width: 152, height: 152 }}
                         />
                         {/* eslint-disable-next-line no-undef */}
                         <div className="myName">
@@ -293,9 +297,7 @@ export default function PatientProfilePage() {
                                     : <></>}
                             </div>
                             <div className="button">
-                                {canScheduleMeeting() ?
-                                    <EmailFormDialog/>
-                                    : <></>}
+                                {canScheduleMeeting() ? <EmailFormDialog/> : <></>}
                             </div>
                             <div className="button">
                                 {JSON.parse(localStorage.getItem("type")) !== "patient" ?
@@ -305,8 +307,14 @@ export default function PatientProfilePage() {
                                     : <></>}
                             </div>
 
+                            <div>
+                                <QRCode value={"http://localhost:3000/" + this.userEmail + "/summary"} style={{ display: "block", margin: "5% auto", }} />
+                            </div>
+
                         </Box>
+
                     </div>
+
                 </div>
             </>
 

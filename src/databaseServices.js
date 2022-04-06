@@ -230,3 +230,26 @@ export async function getPairedDoctors() {
     alert("could not retrieve data >:(")
   }
 }
+
+//////////////////////////////////////////////////////////////////////////////
+
+export async function getPatientInfo(setter, email){
+
+  let params = {
+    TableName: "patients",
+    ScanFilter: {
+      "email": {
+        ComparisonOperator: "CONTAINS",
+        AttributeValueList: [email]
+      }
+    }
+  };
+    try{
+      let scanresult = await docClient.scan(params).promise();
+      console.log(scanresult.Items)
+      setter(scanresult.Items[0]) //setter modifies the instance of the passed paremeter
+    } catch(e){
+      alert(JSON.stringify(e))
+    }
+}
+
