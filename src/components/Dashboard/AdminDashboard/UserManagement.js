@@ -22,7 +22,8 @@ import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
-import PatientProfileUpdate from '../../../Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdate'
+import PatientUpdate from './PatientUpdate'
+
 
 const useStyles = makeStyles((theme) => ({
     pair: {
@@ -40,12 +41,18 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: 'rgba(63, 81, 181, 0.5)',
             color: '#fff',
         }
+    },
+    modal: {
+        height: "70%"
     }
+    
 })
 );
 
 //styling for the modal
 const modalStyle = {
+    //overflow: 'auto',
+    marginTop: '30%',
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -210,6 +217,7 @@ export default function PatientListTable() {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState([])
     const [open, setOpen] = useState(false)
+    const [patient, setPatient] = useState(null)
 
 
 
@@ -236,8 +244,9 @@ export default function PatientListTable() {
 
     useEffect(() => (async () => await getAllPatients(setData))(), [])
 
-    const handleOpen = () => {
+    const handleOpen = patient => {
         console.log('open')
+        setPatient(patient)
         setOpen(true);
 
     };
@@ -266,10 +275,12 @@ export default function PatientListTable() {
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                sx={{overflow: "scroll"}}
+                className={classes.modal}
             >
                 <Box sx={modalStyle}>
                     <Button className={classes.exitButton} onClick={handleClose}><CloseIcon /></Button>
-                    <PatientProfileUpdate />
+                    <PatientUpdate patient={patient} />
                 </Box>
             </Modal>
                 <div style={{ minWidth: "100%", display: 'flex', flexDirection: "row" }}>
@@ -316,7 +327,7 @@ export default function PatientListTable() {
                                                     <TableCell align="center">{item.emergency ? <ErrorIcon style={{ fill: "red" }} /> : ""}</TableCell>
                                                     <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon /></TableCell>
                                                     <TableCell align="center">{item.flag ? <FlagIcon style={{ fill: "orange" }} /> : ""}</TableCell>
-                                                    <TableCell align="center"><Button onClick={handleOpen}>update</Button></TableCell>
+                                                    <TableCell align="center"><Button onClick={()=> handleOpen(item)}>update</Button></TableCell>
                                                     <TableCell align="center"><Button onClick={() => deletePatient(item.email, data, setData)}>delete</Button></TableCell>
                                                 </TableRow>
                                             );
