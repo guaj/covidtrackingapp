@@ -244,3 +244,28 @@ export async function deletePatient(email, data, setter) {
   }
 }
 
+export async function deleteDoctor(email, data, setter) {
+
+  let params = {
+    TableName: "doctors",
+    Key: {
+      "email": email
+    }
+  }
+  try {
+
+    await docClient.delete(params).promise();
+    let updatedData = [...data]
+    updatedData.forEach(patient => {
+      if (patient.email === email) {
+        updatedData.splice(updatedData.indexOf(patient), 1);
+      }
+    })
+    setter(updatedData)
+
+
+  } catch (e) {
+    alert(JSON.stringify(e))
+  }
+}
+
