@@ -236,4 +236,20 @@ export async function fetchRequiredSymptoms(patientEmail) {
         result = await docClient.query(params).promise();
     }catch (e)
     {console.log(e)}
+    finally {
+        const formValues = {
+            symptom1: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[0] !== undefined ? result.Items.at(0).requiredSymptoms[0] : false) : false),
+            symptom2: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[1] !== undefined ? result.Items.at(0).requiredSymptoms[1] : false) : false),
+            symptom3: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[2] !== undefined ? result.Items.at(0).requiredSymptoms[2] : false) : false),
+            symptom4: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[3] !== undefined ? result.Items.at(0).requiredSymptoms[3] : false) : false),
+            symptom5: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[4] !== undefined ? result.Items.at(0).requiredSymptoms[4] : false) : false),
+            symptom6: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[5] !== undefined ? result.Items.at(0).requiredSymptoms[5] : false) : false),
+            symptom7: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[6] !== undefined ? result.Items.at(0).requiredSymptoms[6] : false) : false),
+            symptom8: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[7] !== undefined ? result.Items.at(0).requiredSymptoms[7] : false) : false),
+            symptom9: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[8] !== undefined ? result.Items.at(0).requiredSymptoms[8] : false) : false),
+            symptom10: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[9] !== undefined ? result.Items.at(0).requiredSymptoms[9] : false) : false),
+            symptom11: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[10] !== undefined ? result.Items.at(0).requiredSymptoms[10] : false) : false),
+        }
+        return [formValues];
+    }
 }

@@ -10,7 +10,7 @@ import { Checkbox, FormControlLabel, FormGroup } from "@material-ui/core";
 import geometricImage from "../../../images/geometric_gradient.jpg";
 import { useState, Fragment, useEffect } from "react";
 import Navbar from "../../../components/Navbar/Navbar";
-import {getPatientEmail, updateRequiredSymptoms} from "./PatientProfileUpdateDatabaseServices";
+import {fetchRequiredSymptoms, getPatientEmail, updateRequiredSymptoms} from "./PatientProfileUpdateDatabaseServices";
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -76,8 +76,12 @@ export default function SymptomsRequiredUpdate() {
         async function fetchData() {
             const email = await getPatientEmail(userEmail);
             setPatientEmail(email);
+
         }
-       fetchData()
+       fetchData().then(async r => {
+           const test = await fetchRequiredSymptoms(patientEmail)
+           setPatients(test)
+       } )
     }, [patientEmail, userEmail]);
 
     //loads patient information on patients state change when the state is not null
@@ -128,9 +132,7 @@ export default function SymptomsRequiredUpdate() {
         newPatients[0] = editedPatient;
         setPatients(newPatients);
         updateRequiredSymptoms(newPatients[0], patientEmail).then();
-        /*PatientProfileUpdateDatabaseServices.updateData('patients', newPatients[0]).then(  () => {
-            window.location.assign("/profile/" +userEmail)
-        });*/
+
     };
 
     return (

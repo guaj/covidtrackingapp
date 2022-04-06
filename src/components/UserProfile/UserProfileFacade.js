@@ -95,7 +95,7 @@ async function fetchProfilePatientData() {
         resultsArray.forEach( (item, index) => {
             const fetchEmail = String(item.email).split("@")[0]
             if(userEmail === fetchEmail) {
-                userIndex = index
+                userIndex = index // can fetch the patient that way if multiple patients are returned from the query
             }
         })
         if(userIndex >= 0) {

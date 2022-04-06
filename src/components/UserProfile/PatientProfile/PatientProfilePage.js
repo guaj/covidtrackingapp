@@ -10,6 +10,7 @@ import awsConfig from "../../../aws-config.json";
 import EmailFormDialog from "../../../Services/EmailService/EmailDialog";
 import QRCode from "react-qr-code";
 import {makeStyles} from "@material-ui/core/styles";
+import {HealthStatusView} from "./HealthStatusView";
 
 
 
@@ -29,13 +30,23 @@ class PatientProfilePage extends React.Component {
     user = JSON.parse(localStorage.getItem("email"));
     url = this.user.split("@");
 
+
     state = {
-        flag: this.isFlagged()
+        flag: this.isFlagged(),
+        open: false
     }
 
     editSymptomsRedirect() {
         window.location = '/patient-symptoms-edit'
     }
+
+    handleClickOpen = () => {
+        this.setState({open: true});
+    };
+
+    handleClose = () => {
+        this.setState({open: false})
+    };
 
 
     canEditProfile() {
@@ -221,7 +232,9 @@ class PatientProfilePage extends React.Component {
 
                             <Box className="button" sx={{pt: 5}}>
                                 {JSON.parse(localStorage.getItem("type")) !== "patient" ?
-                                    <Button variant="contained" >View health status</Button> : <></> }
+                                    <Button variant="contained"
+                                            onClick={this.handleClickOpen}
+                                    >View health status</Button> : <></> }
                             </Box>
 
                             <Box className="button" sx={{pt: 5}}>
@@ -244,6 +257,15 @@ class PatientProfilePage extends React.Component {
                     </div>
 
                 </div>
+                <div>
+                    <HealthStatusView
+                        open={this.state.open}
+                        handleClose={this.handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    />
+                </div>
+
             </>
 
         )
