@@ -19,7 +19,6 @@ import DoctorProfileUpdate from './Services/ProfileUpdateSercices/DoctorProfileU
 import AppointmentScheduler from "./Services/AppointmentService/AppointmentScheduler";
 import PatientSummaryPageQrCode from "./components/UserProfile/PatientProfile/PatientSummaryPageQrCode";
 import QuarantineTab from './components/Dashboard/PatientDashboard/QuarantineTab';
-import Navbar from './components/Navbar/Navbar';
 
 
 ///* Make sure to update file when adding to App.css!!*/
