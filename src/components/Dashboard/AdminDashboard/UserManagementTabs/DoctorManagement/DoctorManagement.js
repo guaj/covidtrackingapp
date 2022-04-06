@@ -13,7 +13,7 @@ import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import {visuallyHidden} from '@mui/utils';
-import {deleteDoctor, getAllDoctors} from '../../../../databaseServices'
+import {deleteDoctor, getAllDoctors} from '../../../../../databaseServices'
 import {useState, useEffect} from 'react'
 import Button from '@mui/material/Button';
 import {makeStyles} from '@material-ui/styles';

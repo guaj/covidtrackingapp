@@ -1,13 +1,13 @@
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import '../../../profile.css'
+import '../../../../profile.css'
 import * as React from 'react';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Checkbox, FormControlLabel, FormGroup } from "@material-ui/core";
-import geometricImage from "../../../../images/geometric_gradient.jpg";
+import geometricImage from "../../../../../images/geometric_gradient.jpg";
 import { useState, Fragment, useEffect } from "react";
-import * as PatientProfileUpdateDatabaseServices from '../../../../Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdateDatabaseServices'
+import * as PatientProfileUpdateDatabaseServices from '../../../../../Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdateDatabaseServices'
 
 const useStyles = makeStyles((theme) => ({
     image: {

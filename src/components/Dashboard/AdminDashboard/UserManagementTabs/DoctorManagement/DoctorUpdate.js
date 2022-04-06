@@ -6,10 +6,10 @@ import {makeStyles} from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import * as React from "react";
-import geometricImage from "../../../../images/geometric_gradient.jpg";
+import geometricImage from "../../../../../images/geometric_gradient.jpg";
 import {useState, useEffect} from "react";
 import * as DoctorProfileUpdateDatabaseServices
-    from "../../../../Services/ProfileUpdateSercices/DoctorProfileUpdate/DoctorProfileUpdateDatabaseServices";
+    from "../../../../../Services/ProfileUpdateSercices/DoctorProfileUpdate/DoctorProfileUpdateDatabaseServices";
 
 
 const useStyles = makeStyles((theme) => ({

@@ -16,7 +16,7 @@ import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
 import ErrorIcon from '@mui/icons-material/Error';
 import FlagIcon from '@mui/icons-material/Flag';
-import { getAllPatients, deletePatient } from '../../../../databaseServices'
+import { getAllPatients, deletePatient } from '../../../../../databaseServices'
 import { useState, useEffect } from 'react'
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
