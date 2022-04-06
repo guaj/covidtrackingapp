@@ -6,10 +6,10 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 
 let undefinedAddressList = false;
 
-export async function fetchData(tableName) {
+export async function fetchData(tableName, email) {
     const params = {
         TableName: tableName,
-        ExpressionAttributeValues: {":email": JSON.parse(localStorage.getItem("email"))},
+        ExpressionAttributeValues: {":email":  email ? email : JSON.parse(localStorage.getItem("email"))},
         KeyConditionExpression: 'email = :email'
     }
 

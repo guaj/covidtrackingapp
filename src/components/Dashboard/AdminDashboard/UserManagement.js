@@ -4,8 +4,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import DoctorListTable from '../CommonTabs/doctorListTable';
-import PatientManagement from './UserManagementTabs/PatientManagement'
+import PatientManagement from './UserManagementTabs/PatientManagement/PatientManagement'
+import DoctorManagement from './UserManagementTabs/DoctorManagement/DoctorManagement'
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -69,7 +69,7 @@ export default function AdminTabs() {
                 <PatientManagement/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <DoctorListTable />
+                <DoctorManagement />
             </TabPanel>
         </>
     )

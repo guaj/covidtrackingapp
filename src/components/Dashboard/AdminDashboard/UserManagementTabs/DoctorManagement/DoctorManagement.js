@@ -12,41 +12,40 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { visuallyHidden } from '@mui/utils';
-import LinkIcon from '@mui/icons-material/Link';
-import ErrorIcon from '@mui/icons-material/Error';
-import FlagIcon from '@mui/icons-material/Flag';
-import { getAllPatients, deletePatient } from '../../../../databaseServices'
-import { useState, useEffect } from 'react'
+import {visuallyHidden} from '@mui/utils';
+import {deleteDoctor, getAllDoctors} from '../../../../../databaseServices'
+import {useState, useEffect} from 'react'
 import Button from '@mui/material/Button';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
-import PatientUpdate from './PatientUpdate'
+import DoctorUpdate from './DoctorUpdate'
+import DoctorAdd from './DoctorAdd'
+
 
 
 const useStyles = makeStyles((theme) => ({
-    pair: {
+        pair: {
 
-        '&:hover': {
-            backgroundColor: 'rgba(63, 81, 181, 0.5)',
-            color: '#fff',
+            '&:hover': {
+                backgroundColor: 'rgba(63, 81, 181, 0.5)',
+                color: '#fff',
+            }
+        },
+        exitButton: {
+            position: 'absolute',
+            top: '5px',
+            right: '5px',
+            '&:hover': {
+                backgroundColor: 'rgba(63, 81, 181, 0.5)',
+                color: '#fff',
+            }
+        },
+        modal: {
+            height: "70%"
         }
-    },
-    exitButton: {
-        position: 'absolute',
-        top: '5px',
-        right: '5px',
-        '&:hover': {
-            backgroundColor: 'rgba(63, 81, 181, 0.5)',
-            color: '#fff',
-        }
-    },
-    modal: {
-        height: "70%"
-    }
-    
-})
+
+    })
 );
 
 //styling for the modal
@@ -64,11 +63,6 @@ const modalStyle = {
     borderRadius: '1%',
     p: 4,
 };
-
-
-
-
-
 
 
 function descendingComparator(a, b, orderBy) {
@@ -103,10 +97,19 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'priorityNumber',
-        numeric: true,
+        id: 'licenseNumber',
         disablePadding: false,
-        label: 'Priority',
+        label: 'License Number',
+    },
+    {
+        id: 'address',
+        disablePadding: false,
+        label: 'Address',
+    },
+    {
+        id: 'email',
+        disablePadding: false,
+        label: 'Email',
     },
     {
         id: 'firstName',
@@ -119,29 +122,9 @@ const headCells = [
         label: 'Last Name',
     },
     {
-        id: 'covidResult',
+        id: 'phoneNumber',
         disablePadding: false,
-        label: 'Covid Result',
-    },
-    {
-        id: 'reviewed',
-        disablePadding: false,
-        label: 'Reviewed',
-    },
-    {
-        id: 'emergency',
-        disablePadding: false,
-        label: 'Emergency',
-    },
-    {
-        id: 'profileLink',
-        disablePadding: false,
-        label: 'Profile Link',
-    },
-    {
-        id: 'isFlagged',
-        disablePadding: false,
-        label: 'Flag',
+        label: 'Phone Number',
     },
     {
         id: 'controls',
@@ -157,7 +140,7 @@ const headCells = [
 
 
 function EnhancedTableHead(props) {
-    const { order, orderBy, onRequestSort } =
+    const {order, orderBy, onRequestSort} =
         props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
@@ -204,10 +187,7 @@ EnhancedTableHead.propTypes = {
 };
 
 
-
-// export const [patient, setPatient] = null;
-
-export default function PatientListTable() {
+export default function DoctorListTable() {
     const classes = useStyles();
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('calories');
@@ -217,8 +197,8 @@ export default function PatientListTable() {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState([])
     const [open, setOpen] = useState(false)
-    const [patient, setPatient] = useState(null)
-
+    const [openAdd, setOpenAdd] = useState(false)
+    const [doctor, setDoctor] = useState(null)
 
 
     const handleRequestSort = (event, property) => {
@@ -226,7 +206,6 @@ export default function PatientListTable() {
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
-
 
 
     const handleChangePage = (event, newPage) => {
@@ -242,17 +221,25 @@ export default function PatientListTable() {
         setDense(event.target.checked);
     };
 
-    useEffect(() => (async () => await getAllPatients(setData))(), [])
+    useEffect(() => (async () => await getAllDoctors(setData))(), [])
 
-    const handleOpen = patient => {
+    const handleOpen = doctor => {
         console.log('open')
-        setPatient(patient)
+        setDoctor(doctor)
         setOpen(true);
 
     };
     const handleClose = () => {
         setOpen(false);
 
+    }
+
+    const handleOpenAdd = () => {
+        setOpenAdd(true);
+    }
+
+    const handleCloseAdd = () => {
+        setOpenAdd(false);
     }
 
 
@@ -268,34 +255,47 @@ export default function PatientListTable() {
 
     return (
         <>
-            
+
             <div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-                sx={{overflow: "scroll"}}
-                className={classes.modal}
-            >
-                <Box sx={modalStyle}>
-                    <Button className={classes.exitButton} onClick={handleClose}><CloseIcon /></Button>
-                    <PatientUpdate patient={patient} />
-                </Box>
-            </Modal>
-                <div style={{ minWidth: "100%", display: 'flex', flexDirection: "row" }}>
-                    <h2>Patients</h2>
-                    <Button variant="contained" color="primary" style={{ margin: "0 0 1% auto" }}>add patient</Button>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                    sx={{overflow: "scroll"}}
+                    className={classes.modal}
+                >
+                    <Box sx={modalStyle}>
+                        <Button className={classes.exitButton} onClick={handleClose}><CloseIcon/></Button>
+                        <DoctorUpdate doctor={doctor}/>
+                    </Box>
+                </Modal>
+                <Modal
+                    open={openAdd}
+                    onClose={handleCloseAdd}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                    sx={{overflow: "scroll"}}
+                    className={classes.modal}
+                >
+                    <Box sx={modalStyle}>
+                        <Button className={classes.exitButton} onClick={handleCloseAdd}><CloseIcon/></Button>
+                        <DoctorAdd/>
+                    </Box>
+                </Modal>
+                <div style={{minWidth: "100%", display: 'flex', flexDirection: "row"}}>
+                    <h2>Doctors</h2>
+                    <Button variant="contained" color="primary" style={{margin: "0 0 1% auto"}} onClick={()=>{handleOpenAdd()}}>add doctor</Button>
                 </div>
 
-                <Box sx={{ width: '100%' }}>
+                <Box sx={{width: '100%'}}>
 
-                    <Paper sx={{ width: '100%', mb: 2 }}>
+                    <Paper sx={{width: '100%', mb: 2}}>
 
                         <TableContainer>
                             <Table
-                                sx={{ minWidth: 750 }}
-                                aria-labelledby="patientListTable"
+                                sx={{minWidth: 750}}
+                                aria-labelledby="doctorListTable"
                                 size={dense ? 'small' : 'medium'}
                             >
                                 <EnhancedTableHead
@@ -319,16 +319,16 @@ export default function PatientListTable() {
                                                     tabIndex={-1}
                                                     key={item.name}
                                                 >
-                                                    <TableCell />
-                                                    <TableCell align="center">{item.firstName}</TableCell>
-                                                    <TableCell align="center">{item.lastName}</TableCell>
-                                                    <TableCell align="center">{item.covidResult}</TableCell>
-                                                    <TableCell align="center">{item.reviewed ? "yes" : "no"}</TableCell> {/* TODO: check the database attributes */}
-                                                    <TableCell align="center">{item.emergency ? <ErrorIcon style={{ fill: "red" }} /> : ""}</TableCell>
-                                                    <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon /></TableCell>
-                                                    <TableCell align="center">{item.flag ? <FlagIcon style={{ fill: "orange" }} /> : ""}</TableCell>
-                                                    <TableCell align="center"><Button onClick={()=> handleOpen(item)}>update</Button></TableCell>
-                                                    <TableCell align="center"><Button onClick={() => deletePatient(item.email, data, setData)}>delete</Button></TableCell>
+                                                    <TableCell align="left">{item.licenseNumber}</TableCell>
+                                                    <TableCell align="left"></TableCell>
+                                                    <TableCell align="left">{item.email}</TableCell>
+                                                    <TableCell align="left">{item.firstName}</TableCell>
+                                                    <TableCell align="left">{item.lastName}</TableCell>
+                                                    <TableCell align="left">{item.phoneNumber}</TableCell>
+                                                    <TableCell align="left"><Button
+                                                        onClick={() => handleOpen(item)}>update</Button></TableCell>
+                                                    <TableCell align="left"><Button
+                                                        onClick={() => deleteDoctor(item.email, data, setData)}>delete</Button></TableCell>
                                                 </TableRow>
                                             );
                                         })}
@@ -338,7 +338,7 @@ export default function PatientListTable() {
                                                 height: (dense ? 33 : 53) * emptyRows,
                                             }}
                                         >
-                                            <TableCell colSpan={6} />
+                                            <TableCell colSpan={6}/>
                                         </TableRow>
                                     )}
                                 </TableBody>
@@ -355,7 +355,7 @@ export default function PatientListTable() {
                         />
                     </Paper>
                     <FormControlLabel
-                        control={<Switch checked={dense} onChange={handleChangeDense} />}
+                        control={<Switch checked={dense} onChange={handleChangeDense}/>}
                         label="Dense padding"
                     />
                 </Box>
