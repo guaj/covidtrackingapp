@@ -9,22 +9,71 @@ import AWS from "aws-sdk";
 import awsConfig from "../../aws-config.json";
 import ErrorProfilePage from "./ErrorProfilePage";
 import {makeStyles} from "@material-ui/core/styles";
+import {CircularProgress} from "@mui/material";
 
 const useStyles = makeStyles((theme) => {});
 
-function DisplayUserProfile(userType) {
-
+function DiplayUserProfile(userType) {
     switch (userType) {
         case "doctor":
-            return <DoctorProfilePage/>
+            return <DoctorProfilePage/>;
         case "patient":
-            return <PatientProfilePage/>
+            return <PatientProfilePage />
         default:
-            return <ErrorProfilePage/>
+            return <ErrorProfilePage />
+
     }
 }
 
-async function fetchProfileData() {
+async function fetchProfileDoctorData() {
+    let userEmail = window.location.href.split("/")[4];
+    let userType = null;
+
+    AWS.config.update(awsConfig);
+    const docClient = new AWS.DynamoDB.DocumentClient();
+
+    let params = {
+        TableName: "doctors",
+        ScanFilter: {
+            "email": {
+                ComparisonOperator: "CONTAINS",
+                AttributeValueList: [userEmail]
+            }
+        }
+    };
+
+    try {
+        let scanresult = await docClient.scan(params).promise();
+        let resultsArray = scanresult.Items
+        let userIndex = -1;
+        resultsArray.forEach( (item, index) => {
+            const fetchEmail = String(item.email).split("@")[0]
+            if(userEmail === fetchEmail) {
+                userIndex = index
+            }
+        })
+        if(userIndex >= 0)
+            return "doctor"
+        return "";
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+async function fetchProfileData(setter) {
+    let userType = "";
+    userType= await fetchProfilePatientData();
+    setter(userType)
+    if(userType === "not a patient"){
+        userType = await fetchProfileDoctorData();
+        setter(userType);
+    }
+}
+
+
+
+
+async function fetchProfilePatientData() {
     let userEmail = window.location.href.split("/")[4];
     let userType = null;
 
@@ -43,37 +92,44 @@ async function fetchProfileData() {
 
     try {
         let scanresult = await docClient.scan(params).promise();
-
-        userEmail = (scanresult.Items.length === 0 ? null : scanresult.Items.at(0).email);
-    } finally {
-        if (userEmail !== null)
-            userType = "patient";
-        else
-            userType = JSON.parse(localStorage.getItem("type"));
-
-        return userType;
+        let resultsArray = scanresult.Items
+        let userIndex = -1;
+        resultsArray.forEach( (item, index) => {
+            const fetchEmail = String(item.email).split("@")[0]
+            if(userEmail === fetchEmail) {
+                userIndex = index
+            }
+        })
+        if(userIndex >= 0) {
+            console.log("YESS")
+            return "patient"
+        }
+        return "not a patient";
+    } catch (e) {
+        console.log(e)
     }
 }
 
 export default function UserProfileFacade() {
+    const [isLoading, setIsloading] = React.useState(true)
     useStyles();
 
     try {
         JSON.parse(localStorage.getItem("email"));
-        let userEmail = JSON.parse(localStorage.getItem("email"));
-        let userType = JSON.parse(localStorage.getItem("type"));
+        JSON.parse(localStorage.getItem("email"));
     } catch (err) {
         console.log('Error: ', err.message);
         window.location.assign("/login#redirect");
     }
-    let userEmail = JSON.parse(localStorage.getItem("email"));
-    const [userType, setUserType] = useState(null);
 
-    let userFetch = window.location.href.split("/")[4]
+    const [userType, setUserType] = useState("null");
 
-    useEffect(async () => {
-        setUserType(await fetchProfileData());
-    }, [userType])
+
+    useEffect(() => (async () => {
+            await fetchProfileData(setUserType)
+            setIsloading(false);
+        }
+    )(), [])
 
 
     return (
@@ -82,7 +138,9 @@ export default function UserProfileFacade() {
             <div>
                 <Box sx={{width: '80%', margin: '5% auto'}}>
                     <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                        {DisplayUserProfile(userType)}
+                        {isLoading ? <CircularProgress /> :
+                            <>{DiplayUserProfile(userType)}</>
+                        }
                     </Box>
                 </Box>
             </div>
