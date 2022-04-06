@@ -118,7 +118,7 @@ export default function TracingformTest() {
     }
   };
 
-  //useEffect(() => (async () => await getAllCovidPositivePatients(setData))(), [])
+  useEffect(() => (async () => await getAllCovidPositivePatients(setData))(), [])
    useEffect(() => (async () => await getAllLocations(setData))(), [])
   //  useEffect(() => (async () => await isInNotificationList(localStorage.getItem("email").split("\"")[1]))().then(console.log), [])
 
@@ -239,7 +239,7 @@ function tracingForm(email) {
                 variant="contained" type="button" 
                 onClick={()=> {
                   console.log(email)
-                  handleAdd(localStorage.getItem("email"))
+                  handleAdd(localStorage.getItem("email").split("\"")[1]);
                   console.log(firstName)
 
                   }}>Add</Button>

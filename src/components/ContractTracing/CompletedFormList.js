@@ -14,10 +14,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import {visuallyHidden} from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
-import {
-    addSentContactTracingFormTime,
-    getAllCovidPositivePatients,
-    isInNotificationList, isInTracingList
+import { addSentContactTracingFormTime,
+  getAllCovidPositivePatients, getCompletedCovidTracingForm,
+    isInNotificationList, isInTracingList, getAllLocations
 } from '../../databaseServices';
 import {useState, useEffect} from 'react';
 import AWS from "aws-sdk";
@@ -44,6 +43,10 @@ function getComparator(order, orderBy) {
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
+function profileLink(email) {
+    let url = email.split("@");
+    return  url[0];
+}
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
@@ -60,26 +63,17 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'firstName',
+        id: 'email',
         disablePadding: false,
         label: 'Email',
     },
     {
-        id: 'lastName',
-        disablePadding: false,
-        label: 'Completed',
-    },
-    {
-        id: 'covidResult',
+        id: 'date',
         disablePadding: false,
         label: 'Date',
     },
-
-    {
-        id: 'Type',
-        disablePadding: false,
-        label: 'Profile Link',
-    },
+   
+   
    
 ];
 
@@ -157,7 +151,7 @@ export default function CompletedListTable() {
         setDense(event.target.checked);
     };
 
-    const [tableValues, setTableValues] = useState([{ firstName: '', patientEmail: '', locationName: '', locationNumber: "", locationDate: "", locationTime: "" }]);
+    const [tableValues, setTableValues] = useState([{ email: "", date: "" }]);
 
     const handleElementsRemove = (index) => {
         const list = [...tableValues];
@@ -166,8 +160,9 @@ export default function CompletedListTable() {
     };
   
 
-    useEffect(() => (async () => await getAllLocations(setData))(), [])
-    useEffect(() => (async () => await isInNotificationList(setData))(), [])
+    // useEffect(() => (async () => await getAllLocations(setData))(), [])
+    useEffect(() => (async () => await getCompletedCovidTracingForm(setData))(), [])
+    useEffect(() => (async () => await isInTracingList(setData))(), [])
 
    // useEffect(() => (async () => await isInNotificationList(localStorage.getItem("email").split("\"")[1]))().then(console.log), [])
 
@@ -208,18 +203,20 @@ export default function CompletedListTable() {
                                                 tabIndex={-1}
                                                 // key={item.name}
                                                 // id={item.name}
-                                                key={item.firstName}
+                                                key={item.email}
                                             >
 
 {/* // useEffect(() => (async () => await isInNotificationList(localStorage.getItem("email").split("\"")[1]))().then(console.log), []) */}
 
-                                                <TableCell>{profileLink(item.email) }</TableCell>
+                                                {/* <TableCell>{profileLink(item.email) }</TableCell> */}
                                                 <TableCell>{item.email}</TableCell>
-                                                <TableCell>{item.locationName}</TableCell>
+                                                {/* <TableCell>{item.locationName}</TableCell> */}
                                                 <TableCell>{item.date}</TableCell>
-                                                <TableCell>{item.time}</TableCell>
-                                                <TableCell>{item.locationNumber}</TableCell>
-                                                
+                                                {/* <TableCell>{item.time}</TableCell>
+                                                <TableCell>{item.locationNumber}</TableCell> */}
+                                                {/* <TableCell>{item.type}</TableCell> */}
+                                    {/* <TableCell>{item.locationNumber}</TableCell> */}
+
                                                 {/* <TableCell numeric component ="a" href={tracingForm(item.email)}><LinkIcon/> */}
                                                 {/*contact tracing form : isFilled*/}
                                                 {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
