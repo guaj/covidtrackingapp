@@ -18,7 +18,7 @@ describe("Patient can update his/her symptom status", () => {
         // click on profile link
         cy.findByRole('menuitem', { name: /profile/i }).click() 
         cy.wait(600)
-        
+
         cy.findByTestId('symptoms').then(($element) => {
             // checks whether the symptom exist or nor and add or remove it 
             // with a verification on the profile page (present or not present as symptom) after the edition

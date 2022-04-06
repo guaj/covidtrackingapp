@@ -10,10 +10,6 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import {Checkbox, FormControlLabel, FormGroup} from "@material-ui/core";
 import geometricImage from "../../../images/geometric_gradient.jpg";
-
-
-
-
   
 const useStyles = makeStyles((theme) => ({
   image: {

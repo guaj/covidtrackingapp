@@ -22,6 +22,26 @@ export default function PatientProfilePage() {
     const [user, setUser] = useState(null);    
     const [flag, setFlag] = useState(null);
     const userFetch = window.location.href.split("/")[4];
+    const [pat, setPat] = useState(null);
+
+    const setPatient = async () => {
+        AWS.config.update(awsConfig);
+        const userFetchBuffer = userFetch + '@'
+        let params = {
+            TableName: "patients",
+            ScanFilter: {
+                "email": {
+                    ComparisonOperator: "CONTAINS",
+                    AttributeValueList: [userFetchBuffer]
+                }
+            }
+        };
+        let scan = await docClient.scan(params).promise();
+        console.log(scan.Items)
+        setPat(scan.Items);
+    }
+
+    useEffect( () => (async () => await setPatient()), []);
 
     const flagHandler = e => {
         setFlag(flag);
@@ -55,7 +75,7 @@ export default function PatientProfilePage() {
             ScanFilter: {
                 "email": {
                     ComparisonOperator: "CONTAINS",
-                    AttributeValueList: [FormValues.email]
+                    AttributeValueList: [pat.email]
                 }
             }
         };
@@ -66,7 +86,7 @@ export default function PatientProfilePage() {
 
         params = {
             TableName: 'patients',
-            Key: {"email": FormValues.email},
+            Key: {"email": pat.email},
             ComparisonOperator: "CONTAINS",
             UpdateExpression: "set flag = :flag",
             ExpressionAttributeValues: {":flag": !flag},
@@ -208,47 +228,47 @@ export default function PatientProfilePage() {
                         />
                         {/* eslint-disable-next-line no-undef */}
                         <div className="myName">
-                            <h5>{FormValues.firstName} {FormValues.lastName}</h5>
+                            <h5>{pat.firstName} {pat.lastName}</h5>
                         </div>
                         <div className="infoButtons"
                             variant="outlined"
                             aria-label="address"
                             disabled>
-                            {FormValues.streetNumber} {FormValues.streetName} {FormValues.apartmentNumber} <br/>
-                            {FormValues.postalCode} {FormValues.city} {FormValues.province}
+                            {pat.streetNumber} {pat.streetName} {pat.apartmentNumber} <br/>
+                            {pat.postalCode} {pat.city} {pat.province}
                         </div>
                         <div className="infoButtons"
                                 variant="outlined"
                                 aria-label="email"
                                 disabled>
-                                {FormValues.email}
+                                {pat.email}
                         </div>
-                        {FormValues.phoneNumber !== "" ? 
+                        {pat.phoneNumber !== "" ? 
                             <div className="infoButtons"
                                     variant="outlined"
                                     aria-label="phoneNumber"
                                     data-testid="phoneNumber"
                                     disabled>
-                                    ({FormValues.phoneNumber[0]}{FormValues.phoneNumber[1]}{FormValues.phoneNumber[2]}) {FormValues.phoneNumber[3]}{FormValues.phoneNumber[4]}{FormValues.phoneNumber[5]} - {FormValues.phoneNumber[6]}{FormValues.phoneNumber[7]}{FormValues.phoneNumber[8]}{FormValues.phoneNumber[9]}
+                                    ({pat.phoneNumber[0]}{pat.phoneNumber[1]}{pat.phoneNumber[2]}) {pat.phoneNumber[3]}{pat.phoneNumber[4]}{pat.phoneNumber[5]} - {pat.phoneNumber[6]}{pat.phoneNumber[7]}{pat.phoneNumber[8]}{pat.phoneNumber[9]}
                             </div>
                             : null }
                         <div className="infoButtons"
                                 variant="outlined"
                                 aria-label="ramqNum"
                                 disabled>
-                                {FormValues.ramQNumber !== "" ? FormValues.ramQNumber : "No RAMQ number"}
+                                {pat.ramQNumber !== "" ? pat.ramQNumber : "No RAMQ number"}
                         </div>
                         <div className="infoButtons"
                                 variant="outlined"
                                 aria-label="insurance"
                                 disabled>
-                                {FormValues.insurance !== "" ? FormValues.insurance : "No private insurance"}
+                                {pat.insurance !== "" ? pat.insurance : "No private insurance"}
                         </div>
                         <div className="infoButtons"
                                 variant="outlined"
                                 aria-label="insuranceNumber"
                                 disabled>
-                                {FormValues.insuranceNumber !== "" ? FormValues.insuranceNumber : "No insurance number"}
+                                {pat.insuranceNumber !== "" ? pat.insuranceNumber : "No insurance number"}
                         </div>
                         <div className="infoButtons">
                             {canEditProfile() ?
@@ -259,21 +279,21 @@ export default function PatientProfilePage() {
                     </div>
                     <div className="col-md-4 pt-3">
                         <Box className="infoBox" data-testid="symptoms">
-                            {FormValues.covidResult === "positive" ? <h4 className="positive">Positive to COVID-19</h4> : <h4 className="negative">Negative to COVID-19</h4>}
+                            {pat.covidResult === "positive" ? <h4 className="positive">Positive to COVID-19</h4> : <h4 className="negative">Negative to COVID-19</h4>}
                             <h5 className="myName">
                             My Symptoms:
                             </h5>
-                            {FormValues.symptom1 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>New or worsening cough</div> : null}
-                            {FormValues.symptom2 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom2" disabled>Shortness of breath or difficulty breathing</div> : null}
-                            {FormValues.symptom3 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom3" disabled>Temperature equal or more than 38 C</div> : null}
-                            {FormValues.symptom4 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom4" disabled>Feeling feverish</div> : null}
-                            {FormValues.symptom5 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom5" data-testid="chills" disabled>Chills</div> : null}
-                            {FormValues.symptom6 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom6" disabled>Fatigue and/or weakness</div> : null}
-                            {FormValues.symptom7 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom7" disabled>Muscles and/or body ache</div> : null}
-                            {FormValues.symptom8 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom8" disabled>Headache</div> : null}
-                            {FormValues.symptom9 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom9" disabled>Abdominal pain</div> : null}
-                            {FormValues.symptom10 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom10" disabled>Diarrhea and vomiting</div> :null}
-                            {FormValues.symptom11 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom11" disabled>Feelings of malaise</div> : null}
+                            {pat.symptom1 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom1" disabled>New or worsening cough</div> : null}
+                            {pat.symptom2 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom2" disabled>Shortness of breath or difficulty breathing</div> : null}
+                            {pat.symptom3 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom3" disabled>Temperature equal or more than 38 C</div> : null}
+                            {pat.symptom4 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom4" disabled>Feeling feverish</div> : null}
+                            {pat.symptom5 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom5" data-testid="chills" disabled>Chills</div> : null}
+                            {pat.symptom6 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom6" disabled>Fatigue and/or weakness</div> : null}
+                            {pat.symptom7 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom7" disabled>Muscles and/or body ache</div> : null}
+                            {pat.symptom8 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom8" disabled>Headache</div> : null}
+                            {pat.symptom9 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom9" disabled>Abdominal pain</div> : null}
+                            {pat.symptom10 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom10" disabled>Diarrhea and vomiting</div> :null}
+                            {pat.symptom11 === true ? <div className="infoButtons" variant="outlined" aria-label="symptom11" disabled>Feelings of malaise</div> : null}
                             <div className="infoButtons">
                             {canEditProfile() ?
                                 <Button className="colored-button" onClick={editSymptomsRedirect}>Edit Symptoms</Button>
