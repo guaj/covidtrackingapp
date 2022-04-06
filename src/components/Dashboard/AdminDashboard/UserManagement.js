@@ -19,6 +19,45 @@ import FlagIcon from '@mui/icons-material/Flag';
 import { getAllPatients, deletePatient } from '../../../databaseServices'
 import { useState, useEffect } from 'react'
 import Button from '@mui/material/Button';
+import { makeStyles } from '@material-ui/styles';
+import Modal from '@mui/material/Modal';
+import CloseIcon from '@mui/icons-material/Close';
+import PatientProfileUpdate from '../../../Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdate'
+
+const useStyles = makeStyles((theme) => ({
+    pair: {
+
+        '&:hover': {
+            backgroundColor: 'rgba(63, 81, 181, 0.5)',
+            color: '#fff',
+        }
+    },
+    exitButton: {
+        position: 'absolute',
+        top: '5px',
+        right: '5px',
+        '&:hover': {
+            backgroundColor: 'rgba(63, 81, 181, 0.5)',
+            color: '#fff',
+        }
+    }
+})
+);
+
+//styling for the modal
+const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    // width: ,
+    bgcolor: 'background.paper',
+    //border: '2px solid #000',
+    boxShadow: 24,
+    borderRadius: '1%',
+    p: 4,
+};
+
 
 
 
@@ -162,6 +201,7 @@ EnhancedTableHead.propTypes = {
 
 
 export default function PatientListTable() {
+    const classes = useStyles();
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('calories');
     const [selected] = useState([]);
@@ -169,6 +209,7 @@ export default function PatientListTable() {
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState([])
+    const [open, setOpen] = useState(false)
 
 
 
@@ -195,6 +236,16 @@ export default function PatientListTable() {
 
     useEffect(() => (async () => await getAllPatients(setData))(), [])
 
+    const handleOpen = () => {
+        console.log('open')
+        setOpen(true);
+
+    };
+    const handleClose = () => {
+        setOpen(false);
+
+    }
+
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -207,84 +258,98 @@ export default function PatientListTable() {
 
 
     return (
-        <div>
-            <div style={{minWidth: "100%", display: 'flex', flexDirection: "row"}}>
-                <h2>Patients</h2>
-                <Button variant="contained" color="primary" style={{margin: "0 0 1% auto"}}>add patient</Button>
-            </div>
+        <>
+            
+            <div>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={modalStyle}>
+                    <Button className={classes.exitButton} onClick={handleClose}><CloseIcon /></Button>
+                    <PatientProfileUpdate />
+                </Box>
+            </Modal>
+                <div style={{ minWidth: "100%", display: 'flex', flexDirection: "row" }}>
+                    <h2>Patients</h2>
+                    <Button variant="contained" color="primary" style={{ margin: "0 0 1% auto" }}>add patient</Button>
+                </div>
 
-            <Box sx={{ width: '100%' }}>
+                <Box sx={{ width: '100%' }}>
 
-                <Paper sx={{ width: '100%', mb: 2 }}>
+                    <Paper sx={{ width: '100%', mb: 2 }}>
 
-                    <TableContainer>
-                        <Table
-                            sx={{ minWidth: 750 }}
-                            aria-labelledby="patientListTable"
-                            size={dense ? 'small' : 'medium'}
-                        >
-                            <EnhancedTableHead
-                                numSelected={selected.length}
-                                order={order}
-                                orderBy={orderBy}
-                                onRequestSort={handleRequestSort}
-                                rowCount={data.length}
-                            />
-                            <TableBody>
-                                {/* if you don't need to support IE11, you can replace the `stableSort` call with:
+                        <TableContainer>
+                            <Table
+                                sx={{ minWidth: 750 }}
+                                aria-labelledby="patientListTable"
+                                size={dense ? 'small' : 'medium'}
+                            >
+                                <EnhancedTableHead
+                                    numSelected={selected.length}
+                                    order={order}
+                                    orderBy={orderBy}
+                                    onRequestSort={handleRequestSort}
+                                    rowCount={data.length}
+                                />
+                                <TableBody>
+                                    {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                                {stableSort(data, getComparator(order, orderBy))
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((item) => {
+                                    {stableSort(data, getComparator(order, orderBy))
+                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        .map((item) => {
 
-                                        return (
-                                            <TableRow
-                                                hover
-                                                role="checkbox"
-                                                tabIndex={-1}
-                                                key={item.name}
-                                            >
-                                                <TableCell />
-                                                <TableCell align="center">{item.firstName}</TableCell>
-                                                <TableCell align="center">{item.lastName}</TableCell>
-                                                <TableCell align="center">{item.covidResult}</TableCell>
-                                                <TableCell align="center">{item.reviewed ? "yes" : "no"}</TableCell> {/* TODO: check the database attributes */}
-                                                <TableCell align="center">{item.emergency ? <ErrorIcon style={{ fill: "red" }} /> : ""}</TableCell>
-                                                <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon /></TableCell>
-                                                <TableCell align="center">{item.flag ? <FlagIcon style={{ fill: "orange" }} /> : ""}</TableCell>
-                                                <TableCell align="center"><Button>update</Button></TableCell>
-                                                <TableCell align="center"><Button onClick={() => deletePatient(item.email, data, setData)}>delete</Button></TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
-                                {emptyRows > 0 && (
-                                    <TableRow
-                                        style={{
-                                            height: (dense ? 33 : 53) * emptyRows,
-                                        }}
-                                    >
-                                        <TableCell colSpan={6} />
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
-                        count={data.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                            return (
+                                                <TableRow
+                                                    hover
+                                                    role="checkbox"
+                                                    tabIndex={-1}
+                                                    key={item.name}
+                                                >
+                                                    <TableCell />
+                                                    <TableCell align="center">{item.firstName}</TableCell>
+                                                    <TableCell align="center">{item.lastName}</TableCell>
+                                                    <TableCell align="center">{item.covidResult}</TableCell>
+                                                    <TableCell align="center">{item.reviewed ? "yes" : "no"}</TableCell> {/* TODO: check the database attributes */}
+                                                    <TableCell align="center">{item.emergency ? <ErrorIcon style={{ fill: "red" }} /> : ""}</TableCell>
+                                                    <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon /></TableCell>
+                                                    <TableCell align="center">{item.flag ? <FlagIcon style={{ fill: "orange" }} /> : ""}</TableCell>
+                                                    <TableCell align="center"><Button onClick={handleOpen}>update</Button></TableCell>
+                                                    <TableCell align="center"><Button onClick={() => deletePatient(item.email, data, setData)}>delete</Button></TableCell>
+                                                </TableRow>
+                                            );
+                                        })}
+                                    {emptyRows > 0 && (
+                                        <TableRow
+                                            style={{
+                                                height: (dense ? 33 : 53) * emptyRows,
+                                            }}
+                                        >
+                                            <TableCell colSpan={6} />
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                        <TablePagination
+                            rowsPerPageOptions={[5, 10, 25]}
+                            component="div"
+                            count={data.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            onPageChange={handleChangePage}
+                            onRowsPerPageChange={handleChangeRowsPerPage}
+                        />
+                    </Paper>
+                    <FormControlLabel
+                        control={<Switch checked={dense} onChange={handleChangeDense} />}
+                        label="Dense padding"
                     />
-                </Paper>
-                <FormControlLabel
-                    control={<Switch checked={dense} onChange={handleChangeDense} />}
-                    label="Dense padding"
-                />
-            </Box>
-        </div>
+                </Box>
+            </div>
+        </>
 
     );
 }
