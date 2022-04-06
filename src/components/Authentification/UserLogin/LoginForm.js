@@ -59,8 +59,10 @@ export default function LoginForm({Login, error}){
             margin="normal"
             required
             fullWidth
+            aria-label="password"
+            data-testid="sign-up-password"
             name="password"
-            label="* * * *"
+            label="****"
             id="password"
             helperText="Password"
             data-testid="sign-up-password"
