@@ -7,6 +7,7 @@ import PatientMock from "./mockPatientInfo.json";
 import Box from "@mui/material/Box";
 import AWS from "aws-sdk";
 import awsConfig from "../../../aws-config.json";
+import { sendMail } from "../../../Services/EmailService/EmailService";
 import EmailFormDialog from "../../../Services/EmailService/EmailDialog";
 import QRCode from "react-qr-code";
 import {makeStyles} from "@material-ui/core/styles";
@@ -35,9 +36,11 @@ class PatientProfilePage extends React.Component {
         flag: this.isFlagged(),
         open: false
     }
-
     editSymptomsRedirect() {
         window.location = '/patient-symptoms-edit'
+    }
+    async sendEmail() {
+        await sendMail("TEST!!")
     }
 
     handleClickOpen = () => {
@@ -191,6 +194,7 @@ class PatientProfilePage extends React.Component {
                                 {PatientMock.insuranceNumber}
                             </Button>
                         </div>
+
                         <div className="infoButtons" name="Edit symptoms">
                             {this.canEditProfile() ?
                                 <Button className="colored-button" onClick={this.editSymptomsRedirect}>Edit health status</Button>
@@ -208,8 +212,6 @@ class PatientProfilePage extends React.Component {
                             <div className="boxText">
                                 <p>My doctor : Dr. {PatientMock.doctorName} </p>
                             </div>
-
-
                             <div className="button">
                                 {this.canScheduleMeeting() ?
                                     <Button variant="contained" onClick={this.scheduleRedirect}>Make

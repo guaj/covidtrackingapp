@@ -14,13 +14,17 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
+import ErrorIcon from '@mui/icons-material/Error';
+import FlagIcon from '@mui/icons-material/Flag';
+import { getAllPatients, deletePatient } from '../../../../../databaseServices'
+import { useState, useEffect } from 'react'
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
 import Modal from '@mui/material/Modal';
-import AvailableDoctors from './AvailableDoctors';
-import { getNewPatients } from '../../../databaseServices'
 import CloseIcon from '@mui/icons-material/Close';
-import { useState, useEffect } from 'react'
+import PatientUpdate from './PatientUpdate'
+import PatientAdd from './PatientAdd'
+
 
 const useStyles = makeStyles((theme) => ({
     pair: {
@@ -38,13 +42,16 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: 'rgba(63, 81, 181, 0.5)',
             color: '#fff',
         }
-    }
+    },
+
+    
 })
 );
 
-
 //styling for the modal
 const modalStyle = {
+    //overflow: 'auto',
+    marginTop: '30%',
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -56,6 +63,12 @@ const modalStyle = {
     borderRadius: '1%',
     p: 4,
 };
+
+
+
+
+
+
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -105,9 +118,19 @@ const headCells = [
         label: 'Last Name',
     },
     {
-        id: 'address',
+        id: 'covidResult',
         disablePadding: false,
-        label: 'Address'
+        label: 'Covid Result',
+    },
+    {
+        id: 'reviewed',
+        disablePadding: false,
+        label: 'Reviewed',
+    },
+    {
+        id: 'emergency',
+        disablePadding: false,
+        label: 'Emergency',
     },
     {
         id: 'profileLink',
@@ -115,10 +138,20 @@ const headCells = [
         label: 'Profile Link',
     },
     {
-        id: 'patient-doctor-pairing',
+        id: 'isFlagged',
         disablePadding: false,
-        label: 'Pair to a doctor'
-    }
+        label: 'Flag',
+    },
+    {
+        id: 'controls',
+        disablePadding: false,
+        label: '',
+    },
+    {
+        id: 'controls',
+        disablePadding: false,
+        label: '',
+    },
 ];
 
 
@@ -133,15 +166,12 @@ function EnhancedTableHead(props) {
 
 
         <TableHead>
-            {/* <button onClick={getAvailableDoctors}>TEST DB DOCTORS</button>  for troublehsooting purposes
-            <button onClick={getNewPatients}>TEST DB PATIENTS</button> */}
-
             <TableRow>
 
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={'center'}
+                        align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -161,8 +191,6 @@ function EnhancedTableHead(props) {
                 ))}
             </TableRow>
         </TableHead>
-
-
     );
 }
 
@@ -174,37 +202,32 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-export default function UnpairedNewPatientListTable() {
+
+
+// export const [patient, setPatient] = null;
+
+export default function PatientListTable() {
     const classes = useStyles();
-    const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('calories');
-    const [selected] = React.useState([]);
-    const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    const [patient, setPatient] = React.useState("")
-    const [open, setOpen] = React.useState(false);
-    const [tableSize, setTableSize] = useState(0)
-    const [data, setData] = useState([]);
+    const [order, setOrder] = useState('asc');
+    const [orderBy, setOrderBy] = useState('calories');
+    const [selected] = useState([]);
+    const [page, setPage] = useState(0);
+    const [dense, setDense] = useState(false);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [data, setData] = useState([])
+    const [updateModalOpen, setUpdateModalOpen] = useState(false)
+    const [addModalOpen, setAddModalOpen] = useState(false)
+    const [patient, setPatient] = useState(null)
 
-    const handleOpen = patient => {
-        console.log("handle open() patient: " + patient);
-        setOpen(true);
-        setPatient(patient);
-    };
-    const handleClose = entries => {
-        setOpen(false);
-        setTableSize(entries);
-        getNewPatients(setData);
-    }
 
-    useEffect(() => {(async () => await getNewPatients(setData))()}, []);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
+
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -219,32 +242,77 @@ export default function UnpairedNewPatientListTable() {
         setDense(event.target.checked);
     };
 
+    useEffect(() => (async () => await getAllPatients(setData))(), [])
+
+    const updateModalHandleOpen = patient => {
+        setPatient(patient)
+        setUpdateModalOpen(true);
+
+    };
+    const updateModalHandleClose = () => {
+        setUpdateModalOpen(false);
+        getAllPatients(setData);
+    }
+
+    const addModalHandleOpen = patient => {
+        setAddModalOpen(true);
+
+    };
+    const addModalHandleClose = () => {
+        setAddModalOpen(false);
+        getAllPatients(setData);
+    }
+
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
+    function profileLink(email) {
+        let url = email.split("@");
+        return "/profile/" + url[0];
+    }
 
-   
-        
-        return (
-        
+
+    return (
+        <>
+            
             <div>
-                <Modal
-                    open={open}
-                    onClose={() => handleClose(data.length)}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={modalStyle}>
-                        <Button className={classes.exitButton} onClick={handleClose}><CloseIcon /></Button>
-                        <AvailableDoctors patient={patient} />
-                    </Box>
-                </Modal>
+            <Modal
+                open={updateModalOpen}
+                onClose={updateModalHandleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                sx={{overflow: "scroll"}}
+                className={classes.modal}
+            >
+                <Box sx={modalStyle}>
+                    <Button className={classes.exitButton} onClick={updateModalHandleClose}><CloseIcon /></Button>
+                    <PatientUpdate patient={patient} />
+                </Box>
+            </Modal>
+            <Modal
+                open={addModalOpen}
+                onClose={addModalHandleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                sx={{overflow: "scroll"}}
+                className={classes.modal}
+            >
+                <Box sx={modalStyle}>
+                    <Button className={classes.exitButton} onClick={addModalHandleClose}><CloseIcon /></Button>
+                    <PatientAdd />
+                </Box>
+            </Modal>
+                <div style={{ minWidth: "100%", display: 'flex', flexDirection: "row" }}>
+                    <h2>Patients</h2>
+                    <Button variant="contained" color="primary" style={{ margin: "0 0 1% auto" }} onClick={addModalHandleOpen}>add patient</Button>
+                </div>
 
-                <h2>Patients</h2>
                 <Box sx={{ width: '100%' }}>
+
                     <Paper sx={{ width: '100%', mb: 2 }}>
+
                         <TableContainer>
                             <Table
                                 sx={{ minWidth: 750 }}
@@ -264,20 +332,24 @@ export default function UnpairedNewPatientListTable() {
                                     {stableSort(data, getComparator(order, orderBy))
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map((item) => {
+
                                             return (
-                                                // setNumItems(prevState => (prevState+1)),
                                                 <TableRow
                                                     hover
                                                     role="checkbox"
                                                     tabIndex={-1}
                                                     key={item.name}
                                                 >
-                                                    <TableCell align="center"> priority num </TableCell> 
-                                                    <TableCell align="center"> {item.firstName} </TableCell>
-                                                    <TableCell align="center"> {item.lastName} </TableCell>
-                                                    <TableCell align="center"> {item.address.city} </TableCell>
-                                                    <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon /></TableCell>
-                                                    <TableCell align="center"><Button className={classes.pair} onClick={()=>handleOpen(item.email)}>Find a doctor</Button></TableCell>
+                                                    <TableCell />
+                                                    <TableCell align="left">{item.firstName}</TableCell>
+                                                    <TableCell align="left">{item.lastName}</TableCell>
+                                                    <TableCell align="left">{item.covidResult}</TableCell>
+                                                    <TableCell align="left">{item.reviewed ? "yes" : "no"}</TableCell> {/* TODO: check the database attributes */}
+                                                    <TableCell align="left">{item.emergency ? <ErrorIcon style={{ fill: "red" }} /> : ""}</TableCell>
+                                                    <TableCell align="left" numeric component="a" href={profileLink(item.email)}><LinkIcon /></TableCell>
+                                                    <TableCell align="left">{item.flag ? <FlagIcon style={{ fill: "orange" }} /> : ""}</TableCell>
+                                                    <TableCell align="left"><Button onClick={()=> updateModalHandleOpen(item)}>update</Button></TableCell>
+                                                    <TableCell align="left"><Button onClick={() => deletePatient(item.email, data, setData)}>delete</Button></TableCell>
                                                 </TableRow>
                                             );
                                         })}
@@ -309,7 +381,7 @@ export default function UnpairedNewPatientListTable() {
                     />
                 </Box>
             </div>
+        </>
 
-        );
-    }
-   
+    );
+}

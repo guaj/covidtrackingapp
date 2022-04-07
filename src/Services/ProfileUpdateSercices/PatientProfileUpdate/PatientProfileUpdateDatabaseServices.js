@@ -58,7 +58,6 @@ export async function fetchData(tableName) {
 }
 
 export async function updateData(tableName, data) {
-    alert(data.email)
     const params = {
         TableName: tableName,
         Key: {"email": data.email},
