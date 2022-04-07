@@ -62,10 +62,9 @@ export default function LoginForm({Login, error}){
             fullWidth
             name="password"
             label="* * * *"
-            id="password"
+            id="sign-up-password"
             helperText="Password"
             autoComplete="current-password"
-            data-testid="sign-up-password"
             onChange={e => setDetails({...details, password:e.target.value})}
             value = {details.password}
             data-testid="sign-up-password"
