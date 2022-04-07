@@ -20,6 +20,7 @@ import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import { getAllOrgOfficials, deleteOrgOfficial } from '../../../../../databaseServices'
 import OrganizationAdd from './OrganizationAdd'
+import OrganizationUpdate from './OrganizationUpdate'
 
 
 
@@ -192,8 +193,9 @@ export default function PatientListTable() {
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState([])
-    // const [updateModalOpen, setUpdateModalOpen] = useState(false)
+    const [updateModalOpen, setUpdateModalOpen] = useState(false)
     const [addModalOpen, setAddModalOpen] = useState(false)
+    const [official, setOfficial] = useState({})
     
 
 
@@ -221,17 +223,18 @@ export default function PatientListTable() {
 
     useEffect(() => (async () => await getAllOrgOfficials(setData))(), [])
 
-    // const updateModalHandleOpen = patient => {
-    //     setPatient(patient)
-    //     setUpdateModalOpen(true);
+    const updateModalHandleOpen = () => {
+      
+        setUpdateModalOpen(true);
 
-    // };
-    // const updateModalHandleClose = () => {
-    //     setUpdateModalOpen(false);
-    // }
+    };
+    const updateModalHandleClose = () => {
+        setUpdateModalOpen(false);
+    }
 
-    const addModalHandleOpen = patient => {
+    const addModalHandleOpen = official => {
         setAddModalOpen(true);
+        setOfficial(official)
 
     };
     const addModalHandleClose = () => {
@@ -253,7 +256,7 @@ export default function PatientListTable() {
         <>
             
             <div>
-            {/* <Modal
+            <Modal
                 open={updateModalOpen}
                 onClose={updateModalHandleClose}
                 aria-labelledby="modal-modal-title"
@@ -263,9 +266,9 @@ export default function PatientListTable() {
             >
                 <Box sx={modalStyle}>
                     <Button className={classes.exitButton} onClick={updateModalHandleClose}><CloseIcon /></Button>
-                    <PatientUpdate patient={patient} />
+                    <OrganizationUpdate />
                 </Box>
-            </Modal> */}
+            </Modal>
             <Modal
                 open={addModalOpen}
                 onClose={addModalHandleClose}
@@ -320,7 +323,7 @@ export default function PatientListTable() {
                                                     <TableCell >{item.employeeId}</TableCell>
                                                     <TableCell >{item.orgId}</TableCell>
                                                     <TableCell >{item.type}</TableCell>
-                                                    <TableCell ><Button onClick={{/*()=> updateModalHandleOpen(item)*/}}>update</Button></TableCell>
+                                                    <TableCell ><Button onClick={()=>updateModalHandleOpen(item)}>update</Button></TableCell>
                                                     <TableCell ><Button onClick={() => deleteOrgOfficial(item.email, data, setData)}>delete</Button></TableCell>
                                                 </TableRow>
                                             );
