@@ -25,9 +25,7 @@ import { formatDate } from "../Navbar/Notification";
 import AWS from "aws-sdk";
 import awsConfig from "../../aws-config.json";
 
-//to connect to DynamoDB
-// AWS.config.update(awsConfig);
-// const docClient = new AWS.DynamoDB.DocumentClient();
+
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -185,7 +183,6 @@ export default function LocationListTable() {
     useEffect(() => (async () => await getAllLocations(setData))(), [])
     useEffect(() => (async () => await isInNotificationList(setData))(), [])
 
-   // useEffect(() => (async () => await isInNotificationList(localStorage.getItem("email").split("\"")[1]))().then(console.log), [])
 
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
@@ -214,20 +211,17 @@ export default function LocationListTable() {
                                 {stableSort(data, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((item) => {
-                                        // const value = {'email': item.email,'value': isInNotificationList(item.email)}
-                                        // setEnabled([value])
+                                       
 
                                         return (
                                             <TableRow
                                                 hover
                                                 role="checkbox"
                                                 tabIndex={-1}
-                                                // key={item.name}
-                                                // id={item.name}
+                                               
                                                 key={item.firstName}
                                             >
 
-{/* // useEffect(() => (async () => await isInNotificationList(localStorage.getItem("email").split("\"")[1]))().then(console.log), []) */}
 
                                                 <TableCell>{profileLink(item.email) }</TableCell>
                                                 <TableCell>{item.email}</TableCell>
@@ -236,39 +230,7 @@ export default function LocationListTable() {
                                                 <TableCell>{item.time}</TableCell>
                                                 <TableCell>{item.locationNumber}</TableCell>
                                                 
-                                                {/* <TableCell numeric component ="a" href={tracingForm(item.email)}><LinkIcon/> */}
-                                                {/*contact tracing form : isFilled*/}
-                                                {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
-                                                {/* </TableCell> */}
-                                                {/* <TableCell>
-                                                    <Button
-                                                        type="submit"
-                                                        id={item.email}
-                                                        //onLoad={isEnabled(item.email)}
-                                                        onClick={(event) => {
-                                                            handleSubmitChange(event.target.id);
-                                                            isInNotificationList(email);
-                                                            console.log(event.target.id)
-                                                            //isInNotificationList(item.email
-
-
-                                                        //disabled={()=> {async() =>{return await isInNotificationList(item.email)}}}
-                                                        //disabled= {isNotified(item.email)}
-                                                        //disabled={console.log(isNotified(item.email))}
-                                                        //disabled={isNotified(item.email)}
-                                                        //disabled={false}
-                                                        //disabled = {console.log(isInNotificationList(item.email))}
-                                                        //onClick={(event)=>{
-                                                            //console.log(isInNotificationList(event.target.id));
-                                                            //handleSubmitChange(event.target.id);
-                                                           // console.log(event.target.id)
-                                                            //isInNotificationList(item.email)
-                                                        }}
-                                                    >
-                                                        send
-                                                    </Button>
-
-                                                </TableCell> */}
+                                              
                                             </TableRow>
                                         );
                                     })}

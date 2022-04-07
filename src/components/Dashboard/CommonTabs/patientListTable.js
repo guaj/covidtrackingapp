@@ -75,11 +75,7 @@ const headCells = [
         disablePadding: false,
         label: 'Covid Result',
     },
-    {
-        id: 'reviewed',
-        disablePadding: false,
-        label: 'Reviewed',
-    },
+   
     {
         id: 'emergency',
         disablePadding: false,
@@ -230,7 +226,6 @@ export default function PatientListTable() {
                                                 <TableCell align="center">{item.firstName}</TableCell>
                                                 <TableCell align="center">{item.lastName}</TableCell>
                                                 <TableCell align="center">{item.covidResult}</TableCell>
-                                                <TableCell align="center">{item.reviewed ? "yes" : "no"}</TableCell> {/* TODO: check the database attributes */}
                                                 <TableCell align="center">{item.emergency ? <ErrorIcon style={{fill: "red"}}/> : "" }</TableCell>
                                                 <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon/></TableCell>
                                                 <TableCell align="center">{item.flag ? <FlagIcon style={{fill: "orange"}}/> : "" }</TableCell>

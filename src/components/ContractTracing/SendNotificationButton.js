@@ -18,16 +18,9 @@ export function SendNotificationButton(props){
             type="submit"
             id={props.email}
 
-            //disabled={()=> {async() =>{return await isInNotificationList(item.email)}}}
-            //disabled= {isNotified(item.email)}
-            //disabled={console.log(isNotified(item.email))}
+        
             disabled={isNotified(props.data.email)}
-            //disabled={false}
-            //disabled = {isInNotificationList(item.email)}
-            // onClick={()=>{
-            //     handleSubmitChange();
-            //     //isInNotificationList(item.email)
-            //>}}
+          
         >
             {isNotified(props.data.email)}
         </Button>

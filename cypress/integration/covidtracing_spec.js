@@ -15,12 +15,12 @@ describe('health official can send a notification to a patient to fill contact t
 describe("patients can fill out the contract tracing form", () =>{
     it('patient clicks on contact tracing button on profile', () => {
         cy.visit("http://localhost:3000/") //open browser to localhost: 3000
-        cy.findByRole('textbox', {name: /this.example@email.com/i}).type('eyal@gmail.com')// select email field and enter email : eyal@gmail.com
-        cy.findByTestId('sign-up-password').type('P1234567!')// select password field and enter password :  P1234567!
+        cy.findByRole('textbox', {name: /this.example@email.com/i}).type('patient@gmail.com')// select email field and enter email : eyal@gmail.com
+        cy.findByTestId('sign-up-password').type('Patient1!')// select password field and enter password :  P1234567!
         cy.findByText(/login/i).click()// click on login
-        cy.findByRole('button', { name: /accountuser/i }).click()//user clicks on profile button
-        cy.findByRole('menuitem', { name: /profile/i }).click()//user clicks on profile menu item
-        cy.findByText(/complete tracing form/i).click()//user clicks on complete tracing form
+        cy.findByRole('button', { name: /account of current user/i }).click()// select the profile button      
+        cy.findByRole('menuitem', { name: /profile/i }).click()// select the profile menu item 
+        cy.findByRole('link', { name: /complete tracing form/i }).click() //user clicks on complete tracing form
         cy.get('#locationName').type('Walmart')//type location name in textbox
         cy.get('#locationNumber').type('514-665-6060')//type location number in textbox
         cy.get('#locationDate').type('April 1, 2022')//type location date in textbox
@@ -34,8 +34,8 @@ describe("patients can fill out the contract tracing form", () =>{
 describe('health official can access locations list of patients who completed tracing form', () => {
     it('health official clicks on locations list tab', () => {
         cy.visit("http://localhost:3000/") //open browser to localhost: 3000
-        cy.findByRole('textbox', { name: /this.example@email.com/i }).type('ho3@gmail.com')// select email field and enter email : ho3@gmail.com
-        cy.findByTestId('sign-up-password').type('Healthyasfuck1!')// select password field and enter password :  Healthyasfuck1!
+        cy.findByRole('textbox', { name: /this.example@email.com/i }).type('ho1@gmail.com')// select email field and enter email : ho3@gmail.com
+        cy.findByTestId('sign-up-password').type('Organizations1!')// select password field and enter password :  Healthyasfuck1!
         cy.findByText(/login/i).click()// click on login
         cy.findByRole('tab', { name: /locations contact list/i }).click()//go to locations list tab on dashboard
             })

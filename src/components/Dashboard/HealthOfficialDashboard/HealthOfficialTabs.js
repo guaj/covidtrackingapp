@@ -76,7 +76,6 @@ export default function OrgsTabs() {
                 <Tab label="Doctor-Patient Pairing List" {...a11yProps(2)} />
                 <Tab label="Contact Tracing List" {...a11yProps(3)} />
                 <Tab label="Locations Contact List" {...a11yProps(4)} />
-                <Tab label="Completed Contact Tracing Form " {...a11yProps(5)} />
 
             </Tabs>
             <TabPanel value={value} index={0}>
@@ -109,9 +108,7 @@ export default function OrgsTabs() {
             <TabPanel value={value} index={4}>
                     <LocationListTable />
             </TabPanel>
-            <TabPanel value={value} index={5}>
-                    <CompletedListTable />
-            </TabPanel>
+           
         </>
     )
 }

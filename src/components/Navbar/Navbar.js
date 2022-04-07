@@ -267,9 +267,6 @@ export default function PrimarySearchAppBar() {
                             onClick={handleMobileMenuOpen}
                             color="inherit"
                             name="more" key={1} label="more2" 
-                            name="accountuser"
-                            key={1}
-                            label="accountuser2"
                         >
                             <MoreIcon name="more" key={1} label="more2" style={{color: "#673ab7"}}/>
                         </IconButton>

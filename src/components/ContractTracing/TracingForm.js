@@ -86,8 +86,6 @@ export default function TracingformTest() {
     }
     console.log(email.toString(), firstName.toString())
     try {
-     // await docClient.put(params).promise()
-     // alert("Success! You added the following location(s)" + JSON.stringify(locationName) + " on date " + JSON.stringify(locationDate) + ".");
     await docClient.put(params).promise()
      console.log(params)
      alert("Success! You added the following location(s)" + JSON.stringify(locationName) + " on date " + JSON.stringify(locationDate) + ".");
@@ -97,7 +95,7 @@ export default function TracingformTest() {
     }
   }
 
-  //click this when you want to signmal that you finished with the form
+  //click this when you want to signal that you finished with the form
   const handleSubmitCompleteForm = async (email) => {
     var currentDate = Date().toLocaleString();
     const params = {
@@ -118,9 +116,7 @@ export default function TracingformTest() {
     }
   };
 
-  //useEffect(() => (async () => await getAllCovidPositivePatients(setData))(), [])
    useEffect(() => (async () => await getAllLocations(setData))(), [])
-  //  useEffect(() => (async () => await isInNotificationList(localStorage.getItem("email").split("\"")[1]))().then(console.log), [])
 
 
   function profileLink(email) {
@@ -243,9 +239,7 @@ function tracingForm(email) {
                   console.log(firstName)
 
                   }}>Add</Button>
-                               {/* onClick={()=> {handleAdd(localStorage.getItem("email").split("\"")[1],localStorage.getItem("firstName"))}}>Add</Button> */}
 
-                               {/* https://blog.logrocket.com/localstorage-javascript-complete-guide/#howdoeslocalstoragework */}
                 <Button className="button submit"  
                 label="buttonsubmit" name="buttonsubmit2" key={2} 
                 sx={{ m: 6 }} style={{ backgroundColor: '#cbacd7', borderRadius: 15 }} variant="contained" 
@@ -272,4 +266,3 @@ function tracingForm(email) {
   );
 }
 
-// export default TracingformTest;

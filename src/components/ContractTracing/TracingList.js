@@ -91,7 +91,6 @@ const headCells = [
         label: 'send notification',
     },
 
-    ///add new table column for completed
 ];
 
 
@@ -172,8 +171,7 @@ export default function TracingListTable() {
 
 
     const handleSubmitChange = async (email) => {
-        //add patient info to notifications database
-        //event.preventDefault();
+       
         var currentDate = Date().toLocaleString();
         const params ={
             TableName: "notifications",
@@ -198,7 +196,6 @@ export default function TracingListTable() {
     };
 
     useEffect(() => (async () => await getAllCovidPositivePatients(setData))(), [])
-    // useEffect(() => (async () => await getCompletedCovidTracingForm(setData))(), [])
 
 
     // Avoid a layout jump when reaching the last page with empty rows.
@@ -225,8 +222,9 @@ export default function TracingListTable() {
         }
     }
     async function formIsCompleted(email){
-
         const isCompleted  = await isInTracingList(email) 
+        console.log("Q!!!!!!!!!!!!!!!!!#@#@#@#");
+
         if(isCompleted){
             document.getElementsByClassName(email).item(0).innerText="completed"
 
@@ -270,16 +268,9 @@ export default function TracingListTable() {
                                                 <TableCell>{item.covidResult}</TableCell>
                                                 <TableCell numeric component="a"
                                                            href={profileLink(item.email)}><LinkIcon/></TableCell>
-                                                {/* <TableCell numeric component ="a" href={tracingForm(item.email)}>
-                                                    <LinkIcon/> */}
-                                                    {/*contact tracing form : isFilled*/}
-                                                    {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                                                    
-                                                    value ={isInNotificationList}*/}
-                                                {/* </TableCell> */}
-                                                {/* This currently shows only completed, so I needa fix this */}
+                                              
+                                                <TableCell  className={item.email} onLoad={formIsCompleted(item.email) } >
                                                 
-                                                <TableCell  className={item.email} onLoad={formIsCompleted(item.email) }>
                                                 </TableCell>
                                                 <TableCell>
                                                     <button
@@ -292,18 +283,7 @@ export default function TracingListTable() {
                                                             handleSubmitChange(event.target.id);
                                                             console.log(addSentContactTracingFormTime(item.email));
                                                             console.log(event.target.id)
-                                                            //isInNotificationList(item.email
-                                                        //disabled={()=> {async() =>{return await isInNotificationList(item.email)}}}
-                                                        //disabled= {isNotified(item.email)}
-                                                        //disabled={console.log(isNotified(item.email))}
-                                                        //disabled={isNotified(item.email)}
-                                                        //disabled={false}
-                                                        //disabled = {console.log(isInNotificationList(item.email))}
-                                                        //onClick={(event)=>{
-                                                            //console.log(isInNotificationList(event.target.id));
-                                                            //handleSubmitChange(event.target.id);
-                                                           // console.log(event.target.id)
-                                                            //isInNotificationList(item.email)
+                                                         
                                                         }}
                                                     >
                                                         SEND
