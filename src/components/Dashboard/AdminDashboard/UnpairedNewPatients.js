@@ -195,6 +195,7 @@ export default function UnpairedNewPatientListTable() {
     const handleClose = entries => {
         setOpen(false);
         setTableSize(entries);
+        getNewPatients(setData);
     }
 
     useEffect(() => {(async () => await getNewPatients(setData))()}, []);

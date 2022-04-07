@@ -230,15 +230,18 @@ export default function PatientListTable() {
     };
     const updateModalHandleClose = () => {
         setUpdateModalOpen(false);
+        getAllOrgOfficials(setData)
     }
 
     const addModalHandleOpen = () => {
         setAddModalOpen(true);
         
+        
 
     };
     const addModalHandleClose = () => {
         setAddModalOpen(false);
+        getAllOrgOfficials(setData)
     }
 
 
