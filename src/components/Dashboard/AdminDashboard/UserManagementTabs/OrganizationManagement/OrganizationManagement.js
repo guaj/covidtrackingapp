@@ -13,15 +13,13 @@ import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
-import LinkIcon from '@mui/icons-material/Link';
-import ErrorIcon from '@mui/icons-material/Error';
-import FlagIcon from '@mui/icons-material/Flag';
 import { useState, useEffect } from 'react'
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import { getAllOrgOfficials, deleteOrgOfficial } from '../../../../../databaseServices'
+import OrganizationAdd from './OrganizationAdd'
 
 
 
@@ -267,7 +265,7 @@ export default function PatientListTable() {
                     <Button className={classes.exitButton} onClick={updateModalHandleClose}><CloseIcon /></Button>
                     <PatientUpdate patient={patient} />
                 </Box>
-            </Modal>
+            </Modal> */}
             <Modal
                 open={addModalOpen}
                 onClose={addModalHandleClose}
@@ -278,9 +276,9 @@ export default function PatientListTable() {
             >
                 <Box sx={modalStyle}>
                     <Button className={classes.exitButton} onClick={addModalHandleClose}><CloseIcon /></Button>
-                    <PatientAdd />
+                    <OrganizationAdd />
                 </Box>
-            </Modal> */}
+            </Modal>
                 <div style={{ minWidth: "100%", display: 'flex', flexDirection: "row" }}>
                     <h2>Organizational Officials</h2>
                     <Button variant="contained" color="primary" style={{ margin: "0 0 1% auto" }} onClick={addModalHandleOpen}>add organizational official</Button>
