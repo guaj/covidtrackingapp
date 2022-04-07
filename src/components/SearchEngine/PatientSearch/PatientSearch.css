@@ -2,7 +2,7 @@
     position: absolute;
     background-color: white;
     width: max-content;
-    border-color: rgba(128, 128, 128, 0.8);
+    border-color: transparent;
     border-style: solid;
     border-radius: 10px;
     border-width: 2px;
