@@ -174,13 +174,6 @@ export default class PatientProfilePage extends React.Component {
                                         Appointment </Button>
                                     : <></>}
                             </div>
-                             <div className="button">
-                                    <Button label="tracingformbutton" name="tracingformbutton" key={1} variant="contained" href="/tracing-form">Complete
-                                        Tracing Form </Button>
-                                    
-
-                                    
-                            </div>
                             <div className="button">
                                 {JSON.parse(localStorage.getItem("type")) !== "patient" ?
                                     <Button variant="contained" onClick={() => {
