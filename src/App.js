@@ -25,6 +25,8 @@ import AppointmentScheduler from "./Services/AppointmentService/AppointmentSched
 import PatientSummaryPageQrCode from "./components/UserProfile/PatientProfile/PatientSummaryPageQrCode";
 import QuarantineTab from './components/Dashboard/PatientDashboard/QuarantineTab';
 import SymptomsRequiredUpdate from "./Services/ProfileUpdateSercices/PatientProfileUpdate/SymptomsRequiredUpdate";
+import TracingForm from './components/ContractTracing/TracingForm';
+
 
 
 ///* Make sure to update file when adding to App.css!!*/
@@ -51,6 +53,8 @@ function App() {
             <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
             <Route path='/quarantine' element={[<QuarantineTab/>]} />
             <Route path='/update-required-symptoms/:email' element={[<SymptomsRequiredUpdate />]} />
+                <Route path='/tracing-form' element={[<TracingForm/>]} />
+
         </Routes>
     );
 
