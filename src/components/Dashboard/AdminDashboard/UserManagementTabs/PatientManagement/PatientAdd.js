@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import geometricImage from "../../../../../images/geometric_gradient.jpg";
 import PasswordChecklist from "react-password-checklist";
-import { useState } from "react";
+import {useState} from "react";
 import PasswordStrengthBar from 'react-password-strength-bar';
 import React from 'react';
 import AWS from "aws-sdk";
@@ -59,30 +59,30 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 
 export default function SignUpPatient() {
     const classes = useStyles();
-    const [email,setEmail]= useState('')
-    const [firstName,setFirstName] = useState('')
-    const [lastName,setLastName]=useState('')
+    const [email, setEmail] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
     const [password, setPassword] = useState("")
-	const [passwordAgain, setPasswordAgain] = useState("")
+    const [passwordAgain, setPasswordAgain] = useState("")
     const [valid, setValid] = useState(false)
     const [ramq, setRamq] = useState(true)
     const [ramqNumber, setRamqNumber] = useState("")
-    const [insurance, setInsurance] =useState('')
+    const [insurance, setInsurance] = useState('')
 
-    const handleEmailChange = e =>{
+    const handleEmailChange = e => {
         setEmail(e.target.value)
     };
-    const handleFirstNameChange = e =>{
+    const handleFirstNameChange = e => {
         setFirstName(e.target.value)
     };
-    const handleLastNameChange = e =>{
+    const handleLastNameChange = e => {
         setLastName(e.target.value)
     };
-    const handleInsuranceChange = e =>{
+    const handleInsuranceChange = e => {
         setInsurance(e.target.value)
     };
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const params = {
             TableName: "patients",
@@ -106,168 +106,166 @@ export default function SignUpPatient() {
     }
 
     return (
-       <>
+        <div className={classes.paper}>
+            <Typography component="h1" variant="h4" className={classes.title}>
+                Register as a Patient
+            </Typography>
+            <form className={classes.form} id='form' onSubmit={handleSubmit}>
+                <TextField
+                    type="email"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="this.example@email.com"
+                    name="email"
+                    autoComplete="email"
+                    helperText="Email"
+                    data-testid="sign-up-email"
+                    onChange={handleEmailChange}
+                    value={email}
+                />
+                <TextField
+                    type="text"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    name="firstName"
+                    autoComplete="firstName"
+                    helperText="First Name"
+                    onChange={handleFirstNameChange}
+                    value={firstName}
+                />
+                <TextField
+                    type="text"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="lastName"
+                    label="Last Name"
+                    name="lastName"
+                    autoComplete="lastName"
+                    helperText="Last Name"
+                    onChange={handleLastNameChange}
+                    value={lastName}
+                />
 
-            <CssBaseline/>
-          
-                <div className={classes.paper}>
-                    <Typography component="h1" variant="h4" className={classes.title}>
-                        Register as a Patient
-                    </Typography>
-                    <form className={classes.form} id='form' onSubmit={handleSubmit}>
-                        <TextField
-                            type="email"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="this.example@email.com"
-                            name="email"
-                            autoComplete="email"
-                            helperText="Email"
-                            data-testid="sign-up-email"
-                            onChange={handleEmailChange}
-                            value={email}
-                        />
-                        <TextField
-                            type="text"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="firstName"
-                            label="First Name"
-                            name="firstName"
-                            autoComplete="firstName"
-                            helperText="First Name"
-                            onChange={handleFirstNameChange}
-                            value={firstName}
-                        />
-                        <TextField
-                            type="text"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="lastName"
-                            label="Last Name"
-                            name="lastName"
-                            autoComplete="lastName"
-                            helperText="Last Name"
-                            onChange={handleLastNameChange}
-                            value={lastName}
-                        />
+                <TextField
+                    type="text"
+                    margin="normal"
+                    fullWidth
+                    id="ramqNumber"
+                    label="0000000"
+                    name="ramqNumber"
+                    autoComplete=""
+                    helperText="RAMQ number"
+                    value={ramqNumber}
+                    disabled={!ramq}
+                    required={ramq}
+                    onChange={e => setRamqNumber(e.target.value)}
+                    data-testid="ramqNumber"
 
-                        <TextField
-                            type="text"
-                            margin="normal"
-                            fullWidth
-                            id="ramqNumber"
-                            label="0000000"
-                            name="ramqNumber"
-                            autoComplete=""
-                            helperText="RAMQ number"
-                            value={ramqNumber}
-                            disabled={!ramq}
-                            required={ramq}
-                            onChange={e => setRamqNumber(e.target.value)}
-                            data-testid="ramqNumber"
+                />
+                <Grid container className={classes.checkboxes}>
+                    <Grid item xs>
+                        <FormControlLabel
+                            control={<Checkbox value="insurancePolicyNumber" color="primary"/>}
+                            label="I don't have a RAMQ number"
+                            onChange={(e) => {
+                                setRamq(!ramq);
+                                setRamqNumber("")
+                            }}
+                            data-testid="check"
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                    </Grid>
+                </Grid>
+                <TextField
+                    type="text"
+                    margin="normal"
+                    required={!ramq}
+                    fullWidth
+                    id="insuranceNumber"
+                    label="0000000"
+                    name="insurance number"
+                    autoComplete=""
+                    helperText="Insurance number"
+                    data-testid="insuranceNumber"
+                    value={insurance}
+                />
+                <TextField
+                    data-testid="sign-up-psw1"
+                    type="password"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="* * * *"
+                    id="password"
+                    helperText="Password"
+                    autoComplete="current-password"
+                    onChange={e => setPassword(e.target.value)}
+                />
+                <TextField
+                    data-testid="sign-up-psw2"
+                    type="password"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="* * * *"
+                    id="password"
+                    helperText="Confirm your password"
+                    onChange={e => setPasswordAgain(e.target.value)}
 
+                />
+                <PasswordStrengthBar
+                    password={password}
+                />
+                <PasswordChecklist
+                    rules={["minLength", "specialChar", "number", "capital", "match"]}
+                    minLength={8}
+                    value={password}
+                    valueAgain={passwordAgain}
+                    onChange={(isValid) => {
+                        setValid(isValid)
+                    }
+                    }
+                />
+                <Grid container className={classes.checkboxes}>
+                    <Grid item xs>
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary"/>}
+                            label="Remember my password"
                         />
-                        <Grid container className={classes.checkboxes}>
-                            <Grid item xs>
-                                <FormControlLabel
-                                    control={<Checkbox value="insurancePolicyNumber" color="primary"/>}
-                                    label="I don't have a RAMQ number"
-                                    onChange={(e) => {setRamq(!ramq); setRamqNumber("")}}
-                                    data-testid="check"
-                                />
-                            </Grid>
-                            <Grid item xs={4}>
-                            </Grid>
-                        </Grid>
-                        <TextField
-                            type="text"
-                            margin="normal"
-                            required={!ramq}
-                            fullWidth
-                            id="insuranceNumber"
-                            label="0000000"
-                            name="insurance number"
-                            autoComplete=""
-                            helperText="Insurance number"
-                            data-testid="insuranceNumber"
-                            value={insurance}
-                        />
-                        <TextField
-                            data-testid="sign-up-psw1"
-                            type="password"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="* * * *"
-                            id="password"
-                            helperText="Password"
-                            autoComplete="current-password"
-                            onChange={e => setPassword(e.target.value)}
-                        />
-                        <TextField
-                            data-testid="sign-up-psw2"
-                            type="password"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="* * * *"
-                            id="password"
-                            helperText="Confirm your password"
-                  			onChange={e => setPasswordAgain(e.target.value)}
+                    </Grid>
+                    <Grid item xs={4}>
+                    </Grid>
+                </Grid>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    className={classes.submit}
+                    disabled={!valid}
+                >
+                    Register
+                </Button>
+                <Grid container>
 
-                        />
-                        <PasswordStrengthBar 
-                            password={password}
-                        />
-                        <PasswordChecklist
-                            rules={["minLength","specialChar","number","capital","match"]}
-                            minLength={8}
-                            value={password}
-                            valueAgain={passwordAgain}
-                            onChange={(isValid) => {setValid(isValid)}
-                            }
-                        />
-                        <Grid container className={classes.checkboxes}>
-                            <Grid item xs>
-                                <FormControlLabel
-                                    control={<Checkbox value="remember" color="primary"/>}
-                                    label="Remember my password"
-                                />
-                            </Grid>
-                            <Grid item xs={4}>
-                            </Grid>
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            className={classes.submit}
-                            disabled={!valid}
-                        >
-                            Register
-                        </Button>
-                        <Grid container>
+                    <Grid item>
+                        <Typography variant="body2">Already have an account? <t/>
+                            <Link href="/" variant="body2">
+                                {"Sign In"}
+                            </Link></Typography>
 
-                            <Grid item>
-                                <Typography variant="body2">Already have an account? <t/>
-                                    <Link href="/" variant="body2">
-                                        {"Sign In"}
-                                    </Link></Typography>
-
-                            </Grid>
-                        </Grid>
-                    </form>
-                </div>
-           
-       
-        </>
+                    </Grid>
+                </Grid>
+            </form>
+        </div>
     );
 }
   

@@ -65,6 +65,7 @@ export default function LoginForm({Login, error}){
             id="password"
             helperText="Password"
             autoComplete="current-password"
+            data-testid="sign-up-password"
             onChange={e => setDetails({...details, password:e.target.value})}
             value = {details.password}
         />
