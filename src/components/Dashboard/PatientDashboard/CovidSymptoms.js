@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Grid } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 import { ListItem, Typography } from '@mui/material';
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -157,9 +157,9 @@ export function CovidSymptoms(){
                 </ListItem>
             </Grid>
             <Grid item xs={12} align="center">
-                <button className={classes.link} align="center" href='https://www.quebec.ca/en/health/health-issues/a-z/2019-coronavirus/symptoms-transmission-treatment'>
+                <Button className={classes.link} align="center" href='https://www.quebec.ca/en/health/health-issues/a-z/2019-coronavirus/symptoms-transmission-treatment'>
                         See more about Quebec's Government prevention
-                </button>
+                </Button>
             </Grid>
         </Grid>
     )

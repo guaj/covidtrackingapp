@@ -7,10 +7,10 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 //variable to check store address or symptom list undefined state
 let undefinedAddressOrSymptomsList = false;
 
-export async function fetchData(tableName, email) {
+export async function fetchData(tableName) {
     const params = {
         TableName: tableName,
-        ExpressionAttributeValues: {":email": email ? email : JSON.parse(localStorage.getItem("email"))},
+        ExpressionAttributeValues: {":email": JSON.parse(localStorage.getItem("email"))},
         KeyConditionExpression: 'email = :email'
     }
 
@@ -35,6 +35,8 @@ export async function fetchData(tableName, email) {
             email: result.Items.at(0).email,
             ramQNumber: (result.Items.at(0).ramQNumber !== undefined ? result.Items.at(0).ramQNumber : ""),
             insurance: (result.Items.at(0).insurance !== undefined ? result.Items.at(0).insurance : ""),
+            covidResult: (result.Items.at(0).covidResult !== undefined ? result.Items.at(0).covidResult : ""),
+            insuranceNumber: (result.Items.at(0).insuranceNumber !== undefined ? result.Items.at(0).insuranceNumber : ""),
             symptom1: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom1 : false) : false),
             symptom2: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom2 : false) : false),
             symptom3: (result.Items.at(0).symptoms !== undefined ? (result.Items.at(0).symptoms.symptom1 !== undefined ? result.Items.at(0).symptoms.symptom3 : false) : false),
@@ -49,13 +51,13 @@ export async function fetchData(tableName, email) {
             comments: (result.Items.at(0).comments !== undefined ? result.Items.at(0).comments : ""),
             doctor: (result.Items.at(0).doctor !== undefined ? result.Items.at(0).doctor : ""),
             flag: (result.Items.at(0).flag !== undefined ? result.Items.at(0).flag : false),
+            type: (result.Items.at(0).type !== undefined ? result.Items.at(0).type : ""),
         };
         return [formValues];
     }
 }
 
 export async function updateData(tableName, data) {
-    console.log("update data" + data.email);
     const params = {
         TableName: tableName,
         Key: {"email": data.email},
@@ -71,6 +73,8 @@ export async function updateData(tableName, data) {
             "phoneNumber = :phoneNumber," +
             "ramQNumber = :ramQNumber," +
             "insurance = :insurance," +
+            "insuranceNumber = :insuranceNumber," +
+            "covidResult = :covidResult," +
             "symptoms.symptom1 = :symptom1," +
             "symptoms.symptom2 = :symptom2," +
             "symptoms.symptom3 = :symptom3," +
@@ -98,6 +102,8 @@ export async function updateData(tableName, data) {
             ":phoneNumber": data.phoneNumber,
             ":ramQNumber": data.ramQNumber,
             ":insurance": data.insurance,
+            ":insuranceNumber": data.insuranceNumber,
+            ":covidResult": data.covidResult,
             ":symptom1": data.symptom1,
             ":symptom2": data.symptom2,
             ":symptom3": data.symptom3,
@@ -129,8 +135,7 @@ export async function updateData(tableName, data) {
             }
         }, function (err) {
             if (err) {
-                alert(JSON.stringify(err));
-                //console.info("Unable to create new attributes. Attributes already exist!\nError JSON:", JSON.stringify(err, null, 2));
+                console.info("Unable to create new attributes. Attributes already exist!\nError JSON:", JSON.stringify(err, null, 2));
             } else {
                 undefinedAddressOrSymptomsList = false;
             }
@@ -139,12 +144,111 @@ export async function updateData(tableName, data) {
     //update patient information in the database with the submitted values
     docClient.update(params, function (err, data) {
         if (err) {
-            alert(JSON.stringify(err));
             console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
-            //alert('ERROR: Unable to update profile information! Contact support if issue persists.')
+            alert('ERROR: Unable to update profile information! Contact support if issue persists.')
         } else {
             console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
             alert('Profile information updated!');
         }
     });
 };
+
+export async function UpdateRequiredSymptoms(email, data) {
+    // fetch User Email
+    // Update his form.
+}
+
+export async function getPatientEmail(email) {
+    let params = {
+        TableName: "patients",
+        ScanFilter: {
+            "email": {
+                ComparisonOperator: "CONTAINS",
+                AttributeValueList: [email]
+            }
+        }
+    };
+    try{
+        let scanresult = await docClient.scan(params).promise();
+        let resultsArray = scanresult.Items
+        let userEmail;
+        resultsArray.forEach( (item, index) => {
+            const fetchEmail = String(item.email).split("@")[0]
+            if(email === fetchEmail) {
+                userEmail = String(scanresult.Items.at(index).email)
+            }
+
+        })
+        return userEmail;
+            } catch(e){
+        alert(JSON.stringify(e))
+    }
+}
+
+
+
+export async function  updateRequiredSymptoms(data, patientEmail) {
+    const email = patientEmail
+    const params = {
+        TableName: 'patients',
+        Key: {"email": email},
+        UpdateExpression: "SET requiredSymptoms = :requiredSymptoms",
+        ExpressionAttributeValues: {
+            ":requiredSymptoms": [
+                data.symptom1,
+                data.symptom2,
+                data.symptom3,
+                data.symptom4,
+                data.symptom5,
+                data.symptom6,
+                data.symptom7,
+                data.symptom9,
+                data.symptom10,
+                data.symptom11,
+            ],
+        },
+
+    }
+    docClient.update(params, function (err, data) {
+        if (err) {
+            console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+            alert('ERROR: Unable to update profile information! Contact support if issue persists.')
+        } else {
+            console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+            alert('Required symptoms updated!');
+        }
+    });
+
+}
+
+
+export async function fetchRequiredSymptoms(patientEmail) {
+    const email = patientEmail
+    const params = {
+        TableName: "patients",
+        ExpressionAttributeValues: {":email": email},
+        KeyConditionExpression: 'email = :email'
+    }
+
+    let result = null;
+    try {
+        result = await docClient.query(params).promise();
+    }catch (e)
+    {console.log(e)}
+    finally {
+        const formValues = {
+            symptom1: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[0] !== undefined ? result.Items.at(0).requiredSymptoms[0] : false) : false),
+            symptom2: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[1] !== undefined ? result.Items.at(0).requiredSymptoms[1] : false) : false),
+            symptom3: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[2] !== undefined ? result.Items.at(0).requiredSymptoms[2] : false) : false),
+            symptom4: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[3] !== undefined ? result.Items.at(0).requiredSymptoms[3] : false) : false),
+            symptom5: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[4] !== undefined ? result.Items.at(0).requiredSymptoms[4] : false) : false),
+            symptom6: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[5] !== undefined ? result.Items.at(0).requiredSymptoms[5] : false) : false),
+            symptom7: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[6] !== undefined ? result.Items.at(0).requiredSymptoms[6] : false) : false),
+            symptom8: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[7] !== undefined ? result.Items.at(0).requiredSymptoms[7] : false) : false),
+            symptom9: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[8] !== undefined ? result.Items.at(0).requiredSymptoms[8] : false) : false),
+            symptom10: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[9] !== undefined ? result.Items.at(0).requiredSymptoms[9] : false) : false),
+            symptom11: (result.Items.at(0).requiredSymptoms !== undefined ? (result.Items.at(0).requiredSymptoms[10] !== undefined ? result.Items.at(0).requiredSymptoms[10] : false) : false),
+        }
+        return [formValues];
+    }
+}

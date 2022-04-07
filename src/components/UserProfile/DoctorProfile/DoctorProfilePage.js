@@ -6,10 +6,6 @@ import "../UserProfile.css";
 import DoctorMock from "./mockDoctorInfo.json";
 import Box from "@mui/material/Box";
 
-
-
-
-
 export default class DoctorProfilePage extends React.Component {
     userType;
     userFetch;

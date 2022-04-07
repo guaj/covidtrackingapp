@@ -292,9 +292,9 @@ export function QuarantineInfo(){
                 </ListItem>
             </Grid>
             <Grid item xs={12} align="center">
-                <button className={classes.link} href='https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks/quarantine-isolate-home.html'>
+                <Button className={classes.link} href='https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks/quarantine-isolate-home.html'>
                     Governmental quarantine instructions
-                </button>
+                </Button>
             </Grid>
         </Grid>
     )

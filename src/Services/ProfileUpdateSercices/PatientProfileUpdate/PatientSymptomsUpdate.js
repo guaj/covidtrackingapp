@@ -2,26 +2,20 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import '../../../components/profile.css'
 import * as React from 'react';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { Checkbox, FormControlLabel, FormGroup } from "@material-ui/core";
 import geometricImage from "../../../images/geometric_gradient.jpg";
-import {useState, Fragment, useEffect} from "react";
+import { useState, Fragment, useEffect } from "react";
 import Navbar from "../../../components/Navbar/Navbar";
 import * as PatientProfileUpdateDatabaseServices from "./PatientProfileUpdateDatabaseServices";
+import RadioGroup from '@mui/material/RadioGroup';
+import Radio from '@mui/material/Radio';
 
 const useStyles = makeStyles((theme) => ({
-    inputLabelRoot: {
-        clip: "rect(0 0 0 0)",
-        clipPath: "inset(50%)",
-        height: 1,
-        overflow: "hidden",
-        position: "absolute",
-        whiteSpace: "nowrap",
-        width: 1
-      },
     image: {
         backgroundImage: `url(${geometricImage})`,
         backgroundRepeat: "no-repeat",
@@ -56,14 +50,10 @@ const useStyles = makeStyles((theme) => ({
     },
     field:{
         marginTop: theme.spacing(3)
-    },
-    field1:{
-        marginTop: theme.spacing(3),
-        marginBottom: theme.spacing(-1)
     }
 }));
 
-export default function ProfilePatient() {
+export default function ProfileSymptomsPatient() {
     const classes = useStyles();
 
     const [patients, setPatients] = useState(null);
@@ -211,7 +201,7 @@ export default function ProfilePatient() {
             email: editFormData.email,
             ramQNumber: editFormData.ramQNumber,
             insurance: editFormData.insurance,
-            insuranceNumber: editFormData.insuranceNumber,            
+            insuranceNumber: editFormData.insuranceNumber,
             covidResult: editFormData.covidResult,
             symptom1: editFormData.symptom1,
             symptom2: editFormData.symptom2,
@@ -257,7 +247,7 @@ export default function ProfilePatient() {
             email: editFormData.email,
             ramQNumber: editFormData.ramQNumber,
             insurance: editFormData.insurance,
-            insuranceNumber: editFormData.insuranceNumber,            
+            insuranceNumber: editFormData.insuranceNumber,
             covidResult: editFormData.covidResult,
             symptom1: editFormData.symptom1,
             symptom2: editFormData.symptom2,
@@ -287,156 +277,136 @@ export default function ProfilePatient() {
                     <Grid item xs={12} sm={12} md={8} component={Paper} elevation={6} square>
                         <div className={classes.paper}>
                             <Typography component="h1" variant="h4" className={classes.title}>
-                                Profile page
+                                Symptoms Update
                             </Typography>
                             <form onSubmit={handleEditFormSubmit}>
-                                <p>Name</p>
-                                <TextField
-                                    helperText="First name"
-                                    type="text"
-                                    placeholder="First name"
-                                    name="firstName"
-                                    id="firstName"
-                                    value={editFormData.firstName}
-                                    onChange={handleFormChange}
-                                    disabled={true}
-                                />
-                                <TextField
-                                    helperText="Last name"
-                                    type="text"
-                                    placeholder="Last name"
-                                    name="lastName"
-                                    value={editFormData.lastName}
-                                    onChange={handleFormChange}
-                                    disabled={true}
-                                />
-                                <TextField
-                                    type="date"
-                                    margin="normal"
-                                    fullWidth={true}
-                                    name="dob"
-                                    autoComplete="date"
-                                    helperText="Date of birth"
-                                    value={editFormData.dob}
-                                    onChange={handleFormChange}
-                                    disabled={true}
-                                />
-                                <p className={classes.field}>Address</p>
-                                <TextField
-                                    helperText="Street number"
-                                    type="text"
-                                    name="streetNumber"
-                                    placeholder="Street number"
-                                    value={editFormData.streetNumber}
-                                    onChange={handleFormChange}
-                                />
-                                <TextField
-                                    helperText="Street name"
-                                    type="text"
-                                    name="streetName"
-                                    placeholder="Street name"
-                                    value={editFormData.streetName}
-                                    onChange={handleFormChange}
-                                />
-                                <TextField
-                                    helperText="Apartment number"
-                                    type="text"
-                                    name="apartmentNumber"
-                                    placeholder="Apartment number"
-                                    value={editFormData.apartmentNumber}
-                                    onChange={handleFormChange}
-                                />
-                                <TextField
-                                    helperText="Postal code"
-                                    type="text"
-                                    name="postalCode"
-                                    placeholder="Postal code"
-                                    value={editFormData.postalCode}
-                                    onChange={handleFormChange}
-                                />
-                                <TextField
-                                    helperText="City"
-                                    type="text"
-                                    name="city"
-                                    placeholder="City"
-                                    value={editFormData.city}
-                                    onChange={handleFormChange}
-                                />
-                                <TextField
-                                    helperText="Province"
-                                    type="text"
-                                    name="province"
-                                    placeholder="Province"
-                                    value={editFormData.province}
-                                    onChange={handleFormChange}
-                                />
-                                <p className={classes.field1}> Other contact details</p>
-                                <TextField
-                                    helperText="Email"
-                                    label="email"
-                                    type="text"
-                                    InputLabelProps={{
-                                    className: classes.inputLabelRoot
-                                    }}
-                                    name="email"
-                                    placeholder="Email"
-                                    value={editFormData.email}
-                                    onChange={handleFormChange}
-                                    disabled = {true}
-                                />
-                                <TextField
-                                    label="phoneNumber"
-                                    InputLabelProps={{
-                                    className: classes.inputLabelRoot
-                                    }} 
-                                    helperText="Phone number"
-                                    type="phoneNumber"
-                                    name="phoneNumber"
-                                    id="phoneNumber"
-                                    data-testid="phoneNumber"
-                                    placeholder="Phone"
-                                    value={editFormData.phoneNumber}
-                                    onChange={handleFormChange}
-                                />
-                                <p className={classes.field}>RAMQ number</p>
-                                <TextField
-                                    type="text"
-                                    name="ramQNumber"
-                                    placeholder="RAMQ Number"
-                                    value={editFormData.ramQNumber}
-                                    onChange={handleFormChange}
-                                />
-                                <p className={classes.field}>Private insurance</p>
-                                <TextField
-                                    type="text"
-                                    name="insurance"
-                                    placeholder="Organization name"
-                                    value={editFormData.insurance}
-                                    onChange={handleFormChange}
-                                />
-                                <TextField
-                                    type="text"
-                                    name="insuranceNumber"
-                                    placeholder="Insurance Number"
-                                    value={editFormData.insuranceNumber}
-                                    onChange={handleFormChange}
-                                />
-                                <Button
-                                    type="submit"
-                                    fullWidth={true}
-                                    variant="contained"
-                                    className={classes.submit}
-                                >
-                                    Update profile
-                                </Button>
-                                <Button
-                                    type="button"
-                                    fullWidth={true}
-                                    variant="contained"
-                                    onClick={(event) => [handleNotifyDoctorButtonClick(event), alert('Your doctor will be notified!')]}
-                                >
-                                    Notify my doctor
-                                </Button>
+                                <div className={classes.field}>
+                                    <FormGroup>
+                                        <p>Health status</p>
+                                        <RadioGroup
+                                        >
+                                            <FormControlLabel control={<Radio/>} 
+                                                label="Positive" 
+                                                checked= {editFormData.covidResult === "positive"}
+                                                onClick={() => setEditFormData((val) => {
+                                                return {...val, covidResult: "positive"}
+                                            })}
+                                                />
+                                            <FormControlLabel control={<Radio/>}
+                                                label="Negative" 
+                                                checked= {editFormData.covidResult !== "positive"}
+                                                onClick={() => setEditFormData((val) => {
+                                                return {...val, covidResult: "negative"}
+                                            })}
+                                                />
+                                        </RadioGroup>
+                                        <p> Covid symptoms</p>
+                                        <FormControlLabel control={<Checkbox/>}
+                                            checked={editFormData.symptom1}
+                                            onClick={() => setEditFormData((val) => {
+                                                return {...val, symptom1: !val.symptom1}
+                                            })}
+                                            name="symptom1" label="New or worsening cough"/>
+                                        <FormControlLabel control={<Checkbox/>}
+                                            checked={editFormData.symptom2}
+                                            onClick={() => setEditFormData((val) => {
+                                                return {...val, symptom2: !val.symptom2}
+                                            })}
+                                            name="symptom2"
+                                            label="Shortness of breath or difficulty breathing"/>
+                                        <FormControlLabel control={<Checkbox/>}
+                                            checked={editFormData.symptom3}
+                                            onClick={() => setEditFormData((val) => {
+                                                return {...val, symptom3: !val.symptom3}
+                                            })}
+                                            name="symptom3"
+                                            label="Temperature equal or more than 38 C"/>
+                                        <FormControlLabel control={<Checkbox/>}
+                                            checked={editFormData.symptom4}
+                                            onClick={() => setEditFormData((val) => {
+                                                return {...val, symptom4: !val.symptom4}
+                                            })}
+                                            name="symptom4"
+                                            label="Feeling feverish"/>
+                                        <FormControlLabel control={<Checkbox/>}
+                                            type= 'checkbox'
+                                            data-testid="checkbox-1234"
+                                            checked={editFormData.symptom5}
+                                            onClick={() => setEditFormData((val) => {
+                                                return {...val, symptom5: !val.symptom5}
+                                            })}
+                                            name="symptom5"
+                                            label="Chills"/>
+                                        <FormControlLabel control={<Checkbox/>}
+                                            checked={editFormData.symptom6}
+                                            onClick={() => setEditFormData((val) => {
+                                                return {...val, symptom6: !val.symptom6}
+                                            })}
+                                            name="symptom6"
+                                            label="Fatigue and/or weakness"/>
+                                        <FormControlLabel control={<Checkbox/>}
+                                            checked={editFormData.symptom7}
+                                            onClick={() => setEditFormData((val) => {
+                                                return {...val, symptom7: !val.symptom7}
+                                            })}
+                                            name="symptom7"
+                                            label="Muscles and/or body ache"/>
+                                        <FormControlLabel control={<Checkbox/>}
+                                            checked={editFormData.symptom8}
+                                            onClick={() => setEditFormData((val) => {
+                                                return {...val, symptom8: !val.symptom8}
+                                            })}
+                                            name="symptom8"
+                                            label="Headache"/>
+                                        <FormControlLabel control={<Checkbox/>}
+                                            checked={editFormData.symptom9}
+                                            onChange={() => setEditFormData((val) => {
+                                                return {...val, symptom9: !val.symptom9}
+                                            })}
+                                            name="symptom9"
+                                            label="Abdominal pain"/>
+                                        <FormControlLabel control={<Checkbox/>}
+                                            checked={editFormData.symptom10}
+                                            onClick={() => setEditFormData((val) => {
+                                                return {...val, symptom10: !val.symptom10}
+                                            })}
+                                            name="symptom10"
+                                            label="Diarrhea and vomiting"/>
+                                        <FormControlLabel control={<Checkbox/>}
+                                            checked={editFormData.symptom11}
+                                            onClick={() => setEditFormData((val) => {
+                                                return {...val, symptom11: !val.symptom11}
+                                            })}
+                                            name="symptom11"
+                                            label="Feelings of malaise"/>
+                                    </FormGroup>
+                                    <p>Other comments</p>
+                                        <TextField fullWidth={true}
+                                            id="outlined-multiline-static"
+                                            label=""
+                                            multiline
+                                            rows={2}
+                                            defaultValue="add comments"
+                                            name="comments"
+                                            placeholder="Comments"
+                                            value={editFormData.comments}
+                                            onChange={handleFormChange} />
+                                    <Button
+                                        type="submit"
+                                        fullWidth={true}
+                                        variant="contained"
+                                        className={classes.submit}>
+                                        Edit symptoms
+                                    </Button>
+                                    <Button
+                                        type="button"
+                                        fullWidth={true}
+                                        variant="contained"
+                                        onClick={(event) => [handleNotifyDoctorButtonClick(event), alert('Your doctor will be notified!')]}
+                                    >
+                                        Notify my doctor
+                                    </Button>
+                                </div>
                             </form>
                         </div>
                     </Grid>

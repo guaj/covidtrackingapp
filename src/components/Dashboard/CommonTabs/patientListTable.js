@@ -17,11 +17,8 @@ import LinkIcon from '@mui/icons-material/Link';
 import ErrorIcon from '@mui/icons-material/Error';
 import FlagIcon from '@mui/icons-material/Flag';
 import { getAllPatients } from '../../../databaseServices'
-import {useState, useEffect} from 'react'
-
-
-
-
+import {useState, useEffect} from 'react';
+import { useNavigate } from "react-router";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -146,9 +143,6 @@ EnhancedTableHead.propTypes = {
 };
 
 
-
-
-
 export default function PatientListTable() {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('calories');
@@ -157,7 +151,7 @@ export default function PatientListTable() {
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [data, setData] = useState([])
-
+    const navigate = useNavigate();
 
 
     const handleRequestSort = (event, property) => {
@@ -165,7 +159,6 @@ export default function PatientListTable() {
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
-
 
 
     const handleChangePage = (event, newPage) => {
@@ -188,10 +181,10 @@ export default function PatientListTable() {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
-    function profileLink(email) {
-        let url = email.split("@");
-        return "/profile/" + url[0];
-    }
+    const profileLink = (email) => {
+        let url = email.split("@")
+        return ("/profile/" + url[0]);
+    };
 
 
     return (
@@ -247,7 +240,7 @@ export default function PatientListTable() {
                                             height: (dense ? 33 : 53) * emptyRows,
                                         }}
                                     >
-                                        <TableCell colSpan={6} />
+                                        <TableCell colSpan={6}/>
                                     </TableRow>
                                 )}
                             </TableBody>
@@ -264,7 +257,7 @@ export default function PatientListTable() {
                     />
                 </Paper>
                 <FormControlLabel
-                    control={<Switch checked={dense} onChange={handleChangeDense} />}
+                    control={<Switch checked={dense} onChange={handleChangeDense}/>}
                     label="Dense padding"
                 />
             </Box>

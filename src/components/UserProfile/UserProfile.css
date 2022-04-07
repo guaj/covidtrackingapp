@@ -10,7 +10,6 @@
     padding-top: 50px;
 }
 
-
 .myAvatar {
     display: flex;
     margin: auto;
@@ -19,13 +18,12 @@
 }
 
 .myName {
-    color: #010560;
+    color: #7F7FD5;
     display: flex;
     margin: auto;
     justify-content: center;
     align-items: center;
-    padding-top: 40px;
-    padding-bottom: 20px;
+    padding-top: 20px;
 }
 
 .infoButtons {
@@ -33,8 +31,8 @@
     display: flex;
     margin: auto;
     justify-content: center;
-    align-items: center;
-    padding-bottom: 20px;
+    text-align: center;
+    padding-bottom: 10px;
 }
 
 .MuiButton-outlined {
@@ -44,8 +42,15 @@
 }
 
 .colored-button {
-    color: #7F7FD5 !important;
+    color: white !important;
+    background-color: #4c4c7f !important;
 }
+
+.colored-button:hover {
+    background-color: #7F7FD5;
+    opacity: 80%;
+}
+
 .myName2 {
     color: #010560;
     display: flex;
@@ -63,6 +68,18 @@
 p {
     color: #7F7FD5;
     font-size: large;
+}
+
+.positive {
+    color: darkred;
+    padding-top: 1em;
+    text-align: center;
+}
+
+.negative {
+    color: darkgreen;
+    padding-top: 1em;
+    text-align: center;
 }
 
 .boxText {

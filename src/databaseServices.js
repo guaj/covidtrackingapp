@@ -2,6 +2,9 @@ import awsConfig from './aws-config.json'
 import AWS from 'aws-sdk'
 
 AWS.config.update(awsConfig);
+AWS.config.update({
+  dynamoDbCrc32: false
+});
 const docClient = new AWS.DynamoDB.DocumentClient()
 
 
@@ -36,6 +39,41 @@ export async function getAllPatients(setter) {
     }
 }
 
+export async function getSpecificDoctor(email) {
+  var params = {
+    TableName: "doctors",
+    FilterExpression: "#email = :specific",
+    ExpressionAttributeNames: {
+      "#email" : "email"
+    },
+    ExpressionAttributeValues: { ":specific": email }
+  }
+  try {
+    const data = await docClient.scan(params).promise()
+    return data
+
+  } catch (err) {
+    alert("could not retrieve data >:(")
+  }
+}
+
+export async function getSpecificPatient(email) {
+  var params = {
+    TableName: "patients",
+    FilterExpression: "#email = :specific",
+    ExpressionAttributeNames: {
+      "#email" : "email"
+    },
+    ExpressionAttributeValues: { ":specific": email }
+  }
+  try {
+    const data = await docClient.scan(params).promise()
+    return data
+
+  } catch (err) {
+    alert("could not retrieve data >:(")
+  }
+}
 //////////////////////////////////////////////////////////////////////////////
 // HO contact tracing queries //
 export async function addSentContactTracingFormTime(email) {
