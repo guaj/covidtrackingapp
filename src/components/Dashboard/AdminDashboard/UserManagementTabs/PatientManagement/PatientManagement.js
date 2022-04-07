@@ -253,6 +253,7 @@ export default function PatientListTable() {
     };
     const updateModalHandleClose = () => {
         setUpdateModalOpen(false);
+        getAllPatients(setData);
     }
 
     const addModalHandleOpen = patient => {
@@ -261,6 +262,7 @@ export default function PatientListTable() {
     };
     const addModalHandleClose = () => {
         setAddModalOpen(false);
+        getAllPatients(setData);
     }
 
 
