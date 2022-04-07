@@ -1,4 +1,4 @@
-// //test 1
+//test 1
 describe('health official can send a notification to a patient to fill contact tracing form', () => {
     it('health official clicks on send button', () => {
         cy.visit("http://localhost:3000/") //open browser to localhost: 3000
@@ -18,8 +18,8 @@ describe("patients can fill out the contract tracing form", () =>{
         cy.findByRole('textbox', {name: /this.example@email.com/i}).type('patient@gmail.com')// select email field and enter email : eyal@gmail.com
         cy.findByTestId('sign-up-password').type('Patient1!')// select password field and enter password :  P1234567!
         cy.findByText(/login/i).click()// click on login
-        cy.findByRole('button', { name: /account of current user/i }).click()// select the profile button      
-        cy.findByRole('menuitem', { name: /profile/i }).click()// select the profile menu item 
+        cy.findByRole('button', { name: /account of current user/i }).click()// select the profile button
+        cy.findByRole('menuitem', { name: /profile/i }).click()// select the profile menu item
         cy.findByRole('link', { name: /complete tracing form/i }).click() //user clicks on complete tracing form
         cy.get('#locationName').type('Walmart')//type location name in textbox
         cy.get('#locationNumber').type('514-665-6060')//type location number in textbox
@@ -40,23 +40,4 @@ describe('health official can access locations list of patients who completed tr
         cy.findByRole('tab', { name: /locations contact list/i }).click()//go to locations list tab on dashboard
             })
 })
-
-//template
-// describe('Patient can schedule an appointment', () => {
-//     it('patient choose a date and a time', () => {
-//         cy.visit("http://localhost:3000/%22) // open browser to localhost:3000
-//         cy.findByRole('textbox', { name: /this.example@email.com/i }).type('patient@gmail.com')// select email field and enter email : patient@gmail.com
-//         cy.findByTestId('sign-up-password').type('Patient1!')// select passeword field and enter password :  Patient1!
-//         cy.findByText(/login/i).click()// click on login
-//         cy.findByRole('button', { name: /account of current user/i }).click() // click on profile icon
-//         cy.findByRole('menuitem', { name: /profile/i }).click()// click on profile link
-//         cy.findByText(/make appointment/i).click()
-//         cy.findByRole('button', { name: /calendar view is open, go to text input view/i }).click()
-//         cy.findByRole('textbox').clear()
-//         cy.findByRole('textbox').type('04032025')
-//         cy.findByText(/19:00:00/i).click()// click on 19:00:00
-//         cy.findByText(/19:00:00/i).click()
-//         cy.findByRole('button', { name: /select appointment/i }).click()// click on select appointment
-//     })
-// })
 
