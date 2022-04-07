@@ -11,7 +11,6 @@ import { sendMail } from "../../../Services/EmailService/EmailService";
 import EmailFormDialog from "../../../Services/EmailService/EmailDialog";
 import QRCode from "react-qr-code";
 
-
 export default class PatientProfilePage extends React.Component {
     userType = JSON.parse(localStorage.getItem("type"));
     userFetch = window.location.href.split("/")[4];

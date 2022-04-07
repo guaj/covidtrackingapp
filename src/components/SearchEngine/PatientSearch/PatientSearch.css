@@ -1,0 +1,31 @@
+.PatientResultList {
+    position: absolute;
+    background-color: white;
+    width: max-content;
+    border-color: transparent;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2px;
+    z-index: 1;
+}
+
+.PatientResultList > div {
+    padding-top: 15px;
+    padding-bottom: 1px;
+    cursor: pointer;
+}
+
+.PatientResultList > div:hover{
+    background: rgba(211, 211, 211, 0.3);
+    border-radius: 5px;
+}
+
+.PatientResultList > div > p {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.PatientResultList > div > p > a {
+    text-decoration: none;
+    color: inherit;
+}

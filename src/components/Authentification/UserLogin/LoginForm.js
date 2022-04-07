@@ -68,6 +68,7 @@ export default function LoginForm({Login, error}){
             data-testid="sign-up-password"
             onChange={e => setDetails({...details, password:e.target.value})}
             value = {details.password}
+            data-testid="sign-up-password"
         />
         <Grid container className={classes.checkboxes}>
             <Grid item xs>
