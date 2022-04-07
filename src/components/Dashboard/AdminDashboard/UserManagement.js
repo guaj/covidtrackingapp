@@ -4,12 +4,11 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import PatientListTable from "../CommonTabs/patientListTable";
-import DoctorListTable from '../CommonTabs/doctorListTable';
-import UnpairedNewPatientListTable from './UnpairedNewPatients';
-import UnpairedPatientDoctorEmergencyListTable from './UnpairedPatientDoctorEmergency';
-import UserManagement from './UserManagement';
-//import PairedListTable from './Paired';
+import PatientManagement from './UserManagementTabs/PatientManagement/PatientManagement'
+import DoctorManagement from './UserManagementTabs/DoctorManagement/DoctorManagement'
+import OrganizationManagement from './UserManagementTabs/OrganizationManagement/OrganizationManagement'
+
+
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -64,27 +63,19 @@ export default function AdminTabs() {
     return (
         <>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                <Tab label="Patient List" {...a11yProps(0)} />
-                <Tab label="Doctor List" {...a11yProps(1)} />
-                <Tab label="New Patients Pairing" {...a11yProps(2)} />
-                <Tab label="Doctor Emergency Pairing" {...a11yProps(3)} />
-                <Tab label="User Management" {...a11yProps(3)} />
+                <Tab label="Patients" {...a11yProps(0)} />
+                <Tab label="Doctors" {...a11yProps(1)} />
+                <Tab label="Organizational Officials" {...a11yProps(2)} />
             </Tabs>
 
             <TabPanel value={value} index={0}>
-                <PatientListTable />
+                <PatientManagement/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <DoctorListTable />
+                <DoctorManagement />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <UnpairedNewPatientListTable />
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-                <UnpairedPatientDoctorEmergencyListTable />
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-                <UserManagement />
+                <OrganizationManagement />
             </TabPanel>
         </>
     )

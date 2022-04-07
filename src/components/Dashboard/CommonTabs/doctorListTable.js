@@ -55,11 +55,6 @@ const headCells = [
         label: 'License Number',
     },
     {
-        id: 'address',
-        disablePadding: false,
-        label: 'Address',
-    },
-    {
         id: 'email',
         disablePadding: false,
         label: 'Email',
@@ -202,12 +197,11 @@ export default function DoctorListTable() {
                                                 tabIndex={-1}
                                                 key={item.name}
                                             >
-                                                <TableCell align="center">{item.licenseNumber}</TableCell>
-                                                {/* <TableCell align="center">{item.address}</TableCell> */}
-                                                <TableCell align="center">{item.email}</TableCell>
-                                                {/* <TableCell align="center">{item.firstName}</TableCell> */}
-                                                {/* <TableCell align="center">{item.lastName}</TableCell> */}
-                                                {/* <TableCell align="center">{item.phoneNumber}</TableCell> */}
+                                                <TableCell >{item.licenseNumber ? item.licenseNumber : ""}</TableCell>
+                                                <TableCell >{item.email ? item.email : ""}</TableCell>
+                                                <TableCell >{item.firstName ? item.firstName : ""}</TableCell>
+                                                <TableCell >{item.lastName ? item.lastName : ""}</TableCell>
+                                                <TableCell >{item.phoneNumber ? item.phoneNumber : ""}</TableCell>
                                             </TableRow>
                                         );
                                     })}

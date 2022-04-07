@@ -92,23 +92,23 @@ export async function updateDoctorPatientCount(email) {
 // //database query for finding new patients
 
 export async function getNewPatients(setter) {
-    var params = {
-        TableName: "patients",
-        FilterExpression: "#doc = :none",
-        ExpressionAttributeNames: {
-            "#doc": "doctor"
-        },
-        ExpressionAttributeValues: {
-            ":none": ""
-        }
+  var params = {
+    TableName: "patients",
+    FilterExpression: "#doc = :none",
+    ExpressionAttributeNames: {
+      "#doc": "doctor"
+    },
+    ExpressionAttributeValues: {
+      ":none": ""
     }
-        try {
-            const data = await docClient.scan(params).promise()
-            console.log(data.Items)
-            setter(data.Items)
-        } catch (err) {
-            alert(JSON.stringify(err))
-        }
+  }
+  try {
+    const data = await docClient.scan(params).promise()
+    console.log(data.Items)
+    setter(data.Items)
+  } catch (err) {
+    alert(JSON.stringify(err))
+  }
 }
 //////////////////////////////////////////////////////////////////////////////
 
@@ -197,7 +197,7 @@ export async function getPairedDoctors() {
 
 //////////////////////////////////////////////////////////////////////////////
 
-export async function getPatientInfo(setter, email){
+export async function getPatientInfo(setter, email) {
 
   let params = {
     TableName: "patients",
@@ -208,12 +208,97 @@ export async function getPatientInfo(setter, email){
       }
     }
   };
-    try{
-      let scanresult = await docClient.scan(params).promise();
-      console.log(scanresult.Items)
-      setter(scanresult.Items[0]) //setter modifies the instance of the passed paremeter
-    } catch(e){
-      alert(JSON.stringify(e))
-    }
+  try {
+    let scanresult = await docClient.scan(params).promise();
+    console.log(scanresult.Items)
+    setter(scanresult.Items[0]) //setter modifies the instance of the passed paremeter
+  } catch (e) {
+    alert(JSON.stringify(e))
+  }
 }
 
+//////////////////////////////////////////////////////////////////////////////
+
+export async function deletePatient(email, data, setter) {
+
+  let params = {
+    TableName: "patients",
+    Key: {
+      "email": email
+    }
+  }
+  try {
+    
+    await docClient.delete(params).promise();
+    let updatedData = [...data]
+    updatedData.forEach(patient => {
+      if (patient.email === email) {
+        updatedData.splice(updatedData.indexOf(patient), 1);
+      }
+    })
+    setter(updatedData)
+    
+    
+  } catch (e) {
+    alert(JSON.stringify(e))
+  }
+}
+
+export async function deleteDoctor(email, data, setter) {
+
+  let params = {
+    TableName: "doctors",
+    Key: {
+      "email": email
+    }
+  }
+  try {
+
+    await docClient.delete(params).promise();
+    let updatedData = [...data]
+    updatedData.forEach(patient => {
+      if (patient.email === email) {
+        updatedData.splice(updatedData.indexOf(patient), 1);
+      }
+    })
+    setter(updatedData)
+
+
+  } catch (e) {
+    alert(JSON.stringify(e))
+  }
+}
+
+export async function deleteOrgOfficial(email, data, setter) {
+
+  let params = {
+    TableName: "organizations",
+    Key: {
+      "email": email
+    }
+  }
+  try {
+    
+    await docClient.delete(params).promise();
+    let updatedData = [...data]
+    updatedData.forEach(patient => {
+      if (patient.email === email) {
+        updatedData.splice(updatedData.indexOf(patient), 1);
+      }
+    })
+    setter(updatedData)
+    
+    
+  } catch (e) {
+    alert(JSON.stringify(e))
+  }
+}
+
+export async function getAllOrgOfficials(setter) {
+  try {
+    const data = await docClient.scan({ TableName: "organizations" }).promise()
+    setter(data.Items)
+  } catch (err) {
+    alert(JSON.stringify(err))
+  }
+}
