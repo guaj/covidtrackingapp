@@ -140,6 +140,7 @@ export default function OfficialProfile(props) {
                             margin="normal"
                             label="employee Id"
                             name="employeeId"
+                            data-testid="employeeId"
                             value={editFormData.employeeId}
                             onChange={handleEditFormChange}
                         />
@@ -149,6 +150,7 @@ export default function OfficialProfile(props) {
                             fullWidth
                             label="Organization Id"
                             name="orgId"
+                            data-testid="orgId"
                             autoComplete=""
                             value={editFormData.orgId}
                             onChange={handleEditFormChange}

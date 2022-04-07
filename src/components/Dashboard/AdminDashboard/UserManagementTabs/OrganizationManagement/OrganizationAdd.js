@@ -130,6 +130,7 @@ export default function SignUpOrg() {
             required
             fullWidth
             id="organizationId"
+            data-testid="organizationId"
             label="000000000"
             name="organizationId"
             helperText="Organization Branch ID"
@@ -142,6 +143,7 @@ export default function SignUpOrg() {
             required
             fullWidth
             id="employeeid"
+            data-testid="employeeid"
             label="000000000"
             name="EmployeeId"
             helperText="Employee ID"
@@ -170,6 +172,7 @@ export default function SignUpOrg() {
             name="password"
             label="* * * *"
             id="password"
+            data-testid="sign-up-psw1"
             helperText="Password"
             autoComplete="current-password"
             onChange={e => setPassword(e.target.value)}
@@ -182,6 +185,7 @@ export default function SignUpOrg() {
             name="password"
             label="* * * *"
             id="password"
+            data-testid="sign-up-psw2"
             helperText="Confirm your password"
             onChange={e => setPasswordAgain(e.target.value)}
           />

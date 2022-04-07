@@ -341,15 +341,15 @@ export default function PatientListTable() {
                                                     key={item.name}
                                                 >
                                                     <TableCell />
-                                                    <TableCell align="center">{item.firstName}</TableCell>
-                                                    <TableCell align="center">{item.lastName}</TableCell>
-                                                    <TableCell align="center">{item.covidResult}</TableCell>
-                                                    <TableCell align="center">{item.reviewed ? "yes" : "no"}</TableCell> {/* TODO: check the database attributes */}
-                                                    <TableCell align="center">{item.emergency ? <ErrorIcon style={{ fill: "red" }} /> : ""}</TableCell>
-                                                    <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon /></TableCell>
-                                                    <TableCell align="center">{item.flag ? <FlagIcon style={{ fill: "orange" }} /> : ""}</TableCell>
-                                                    <TableCell align="center"><Button onClick={()=> updateModalHandleOpen(item)}>update</Button></TableCell>
-                                                    <TableCell align="center"><Button onClick={() => deletePatient(item.email, data, setData)}>delete</Button></TableCell>
+                                                    <TableCell align="left">{item.firstName}</TableCell>
+                                                    <TableCell align="left">{item.lastName}</TableCell>
+                                                    <TableCell align="left">{item.covidResult}</TableCell>
+                                                    <TableCell align="left">{item.reviewed ? "yes" : "no"}</TableCell> {/* TODO: check the database attributes */}
+                                                    <TableCell align="left">{item.emergency ? <ErrorIcon style={{ fill: "red" }} /> : ""}</TableCell>
+                                                    <TableCell align="left" numeric component="a" href={profileLink(item.email)}><LinkIcon /></TableCell>
+                                                    <TableCell align="left">{item.flag ? <FlagIcon style={{ fill: "orange" }} /> : ""}</TableCell>
+                                                    <TableCell align="left"><Button onClick={()=> updateModalHandleOpen(item)}>update</Button></TableCell>
+                                                    <TableCell align="left"><Button onClick={() => deletePatient(item.email, data, setData)}>delete</Button></TableCell>
                                                 </TableRow>
                                             );
                                         })}
