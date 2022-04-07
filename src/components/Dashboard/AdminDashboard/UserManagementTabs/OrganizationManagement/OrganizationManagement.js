@@ -103,22 +103,22 @@ const headCells = [
     {
         id: 'email',
         disablePadding: false,
-        label: 'email',
+        label: 'Email',
     },
     {
         id: 'employeeId',
         disablePadding: false,
-        label: 'employee Id',
+        label: 'Employee Id',
     },
     {
         id: 'orgId',
         disablePadding: false,
-        label: 'organization Id',
+        label: 'Organization Id',
     },
     {
         id: 'type',
         disablePadding: false,
-        label: 'type',
+        label: 'Type',
     },
     {
         id: 'controls',
