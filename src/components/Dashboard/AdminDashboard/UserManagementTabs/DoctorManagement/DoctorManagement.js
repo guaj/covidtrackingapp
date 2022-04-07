@@ -41,16 +41,14 @@ const useStyles = makeStyles((theme) => ({
                 color: '#fff',
             }
         },
-        modal: {
-            height: "70%"
-        }
+        
 
     })
 );
 
 //styling for the modal
 const modalStyle = {
-    //overflow: 'auto',
+    overflow: 'auto',
     marginTop: '30%',
     position: 'absolute',
     top: '50%',
@@ -258,6 +256,7 @@ export default function DoctorListTable() {
         <>
 
             <div>
+              
                 <Modal
                     open={open}
                     onClose={handleClose}
@@ -271,6 +270,7 @@ export default function DoctorListTable() {
                         <DoctorUpdate doctor={doctor}/>
                     </Box>
                 </Modal>
+                
                 <Modal
                     open={openAdd}
                     onClose={handleCloseAdd}
@@ -284,7 +284,7 @@ export default function DoctorListTable() {
                         <DoctorAdd/>
                     </Box>
                 </Modal>
-                <div style={{minWidth: "100%", display: 'flex', flexDirection: "row"}}>
+                <div style={{minWidth: "100%", display: 'flex', flexDirection: "row", marginBottom: "1%"}}>
                     <h2>Doctors</h2>
                     <Button variant="contained" color="primary" style={{margin: "0 0 1% auto"}} onClick={()=>{handleOpenAdd()}}>add doctor</Button>
                 </div>

@@ -112,7 +112,7 @@ export default function SignUpOrg() {
 
       <div className={classes.paper}>
         <Typography component="h1" variant="h4" className={classes.title} >
-          Register as an Organization
+          add an organizational official
         </Typography>
         <form className={classes.form} id='form' onSubmit={handleSubmit}>
           <RadioGroup

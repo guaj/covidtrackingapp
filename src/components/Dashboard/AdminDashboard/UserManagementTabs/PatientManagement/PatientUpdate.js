@@ -44,9 +44,7 @@ const useStyles = makeStyles((theme) => ({
     centerGrid: {
         justifyContent: "center",
     },
-    modal: {
-        
-    }
+ 
 }));
 
 export default function ProfilePatient(props) {

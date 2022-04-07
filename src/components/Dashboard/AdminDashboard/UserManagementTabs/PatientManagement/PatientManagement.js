@@ -43,9 +43,7 @@ const useStyles = makeStyles((theme) => ({
             color: '#fff',
         }
     },
-    modal: {
-        height: "70%"
-    }
+
     
 })
 );

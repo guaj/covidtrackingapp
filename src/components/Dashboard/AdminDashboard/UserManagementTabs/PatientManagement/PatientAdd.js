@@ -108,7 +108,7 @@ export default function SignUpPatient() {
     return (
         <div className={classes.paper}>
             <Typography component="h1" variant="h4" className={classes.title}>
-                Register as a Patient
+                add a patient 
             </Typography>
             <form className={classes.form} id='form' onSubmit={handleSubmit}>
                 <TextField
