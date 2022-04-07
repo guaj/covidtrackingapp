@@ -33,7 +33,12 @@ export default class DoctorScheduleSelector extends React.Component {
 
 
     async componentDidMount() {
-        this.setState({schedule: await this.retrieveData()});
+        try {
+            this.setState({schedule: await this.retrieveData()});
+        }catch (e) {
+            this.setState( { schedule: []}); // if no availabilities found!
+        }
+
         this.setState( {retrieve: true});
     }
 
