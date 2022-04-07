@@ -14,6 +14,7 @@ import { useState } from "react";
 import PasswordStrengthBar from 'react-password-strength-bar';
 import AWS from 'aws-sdk';
 import awsConfig from '../../../aws-config.json';
+import {setLocalStorage} from "../UserLogin/UserLogin";
 
   
   const useStyles = makeStyles((theme) => ({
@@ -77,27 +78,30 @@ export default function SignUpOrg() {
         setEmail(e.target.value);
     };
 
+  var orgType = localStorage.getItem("type");
+  //var orgEmail;
+
+
     const handleSubmit = async(e) =>{
         e.preventDefault();
         const params = {
-            TableName:"organizations",
-            Item:{
-                "type": String("org"),
+            TableName: "organizations",
+            Item: {
+                "type": String(orgType),
                 "orgId": String(orgId),
                 "employeeId": Number(empId),
                 "email": String(email),
                 "password": String(password)
             }
         }
-        try {
-            const result = await docClient.put(params).promise()
-            console.log(result)
-            alert("The account is created!");
-        } catch (err) {
-            alert("unable to create the account");
-            alert(err);
-        }
-
+            await docClient.put(params,function(error, data){
+                if(error){
+                    console.log(error)
+                }
+                //TODO: check the db that the email(key) is not already there then can't register an account
+                else
+                    setLocalStorage(email,orgType)
+            })
     }
     return (
       <Grid container component="main">

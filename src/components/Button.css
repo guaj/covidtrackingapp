@@ -14,7 +14,7 @@
 .btn:hover {
     padding: 8px 20px;
     transition: all 0.3s ease-out;
-    background: rgba(1, 6, 96, 0.322);
+    background: rgba(1, 6, 96, 0.32);
     color: rgba(1, 5, 96, 1);
     transition: 250ms;
 }

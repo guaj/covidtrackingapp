@@ -12,13 +12,21 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { visuallyHidden } from '@mui/utils';
+import {visuallyHidden} from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
-import ErrorIcon from '@mui/icons-material/Error';
-import FlagIcon from '@mui/icons-material/Flag';
-import { getAllPatients } from '../../../databaseServices'
+import {
+    addSentContactTracingFormTime,
+    getAllCovidPositivePatients,
+    isInNotificationList, isInTracingList, getCompletedCovidTracingForm
+} from '../../databaseServices';
 import {useState, useEffect} from 'react';
-import { useNavigate } from "react-router";
+import AWS from "aws-sdk";
+import awsConfig from "../../aws-config.json";
+import '../ContractTracing/button.css';
+
+//to connect to DynamoDB
+AWS.config.update(awsConfig);
+const docClient = new AWS.DynamoDB.DocumentClient();
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -52,12 +60,6 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'priorityNumber',
-        numeric : true,
-        disablePadding: false,
-        label: 'Priority',
-    },
-    {
         id: 'firstName',
         disablePadding: false,
         label: 'First Name',
@@ -70,28 +72,25 @@ const headCells = [
     {
         id: 'covidResult',
         disablePadding: false,
-        label: 'Covid Result',
+        label: 'Covid Positive',
     },
-    {
-        id: 'reviewed',
-        disablePadding: false,
-        label: 'Reviewed',
-    },
-    {
-        id: 'emergency',
-        disablePadding: false,
-        label: 'Emergency',
-    },
+
     {
         id: 'profileLink',
         disablePadding: false,
         label: 'Profile Link',
     },
     {
-        id: 'isFlagged',
+        id: 'contactTracingFormStatus',
         disablePadding: false,
-        label: 'Flag',
+        label: 'Contact Tracing Form Status',
     },
+    {
+        id: 'notifyPatient',
+        disablePadding: false,
+        label: 'send notification',
+    },
+
 ];
 
 
@@ -107,7 +106,6 @@ function EnhancedTableHead(props) {
 
         <TableHead>
             <TableRow>
-
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -143,23 +141,20 @@ EnhancedTableHead.propTypes = {
 };
 
 
-export default function PatientListTable() {
+export default function TracingListTable() {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('calories');
     const [selected] = useState([]);
     const [page, setPage] = useState(0);
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [data, setData] = useState([])
-    const navigate = useNavigate();
-
+    const [data, setData] = useState([]);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
-
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -174,27 +169,74 @@ export default function PatientListTable() {
         setDense(event.target.checked);
     };
 
-    useEffect(() => (async () => await getAllPatients(setData))(), [])
+
+    const handleSubmitChange = async (email) => {
+       
+        var currentDate = Date().toLocaleString();
+        const params ={
+            TableName: "notifications",
+            Item:{
+                "email": String(email),
+                "type": String("contact tracing"),
+                "content": String("You have been requested to share your location history. Please fill out the form in the following link : http://localhost:3000/tracing-form "),
+                "date": String(currentDate)
+            }
+        }
+        try {
+            const result = await docClient.put(params).promise()
+            console.log(params)
+            alert("notification sent")
+            document.getElementById(email).disabled = true;
+            document.getElementById(email).style.color = "grey";
+            document.getElementById(email).innerText = "SENT!";
+        }catch(err){
+            alert("cannot send notification")
+            alert(err)
+        }
+    };
+
+    useEffect(() => (async () => await getAllCovidPositivePatients(setData))(), [])
 
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
-    const profileLink = (email) => {
-        let url = email.split("@")
-        return ("/profile/" + url[0]);
-    };
+    function profileLink(email) {
+        let url = email.split("@");
+        return "/profile/" + url[0];
+    }
 
+
+    function tracingForm(email) {
+        let url = email.split("@");
+        return "/tracing-form/" + url[0];
+    }
+
+    async function isEnabled(email) {
+        const enabled = await isInNotificationList(email);
+        document.getElementById(email).disabled = enabled;
+        if(enabled){
+            document.getElementById(email).innerText = "SENT!";
+            document.getElementById(email).style.color = "grey";
+        }
+    }
+    async function formIsCompleted(email){
+        const isCompleted = await isInTracingList(email)
+
+        if(isCompleted){
+            document.getElementsByClassName(email).item(0).innerText="completed"
+        }
+    }
 
     return (
         <div>
             <h2>Patients</h2>
-            <Box sx={{ width: '100%' }}>
-                <Paper sx={{ width: '100%', mb: 2 }}>
+            <Box sx={{width: '75%'}}>
+                <Paper sx={{width: '100%', mb: 2}}>
                     <TableContainer>
                         <Table
-                            sx={{ minWidth: 750 }}
+                            sx={{minWidth: 750}}
                             aria-labelledby="patientListTable"
                             size={dense ? 'small' : 'medium'}
                         >
@@ -211,26 +253,41 @@ export default function PatientListTable() {
                                 {stableSort(data, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((item) => {
-
                                         return (
                                             <TableRow
                                                 hover
                                                 role="checkbox"
                                                 tabIndex={-1}
-                                                key={item.name}
+                                                key={item.email}
                                             >
-                                               {console.log(item)}
-                                                <TableCell >{item.firstName}</TableCell>
-                                                <TableCell >{item.lastName}</TableCell>
-                                                <TableCell >{item.covidResult}</TableCell>
-                                                <TableCell
-                                                    >{item.reviewed ? "yes" : "no"}</TableCell> {/* TODO: check the database attributes */}
-                                                <TableCell >{item.hasEmergency ?
-                                                    <ErrorIcon style={{fill: "red"}}/> : ""}</TableCell>
-                                                <TableCell  numeric component="a"
+
+                                                <TableCell>{item.firstName}</TableCell>
+                                                <TableCell>{item.lastName}</TableCell>
+                                                <TableCell>{item.covidResult}</TableCell>
+                                                <TableCell numeric component="a"
                                                            href={profileLink(item.email)}><LinkIcon/></TableCell>
-                                                <TableCell >{item.flag ?
-                                                    <FlagIcon style={{fill: "orange"}}/> : ""}</TableCell>
+                                              
+                                                <TableCell  className={item.email} onLoad={formIsCompleted(item.email) } >
+                                                
+                                                </TableCell>
+                                                <TableCell>
+                                                    <button
+                                                        class="button"
+                                                        type="submit"
+                                                        id={item.email}
+
+                                                        onLoad={isEnabled(item.email)}
+                                                        onClick={(event) => {
+                                                            handleSubmitChange(event.target.id);
+                                                            console.log(addSentContactTracingFormTime(item.email));
+                                                            console.log(event.target.id)
+                                                         
+                                                        }}
+                                                    >
+                                                        SEND
+                                                    </button>
+
+                                                </TableCell>
                                             </TableRow>
                                         );
                                     })}

@@ -48,10 +48,15 @@ export default function NotificationList() {
     };
 
     function notificationRedirect(item) {
-        const { myValue } = item.currentTarget.dataset;
-        if(myValue === "quarantine information"){
+        // const { myValue } = item.currentTarget.dataset;
+        if(item.type === "quarantine information"){
             navigate("/quarantine");
-        }        
+        }
+        // const { myValue } = item.currentTarget.dataset;
+        // alert(myValue);
+
+        if (item.type === "contact tracing")
+            window.location.href = 'http://localhost:3000/tracing-form'
     }
 
     function formatDate(date) {
@@ -73,7 +78,7 @@ export default function NotificationList() {
                     <MenuItem
                         key={i}
                         data-my-value={item.type}
-                        onClick={notificationRedirect}
+                        onClick={(event) => {event.preventDefault(); notificationRedirect(item)}}
                         style={{whiteSpace: 'normal'}}
                     >
                         <p className="notif-text">{item.content}

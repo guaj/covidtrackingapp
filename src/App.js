@@ -14,6 +14,9 @@ import PatientRegistration from './components/Authentification/UserRegistration/
 import DoctorRegistration from './components/Authentification/UserRegistration/DoctorRegistration'
 import OrganizationRegistration from './components/Authentification/UserRegistration/OrganizationRegistration';
 import UserProfileFacade from "./components/UserProfile/UserProfileFacade";
+
+
+
 import PatientProfileUpdate from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdate'
 import PatientSymptomsUpdate from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientSymptomsUpdate'
 
