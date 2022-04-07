@@ -16,7 +16,6 @@ import OrganizationRegistration from './components/Authentification/UserRegistra
 import UserProfileFacade from "./components/UserProfile/UserProfileFacade";
 
 
-
 import PatientProfileUpdate from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdate'
 import PatientSymptomsUpdate from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientSymptomsUpdate'
 
@@ -28,32 +27,31 @@ import SymptomsRequiredUpdate from "./Services/ProfileUpdateSercices/PatientProf
 import TracingForm from './components/ContractTracing/TracingForm';
 
 
-
 ///* Make sure to update file when adding to App.css!!*/
 function App() {
 
     return (
         <Routes>
-            <Route path="/schedule-appointment" element={[<AppointmentScheduler/>]} />
-            <Route path='/about' element={[ <AboutUs/>]} />
-            <Route path='/dashboard' element={[<Dashboard/>]} />
-            <Route path="/profile/:user_email" element={[<UserProfileFacade/>]} />
-            <Route path="/:user_email/summary" element={[<PatientSummaryPageQrCode/>]} />
-            <Route path="/login#redirect" element={[<NavbarHome/>, <UsersLogin/>]} />
-            <Route path="/login" element={[<NavbarHome/>, <UsersLogin/>]} />
-            <Route exact path='/' element={[<NavbarHome/>, <UsersLogin/>]} />
-            <Route path='/patient-profile' element={[<NavbarProfilePatient/>, <PatientProfile/>]} />
-            <Route path='/doctor-profile' element={[<NavbarPro/>, <DoctorProfile/>]} />
-            <Route path='/user-registration' element={[<UsersRegistration/>]} />
-            <Route path='/doctor-registration' element={[<NavbarRegister/>, <DoctorRegistration/>]} />
-            <Route path='/patient-registration' element={[<NavbarRegister/>, <PatientRegistration/>]} />
-            <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]} />
-            <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]} />
-            <Route path='/patient-symptoms-edit' element={[<PatientSymptomsUpdate/>]} />
-            <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]} />
-            <Route path='/quarantine' element={[<QuarantineTab/>]} />
-            <Route path='/update-required-symptoms/:email' element={[<SymptomsRequiredUpdate />]} />
-                <Route path='/tracing-form' element={[<TracingForm/>]} />
+            <Route path="/schedule-appointment" element={[<AppointmentScheduler/>]}/>
+            <Route path='/about' element={[<AboutUs/>]}/>
+            <Route path='/dashboard' element={[<Dashboard/>]}/>
+            <Route path="/profile/:user_email" element={[<UserProfileFacade/>]}/>
+            <Route path="/:user_email/summary" element={[<PatientSummaryPageQrCode/>]}/>
+            <Route path="/login#redirect" element={[<NavbarHome/>, <UsersLogin/>]}/>
+            <Route path="/login" element={[<NavbarHome/>, <UsersLogin/>]}/>
+            <Route exact path='/' element={[<NavbarHome/>, <UsersLogin/>]}/>
+            <Route path='/patient-profile' element={[<NavbarProfilePatient/>, <PatientProfile/>]}/>
+            <Route path='/doctor-profile' element={[<NavbarPro/>, <DoctorProfile/>]}/>
+            <Route path='/user-registration' element={[<UsersRegistration/>]}/>
+            <Route path='/doctor-registration' element={[<NavbarRegister/>, <DoctorRegistration/>]}/>
+            <Route path='/patient-registration' element={[<NavbarRegister/>, <PatientRegistration/>]}/>
+            <Route path='/organization-registration' element={[<NavbarRegister/>, <OrganizationRegistration/>]}/>
+            <Route path='/patient-profile-edit' element={[<PatientProfileUpdate/>]}/>
+            <Route path='/patient-symptoms-edit' element={[<PatientSymptomsUpdate/>]}/>
+            <Route path='/doctor-profile-edit' element={[<DoctorProfileUpdate/>]}/>
+            <Route path='/quarantine' element={[<QuarantineTab/>]}/>
+            <Route path='/update-required-symptoms/:email' element={[<SymptomsRequiredUpdate/>]}/>
+            <Route path='/tracing-form' element={[<TracingForm/>]}/>
 
         </Routes>
     );
