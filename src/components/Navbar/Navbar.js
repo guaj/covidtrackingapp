@@ -117,7 +117,7 @@ export default function PrimarySearchAppBar() {
             onClose={handleMenuClose}
         >
             {hasAccessProfilePage() ?
-                <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                <MenuItem data-testid = "profile-button" onClick={handleProfile}>Profile</MenuItem>
                 : <></>
             }
 
