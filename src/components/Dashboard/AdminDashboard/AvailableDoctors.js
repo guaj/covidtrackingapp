@@ -231,11 +231,11 @@ if(data) {
                                                 tabIndex={-1}
                                                 key={item.name}
                                             >
-                                                <TableCell align="center">{item.licenseNumber}</TableCell>
-                                                <TableCell align="center">{item.city}</TableCell>
-                                                <TableCell align="center">{item.email}</TableCell>
-                                                <TableCell align="center">{item.firstName}</TableCell>
-                                                <TableCell align="center">{item.lastName}</TableCell>
+                                                <TableCell >{item.licenseNumber}</TableCell>
+                                                <TableCell >{item.city}</TableCell>
+                                                <TableCell >{item.email}</TableCell>
+                                                <TableCell >{item.firstName}</TableCell>
+                                                <TableCell >{item.lastName}</TableCell>
                                                 <TableCell><Button className={classes.pair} onClick={() => updatePatientsDoctor(props.patient, item.email)}>Select</Button></TableCell>
                                             </TableRow>
                                         );

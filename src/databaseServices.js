@@ -1,6 +1,5 @@
 import awsConfig from './aws-config.json'
 import AWS from 'aws-sdk'
-import {useEffect} from 'react';
 
 AWS.config.update(awsConfig);
 const docClient = new AWS.DynamoDB.DocumentClient()
@@ -20,12 +19,12 @@ export async function getAvailableDoctors() {
     }
     try {
 
-        const data = await docClient.scan(params).promise()
-        return data
+    const data = await docClient.scan(params).promise()
+    return data
 
-    } catch (err) {
-        alert("could not retrieve data >:(")
-    }
+  } catch (err) {
+    alert("could not retrieve data >:(")
+  }
 }
 
 export async function getAllPatients(setter) {
@@ -236,6 +235,7 @@ export async function updateDoctorPatientCount(email) {
 //////////////////////////////////////////////////////////////////////////////
 
 
+
 // //database query for finding new patients
 
 export async function getNewPatients(setter) {
@@ -257,7 +257,6 @@ export async function getNewPatients(setter) {
         alert(JSON.stringify(err))
     }
 }
-
 //////////////////////////////////////////////////////////////////////////////
 
 //database query for finding new patients
@@ -280,6 +279,7 @@ export async function getPatientWithDoctor(setter) {
         alert(JSON.stringify(err))
     }
 }
+
 
 
 //database query for finding new patients
@@ -340,4 +340,112 @@ export async function getPairedDoctors() {
     } catch (err) {
         alert("could not retrieve data >:(")
     }
+}
+
+//////////////////////////////////////////////////////////////////////////////
+
+export async function getPatientInfo(setter, email) {
+
+  let params = {
+    TableName: "patients",
+    ScanFilter: {
+      "email": {
+        ComparisonOperator: "CONTAINS",
+        AttributeValueList: [email]
+      }
+    }
+  };
+  try {
+    let scanresult = await docClient.scan(params).promise();
+    console.log(scanresult.Items)
+    setter(scanresult.Items[0]) //setter modifies the instance of the passed paremeter
+  } catch (e) {
+    alert(JSON.stringify(e))
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////
+
+export async function deletePatient(email, data, setter) {
+
+  let params = {
+    TableName: "patients",
+    Key: {
+      "email": email
+    }
+  }
+  try {
+
+    await docClient.delete(params).promise();
+    let updatedData = [...data]
+    updatedData.forEach(patient => {
+      if (patient.email === email) {
+        updatedData.splice(updatedData.indexOf(patient), 1);
+      }
+    })
+    setter(updatedData)
+
+
+  } catch (e) {
+    alert(JSON.stringify(e))
+  }
+}
+
+export async function deleteDoctor(email, data, setter) {
+
+  let params = {
+    TableName: "doctors",
+    Key: {
+      "email": email
+    }
+  }
+  try {
+
+    await docClient.delete(params).promise();
+    let updatedData = [...data]
+    updatedData.forEach(patient => {
+      if (patient.email === email) {
+        updatedData.splice(updatedData.indexOf(patient), 1);
+      }
+    })
+    setter(updatedData)
+
+
+  } catch (e) {
+    alert(JSON.stringify(e))
+  }
+}
+
+export async function deleteOrgOfficial(email, data, setter) {
+
+  let params = {
+    TableName: "organizations",
+    Key: {
+      "email": email
+    }
+  }
+  try {
+
+    await docClient.delete(params).promise();
+    let updatedData = [...data]
+    updatedData.forEach(patient => {
+      if (patient.email === email) {
+        updatedData.splice(updatedData.indexOf(patient), 1);
+      }
+    })
+    setter(updatedData)
+
+
+  } catch (e) {
+    alert(JSON.stringify(e))
+  }
+}
+
+export async function getAllOrgOfficials(setter) {
+  try {
+    const data = await docClient.scan({ TableName: "organizations" }).promise()
+    setter(data.Items)
+  } catch (err) {
+    alert(JSON.stringify(err))
+  }
 }

@@ -75,7 +75,11 @@ const headCells = [
         disablePadding: false,
         label: 'Covid Result',
     },
-   
+    {
+        id: 'reviewed',
+        disablePadding: false,
+        label: 'Reviewed',
+    },
     {
         id: 'emergency',
         disablePadding: false,
@@ -222,13 +226,18 @@ export default function PatientListTable() {
                                                 tabIndex={-1}
                                                 key={item.name}
                                             >
-                                                <TableCell/>
-                                                <TableCell align="center">{item.firstName}</TableCell>
-                                                <TableCell align="center">{item.lastName}</TableCell>
-                                                <TableCell align="center">{item.covidResult}</TableCell>
-                                                <TableCell align="center">{item.emergency ? <ErrorIcon style={{fill: "red"}}/> : "" }</TableCell>
-                                                <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon/></TableCell>
-                                                <TableCell align="center">{item.flag ? <FlagIcon style={{fill: "orange"}}/> : "" }</TableCell>
+                                               {console.log(item)}
+                                                <TableCell >{item.firstName}</TableCell>
+                                                <TableCell >{item.lastName}</TableCell>
+                                                <TableCell >{item.covidResult}</TableCell>
+                                                <TableCell
+                                                    >{item.reviewed ? "yes" : "no"}</TableCell> {/* TODO: check the database attributes */}
+                                                <TableCell >{item.hasEmergency ?
+                                                    <ErrorIcon style={{fill: "red"}}/> : ""}</TableCell>
+                                                <TableCell  numeric component="a"
+                                                           href={profileLink(item.email)}><LinkIcon/></TableCell>
+                                                <TableCell >{item.flag ?
+                                                    <FlagIcon style={{fill: "orange"}}/> : ""}</TableCell>
                                             </TableRow>
                                         );
                                     })}

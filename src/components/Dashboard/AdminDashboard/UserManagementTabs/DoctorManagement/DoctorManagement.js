@@ -12,39 +12,44 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { visuallyHidden } from '@mui/utils';
-import LinkIcon from '@mui/icons-material/Link';
+import {visuallyHidden} from '@mui/utils';
+import {deleteDoctor, getAllDoctors} from '../../../../../databaseServices'
+import {useState, useEffect} from 'react'
 import Button from '@mui/material/Button';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 import Modal from '@mui/material/Modal';
-import AvailableDoctors from './AvailableDoctors';
-import { getNewPatients } from '../../../databaseServices'
 import CloseIcon from '@mui/icons-material/Close';
-import { useState, useEffect } from 'react'
+import DoctorUpdate from './DoctorUpdate'
+import DoctorAdd from './DoctorAdd'
+
+
 
 const useStyles = makeStyles((theme) => ({
-    pair: {
+        pair: {
 
-        '&:hover': {
-            backgroundColor: 'rgba(63, 81, 181, 0.5)',
-            color: '#fff',
-        }
-    },
-    exitButton: {
-        position: 'absolute',
-        top: '5px',
-        right: '5px',
-        '&:hover': {
-            backgroundColor: 'rgba(63, 81, 181, 0.5)',
-            color: '#fff',
-        }
-    }
-})
+            '&:hover': {
+                backgroundColor: 'rgba(63, 81, 181, 0.5)',
+                color: '#fff',
+            }
+        },
+        exitButton: {
+            position: 'absolute',
+            top: '5px',
+            right: '5px',
+            '&:hover': {
+                backgroundColor: 'rgba(63, 81, 181, 0.5)',
+                color: '#fff',
+            }
+        },
+        
+
+    })
 );
-
 
 //styling for the modal
 const modalStyle = {
+    overflow: 'auto',
+    marginTop: '30%',
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -56,6 +61,7 @@ const modalStyle = {
     borderRadius: '1%',
     p: 4,
 };
+
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -89,10 +95,19 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'priorityNumber',
-        numeric: true,
+        id: 'licenseNumber',
         disablePadding: false,
-        label: 'Priority',
+        label: 'License Number',
+    },
+    {
+        id: 'address',
+        disablePadding: false,
+        label: 'Address',
+    },
+    {
+        id: 'email',
+        disablePadding: false,
+        label: 'Email',
     },
     {
         id: 'firstName',
@@ -105,25 +120,25 @@ const headCells = [
         label: 'Last Name',
     },
     {
-        id: 'address',
+        id: 'phoneNumber',
         disablePadding: false,
-        label: 'Address'
+        label: 'Phone Number',
     },
     {
-        id: 'profileLink',
+        id: 'controls',
         disablePadding: false,
-        label: 'Profile Link',
+        label: '',
     },
     {
-        id: 'patient-doctor-pairing',
+        id: 'controls',
         disablePadding: false,
-        label: 'Pair to a doctor'
-    }
+        label: '',
+    },
 ];
 
 
 function EnhancedTableHead(props) {
-    const { order, orderBy, onRequestSort } =
+    const {order, orderBy, onRequestSort} =
         props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
@@ -133,15 +148,12 @@ function EnhancedTableHead(props) {
 
 
         <TableHead>
-            {/* <button onClick={getAvailableDoctors}>TEST DB DOCTORS</button>  for troublehsooting purposes
-            <button onClick={getNewPatients}>TEST DB PATIENTS</button> */}
-
             <TableRow>
 
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={'center'}
+                        align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -161,8 +173,6 @@ function EnhancedTableHead(props) {
                 ))}
             </TableRow>
         </TableHead>
-
-
     );
 }
 
@@ -174,37 +184,27 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-export default function UnpairedNewPatientListTable() {
+
+export default function DoctorListTable() {
     const classes = useStyles();
-    const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('calories');
-    const [selected] = React.useState([]);
-    const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    const [patient, setPatient] = React.useState("")
-    const [open, setOpen] = React.useState(false);
-    const [tableSize, setTableSize] = useState(0)
-    const [data, setData] = useState([]);
+    const [order, setOrder] = useState('asc');
+    const [orderBy, setOrderBy] = useState('calories');
+    const [selected] = useState([]);
+    const [page, setPage] = useState(0);
+    const [dense, setDense] = useState(false);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [data, setData] = useState([])
+    const [open, setOpen] = useState(false)
+    const [openAdd, setOpenAdd] = useState(false)
+    const [doctor, setDoctor] = useState(null)
 
-    const handleOpen = patient => {
-        console.log("handle open() patient: " + patient);
-        setOpen(true);
-        setPatient(patient);
-    };
-    const handleClose = entries => {
-        setOpen(false);
-        setTableSize(entries);
-        getNewPatients(setData);
-    }
-
-    useEffect(() => {(async () => await getNewPatients(setData))()}, []);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -219,36 +219,84 @@ export default function UnpairedNewPatientListTable() {
         setDense(event.target.checked);
     };
 
+    useEffect(() => (async () => await getAllDoctors(setData))(), [])
+
+    const handleOpen = doctor => {
+        console.log('open')
+        setDoctor(doctor)
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+        getAllDoctors(setData)
+    }
+
+    const handleOpenAdd = () => {
+        setOpenAdd(true);
+    }
+
+    const handleCloseAdd = () => {
+        setOpenAdd(false);
+        getAllDoctors(setData)
+    }
+
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
+    function profileLink(email) {
+        let url = email.split("@");
+        return "/profile/" + url[0];
+    }
 
-   
-        
-        return (
-        
+
+    return (
+        <>
+
             <div>
+              
                 <Modal
                     open={open}
-                    onClose={() => handleClose(data.length)}
+                    onClose={handleClose}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
+                    sx={{overflow: "scroll"}}
+                    className={classes.modal}
                 >
                     <Box sx={modalStyle}>
-                        <Button className={classes.exitButton} onClick={handleClose}><CloseIcon /></Button>
-                        <AvailableDoctors patient={patient} />
+                        <Button className={classes.exitButton} onClick={handleClose}><CloseIcon/></Button>
+                        <DoctorUpdate doctor={doctor}/>
                     </Box>
                 </Modal>
+                
+                <Modal
+                    open={openAdd}
+                    onClose={handleCloseAdd}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                    sx={{overflow: "scroll"}}
+                    className={classes.modal}
+                >
+                    <Box sx={modalStyle}>
+                        <Button className={classes.exitButton} onClick={handleCloseAdd}><CloseIcon/></Button>
+                        <DoctorAdd/>
+                    </Box>
+                </Modal>
+                <div style={{minWidth: "100%", display: 'flex', flexDirection: "row", marginBottom: "1%"}}>
+                    <h2>Doctors</h2>
+                    <Button variant="contained" color="primary" style={{margin: "0 0 1% auto"}} onClick={()=>{handleOpenAdd()}}>add doctor</Button>
+                </div>
 
-                <h2>Patients</h2>
-                <Box sx={{ width: '100%' }}>
-                    <Paper sx={{ width: '100%', mb: 2 }}>
+                <Box sx={{width: '100%'}}>
+
+                    <Paper sx={{width: '100%', mb: 2}}>
+
                         <TableContainer>
                             <Table
-                                sx={{ minWidth: 750 }}
-                                aria-labelledby="patientListTable"
+                                sx={{minWidth: 750}}
+                                aria-labelledby="doctorListTable"
                                 size={dense ? 'small' : 'medium'}
                             >
                                 <EnhancedTableHead
@@ -264,20 +312,24 @@ export default function UnpairedNewPatientListTable() {
                                     {stableSort(data, getComparator(order, orderBy))
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map((item) => {
+
                                             return (
-                                                // setNumItems(prevState => (prevState+1)),
                                                 <TableRow
                                                     hover
                                                     role="checkbox"
                                                     tabIndex={-1}
                                                     key={item.name}
                                                 >
-                                                    <TableCell align="center"> priority num </TableCell> 
-                                                    <TableCell align="center"> {item.firstName} </TableCell>
-                                                    <TableCell align="center"> {item.lastName} </TableCell>
-                                                    <TableCell align="center"> {item.address.city} </TableCell>
-                                                    <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon /></TableCell>
-                                                    <TableCell align="center"><Button className={classes.pair} onClick={()=>handleOpen(item.email)}>Find a doctor</Button></TableCell>
+                                                    <TableCell align="left">{item.licenseNumber}</TableCell>
+                                                    <TableCell align="left"></TableCell>
+                                                    <TableCell align="left">{item.email}</TableCell>
+                                                    <TableCell align="left">{item.firstName}</TableCell>
+                                                    <TableCell align="left">{item.lastName}</TableCell>
+                                                    <TableCell align="left">{item.phoneNumber}</TableCell>
+                                                    <TableCell align="left"><Button
+                                                        onClick={() => handleOpen(item)}>update</Button></TableCell>
+                                                    <TableCell align="left"><Button
+                                                        onClick={() => deleteDoctor(item.email, data, setData)}>delete</Button></TableCell>
                                                 </TableRow>
                                             );
                                         })}
@@ -287,7 +339,7 @@ export default function UnpairedNewPatientListTable() {
                                                 height: (dense ? 33 : 53) * emptyRows,
                                             }}
                                         >
-                                            <TableCell colSpan={6} />
+                                            <TableCell colSpan={6}/>
                                         </TableRow>
                                     )}
                                 </TableBody>
@@ -304,12 +356,12 @@ export default function UnpairedNewPatientListTable() {
                         />
                     </Paper>
                     <FormControlLabel
-                        control={<Switch checked={dense} onChange={handleChangeDense} />}
+                        control={<Switch checked={dense} onChange={handleChangeDense}/>}
                         label="Dense padding"
                     />
                 </Box>
             </div>
+        </>
 
-        );
-    }
-   
+    );
+}

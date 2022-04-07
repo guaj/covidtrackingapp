@@ -7,10 +7,10 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 //variable to check store address or symptom list undefined state
 let undefinedAddressOrSymptomsList = false;
 
-export async function fetchData(tableName) {
+export async function fetchData(tableName, email) {
     const params = {
         TableName: tableName,
-        ExpressionAttributeValues: {":email": JSON.parse(localStorage.getItem("email"))},
+        ExpressionAttributeValues: {":email": email ? email : JSON.parse(localStorage.getItem("email"))},
         KeyConditionExpression: 'email = :email'
     }
 
@@ -55,6 +55,7 @@ export async function fetchData(tableName) {
 }
 
 export async function updateData(tableName, data) {
+    console.log("update data" + data.email);
     const params = {
         TableName: tableName,
         Key: {"email": data.email},
@@ -128,7 +129,8 @@ export async function updateData(tableName, data) {
             }
         }, function (err) {
             if (err) {
-                console.info("Unable to create new attributes. Attributes already exist!\nError JSON:", JSON.stringify(err, null, 2));
+                alert(JSON.stringify(err));
+                //console.info("Unable to create new attributes. Attributes already exist!\nError JSON:", JSON.stringify(err, null, 2));
             } else {
                 undefinedAddressOrSymptomsList = false;
             }
@@ -137,8 +139,9 @@ export async function updateData(tableName, data) {
     //update patient information in the database with the submitted values
     docClient.update(params, function (err, data) {
         if (err) {
+            alert(JSON.stringify(err));
             console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
-            alert('ERROR: Unable to update profile information! Contact support if issue persists.')
+            //alert('ERROR: Unable to update profile information! Contact support if issue persists.')
         } else {
             console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
             alert('Profile information updated!');

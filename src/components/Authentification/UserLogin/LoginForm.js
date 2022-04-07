@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginForm({Login, error}){
     const classes = useStyles();
-    const [details, setDetails] = useState({type:"", email: "", password: ""});
+    const [details, setDetails] = useState({type:'Controlled', email: 'Controlled', password: 'Controlled'});
 
     const submitHandler = e => {
         e.preventDefault();
@@ -62,7 +62,7 @@ export default function LoginForm({Login, error}){
             fullWidth
             name="password"
             label="* * * *"
-            id="sign-up-password"
+            id="password"
             helperText="Password"
             autoComplete="current-password"
             onChange={e => setDetails({...details, password:e.target.value})}

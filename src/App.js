@@ -18,9 +18,12 @@ import UserProfileFacade from "./components/UserProfile/UserProfileFacade";
 import TracingForm from './components/ContractTracing/TracingForm';
 import OrgsTabs from "./components/Dashboard/HealthOfficialDashboard/HealthOfficialTabs";
 import PatientProfileUpdate from './Services/ProfileUpdateSercices/PatientProfileUpdate/PatientProfileUpdate'
-
 import DoctorProfileUpdate from './Services/ProfileUpdateSercices/DoctorProfileUpdate/DoctorProfileUpdate'
 import AppointmentScheduler from "./Services/AppointmentService/AppointmentScheduler";
+import PatientSummaryPageQrCode from "./components/UserProfile/PatientProfile/PatientSummaryPageQrCode";
+import QuarantineTab from './components/Dashboard/PatientDashboard/QuarantineTab';
+import Navbar from './components/Navbar/Navbar';
+
 
 ///* Make sure to update file when adding to App.css!!*/
 function App() {
@@ -31,6 +34,7 @@ function App() {
                     <Route path='/about' element={[ <AboutUs/>]} />
                     <Route path='/dashboard' element={[<Dashboard/>]} />
                     <Route path="/profile/:user_email" element={[<UserProfileFacade/>]} />
+                    <Route path="/:user_email/summary" element={[<PatientSummaryPageQrCode/>]} />
                     <Route path="/login#redirect" element={[<NavbarHome/>, <UsersLogin/>]} />
                     <Route path="/login" element={[<NavbarHome/>, <UsersLogin/>]} />
                     <Route exact path='/' element={[<NavbarHome/>, <UsersLogin/>]} />
@@ -46,6 +50,7 @@ function App() {
                     <Route path="/tracing-form/:user_email" element={[<TracingForm/>]} />
                     <Route path='/health-tabs' element={[<OrgsTabs/>]} />
 
+                    <Route path='/quarantine' element={[<QuarantineTab/>]} />
             </Routes>
         );
 
