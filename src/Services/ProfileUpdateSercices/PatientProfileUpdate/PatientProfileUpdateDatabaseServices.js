@@ -7,10 +7,10 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 //variable to check store address or symptom list undefined state
 let undefinedAddressOrSymptomsList = false;
 
-export async function fetchData(tableName) {
+export async function fetchData(tableName, email) {
     const params = {
         TableName: tableName,
-        ExpressionAttributeValues: {":email": JSON.parse(localStorage.getItem("email"))},
+        ExpressionAttributeValues: {":email":  email ? email : JSON.parse(localStorage.getItem("email"))},
         KeyConditionExpression: 'email = :email'
     }
 

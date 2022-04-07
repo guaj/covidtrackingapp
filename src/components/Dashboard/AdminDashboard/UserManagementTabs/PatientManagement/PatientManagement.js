@@ -245,9 +245,9 @@ export default function PatientListTable() {
     useEffect(() => (async () => await getAllPatients(setData))(), [])
 
     const updateModalHandleOpen = patient => {
+        console.log(patient)
         setPatient(patient)
         setUpdateModalOpen(true);
-
     };
     const updateModalHandleClose = () => {
         setUpdateModalOpen(false);
