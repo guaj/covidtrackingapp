@@ -189,6 +189,7 @@ export default function DoctorProfile(props) {
                             data-testid="sign-up-email"
                             value={editFormData.email}
                             onChange={handleEditFormChange}
+                            disabled={true}
                         />
                         <TextField
                             type="text"
