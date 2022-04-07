@@ -223,8 +223,8 @@ export default function PatientListTable() {
 
     useEffect(() => (async () => await getAllOrgOfficials(setData))(), [])
 
-    const updateModalHandleOpen = () => {
-      
+    const updateModalHandleOpen = official => {
+        setOfficial(official)
         setUpdateModalOpen(true);
 
     };
@@ -232,9 +232,9 @@ export default function PatientListTable() {
         setUpdateModalOpen(false);
     }
 
-    const addModalHandleOpen = official => {
+    const addModalHandleOpen = () => {
         setAddModalOpen(true);
-        setOfficial(official)
+        
 
     };
     const addModalHandleClose = () => {
@@ -266,9 +266,10 @@ export default function PatientListTable() {
             >
                 <Box sx={modalStyle}>
                     <Button className={classes.exitButton} onClick={updateModalHandleClose}><CloseIcon /></Button>
-                    <OrganizationUpdate />
+                    <OrganizationUpdate official={official} />
                 </Box>
             </Modal>
+            {/*add*/}
             <Modal
                 open={addModalOpen}
                 onClose={addModalHandleClose}

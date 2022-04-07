@@ -64,11 +64,13 @@ export default function OfficialProfile(props) {
     const handleInformationLoad = () => {
         const official = officials[0];
         setEditOfficialId(official.id);
-
+        console.log("org id:" + official.orgId)
         const formValues = {
-            
-            
-           
+
+            email: official.email,
+            employeeId: official.employeeId, 
+            orgId: official.orgId
+        
         };
 
 
@@ -80,7 +82,6 @@ export default function OfficialProfile(props) {
 
         const fieldName = event.target.getAttribute("name");
         const fieldValue = event.target.value;
-        //create new object on new values
         const newFormData = {...editFormData};
         newFormData[fieldName] = fieldValue;
         setEditFormData(newFormData);
@@ -100,11 +101,12 @@ export default function OfficialProfile(props) {
         setOfficials(newOfficials);
         const user = props.official.email
         const url = user.split("@");
-        OfficialUpdateDatabaseServices.updateData('officials', newOfficials[0])
+        OfficialUpdateDatabaseServices.updateData('organizations', newOfficials[0])
     };
 
     useEffect(async () => {
         setOfficials(await OfficialUpdateDatabaseServices.fetchData('organizations', props.official.email))
+        console.log('use eff' + JSON.stringify(officials))
     }, [])
 
     useEffect(() => {
@@ -129,6 +131,7 @@ export default function OfficialProfile(props) {
                             value={editFormData.email}
                             onChange={handleEditFormChange}
                             onClick={handleInformationLoad}
+                            disabled={true}
                         />
 
 
@@ -147,7 +150,7 @@ export default function OfficialProfile(props) {
                             label="Organization Id"
                             name="orgId"
                             autoComplete=""
-                            value={editFormData.lorgId}
+                            value={editFormData.orgId}
                             onChange={handleEditFormChange}
                         />
                         <br/>
