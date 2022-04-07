@@ -112,7 +112,6 @@ export default function UsersLogin() {
             } catch (err) {
                 console.log("not a doctor")
             }
-
             try {
                 const param = {
                     TableName: orgTable,
@@ -123,12 +122,29 @@ export default function UsersLogin() {
                 const result = await docClient.get(param).promise()
                 console.log(result)
                 if(result.Item.password === details.password && result.Item.email === details.email){
-                    setLocalStorage(result.Item.email, "immigration official");
+                    setLocalStorage(result.Item.email,result.Item.type);
                     validCredentials = true;
                 }
             } catch (err) {
-                console.log("not an org")
+                console.log("not a health official")
             }
+            try {
+                const param = {
+                    TableName: orgTable,
+                    Key:{
+                        "email":String(details.email),
+                    }
+                }
+                const result = await docClient.get(param).promise()
+                console.log(result)
+                if(result.Item.password === details.password && result.Item.email === details.email){
+                    setLocalStorage(result.Item.email, result.Item.type);
+                    validCredentials = true;
+                }
+            } catch (err) {
+                console.log("not an immigration official")
+            }
+
             if(!validCredentials)
                 alert("wrong password or email")
         }catch (e) {

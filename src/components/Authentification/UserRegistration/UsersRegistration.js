@@ -60,16 +60,14 @@ export default function UsersRegistration() {
         e.preventDefault();
 
         if(value === "patient"){
-        setText('Im in patient');
         window.location = '/patient-registration';
 
         }
         else if (value === "doctor"){
-            setText('Im in doctor');
             window.location = '/doctor-registration';
         }
-        else if (value === "immigrationOfficer" || value === "healthOfficer"){
-            setText('Im in the rest');
+        else if (value === "immigration official" || value === "health official"){
+            localStorage.setItem("type",value);
             window.location = '/organization-registration';
 
         }
@@ -95,8 +93,8 @@ export default function UsersRegistration() {
                         >
                             <FormControlLabel value="patient" control={<Radio />} label="Patient account" onChange={handleRadioChange}/>
                             <FormControlLabel value="doctor" control={<Radio />} label="Doctor account" />
-                            <FormControlLabel value="healthOfficer" control={<Radio />} label="Health Officer account" />
-                            <FormControlLabel value="immigrationOfficer" control={<Radio />} label="Immigration Officer account" />
+                            <FormControlLabel value="health official" control={<Radio />} label="Health Officer account" />
+                            <FormControlLabel value="immigration official" control={<Radio />} label="Immigration Officer account" />
                         </RadioGroup>
                         <FormHelperText>{text}</FormHelperText>
 

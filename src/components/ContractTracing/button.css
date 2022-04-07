@@ -1,0 +1,20 @@
+.button{
+    cursor:pointer;
+    color:#1976d2;
+    border-style:none;
+    background-color:transparent;
+    font-family:Roboto,Helvetica,Arial,sans-serif;
+    font-weight:500;
+    font-size:0.875rem;
+    float: left;
+
+
+}
+.button:disabled{
+    cursor: default;
+}
+.button:hover{
+    background-color:rgba(186, 209, 255, 0.2);
+    border-radius: 5px;
+
+}

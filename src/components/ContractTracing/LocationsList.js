@@ -14,12 +14,16 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
-import ErrorIcon from '@mui/icons-material/Error';
-import FlagIcon from '@mui/icons-material/Flag';
-import { getAllPatients } from '../../../databaseServices'
-import {useState, useEffect} from 'react'
-
-
+import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
+import {fetchPatientName, getAllLocations, getAllPatients, isInNotificationList} from '../../databaseServices';
+import { useState, useEffect } from 'react';
+import FlagIcon from "@mui/icons-material/Flag";
+import Link from "@material-ui/core/Link";
+import Button from "@mui/material/Button";
+import { SendNotificationButton } from "./SendNotificationButton";
+import { formatDate } from "../Navbar/Notification";
+import AWS from "aws-sdk";
+import awsConfig from "../../aws-config.json";
 
 
 
@@ -39,6 +43,12 @@ function getComparator(order, orderBy) {
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
+
+function profileLink(email) {
+    let url = email.split("@");
+    return  url[0];
+}
+
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
@@ -55,48 +65,37 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'priorityNumber',
-        numeric : true,
+        id: 'patientName',
         disablePadding: false,
-        label: 'Priority',
+        label: 'Patient Name',
     },
     {
-        id: 'firstName',
+        id: 'patientEmail',
         disablePadding: false,
-        label: 'First Name',
+        label: 'Patient Email',
     },
     {
-        id: 'lastName',
+        id: 'locationName',
         disablePadding: false,
-        label: 'Last Name',
+        label: 'Location Name',
     },
     {
-        id: 'covidResult',
+        id: 'date',
         disablePadding: false,
-        label: 'Covid Result',
+        label: 'Visited On',
+    },
+
+    {
+        id: 'time',
+        disablePadding: false,
+        label: 'Visited Time',
     },
     {
-        id: 'reviewed',
+        id: 'locationNumber',
         disablePadding: false,
-        label: 'Reviewed',
-    },
-    {
-        id: 'emergency',
-        disablePadding: false,
-        label: 'Emergency',
-    },
-    {
-        id: 'profileLink',
-        disablePadding: false,
-        label: 'Profile Link',
-    },
-    {
-        id: 'isFlagged',
-        disablePadding: false,
-        label: 'Flag',
+        label: 'Location Phone Number',
     },
 ];
-
 
 function EnhancedTableHead(props) {
     const { order, orderBy, onRequestSort } =
@@ -110,7 +109,6 @@ function EnhancedTableHead(props) {
 
         <TableHead>
             <TableRow>
-
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -145,28 +143,20 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-
-
-
-
-export default function PatientListTable() {
+export default function LocationListTable() {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('calories');
     const [selected] = useState([]);
     const [page, setPage] = useState(0);
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [data, setData] = useState([])
-
-
-
+    const [data, setData] = useState([]);
+   
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
-
-
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -181,28 +171,37 @@ export default function PatientListTable() {
         setDense(event.target.checked);
     };
 
-    useEffect(() => (async () => await getAllPatients(setData))(), [])
+    const [tableValues, setTableValues] = useState([{ firstName: '', patientEmail: '', locationName: '', locationNumber: "", locationDate: "", locationTime: "" }]);
+
+    const handleElementsRemove = (index) => {
+        const list = [...tableValues];
+        list.splice(index, 1);
+        setTableValues(list);
+    };
+
+    const setPatientName = async(email) => {
+        const patientName = await fetchPatientName(email)
+        console.log(patientName)
+        document.getElementById(email).innerText = patientName;
+    }
+  
+
+    useEffect(() => (async () => await getAllLocations(setData))(), [])
+    // useEffect(() => (async () => await isInNotificationList(setData))(), [])
 
 
-    // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
-    function profileLink(email) {
-        let url = email.split("@");
-        return "/profile/" + url[0];
-    }
-
-
     return (
         <div>
-            <h2>Patients</h2>
-            <Box sx={{ width: '100%' }}>
+            <h2>Locations</h2>
+            <Box sx={{ width: '75%' }}>
                 <Paper sx={{ width: '100%', mb: 2 }}>
                     <TableContainer>
                         <Table
                             sx={{ minWidth: 750 }}
-                            aria-labelledby="patientListTable"
+                            aria-labelledby="locationListTable"
                             size={dense ? 'small' : 'medium'}
                         >
                             <EnhancedTableHead
@@ -218,26 +217,26 @@ export default function PatientListTable() {
                                 {stableSort(data, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((item) => {
+                                       
 
                                         return (
                                             <TableRow
                                                 hover
                                                 role="checkbox"
                                                 tabIndex={-1}
-                                                key={item.name}
+                                               
+                                                key={item.email}
                                             >
-                                               {console.log(item)}
-                                                <TableCell >{item.firstName}</TableCell>
-                                                <TableCell >{item.lastName}</TableCell>
-                                                <TableCell >{item.covidResult}</TableCell>
-                                                <TableCell
-                                                    >{item.reviewed ? "yes" : "no"}</TableCell> {/* TODO: check the database attributes */}
-                                                <TableCell >{item.hasEmergency ?
-                                                    <ErrorIcon style={{fill: "red"}}/> : ""}</TableCell>
-                                                <TableCell  numeric component="a"
-                                                           href={profileLink(item.email)}><LinkIcon/></TableCell>
-                                                <TableCell >{item.flag ?
-                                                    <FlagIcon style={{fill: "orange"}}/> : ""}</TableCell>
+
+
+                                                <TableCell id={item.email} onLoad={setPatientName(item.email)}></TableCell>
+                                                <TableCell>{item.email}</TableCell>
+                                                <TableCell>{item.locationName}</TableCell>
+                                                <TableCell>{item.date}</TableCell>
+                                                <TableCell>{item.time}</TableCell>
+                                                <TableCell>{item.locationNumber}</TableCell>
+                                                
+                                              
                                             </TableRow>
                                         );
                                     })}

@@ -164,6 +164,9 @@ export default function PrimarySearchAppBar() {
                         aria-controls="primary-search-account-menu"
                         aria-haspopup="true"
                         color="inherit"
+                        name="iconbutton"
+                        key={1}
+                        label="iconbutton2"
                     >
                         <AccountCircle style={{color: "#673ab7"}}/>
                     </IconButton>
@@ -247,6 +250,9 @@ export default function PrimarySearchAppBar() {
                             aria-haspopup="true"
                             onClick={handleProfileMenuOpen}
                             color="inherit"
+                            name="accountuser"
+                            key={1}
+                            label="accountuser2"
                         >
                             <AccountCircle style={{color: "#673ab7"}}/>
                         </IconButton>
@@ -259,8 +265,9 @@ export default function PrimarySearchAppBar() {
                             aria-haspopup="true"
                             onClick={handleMobileMenuOpen}
                             color="inherit"
+                            name="more" key={1} label="more2" 
                         >
-                            <MoreIcon style={{color: "#673ab7"}}/>
+                            <MoreIcon name="more" key={1} label="more2" style={{color: "#673ab7"}}/>
                         </IconButton>
                     </Box>
                 </Toolbar>
