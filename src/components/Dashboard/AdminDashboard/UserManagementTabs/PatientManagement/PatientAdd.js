@@ -106,11 +106,10 @@ export default function SignUpPatient() {
     }
 
     return (
-        <Grid container component="main">
+       <>
 
             <CssBaseline/>
-            <Grid item xs={false} sm={false} md={4} className={classes.image}/>
-            <Grid item xs={12} sm={12} md={8} component={Paper} elevation={6} square>
+          
                 <div className={classes.paper}>
                     <Typography component="h1" variant="h4" className={classes.title}>
                         Register as a Patient
@@ -266,8 +265,9 @@ export default function SignUpPatient() {
                         </Grid>
                     </form>
                 </div>
-            </Grid>
-        </Grid>
+           
+       
+        </>
     );
 }
   

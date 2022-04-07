@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import PatientManagement from './UserManagementTabs/PatientManagement/PatientManagement'
 import DoctorManagement from './UserManagementTabs/DoctorManagement/DoctorManagement'
+import OrganizationManagement from './UserManagementTabs/OrganizationManagement/OrganizationManagement'
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -63,6 +65,7 @@ export default function AdminTabs() {
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="Patients" {...a11yProps(0)} />
                 <Tab label="Doctors" {...a11yProps(1)} />
+                <Tab label="Organizational Officials" {...a11yProps(2)} />
             </Tabs>
 
             <TabPanel value={value} index={0}>
@@ -70,6 +73,9 @@ export default function AdminTabs() {
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <DoctorManagement />
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+                <OrganizationManagement />
             </TabPanel>
         </>
     )
