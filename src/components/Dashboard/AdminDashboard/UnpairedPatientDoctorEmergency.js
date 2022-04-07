@@ -195,6 +195,7 @@ export default function UnpairedNewPatientListTable() {
     const handleClose = entries => {
         setOpen(false);
         setTableSize(entries);
+        getPatientsWithDoctorEmergency(setData);
     }
 
     const [data, setData] = useState([]);
