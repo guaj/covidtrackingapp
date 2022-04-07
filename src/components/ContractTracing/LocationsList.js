@@ -15,7 +15,7 @@ import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
 import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
-import { getAllLocations ,getAllPatients,isInNotificationList} from '../../databaseServices';
+import {fetchPatientName, getAllLocations, getAllPatients, isInNotificationList} from '../../databaseServices';
 import { useState, useEffect } from 'react';
 import FlagIcon from "@mui/icons-material/Flag";
 import Link from "@material-ui/core/Link";
@@ -178,10 +178,16 @@ export default function LocationListTable() {
         list.splice(index, 1);
         setTableValues(list);
     };
+
+    const setPatientName = async(email) => {
+        const patientName = await fetchPatientName(email)
+        console.log(patientName)
+        document.getElementById(email).innerText = patientName;
+    }
   
 
     useEffect(() => (async () => await getAllLocations(setData))(), [])
-    useEffect(() => (async () => await isInNotificationList(setData))(), [])
+    // useEffect(() => (async () => await isInNotificationList(setData))(), [])
 
 
     const emptyRows =
@@ -219,11 +225,11 @@ export default function LocationListTable() {
                                                 role="checkbox"
                                                 tabIndex={-1}
                                                
-                                                key={item.firstName}
+                                                key={item.email}
                                             >
 
 
-                                                <TableCell>{profileLink(item.email) }</TableCell>
+                                                <TableCell id={item.email} onLoad={setPatientName(item.email)}></TableCell>
                                                 <TableCell>{item.email}</TableCell>
                                                 <TableCell>{item.locationName}</TableCell>
                                                 <TableCell>{item.date}</TableCell>

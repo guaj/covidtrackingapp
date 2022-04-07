@@ -1,6 +1,6 @@
 import awsConfig from './aws-config.json'
 import AWS from 'aws-sdk'
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 
 AWS.config.update(awsConfig);
 const docClient = new AWS.DynamoDB.DocumentClient()
@@ -38,10 +38,10 @@ export async function getAllPatients(setter) {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-                    // HO contact tracing queries //
-export async function addSentContactTracingFormTime(email){
-    try{
-        const params ={
+// HO contact tracing queries //
+export async function addSentContactTracingFormTime(email) {
+    try {
+        const params = {
             TableName: 'patients',
             Key: {email},
             UpdateExpression: 'set sentContactTracingForm = :contactTracingForm',
@@ -50,12 +50,13 @@ export async function addSentContactTracingFormTime(email){
         await docClient.update(params).promise()
         console.log(params)
 
-    }catch(err){
+    } catch (err) {
         console.log(err)
 
     }
 
 }
+
 export async function getAllCovidPositivePatients(setter) {
     try {
         const params = {
@@ -73,6 +74,7 @@ export async function getAllCovidPositivePatients(setter) {
         console.error(err);
     }
 }
+
 export async function getCompletedCovidTracingForm(setter) {
     try {
         const params = {
@@ -90,65 +92,65 @@ export async function getCompletedCovidTracingForm(setter) {
         console.error(err);
     }
 
-    
+
 }
 
 
-export async function isInNotificationList(email){
+export async function isInNotificationList(email) {
     try {
         const params = {
             TableName: 'notifications',
-            Key:{email},
-            KeyConditionExpression: "email = :email and #type = :type " ,
+            Key: {email},
+            KeyConditionExpression: "email = :email and #type = :type ",
             ExpressionAttributeNames: {
-                 "#type": "type",
-             },
-            ExpressionAttributeValues:{
-                ":email":email,
-               ":type":"contact tracing"
+                "#type": "type",
+            },
+            ExpressionAttributeValues: {
+                ":email": email,
+                ":type": "contact tracing"
             }
         };
         const result = await docClient.query(params).promise()
         console.log(result)
         //console.log(JSON.stringify(result.Items))
-       // console.log(JSON.stringify(result.Items.at(0).content))
-          if(result.Count === 1){
-              console.log(JSON.stringify(result.Count))
-              console.log(JSON.stringify(result.Items.at(0).content))
-              return true
-          }else if(result.Count === 0) {
-              console.log(JSON.stringify(result.Count))
-              return false
-         }
+        // console.log(JSON.stringify(result.Items.at(0).content))
+        if (result.Count === 1) {
+            console.log(JSON.stringify(result.Count))
+            console.log(JSON.stringify(result.Items.at(0).content))
+            return true
+        } else if (result.Count === 0) {
+            console.log(JSON.stringify(result.Count))
+            return false
+        }
     } catch (err) {
         console.error(err);
     }
 
 }
 
-export async function isInTracingList(email){
+export async function isInTracingList(email) {
     try {
         const params = {
             TableName: 'completedTracingForm',
-            Key:{email},
-            KeyConditionExpression: "email = :email ] " ,
-            
-            ExpressionAttributeValues:{
-                ":email":email,
+            Key: {email},
+            KeyConditionExpression: "email = :email",
+
+            ExpressionAttributeValues: {
+                ":email": email,
             }
         };
         const result = await docClient.query(params).promise()
         console.log(result)
         //console.log(JSON.stringify(result.Items))
-       // console.log(JSON.stringify(result.Items.at(0).content))
-          if(result.Count === 1){
-              console.log(JSON.stringify(result.Count))
-              console.log(JSON.stringify(result.Items.at(0).content))
-              return true
-          }else if(result.Count === 0) {
-              console.log(JSON.stringify(result.Count))
-              return false
-         }
+        // console.log(JSON.stringify(result.Items.at(0).content))
+        if (result.Count === 1) {
+            console.log(JSON.stringify(result.Count))
+            console.log(JSON.stringify(result.Items.at(0).content))
+            return true
+        } else if (result.Count === 0) {
+            console.log(JSON.stringify(result.Count))
+            return false
+        }
     } catch (err) {
         console.error(err);
     }
@@ -161,6 +163,21 @@ export async function getAllLocations(setter) {
         setter(data.Items)
     } catch (err) {
         alert(JSON.stringify(err))
+    }
+}
+
+export async function fetchPatientName(email) {
+    const params = {
+        TableName: 'patients',
+        ExpressionAttributeValues: {":email": email},
+        KeyConditionExpression: 'email = :email'
+    }
+
+    try {
+        let result = await docClient.query(params).promise();
+        return result.Items.at(0).firstName + " " + result.Items.at(0).lastName
+    } catch (e) {
+        console.error(e)
     }
 }
 

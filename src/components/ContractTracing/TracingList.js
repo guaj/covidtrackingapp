@@ -222,12 +222,10 @@ export default function TracingListTable() {
         }
     }
     async function formIsCompleted(email){
-        const isCompleted  = await isInTracingList(email) 
-        console.log("Q!!!!!!!!!!!!!!!!!#@#@#@#");
+        const isCompleted = await isInTracingList(email)
 
         if(isCompleted){
             document.getElementsByClassName(email).item(0).innerText="completed"
-
         }
     }
 
