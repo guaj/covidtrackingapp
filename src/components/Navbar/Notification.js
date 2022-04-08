@@ -10,7 +10,7 @@ import {useEffect} from "react";
 import {retrieveNotifications} from "./NotificationsService";
 import {makeStyles} from "@material-ui/styles";
 import "./Notifications.css";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 const useStyles = makeStyles({
         listItem: {
@@ -49,7 +49,7 @@ export default function NotificationList() {
 
     function notificationRedirect(item) {
         // const { myValue } = item.currentTarget.dataset;
-        if(item.type === "quarantine information"){
+        if (item.type === "quarantine information") {
             navigate("/quarantine");
         }
         // const { myValue } = item.currentTarget.dataset;
@@ -57,6 +57,9 @@ export default function NotificationList() {
 
         if (item.type === "contact tracing")
             window.location.href = 'http://localhost:3000/tracing-form'
+
+        if (item.type === "patient profile update" || item.type === "patient symptoms update")
+            window.location.href = '/profile/' + item.patientemail.split('@')[0]
     }
 
     function formatDate(date) {
@@ -71,27 +74,30 @@ export default function NotificationList() {
             setNotificationList(dbData);
         })();
 
-    },[]);
+    }, []);
     let notificationItems = [
-        notificationList.map((item,i) =>
-                <>
-                    <MenuItem
-                        key={i}
-                        data-my-value={item.type}
-                        onClick={(event) => {event.preventDefault(); notificationRedirect(item)}}
-                        style={{whiteSpace: 'normal'}}
-                    >
-                        <p className="notif-text">{item.content}
-                            <br/><span className="date-text">{formatDate(item.date)}</span>
-                        </p>
+        notificationList.map((item, i) =>
+            <>
+                <MenuItem
+                    key={i}
+                    data-my-value={item.type}
+                    onClick={(event) => {
+                        event.preventDefault();
+                        notificationRedirect(item)
+                    }}
+                    style={{whiteSpace: 'normal'}}
+                >
+                    <p className="notif-text">{item.content}
+                        <br/><span className="date-text">{formatDate(item.date)}</span>
+                    </p>
 
-                    </MenuItem>
-                </>
+                </MenuItem>
+            </>
         )
     ];
     return (
         <React.Fragment>
-            <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+            <Box sx={{display: 'flex', alignItems: 'center', textAlign: 'center'}}>
                 <Tooltip title="Account settings">
                     <IconButton
                         onClick={handleClick}
@@ -122,8 +128,8 @@ export default function NotificationList() {
                     },
 
                 }}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                transformOrigin={{horizontal: 'right', vertical: 'top'}}
+                anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             >
                 {notificationItems}
 
