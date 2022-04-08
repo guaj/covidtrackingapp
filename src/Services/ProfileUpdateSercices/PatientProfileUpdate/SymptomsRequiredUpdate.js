@@ -139,7 +139,6 @@ export default function SymptomsRequiredUpdate() {
         newPatients[0] = editedPatient;
         setPatients(newPatients);
         updateRequiredSymptoms(newPatients[0], patientEmail).then(() => redirectProfile());
-
     };
 
     return (
