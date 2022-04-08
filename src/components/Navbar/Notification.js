@@ -56,7 +56,7 @@ export default function NotificationList() {
         // alert(myValue);
 
         if (item.type === "contact tracing")
-            window.location.href = 'http://localhost:3000/tracing-form'
+            window.location.href = '/tracing-form'
 
         if (item.type === "patient profile update" || item.type === "patient symptoms update")
             window.location.href = '/profile/' + item.patientemail.split('@')[0]
