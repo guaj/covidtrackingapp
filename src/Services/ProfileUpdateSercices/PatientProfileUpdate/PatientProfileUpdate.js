@@ -319,7 +319,6 @@ export default function ProfilePatient() {
                                     helperText="Date of birth"
                                     value={editFormData.dob}
                                     onChange={handleFormChange}
-                                    disabled={true}
                                 />
                                 <p className={classes.field}>Address</p>
                                 <TextField

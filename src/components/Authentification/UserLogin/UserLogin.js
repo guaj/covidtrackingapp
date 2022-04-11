@@ -70,7 +70,7 @@ export default function UsersLogin() {
                 const params = {
                     TableName: "admin",
                     Key: {
-                        "adminID": String('2')
+                        "adminID": String('1')
                     }
                 }
                 const result = await docClient.get(params).promise()
