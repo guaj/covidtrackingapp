@@ -212,19 +212,24 @@ class PatientProfilePage extends React.Component {
                             <div className="boxText">
                                 <p>My doctor : Dr. {PatientMock.doctorName} </p>
                             </div>
-                            <div className="button">
-                                {this.canScheduleMeeting() ?
-                                    <Button variant="contained" onClick={this.scheduleRedirect}>Make
-                                        Appointment </Button>
-                                    : <></>}
-                            </div>
-                            <div className="button">
-                                {this.canScheduleMeeting() ?
-                                    <EmailFormDialog />
-                                    : <></>}
-                            </div>
+
+
                             <div className="menuButton">
-                            <div className="button">
+                                <div className="button">
+                                    {this.canScheduleMeeting() ?
+                                        <Button variant="contained" onClick={this.scheduleRedirect}>Make
+                                            Appointment </Button>
+                                        : <></>}
+                                </div>
+
+                                <div className="button">
+                                    {this.canScheduleMeeting() ?
+                                        <EmailFormDialog />
+                                        : <></>}
+                                </div>
+
+
+                                <div className="button">
                                 {JSON.parse(localStorage.getItem("type")) !== "patient" ?
                                     <Button variant="contained" onClick={() => {
                                         this.flagPatient(this.state.flag);
@@ -245,10 +250,7 @@ class PatientProfilePage extends React.Component {
                                             onClick={this.handleClickOpen}
                                     >View health status</Button> : <></> }
                             </div>
-
-
 </div>
-
 
                             <Box sx={{pb:5}}>
                                 <QRCode value={"https://main.d1mmulvvzymdin.amplifyapp.com/" + this.userEmail + "/summary"} style={{ display: "block", margin: "5% auto", }} />
