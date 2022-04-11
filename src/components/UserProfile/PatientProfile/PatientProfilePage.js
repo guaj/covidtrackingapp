@@ -207,7 +207,7 @@ class PatientProfilePage extends React.Component {
                         </div>
 
                     </div>
-                    <div className="col-md-8" style={{ position: "bottom" }}>
+                    <div className="col-md-4" style={{ position: "bottom" }}>
                         <Box className="infoBox">
                             <div className="boxText">
                                 <p>My doctor : Dr. {PatientMock.doctorName} </p>
@@ -223,6 +223,7 @@ class PatientProfilePage extends React.Component {
                                     <EmailFormDialog />
                                     : <></>}
                             </div>
+                            <div className="menuButton">
                             <div className="button">
                                 {JSON.parse(localStorage.getItem("type")) !== "patient" ?
                                     <Button variant="contained" onClick={() => {
@@ -230,21 +231,23 @@ class PatientProfilePage extends React.Component {
                                     }}>{this.state.flag ? 'Unflag' : 'Flag'}</Button>
                                     : <></>}
                             </div>
+                                <div className="button">
+                                    {JSON.parse(localStorage.getItem("type")) !== "patient" ?
+                                        <Button
+                                            variant="contained"
+                                            name="update-required-symptoms"
+                                            onClick={this.redirectSymptomsRequired}>Update Symptoms</Button>  : <></> }
+                                </div>
 
-                            <Box className="button" sx={{pt: 5}}>
+                            <div className="button">
                                 {JSON.parse(localStorage.getItem("type")) !== "patient" ?
                                     <Button variant="contained"
                                             onClick={this.handleClickOpen}
                                     >View health status</Button> : <></> }
-                            </Box>
+                            </div>
 
-                            <Box className="button" sx={{pt: 5}}>
-                                {JSON.parse(localStorage.getItem("type")) !== "patient" ?
-                                    <Button
-                                        variant="contained"
-                                        name="update-required-symptoms"
-                                        onClick={this.redirectSymptomsRequired}>Update required Symptoms</Button>  : <></> }
-                            </Box>
+
+</div>
 
 
                             <Box sx={{pb:5}}>
