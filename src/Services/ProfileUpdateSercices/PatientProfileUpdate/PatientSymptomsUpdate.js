@@ -14,6 +14,7 @@ import Navbar from "../../../components/Navbar/Navbar";
 import * as PatientProfileUpdateDatabaseServices from "./PatientProfileUpdateDatabaseServices";
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
+import * as DoctorNotification from "./NotifyDoctorDatabaseServices"
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -264,7 +265,7 @@ export default function ProfileSymptomsPatient() {
             flag: editFormData.flag
         };
         setNotifyDoctor(editedNotifyDoctor);
-        console.log(JSON.stringify(editedNotifyDoctor));
+        DoctorNotification.notifyDoctor(patients[0].doctor, patients[0].firstName, patients[0].lastName, patients[0].email, "patient symptoms update")
     }
 
 
@@ -402,7 +403,7 @@ export default function ProfileSymptomsPatient() {
                                         type="button"
                                         fullWidth={true}
                                         variant="contained"
-                                        onClick={(event) => [handleNotifyDoctorButtonClick(event), alert('Your doctor will be notified!')]}
+                                        onClick={(event) => [handleNotifyDoctorButtonClick(event)]}
                                     >
                                         Notify my doctor
                                     </Button>
