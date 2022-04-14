@@ -73,8 +73,8 @@ export default function OrgsTabs() {
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="Statistics" {...a11yProps(0)} />
                 <Tab label="Patient List" {...a11yProps(1)} />
-                <Tab label="Contact Tracing List" {...a11yProps(3)} />
-                <Tab label="Locations Contact List" {...a11yProps(4)} />
+                <Tab label="Contact Tracing List" {...a11yProps(2)} />
+                <Tab label="Locations Contact List" {...a11yProps(3)} />
 
             </Tabs>
             <TabPanel value={value} index={0}>
@@ -98,13 +98,11 @@ export default function OrgsTabs() {
                     </Pdf>
                 </div>
             </TabPanel>
+
             <TabPanel value={value} index={2}>
-                {/* to be implemented in future sprints */}
-            </TabPanel>
-            <TabPanel value={value} index={3}>
                     <TracingListTable />
             </TabPanel>
-            <TabPanel value={value} index={4}>
+            <TabPanel value={value} index={3}>
                     <LocationListTable />
             </TabPanel>
            

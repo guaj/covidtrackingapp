@@ -93,9 +93,6 @@ export default function PatientTabs() {
                     </Pdf>
                 </div>
             </TabPanel>
-            <TabPanel value={value} index={2}>
-               {/* to be implemented in future sprints */}
-            </TabPanel>
         </>
     )
 }
