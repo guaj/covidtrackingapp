@@ -220,6 +220,7 @@ export default function PatientListTable() {
                                                 key={item.name}
                                             >
                                                {console.log(item)}
+                                               <TableCell/>
                                                 <TableCell >{item.firstName}</TableCell>
                                                 <TableCell >{item.lastName}</TableCell>
                                                 <TableCell >{item.covidResult}</TableCell>
