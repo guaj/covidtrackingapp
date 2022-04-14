@@ -2,8 +2,8 @@
 describe('health official can send a notification to a patient to fill contact tracing form', () => {
     it('health official clicks on send button', () => {
         cy.visit("http://localhost:3000/") //open browser to localhost: 3000
-        cy.findByRole('textbox', { name: /this.example@email.com/i }).type('ho3@gmail.com')// select email field and enter email : ho3@gmail.com
-        cy.findByTestId('sign-up-password').type('Healthyasfuck1!')// select password field and enter password :  Healthyasfuck1!
+        cy.findByRole('textbox', { name: /this.example@email.com/i }).type('bob_morisette@outlook.com')// select email field and enter email
+        cy.findByTestId('sign-up-password').type('ThePassword1!')// select password field and enter password
         cy.findByText(/login/i).click()// click on login
         cy.findByRole('tab', { name: /contact tracing list/i }).click()//go to contact tracing tab on dashboard
         cy.wait(2000) //for the db to update the send notification column
@@ -15,8 +15,8 @@ describe('health official can send a notification to a patient to fill contact t
 describe("patients can fill out the contract tracing form", () =>{
     it('patient clicks on contact tracing button on profile', () => {
         cy.visit("http://localhost:3000/") //open browser to localhost: 3000
-        cy.findByRole('textbox', {name: /this.example@email.com/i}).type('patient@gmail.com')// select email field and enter email : eyal@gmail.com
-        cy.findByTestId('sign-up-password').type('Patient1!')// select password field and enter password :  P1234567!
+        cy.findByRole('textbox', {name: /this.example@email.com/i}).type('jason_caldwell@gmail.com')// select email field and enter email
+        cy.findByTestId('sign-up-password').type('ThePassword1!')// select password field and enter password
         cy.findByText(/login/i).click()// click on login
         cy.findByRole('button', { name: /account of current user/i }).click()// select the profile button
         cy.findByRole('menuitem', { name: /profile/i }).click()// select the profile menu item
@@ -34,8 +34,8 @@ describe("patients can fill out the contract tracing form", () =>{
 describe('health official can access locations list of patients who completed tracing form', () => {
     it('health official clicks on locations list tab', () => {
         cy.visit("http://localhost:3000/") //open browser to localhost: 3000
-        cy.findByRole('textbox', { name: /this.example@email.com/i }).type('ho1@gmail.com')// select email field and enter email : ho3@gmail.com
-        cy.findByTestId('sign-up-password').type('Organizations1!')// select password field and enter password :  Healthyasfuck1!
+        cy.findByRole('textbox', { name: /this.example@email.com/i }).type('bob_morisette@outlook.com')// select email field and enter email
+        cy.findByTestId('sign-up-password').type('ThePassword1!')// select password field and enter password
         cy.findByText(/login/i).click()// click on login
         cy.findByRole('tab', { name: /locations contact list/i }).click()//go to locations list tab on dashboard
             })
