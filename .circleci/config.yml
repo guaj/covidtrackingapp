@@ -3,23 +3,34 @@ version: 2.1
 orbs:
   node: circleci/node@4.7.0
   
+ 
 jobs:
-  build:
+  build_and_test: # this can be any name you choose
     docker:
-      - image: cimg/base:2021.04
+      - image: cimg/node:17.2.0
     steps:
       - checkout
+      - node/install-packages:
+          pkg-manager: npm
       - run:
-          name: The First Step
-          command: |
-            npm run test
-            echo 'This is testing'
+          command: npm run test
+          name: Run tests
       - run:
-          name: The Second Step
-          command: |
-            npm run build
-            echo 'This is building'
+          command: npm run build
+          name: Build app
       - persist_to_workspace:
-            root: ~/covidtrackingapp
-            paths: ./
-
+          root: ~/covidtrackingappp
+          paths: .
+          
+         
+workflows:
+  test_my_app:
+    jobs:
+      - build_and_test
+      - deploy:
+          requires:
+            - build_and_test # only deploy if the build_and_test job has completed
+          filters:
+            branches:
+              only: main # only deploy when on main
+ 
