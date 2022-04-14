@@ -1,5 +1,4 @@
-# Covid-19 Tracking App
-[![CircleCI](https://circleci.com/<VCS>/<ORG_NAME>/<PROJECT_NAME>.svg?style=svg&circle-token=<YOUR_STATUS_API_TOKEN>)](<LINK>)
+# Covid-19 Tracking App[![CircleCI](https://circleci.com/gh/guaj/covidtrackingapp>.svg?style=svg&circle-token=<YOUR_STATUS_API_TOKEN>)](circleci-docs)
 
 
 The goal of this project is to simulate a Software development process through the creation of a COVID-19 tracking application. The main objective of this application is to :
