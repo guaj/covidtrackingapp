@@ -195,6 +195,7 @@ export default function UnpairedNewPatientListTable() {
     const handleClose = entries => {
         setOpen(false);
         setTableSize(entries);
+        getNewPatients(setData);
     }
 
     useEffect(() => {(async () => await getNewPatients(setData))()}, []);
@@ -271,7 +272,7 @@ export default function UnpairedNewPatientListTable() {
                                                     tabIndex={-1}
                                                     key={item.name}
                                                 >
-                                                {/* <TableCell align="center"> {item.priorityNumber} </TableCell> */}
+                                                    <TableCell align="center"> priority num </TableCell> 
                                                     <TableCell align="center"> {item.firstName} </TableCell>
                                                     <TableCell align="center"> {item.lastName} </TableCell>
                                                     <TableCell align="center"> {item.address.city} </TableCell>

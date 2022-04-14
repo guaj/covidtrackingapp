@@ -14,6 +14,7 @@ import { useState } from "react";
 import PasswordStrengthBar from 'react-password-strength-bar';
 import AWS from 'aws-sdk';
 import awsConfig from '../../../aws-config.json';
+import {setLocalStorage} from "../UserLogin/UserLogin";
 
   
   const useStyles = makeStyles((theme) => ({
@@ -77,27 +78,31 @@ export default function SignUpOrg() {
         setEmail(e.target.value);
     };
 
+  var orgType = localStorage.getItem("type");
+  //var orgEmail;
+
+
     const handleSubmit = async(e) =>{
         e.preventDefault();
         const params = {
-            TableName:"organizations",
-            Item:{
-                "type": String("org"),
+            TableName: "organizations",
+            Item: {
+                "type": String(orgType),
                 "orgId": String(orgId),
                 "employeeId": Number(empId),
                 "email": String(email),
                 "password": String(password)
             }
         }
-        try {
-            const result = await docClient.put(params).promise()
-            console.log(result)
-            alert("The account is created!");
-        } catch (err) {
-            alert("unable to create the account");
-            alert(err);
-        }
-
+            await docClient.put(params,function(error, data){
+                if(error){
+                    console.log(error)
+                }
+                //TODO: check the db that the email(key) is not already there then can't register an account
+                else
+                    alert("The account is created!");
+                    setLocalStorage(email,orgType)
+            })
     }
     return (
       <Grid container component="main">
@@ -120,6 +125,7 @@ export default function SignUpOrg() {
                 helperText="Organization Branch ID"
                 onChange={handleOrgIdChange}
                 value={orgId}
+                data-testid="orgId"
                 />
               <TextField
                   type="id"
@@ -132,6 +138,7 @@ export default function SignUpOrg() {
                   helperText="Employee ID"
                   onChange={handleEmpIdChange}
                   value={empId}
+                  data-testid="empId"
               />
               <TextField
                   type="email"
@@ -158,6 +165,7 @@ export default function SignUpOrg() {
                 helperText="Password"
                 autoComplete="current-password"
                 onChange={e => setPassword(e.target.value)}
+                data-testid="sign-up-psw1"
               />
               <TextField
                 type="password"
@@ -169,6 +177,7 @@ export default function SignUpOrg() {
                 id="password"
                 helperText="Confirm your password"
                 onChange={e => setPasswordAgain(e.target.value)}
+                data-testid="sign-up-psw2"
               />
               <PasswordStrengthBar 
                             password={password}
@@ -204,7 +213,7 @@ export default function SignUpOrg() {
                 
                 <Grid item>
                 <Typography variant="body2">Already registered? <t/>
-                    <Link href="/professionals" variant="body2">
+                    <Link href="/" variant="body2">
                     {"Sign In"}
                     </Link> 
                 </Typography>   

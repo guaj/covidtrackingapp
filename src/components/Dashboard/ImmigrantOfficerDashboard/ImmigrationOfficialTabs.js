@@ -66,6 +66,7 @@ export default function PatientTabs() {
 
     return (
         <>
+            <h2>Immigration Officials Dashboard</h2>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="Statistics" {...a11yProps(0)} />
                 <Tab label="Patient List" {...a11yProps(1)} />
