@@ -21,7 +21,7 @@ import { addSentContactTracingFormTime,
 import {useState, useEffect} from 'react';
 import AWS from "aws-sdk";
 import awsConfig from "../../aws-config.json";
-import '../ContractTracing/button.css';
+//import '../ContractTracing/button.css';
 
 //to connect to DynamoDB
 AWS.config.update(awsConfig);
