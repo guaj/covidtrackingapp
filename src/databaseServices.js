@@ -11,13 +11,14 @@ const docClient = new AWS.DynamoDB.DocumentClient()
 export async function getAvailableDoctors() {
     var params = {
         TableName: "doctors",
-        FilterExpression: "#count < :max OR attribute_not_exists(#em)",
+        FilterExpression: "#count < :max AND #em <> :true",
         ExpressionAttributeNames: {
             "#count": "patientCount",
             "#em": "hasEmergency"
         },
         ExpressionAttributeValues: {
-            ":max": 10
+            ":max": 10,
+            ":true": true
         }
     }
     try {

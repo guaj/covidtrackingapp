@@ -11,6 +11,7 @@ import geometricImage from "../../../images/geometric_gradient.jpg";
 import {useState, Fragment, useEffect} from "react";
 import Navbar from "../../../components/Navbar/Navbar";
 import * as PatientProfileUpdateDatabaseServices from "./PatientProfileUpdateDatabaseServices";
+import * as DoctorNotification from "./NotifyDoctorDatabaseServices"
 
 const useStyles = makeStyles((theme) => ({
     inputLabelRoot: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         whiteSpace: "nowrap",
         width: 1
-      },
+    },
     image: {
         backgroundImage: `url(${geometricImage})`,
         backgroundRepeat: "no-repeat",
@@ -54,10 +55,10 @@ const useStyles = makeStyles((theme) => ({
     centerGrid: {
         justifyContent: "center",
     },
-    field:{
+    field: {
         marginTop: theme.spacing(3)
     },
-    field1:{
+    field1: {
         marginTop: theme.spacing(3),
         marginBottom: theme.spacing(-1)
     }
@@ -211,7 +212,7 @@ export default function ProfilePatient() {
             email: editFormData.email,
             ramQNumber: editFormData.ramQNumber,
             insurance: editFormData.insurance,
-            insuranceNumber: editFormData.insuranceNumber,            
+            insuranceNumber: editFormData.insuranceNumber,
             covidResult: editFormData.covidResult,
             symptom1: editFormData.symptom1,
             symptom2: editFormData.symptom2,
@@ -234,7 +235,7 @@ export default function ProfilePatient() {
         setPatients(newPatients);
         const user = JSON.parse(localStorage.getItem("email"))
         const url = user.split("@");
-        PatientProfileUpdateDatabaseServices.updateData('patients', newPatients[0]).then(  () => {
+        PatientProfileUpdateDatabaseServices.updateData('patients', newPatients[0]).then(() => {
             window.location.assign("/profile/" + url[0])
         });
     };
@@ -257,7 +258,7 @@ export default function ProfilePatient() {
             email: editFormData.email,
             ramQNumber: editFormData.ramQNumber,
             insurance: editFormData.insurance,
-            insuranceNumber: editFormData.insuranceNumber,            
+            insuranceNumber: editFormData.insuranceNumber,
             covidResult: editFormData.covidResult,
             symptom1: editFormData.symptom1,
             symptom2: editFormData.symptom2,
@@ -274,7 +275,7 @@ export default function ProfilePatient() {
             flag: editFormData.flag
         };
         setNotifyDoctor(editedNotifyDoctor);
-        console.log(JSON.stringify(editedNotifyDoctor));
+        DoctorNotification.notifyDoctor(patients[0].doctor, patients[0].firstName, patients[0].lastName, patients[0].email, "patient profile update")
     }
 
 
@@ -319,7 +320,6 @@ export default function ProfilePatient() {
                                     helperText="Date of birth"
                                     value={editFormData.dob}
                                     onChange={handleFormChange}
-                                    disabled={true}
                                 />
                                 <p className={classes.field}>Address</p>
                                 <TextField
@@ -376,19 +376,19 @@ export default function ProfilePatient() {
                                     label="email"
                                     type="text"
                                     InputLabelProps={{
-                                    className: classes.inputLabelRoot
+                                        className: classes.inputLabelRoot
                                     }}
                                     name="email"
                                     placeholder="Email"
                                     value={editFormData.email}
                                     onChange={handleFormChange}
-                                    disabled = {true}
+                                    disabled={true}
                                 />
                                 <TextField
                                     label="phoneNumber"
                                     InputLabelProps={{
-                                    className: classes.inputLabelRoot
-                                    }} 
+                                        className: classes.inputLabelRoot
+                                    }}
                                     helperText="Phone number"
                                     type="phoneNumber"
                                     name="phoneNumber"
@@ -433,7 +433,7 @@ export default function ProfilePatient() {
                                     type="button"
                                     fullWidth={true}
                                     variant="contained"
-                                    onClick={(event) => [handleNotifyDoctorButtonClick(event), alert('Your doctor will be notified!')]}
+                                    onClick={(event) => [handleNotifyDoctorButtonClick(event)]}
                                 >
                                     Notify my doctor
                                 </Button>

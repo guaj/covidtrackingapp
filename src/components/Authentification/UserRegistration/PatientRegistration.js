@@ -91,7 +91,7 @@ export default function SignUpPatient() {
                 "email": String(email),
                 "firstName": String(firstName),
                 "lastName": String(lastName),
-                "RAMQ": String(ramqNumber),
+                "ramQNumber": String(ramqNumber),
                 "insurance": Number(insurance),
                 "password": String(password)
             }
@@ -193,10 +193,10 @@ export default function SignUpPatient() {
                             id="insuranceNumber"
                             label="0000000"
                             name="insurance number"
-                            autoComplete=""
                             helperText="Insurance number"
                             data-testid="insuranceNumber"
                             value={insurance}
+                            onChange={e => setInsurance(e.target.value)}
                         />
                         <TextField
                             data-testid="sign-up-psw1"
