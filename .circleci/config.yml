@@ -5,6 +5,7 @@ orbs:
   node: circleci/node@4.7.0
 
 workflows:
+my_workflow:
   jobs:
     build_and_test: # this can be any name you choose
       docker:
