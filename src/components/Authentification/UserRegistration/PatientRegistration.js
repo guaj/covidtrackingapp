@@ -15,6 +15,7 @@ import PasswordStrengthBar from 'react-password-strength-bar';
 import React from 'react';
 import AWS from "aws-sdk";
 import awsConfig from '../../../aws-config.json';
+import {setLocalStorage} from "../UserLogin/UserLogin";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -99,6 +100,7 @@ export default function SignUpPatient() {
         try {
             await docClient.put(params).promise()
             alert("The account is created!");
+            setLocalStorage(email,'patient');
         } catch (err) {
             alert("unable to create the account");
             alert(err);
