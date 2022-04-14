@@ -1,4 +1,6 @@
-# Covid-19 Tracking App [![Build Status](https://app.travis-ci.com/guaj/covidtrackingapp.svg?token=qEFTktWzy5TPf2d3cfEZ&branch=main)](https://app.travis-ci.com/guaj/covidtrackingapp)
+# Covid-19 Tracking App
+[![CircleCI](https://circleci.com/<VCS>/<ORG_NAME>/<PROJECT_NAME>.svg?style=svg&circle-token=<YOUR_STATUS_API_TOKEN>)](<LINK>)
+
 
 The goal of this project is to simulate a Software development process through the creation of a COVID-19 tracking application. The main objective of this application is to :
 * Help patients with symptoms get assessed by a Doctor
