@@ -32,7 +32,7 @@
     margin: auto;
     justify-content: center;
     text-align: center;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 .MuiButton-outlined {
@@ -99,4 +99,7 @@ p {
 .btn {
     width: fit-content;
 
+}
+.button-padding {
+    padding-top: 50px;
 }

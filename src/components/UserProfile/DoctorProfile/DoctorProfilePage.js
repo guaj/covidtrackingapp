@@ -4,12 +4,10 @@ import Avatar from "@mui/material/Avatar";
 import myImage from "../../../Assets/avatar_1.jpg"
 import "../UserProfile.css";
 import DoctorAppointmentListTable from "./DoctorAppointmentListTable";
-import {getSpecificDoctor, getSpecificPatient} from "../../../databaseServices";
-import Typography from "@mui/material/Typography";
-import "../UserProfile.css"
-import {makeStyles} from "@material-ui/core/styles";
+import {getSpecificDoctor} from "../../../databaseServices";
+import "../UserProfile.css";
 
-const useStyles = makeStyles((theme) => {});
+
 
 
 function formatAddress(data) {
@@ -54,7 +52,6 @@ export default class DoctorProfilePage extends React.Component {
     async componentDidMount() {
         try {
             const data = await getSpecificDoctor(this.props.data)
-            console.log(data.Items[0].address);
             this.setState({
                 name: data.Items[0].lastName,
                 address: formatAddress(data.Items[0].address),
@@ -65,8 +62,6 @@ export default class DoctorProfilePage extends React.Component {
         }catch (e) {
             console.log(e)
         }
-
-
     }
 
 
@@ -94,9 +89,7 @@ export default class DoctorProfilePage extends React.Component {
                                 variant="outlined"
                                 aria-label="address"
                                 disabled>
-                                <Typography>
                                     {this.state.address}
-                                </Typography>
                             </Button>
                         </div>
                         <div className="infoButtons">
@@ -105,9 +98,7 @@ export default class DoctorProfilePage extends React.Component {
                                 aria-label="email"
                                 className="btn"
                                 disabled>
-                                <Typography >
                                     {this.state.email}
-                                </Typography>
                             </Button>
                         </div>
                         <div className="infoButtons">
@@ -115,10 +106,7 @@ export default class DoctorProfilePage extends React.Component {
                                 variant="outlined"
                                 aria-label="phone_number"
                                 disabled>
-                                <Typography>
                                     {this.state.phoneNumber}
-                                </Typography>
-
                             </Button>
                         </div>
                         <div className="infoButtons">
@@ -126,10 +114,7 @@ export default class DoctorProfilePage extends React.Component {
                                 variant="outlined"
                                 aria-label="license"
                                 disabled>
-                                <Typography>
                                     {this.state.licenseNumber}
-                                </Typography>
-
                             </Button>
                         </div>
                         <div className="infoButtons">
@@ -139,7 +124,7 @@ export default class DoctorProfilePage extends React.Component {
                         </div>
 
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-8 button-padding">
                         <div className="row">
                             <DoctorAppointmentListTable email={this.userEmail}/>
                         </div>

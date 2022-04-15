@@ -166,11 +166,10 @@ export default function DoctorAppointmentListTable(props) {
     return (
         <div>
             <Typography style={{paddingBottom: 50}}>My appointments</Typography>
-            <Box >
+            <Box sx={{width: '100%'}}>
                 <Paper sx={{ mb: 2 }}>
                     <TableContainer>
                         <Table
-                            sx={{ minWidth: 750 }}
                             aria-labelledby="doctorAppointmentListTable"
                             size={dense ? 'small' : 'medium'}
                         >
