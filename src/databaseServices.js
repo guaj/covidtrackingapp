@@ -280,7 +280,7 @@ export async function updateDoctorPatientCount(email) {
 export async function getNewPatients(setter) {
     var params = {
         TableName: "patients",
-        FilterExpression: "#doc = :none",
+        FilterExpression: "#doc = :none OR attribute_not_exists(#doc)",
         ExpressionAttributeNames: {
             "#doc": "doctor"
         },
@@ -302,7 +302,7 @@ export async function getNewPatients(setter) {
 export async function getPatientWithDoctor(setter) {
     var params = {
         TableName: "patients",
-        FilterExpression: "#doc <> :none",
+        FilterExpression: "#doc <> :none AND attribute_exists(#doc)",
         ExpressionAttributeNames: {
             "#doc": "doctor",
         },
