@@ -10,7 +10,7 @@ import "../UserProfile.css";
 
 
 
-function formatAddress(data) {
+export function formatAddress(data) {
      return (
         data.streetNumber + " " + data.streetName + ", "+ data.city + ", "+ data.province + ", " + data.postalCode
     )
@@ -19,17 +19,13 @@ function formatAddress(data) {
 export default class DoctorProfilePage extends React.Component {
     userType;
     userFetch;
-    userEmail;
-    doctorInfo;
     user = JSON.parse(localStorage.getItem("email"));
     url = this.user.split("@");
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.userType = JSON.parse(localStorage.getItem("type"));
         this.userFetch = window.location.href.split("/")[4];
-        this.userEmail = JSON.parse(localStorage.getItem("email"));
-        this.user = JSON.parse(localStorage.getItem("email"));
         this.state = {
             name : "",
             address: "",
@@ -42,7 +38,7 @@ export default class DoctorProfilePage extends React.Component {
 
 
     canEditProfile() {
-        return ((this.userType === "doctor") && this.userFetch === this.userEmail.split("@")[0]);
+        return ((this.userType === "doctor") && this.userFetch === this.props.data.split("@")[0]);
     }
     editRedirect() {
         window.location = "/doctor-profile-edit"
@@ -126,7 +122,7 @@ export default class DoctorProfilePage extends React.Component {
                     </div>
                     <div className="col-md-8 button-padding">
                         <div className="row">
-                            <DoctorAppointmentListTable email={this.userEmail}/>
+                            <DoctorAppointmentListTable email={this.props.data}/>
                         </div>
                     </div>
                 </div>

@@ -11,6 +11,7 @@ import {retrieveNotifications} from "./NotificationsService";
 import {makeStyles} from "@material-ui/styles";
 import "./Notifications.css";
 import {useNavigate} from 'react-router-dom';
+import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles({
         listItem: {
@@ -131,7 +132,7 @@ export default function NotificationList() {
                 transformOrigin={{horizontal: 'right', vertical: 'top'}}
                 anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             >
-                {notificationItems}
+                {numberOfNotifications > 0 ? notificationItems : <Typography>No notifications found </Typography>}
 
             </Menu>
         </React.Fragment>

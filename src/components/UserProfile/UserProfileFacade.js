@@ -10,7 +10,6 @@ import awsConfig from "../../aws-config.json";
 import ErrorProfilePage from "./ErrorProfilePage";
 import {makeStyles} from "@material-ui/core/styles";
 import {CircularProgress} from "@mui/material";
-import {getSpecificDoctor, getSpecificPatient} from "../../databaseServices";
 
 const useStyles = makeStyles((theme) => {});
 
