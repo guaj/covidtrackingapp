@@ -3,29 +3,45 @@ import Button from "@material-ui/core/Button";
 import Avatar from "@mui/material/Avatar";
 import myImage from "../../../Assets/avatar_1.jpg"
 import "../UserProfile.css";
-import DoctorMock from "./mockDoctorInfo.json";
 import DoctorAppointmentListTable from "./DoctorAppointmentListTable";
+import {getSpecificDoctor, getSpecificPatient} from "../../../databaseServices";
+import Typography from "@mui/material/Typography";
+import "../UserProfile.css"
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => {});
+
+
+function formatAddress(data) {
+     return (
+        data.streetNumber + " " + data.streetName + ", "+ data.city + ", "+ data.province + ", " + data.postalCode
+    )
+}
 
 export default class DoctorProfilePage extends React.Component {
     userType;
     userFetch;
     userEmail;
+    doctorInfo;
     user = JSON.parse(localStorage.getItem("email"));
     url = this.user.split("@");
 
     constructor() {
         super();
         this.userType = JSON.parse(localStorage.getItem("type"));
-        this.userFetch =  window.location.href.split("/")[4];
+        this.userFetch = window.location.href.split("/")[4];
         this.userEmail = JSON.parse(localStorage.getItem("email"));
         this.user = JSON.parse(localStorage.getItem("email"));
-        try{
-            //console.log(this.props.data.Items)
-        }catch (e) {
-            console.log(e)
+        this.state = {
+            name : "",
+            address: "",
+            phoneNumber: "",
+            email: "",
+            licenseNumber: ""
         }
 
     }
+
 
     canEditProfile() {
         return ((this.userType === "doctor") && this.userFetch === this.userEmail.split("@")[0]);
@@ -35,9 +51,24 @@ export default class DoctorProfilePage extends React.Component {
     }
 
 
-    state = {
-        url: this.url[0]
-    } // changed = to : ?
+    async componentDidMount() {
+        try {
+            const data = await getSpecificDoctor(this.props.data)
+            console.log(data.Items[0].address);
+            this.setState({
+                name: data.Items[0].lastName,
+                address: formatAddress(data.Items[0].address),
+                phoneNumber: data.Items[0].phoneNumber,
+                email: data.Items[0].email,
+                licenseNumber: data.Items[0].licenseNumber
+            })
+        }catch (e) {
+            console.log(e)
+        }
+
+
+    }
+
 
     render() {
         return (
@@ -56,22 +87,27 @@ export default class DoctorProfilePage extends React.Component {
                         />
                         {/* eslint-disable-next-line no-undef */}
                         <div className="myName">
-                            <h2>Dr. {this.url[0]}</h2>
+                            <h2>Dr. {this.state.name}</h2>
                         </div>
                         <div className="infoButtons">
                             <Button
                                 variant="outlined"
                                 aria-label="address"
                                 disabled>
-                                {DoctorMock.address}
+                                <Typography>
+                                    {this.state.address}
+                                </Typography>
                             </Button>
                         </div>
                         <div className="infoButtons">
                             <Button
                                 variant="outlined"
                                 aria-label="email"
+                                className="btn"
                                 disabled>
-                                {DoctorMock.email}
+                                <Typography >
+                                    {this.state.email}
+                                </Typography>
                             </Button>
                         </div>
                         <div className="infoButtons">
@@ -79,7 +115,10 @@ export default class DoctorProfilePage extends React.Component {
                                 variant="outlined"
                                 aria-label="phone_number"
                                 disabled>
-                                {DoctorMock.phone_number}
+                                <Typography>
+                                    {this.state.phoneNumber}
+                                </Typography>
+
                             </Button>
                         </div>
                         <div className="infoButtons">
@@ -87,7 +126,10 @@ export default class DoctorProfilePage extends React.Component {
                                 variant="outlined"
                                 aria-label="license"
                                 disabled>
-                                {DoctorMock.license_number}
+                                <Typography>
+                                    {this.state.licenseNumber}
+                                </Typography>
+
                             </Button>
                         </div>
                         <div className="infoButtons">
@@ -97,9 +139,10 @@ export default class DoctorProfilePage extends React.Component {
                         </div>
 
                     </div>
-                    <div className="col-md-8 row">
-
-                        <DoctorAppointmentListTable email={this.userEmail}/>
+                    <div className="col-md-8">
+                        <div className="row">
+                            <DoctorAppointmentListTable email={this.userEmail}/>
+                        </div>
                     </div>
                 </div>
             </>

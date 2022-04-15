@@ -166,8 +166,8 @@ export default function DoctorAppointmentListTable(props) {
     return (
         <div>
             <Typography style={{paddingBottom: 50}}>My appointments</Typography>
-            <Box sx={{ width: '100%' }}>
-                <Paper sx={{ width: '100%', mb: 2 }}>
+            <Box >
+                <Paper sx={{ mb: 2 }}>
                     <TableContainer>
                         <Table
                             sx={{ minWidth: 750 }}
