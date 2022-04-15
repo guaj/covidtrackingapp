@@ -111,12 +111,15 @@ export default function TracingformTest() {
         try {
             const result = await docClient.put(params).promise()
             console.log(params)
-            try {
-                await deletePatientFromNotificationsTable(email)
+            //try {
+                console.log("test");
+                console.log(email);
                 alert("Success! ");
-            } catch (err){
-                console.log(JSON.stringify(err))
-            }
+                await deletePatientFromNotificationsTable(email)
+
+           // } catch (err){
+             //   console.log(JSON.stringify(err))
+          //  }
         } catch (err) {
             alert("Cannot add to table``````````````-------.");
             alert(err);
