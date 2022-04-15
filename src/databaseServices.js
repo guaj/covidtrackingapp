@@ -63,6 +63,21 @@ export async function getAllPatients(setter) {
     }
 }
 
+export async function getEmailFromUrl(userFetch, tableName) {
+    try {
+        const data = await docClient.scan({TableName: tableName}).promise()
+        let email;
+        for (const user of data.Items)
+        {
+            if (JSON.stringify(user.email).indexOf(userFetch) !== -1)
+                email = user.email;
+        }
+        return email
+    }catch (e) {
+        console.log(e)
+    }
+}
+
 export async function getSpecificDoctor(email) {
   var params = {
     TableName: "doctors",
@@ -421,7 +436,6 @@ export async function getPatientInfo(setter, email) {
   };
   try {
     let scanresult = await docClient.scan(params).promise();
-    console.log(scanresult.Items)
     setter(scanresult.Items[0]) //setter modifies the instance of the passed paremeter
   } catch (e) {
     alert(JSON.stringify(e))

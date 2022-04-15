@@ -4,11 +4,18 @@ import Avatar from "@mui/material/Avatar";
 import myImage from "../../../Assets/avatar_1.jpg"
 import "../UserProfile.css";
 import DoctorAppointmentListTable from "./DoctorAppointmentListTable";
-import {getSpecificDoctor} from "../../../databaseServices";
+import {getEmailFromUrl, getSpecificDoctor} from "../../../databaseServices";
 import "../UserProfile.css";
 
 
-
+export function formatPhoneNumber(phoneNumberString) {
+    var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+    var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+        return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    }
+    return null;
+}
 
 export function formatAddress(data) {
      return (
@@ -19,6 +26,7 @@ export function formatAddress(data) {
 export default class DoctorProfilePage extends React.Component {
     userType;
     userFetch;
+    doctorInfo;
     user = JSON.parse(localStorage.getItem("email"));
     url = this.user.split("@");
 
@@ -47,7 +55,8 @@ export default class DoctorProfilePage extends React.Component {
 
     async componentDidMount() {
         try {
-            const data = await getSpecificDoctor(this.props.data)
+            const userEmail = await getEmailFromUrl(this.userFetch, "doctors");
+            const data = await getSpecificDoctor(userEmail)
             this.setState({
                 name: data.Items[0].lastName,
                 address: formatAddress(data.Items[0].address),

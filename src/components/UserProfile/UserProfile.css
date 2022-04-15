@@ -1,9 +1,10 @@
 .button {
 
     margin: auto;
-    padding-top: 100px;
+    vertical-align: top;
     justify-content: center;
     align-items: center;
+    padding-bottom: 10px;
 }
 
 .container {
@@ -62,11 +63,10 @@
 .infoBox {
     background-color: #F8F8F8;
     border-radius: 30px;
-    min-height: 500px;
-    min-width:600px;
 }
 .menuButton {
     display: flex;
+    float: top;
     flex-direction: column;
 }
 
