@@ -7,7 +7,7 @@ try {
 
 /**
  *
- * @returns {Promise<any>} the email of the assigned doctor
+ * @returns JSON object:  the email of the patient assigned doctor
  */
 async function retrieveDoctorEmail() {
     var docClient = new AWS.DynamoDB.DocumentClient();

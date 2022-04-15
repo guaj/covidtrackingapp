@@ -207,7 +207,7 @@ class PatientProfilePage extends React.Component {
                         </div>
 
                     </div>
-                    <div className="col-md-4" style={{ position: "bottom" }}>
+                    <div className="col-md-8" style={{ position: "bottom" }}>
                         <Box className="infoBox">
                             <div className="boxText">
                                 <p>My doctor : Dr. {PatientMock.doctorName} </p>

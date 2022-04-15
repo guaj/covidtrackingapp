@@ -26,13 +26,15 @@ export default class DoctorScheduleSelector extends React.Component {
     }
 
 
+
     retrieveData = async () => {
-        const result = await retrieveDoctorSchedule('DoctorSchedule');
+        const result = await retrieveDoctorSchedule('DoctorSchedule', this.props.data);
         return convertScheduleStringToArrayOfDates(result.Item.dailyAvailabilities)
     };
 
 
     async componentDidMount() {
+        console.log(this.props.data)
         try {
             this.setState({schedule: await this.retrieveData()});
         }catch (e) {

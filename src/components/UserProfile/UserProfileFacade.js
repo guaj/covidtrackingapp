@@ -10,20 +10,11 @@ import awsConfig from "../../aws-config.json";
 import ErrorProfilePage from "./ErrorProfilePage";
 import {makeStyles} from "@material-ui/core/styles";
 import {CircularProgress} from "@mui/material";
+import {getSpecificDoctor, getSpecificPatient} from "../../databaseServices";
 
 const useStyles = makeStyles((theme) => {});
 
-function DiplayUserProfile(userType) {
-    switch (userType) {
-        case "doctor":
-            return <DoctorProfilePage/>;
-        case "patient":
-            return <DisplayProfilePage />
-        default:
-            return <ErrorProfilePage />
 
-    }
-}
 
 async function fetchProfileDoctorData() {
     let userEmail = window.location.href.split("/")[4];
@@ -125,6 +116,7 @@ export default function UserProfileFacade() {
         window.location.assign("/login#redirect");
     }
 
+    const email = JSON.parse(localStorage.getItem("email"));
     const [userType, setUserType] = useState("null");
 
 
@@ -134,6 +126,20 @@ export default function UserProfileFacade() {
         }
     )(), [])
 
+    async function DisplayUserProfile(userType) {
+        switch (userType) {
+            case "doctor":
+                const doctorInfo = await getSpecificDoctor(String(email))
+                return <DoctorProfilePage data={doctorInfo}/>;
+            case "patient":
+                const patientInfo = await getSpecificPatient(String(email))
+                return <DisplayProfilePage data={patientInfo}/>
+            default:
+                return <ErrorProfilePage/>
+
+        }
+    }
+
 
     return (
         <>
@@ -142,7 +148,7 @@ export default function UserProfileFacade() {
                 <Box sx={{width: '80%', margin: '5% auto'}}>
                     <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                         {isLoading ? <CircularProgress /> :
-                            <>{DiplayUserProfile(userType)}</>
+                            <>{DisplayUserProfile(userType)}</>
                         }
                     </Box>
                 </Box>

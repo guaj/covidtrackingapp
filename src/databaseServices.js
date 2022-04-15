@@ -2,10 +2,33 @@ import awsConfig from './aws-config.json'
 import AWS from 'aws-sdk'
 
 AWS.config.update(awsConfig);
+
+// Fix for Cypress testing.
 AWS.config.update({
   dynamoDbCrc32: false
 });
+
 const docClient = new AWS.DynamoDB.DocumentClient()
+
+export async function getDoctorAppointments(doctorEmail) {
+    let queryEmail = doctorEmail;
+    queryEmail = 'maria.collins@gmail.com'; //for testing
+
+    var params = {
+        TableName: 'appointments',
+        FilterExpression: '#email = :query', // optional
+        ExpressionAttributeValues: { ':query': queryEmail }, // optional
+        ExpressionAttributeNames: { '#email': 'doctorEmail' }, // optional
+    }
+    try {
+        const data = await docClient.scan(params).promise()
+        return data.Items
+    } catch (err) {
+        return err
+    }
+
+
+}
 
 
 export async function getAvailableDoctors() {
@@ -94,6 +117,8 @@ export async function addSentContactTracingFormTime(email) {
     }
 
 }
+
+
 
 export async function getAllCovidPositivePatients(setter) {
     try {

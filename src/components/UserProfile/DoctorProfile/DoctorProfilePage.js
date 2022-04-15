@@ -4,7 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import myImage from "../../../Assets/avatar_1.jpg"
 import "../UserProfile.css";
 import DoctorMock from "./mockDoctorInfo.json";
-import Box from "@mui/material/Box";
+import DoctorAppointmentListTable from "./DoctorAppointmentListTable";
 
 export default class DoctorProfilePage extends React.Component {
     userType;
@@ -19,6 +19,12 @@ export default class DoctorProfilePage extends React.Component {
         this.userFetch =  window.location.href.split("/")[4];
         this.userEmail = JSON.parse(localStorage.getItem("email"));
         this.user = JSON.parse(localStorage.getItem("email"));
+        try{
+            //console.log(this.props.data.Items)
+        }catch (e) {
+            console.log(e)
+        }
+
     }
 
     canEditProfile() {
@@ -91,10 +97,9 @@ export default class DoctorProfilePage extends React.Component {
                         </div>
 
                     </div>
-                    <div className="col-md-8">
-                        <Box className="infoBox">
-                        <h2>Information Here</h2>
-                        </Box>
+                    <div className="col-md-8 row">
+
+                        <DoctorAppointmentListTable email={this.userEmail}/>
                     </div>
                 </div>
             </>
