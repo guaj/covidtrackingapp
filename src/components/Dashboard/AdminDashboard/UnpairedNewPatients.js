@@ -89,7 +89,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'priorityNumber',
+        id: 'priorityNum',
         numeric: true,
         disablePadding: false,
         label: 'Priority',
@@ -110,7 +110,7 @@ const headCells = [
         label: 'Address'
     },
     {
-        id: 'profileLink',
+        id: 'email',
         disablePadding: false,
         label: 'Profile Link',
     },
@@ -219,6 +219,11 @@ export default function UnpairedNewPatientListTable() {
         setDense(event.target.checked);
     };
 
+    const profileLink = (email) => {
+        let url = email.split("@")
+        return ("/profile/" + url[0]);
+    };
+
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -272,11 +277,11 @@ export default function UnpairedNewPatientListTable() {
                                                     tabIndex={-1}
                                                     key={item.name}
                                                 >
-                                                    <TableCell align="center"> priority num </TableCell> 
+                                                    <TableCell align="center"/>
                                                     <TableCell align="center"> {item.firstName} </TableCell>
                                                     <TableCell align="center"> {item.lastName} </TableCell>
                                                     <TableCell align="center"> {item.address.city} </TableCell>
-                                                    <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon /></TableCell>
+                                                    <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon /></TableCell>
                                                     <TableCell align="center"><Button className={classes.pair} onClick={()=>handleOpen(item.email)}>Find a doctor</Button></TableCell>
                                                 </TableRow>
                                             );

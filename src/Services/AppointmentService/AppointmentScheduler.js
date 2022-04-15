@@ -73,10 +73,9 @@ export default function StaticDatePickerLandscape() {
             <Navbar/>
             <div>
                 <div className="row">
-                    <div className="col-md-8 datePicker">
+                    <div className="col-md-6 datePicker">
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <StaticDatePicker
-                                orientation="landscape"
                                 openTo="day"
                                 minDate={todayDate}
                                 value={value}
@@ -91,7 +90,7 @@ export default function StaticDatePickerLandscape() {
 
                     <div className="col-md-4">
                         <div className="title">
-                            <p>SELECT TIME</p>
+                            <p>SELECTED TIME</p>
                         </div>
                         <div className="timePicker">
                             {isAvailable ?
@@ -106,19 +105,19 @@ export default function StaticDatePickerLandscape() {
                                 <p>No Available time for this date</p>
                             }
                         </div>
-
+                        <div className="button">
+                            <Button
+                                type="button"
+                                variant="contained"
+                                onClick={getTime}
+                                disabled={timeValue === 0}
+                            >
+                                Select Appointment
+                            </Button>
+                        </div>
                     </div>
                 </div>
-                <div className="button">
-                    <Button
-                        type="button"
-                        variant="contained"
-                        onClick={getTime}
-                        disabled={timeValue === 0}
-                    >
-                        Select Appointment
-                    </Button>
-                </div>
+
             </div>
 
         </>

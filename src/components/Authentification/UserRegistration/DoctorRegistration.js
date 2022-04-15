@@ -172,6 +172,7 @@ function SignUpDoctor() {
                             helperText="License number"
                             onChange={handleLicenseNumberChange}
                             value={licenseNumber}
+                            data-testid="licenseNumber"
                         />
                         <TextField
                             data-testid="sign-up-psw1"

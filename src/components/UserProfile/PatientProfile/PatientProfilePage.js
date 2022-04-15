@@ -207,45 +207,50 @@ class PatientProfilePage extends React.Component {
                         </div>
 
                     </div>
-                    <div className="col-md-8" style={{ position: "bottom" }}>
+                    <div className="col-md-4" style={{ position: "bottom" }}>
                         <Box className="infoBox">
                             <div className="boxText">
                                 <p>My doctor : Dr. {PatientMock.doctorName} </p>
                             </div>
-                            <div className="button">
-                                {this.canScheduleMeeting() ?
-                                    <Button variant="contained" onClick={this.scheduleRedirect}>Make
-                                        Appointment </Button>
-                                    : <></>}
-                            </div>
-                            <div className="button">
-                                {this.canScheduleMeeting() ?
-                                    <EmailFormDialog />
-                                    : <></>}
-                            </div>
-                            <div className="button">
+
+
+                            <div className="menuButton">
+                                <div className="button">
+                                    {this.canScheduleMeeting() ?
+                                        <Button variant="contained" onClick={this.scheduleRedirect}>Make
+                                            Appointment </Button>
+                                        : <></>}
+                                </div>
+
+                                <div className="button">
+                                    {this.canScheduleMeeting() ?
+                                        <EmailFormDialog />
+                                        : <></>}
+                                </div>
+
+
+                                <div className="button">
                                 {JSON.parse(localStorage.getItem("type")) !== "patient" ?
                                     <Button variant="contained" onClick={() => {
                                         this.flagPatient(this.state.flag);
                                     }}>{this.state.flag ? 'Unflag' : 'Flag'}</Button>
                                     : <></>}
                             </div>
+                                <div className="button">
+                                    {JSON.parse(localStorage.getItem("type")) !== "patient" ?
+                                        <Button
+                                            variant="contained"
+                                            name="update-required-symptoms"
+                                            onClick={this.redirectSymptomsRequired}>Update Symptoms</Button>  : <></> }
+                                </div>
 
-                            <Box className="button" sx={{pt: 5}}>
+                            <div className="button">
                                 {JSON.parse(localStorage.getItem("type")) !== "patient" ?
                                     <Button variant="contained"
                                             onClick={this.handleClickOpen}
                                     >View health status</Button> : <></> }
-                            </Box>
-
-                            <Box className="button" sx={{pt: 5}}>
-                                {JSON.parse(localStorage.getItem("type")) !== "patient" ?
-                                    <Button
-                                        variant="contained"
-                                        name="update-required-symptoms"
-                                        onClick={this.redirectSymptomsRequired}>Update required Symptoms</Button>  : <></> }
-                            </Box>
-
+                            </div>
+</div>
 
                             <Box sx={{pb:5}}>
                                 <QRCode value={"https://main.d1mmulvvzymdin.amplifyapp.com/" + this.userEmail + "/summary"} style={{ display: "block", margin: "5% auto", }} />

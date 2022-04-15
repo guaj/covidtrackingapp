@@ -272,7 +272,7 @@ export default function TracingListTable() {
                                                 </TableCell>
                                                 <TableCell>
                                                     <button
-                                                        class="button"
+                                                        class="button2"
                                                         type="submit"
                                                         id={item.email}
 

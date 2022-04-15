@@ -100,6 +100,7 @@ export default function SignUpOrg() {
                 }
                 //TODO: check the db that the email(key) is not already there then can't register an account
                 else
+                    alert("The account is created!");
                     setLocalStorage(email,orgType)
             })
     }
@@ -124,6 +125,7 @@ export default function SignUpOrg() {
                 helperText="Organization Branch ID"
                 onChange={handleOrgIdChange}
                 value={orgId}
+                data-testid="orgId"
                 />
               <TextField
                   type="id"
@@ -136,6 +138,7 @@ export default function SignUpOrg() {
                   helperText="Employee ID"
                   onChange={handleEmpIdChange}
                   value={empId}
+                  data-testid="empId"
               />
               <TextField
                   type="email"
@@ -162,6 +165,7 @@ export default function SignUpOrg() {
                 helperText="Password"
                 autoComplete="current-password"
                 onChange={e => setPassword(e.target.value)}
+                data-testid="sign-up-psw1"
               />
               <TextField
                 type="password"
@@ -173,6 +177,7 @@ export default function SignUpOrg() {
                 id="password"
                 helperText="Confirm your password"
                 onChange={e => setPasswordAgain(e.target.value)}
+                data-testid="sign-up-psw2"
               />
               <PasswordStrengthBar 
                             password={password}
@@ -208,7 +213,7 @@ export default function SignUpOrg() {
                 
                 <Grid item>
                 <Typography variant="body2">Already registered? <t/>
-                    <Link href="/professionals" variant="body2">
+                    <Link href="/" variant="body2">
                     {"Sign In"}
                     </Link> 
                 </Typography>   

@@ -12,38 +12,38 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { visuallyHidden } from '@mui/utils';
+import {visuallyHidden} from '@mui/utils';
 import LinkIcon from '@mui/icons-material/Link';
 import Button from '@mui/material/Button';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 import Modal from '@mui/material/Modal';
 import AvailableDoctors from './AvailableDoctors';
-import { getPatientsWithDoctorEmergency } from '../../../databaseServices'
+import {getPatientsWithDoctorEmergency} from '../../../databaseServices'
 import CloseIcon from '@mui/icons-material/Close';
-import { useState, useEffect } from 'react'
+import {useState, useEffect} from 'react'
 
 
 //database query for doctors with (< 10 patients) and (city = patient city)
 
 
 const useStyles = makeStyles((theme) => ({
-    pair: {
+        pair: {
 
-        '&:hover': {
-            backgroundColor: 'rgba(63, 81, 181, 0.5)',
-            color: '#fff',
+            '&:hover': {
+                backgroundColor: 'rgba(63, 81, 181, 0.5)',
+                color: '#fff',
+            }
+        },
+        exitButton: {
+            position: 'absolute',
+            top: '5px',
+            right: '5px',
+            '&:hover': {
+                backgroundColor: 'rgba(63, 81, 181, 0.5)',
+                color: '#fff',
+            }
         }
-    },
-    exitButton: {
-        position: 'absolute',
-        top: '5px',
-        right: '5px',
-        '&:hover': {
-            backgroundColor: 'rgba(63, 81, 181, 0.5)',
-            color: '#fff',
-        }
-    }
-})
+    })
 );
 
 
@@ -93,7 +93,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'priorityNumber',
+        id: 'priorityNum',
         numeric: true,
         disablePadding: false,
         label: 'Priority',
@@ -114,7 +114,7 @@ const headCells = [
         label: 'Address'
     },
     {
-        id: 'profileLink',
+        id: 'email',
         disablePadding: false,
         label: 'Profile Link',
     },
@@ -127,7 +127,7 @@ const headCells = [
 
 
 function EnhancedTableHead(props) {
-    const { order, orderBy, onRequestSort } =
+    const {order, orderBy, onRequestSort} =
         props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
@@ -186,7 +186,7 @@ export default function UnpairedNewPatientListTable() {
     const [patient, setPatient] = React.useState("")
     const [open, setOpen] = React.useState(false);
     const [tableSize, setTableSize] = useState(0)
-    
+
     const handleOpen = patient => {
         console.log("handle open() patient: " + patient);
         setOpen(true);
@@ -207,13 +207,13 @@ export default function UnpairedNewPatientListTable() {
     //         await getDoctorEmergency(setDoctorData);
     //         console.log(doctorData)
     //     })()}, []);
-    
+
     // useEffect(() => {
     //     (async () => {
     //         await getPatientWithDoctor(setPatientData);
     //         console.log(patientData)
     //     })()}, []);
-    
+
     // useEffect(() => {
     //     var array =[];
     //     patientData.forEach(pat => {
@@ -229,6 +229,8 @@ export default function UnpairedNewPatientListTable() {
     useEffect(() => (async () => await getPatientsWithDoctorEmergency(setData))(), []);
 
     const handleRequestSort = (event, property) => {
+        console.log(order)
+        console.log(orderBy)
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
@@ -252,91 +254,97 @@ export default function UnpairedNewPatientListTable() {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
+    const profileLink = (email) => {
+        let url = email.split("@")
+        return ("/profile/" + url[0]);
+    };
 
-  
-        return (
-            <div>
-                <Modal
-                    open={open}
-                    onClose={() => handleClose(data.length)}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={modalStyle}>
-                        <Button className={classes.exitButton} onClick={handleClose}><CloseIcon /></Button>
-                        <AvailableDoctors patient={patient} />
-                    </Box>
-                </Modal>
 
-                <h2>Patients</h2>
-                <Box sx={{ width: '100%' }}>
-                    <Paper sx={{ width: '100%', mb: 2 }}>
-                        <TableContainer>
-                            <Table
-                                sx={{ minWidth: 750 }}
-                                aria-labelledby="patientListTable"
-                                size={dense ? 'small' : 'medium'}
-                            >
-                                <EnhancedTableHead
-                                    numSelected={selected.length}
-                                    order={order}
-                                    orderBy={orderBy}
-                                    onRequestSort={handleRequestSort}
-                                    rowCount={data.length}
-                                />
-                                <TableBody>
-                                    {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
-        
-    
-                                    {stableSort(data, getComparator(order, orderBy))
-                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                        .map((item) => {
-                                            return (
-                                                // setNumItems(prevState => (prevState+1)),
-                                                <TableRow
-                                                    hover
-                                                    role="checkbox"
-                                                    tabIndex={-1}
-                                                    key={item.name}
-                                                >
-                                                    <TableCell align="center"> {item.priorityNumber} </TableCell>
-                                                    <TableCell align="center"> {item.firstName} </TableCell>
-                                                    <TableCell align="center"> {item.lastName} </TableCell>
-                                                    <TableCell align="center"> {item.address.city} </TableCell>
-                                                    <TableCell align="center" numeric component="a" href={item.profileLink}><LinkIcon /></TableCell>
-                                                    <TableCell align="center"><Button className={classes.pair} onClick={()=>handleOpen(item.email)}>Find a doctor</Button></TableCell>
-                                                </TableRow>
-                                            );
-                                        })}
-                                    {emptyRows > 0 && (
-                                        <TableRow
-                                            style={{
-                                                height: (dense ? 33 : 53) * emptyRows,
-                                            }}
-                                        >
-                                            <TableCell colSpan={6} />
-                                        </TableRow>
-                                    )}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                        <TablePagination
-                            rowsPerPageOptions={[5, 10, 25]}
-                            component="div"
-                            count={data.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                        />
-                    </Paper>
-                    <FormControlLabel
-                        control={<Switch checked={dense} onChange={handleChangeDense} />}
-                        label="Dense padding"
-                    />
+    return (
+        <div>
+            <Modal
+                open={open}
+                onClose={() => handleClose(data.length)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={modalStyle}>
+                    <Button className={classes.exitButton} onClick={handleClose}><CloseIcon/></Button>
+                    <AvailableDoctors patient={patient}/>
                 </Box>
-            </div>
+            </Modal>
 
-        );
+            <h2>Patients</h2>
+            <Box sx={{width: '100%'}}>
+                <Paper sx={{width: '100%', mb: 2}}>
+                    <TableContainer>
+                        <Table
+                            sx={{minWidth: 750}}
+                            aria-labelledby="patientListTable"
+                            size={dense ? 'small' : 'medium'}
+                        >
+                            <EnhancedTableHead
+                                numSelected={selected.length}
+                                order={order}
+                                orderBy={orderBy}
+                                onRequestSort={handleRequestSort}
+                                rowCount={data.length}
+                            />
+                            <TableBody>
+                                {/* if you don't need to support IE11, you can replace the `stableSort` call with:
+                 rows.slice().sort(getComparator(order, orderBy)) */}
+
+
+                                {stableSort(data, getComparator(order, orderBy))
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map((item) => {
+                                        return (
+                                            // setNumItems(prevState => (prevState+1)),
+                                            <TableRow
+                                                hover
+                                                role="checkbox"
+                                                tabIndex={-1}
+                                                key={item.name}
+                                            >
+                                                <TableCell align="center"/>
+                                                <TableCell align="center"> {item.firstName} </TableCell>
+                                                <TableCell align="center"> {item.lastName} </TableCell>
+                                                <TableCell align="center"> {item.address.city} </TableCell>
+                                                <TableCell align="center" numeric component="a" href={profileLink(item.email)}><LinkIcon/></TableCell>
+                                                <TableCell align="center"><Button className={classes.pair}
+                                                                                  onClick={() => handleOpen(item.email)}>Find
+                                                    a doctor</Button></TableCell>
+                                            </TableRow>
+                                        );
+                                    })}
+                                {emptyRows > 0 && (
+                                    <TableRow
+                                        style={{
+                                            height: (dense ? 33 : 53) * emptyRows,
+                                        }}
+                                    >
+                                        <TableCell colSpan={6}/>
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={data.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                </Paper>
+                <FormControlLabel
+                    control={<Switch checked={dense} onChange={handleChangeDense}/>}
+                    label="Dense padding"
+                />
+            </Box>
+        </div>
+
+    );
 }
