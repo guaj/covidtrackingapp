@@ -38,9 +38,10 @@ test("Check if stringToArrayConverter return an array", () => {
 })
 
 test("Check if doctor Scheduler can retrieve a doctorSchedule", async () => {
-    const email = "janeSmith@gmail.com"
-    const result = await retrieveDoctorSchedule('DoctorSchedule', email);
-    expect(result).toBeTruthy();
+    const email = "janeSmith@gmail.com";
+    const tableName = 'DoctorSchedule';
+    const result = await retrieveDoctorSchedule(tableName, email);
+    expect(result.Item.email).toBe(email);
 })
 
 
