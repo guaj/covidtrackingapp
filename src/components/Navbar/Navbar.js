@@ -76,6 +76,7 @@ const usersWithProfilePage = [
 ]
 
 export default function PrimarySearchAppBar() {
+    const userEmail = JSON.parse(localStorage.getItem("email"));
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -151,7 +152,7 @@ export default function PrimarySearchAppBar() {
             {/*Conditional rendering for notifications feature */}
             {hasNotification() ?
                 <MenuItem>
-                    <NotificationMenu isMobile={true}/>
+                    <NotificationMenu data={userEmail} isMobile={true}/>
                     <p>Notifications</p>
                 </MenuItem>
                 : <></>
@@ -239,7 +240,7 @@ export default function PrimarySearchAppBar() {
 
                         {/*conditional rendering for notifications */}
                         {hasNotification() ?
-                            <NotificationMenu isMobile={false} data-testid="notification"/>
+                            <NotificationMenu  data={userEmail} isMobile={false} data-testid="notification"/>
                             : <></>
                         }
                         <IconButton

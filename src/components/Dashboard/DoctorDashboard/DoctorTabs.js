@@ -58,6 +58,7 @@ TabPanel.propTypes = {
 const ref = React.createRef();
 
 export default function DoctorTabs() {
+    const email = JSON.parse(localStorage.getItem("email"));
 
     const [value, setValue] = React.useState(0);
 
@@ -96,7 +97,7 @@ export default function DoctorTabs() {
                 </div>
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <DoctorSchedule />
+                <DoctorSchedule data={email}/>
             </TabPanel>
 
 

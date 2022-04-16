@@ -1,11 +1,10 @@
 import AWS from "aws-sdk";
 import awsConfig from "../../aws-config.json";
 
-export async function retrieveNotifications() {
+export async function retrieveNotifications(email) {
     try {
         AWS.config.update(awsConfig);
         var docClient = new AWS.DynamoDB.DocumentClient();
-        let email = JSON.parse(localStorage.getItem("email"))
         let tableName = "notifications"
         var params = {
             TableName: tableName,

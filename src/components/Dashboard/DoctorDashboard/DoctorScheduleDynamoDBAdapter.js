@@ -18,7 +18,7 @@ export const addDoctorSchedule = (tableName , data) => {
         }
     }catch (e) {}
 
-    docClient.put(params, function (err, data) {
+    return docClient.put(params, function (err, data) {
         if (err) {
             alert('Error from put: '+ err)
         } else {
