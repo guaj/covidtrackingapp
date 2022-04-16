@@ -31,7 +31,7 @@ it("Check if contact tracing notification redirects to form", () => {
 })
 
 
-test("Check retrieve a notification ", async () => {
+test("Check if notification list retrieves a notification ", async () => {
     const email = "jason_caldwell@gmail.com"
     const result = await retrieveNotifications(email);
     expect(result).toBeTruthy();
