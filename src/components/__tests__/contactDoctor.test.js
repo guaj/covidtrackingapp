@@ -1,5 +1,4 @@
 import {fireEvent, render, screen} from "@testing-library/react";
-import HealthOfficialTabs from "../Dashboard/HealthOfficialDashboard/HealthOfficialTabs";
 import React from "react";
 import EmailFormDialog from "../../Services/EmailService/EmailDialog";
 

@@ -3,8 +3,12 @@ import Box from '@mui/material/Box';
 import { QuarantineInfo } from './QuarantineInfo';
 import { CovidSymptoms } from './CovidSymptoms';
 import Navbar from "../../Navbar/Navbar";
+import {makeStyles} from "@material-ui/styles";
 
-export default function QuarantineTab() {    
+const useStyles = makeStyles({});
+export default function QuarantineTab() {
+
+    useStyles();
     return (
         <div>
             <Navbar />

@@ -41,9 +41,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const setForm = (event => {
-    return event.target.value;
-})
 
 export default function DoctorProfile() {
     const classes = useStyles();

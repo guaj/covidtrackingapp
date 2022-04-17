@@ -37,7 +37,7 @@ export default function NotificationList(props) {
     const [numberOfNotifications, setNumberOfNotifications] = React.useState(0)
     const open = Boolean(anchorEl);
     const ITEM_HEIGHT = 48;
-    const classes = useStyles();
+    useStyles();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);

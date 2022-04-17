@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import {unmountComponentAtNode} from "react-dom";
-import {NotificationsItems} from "../Navbar/NotificationsItems";
+import {NotificationsItems} from "../Navbar/Notifications/NotificationsItems";
 import * as React from "react";
 
 let container = null;

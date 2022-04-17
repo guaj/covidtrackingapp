@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-// import DoctorTabs from '../Dashboard/DoctorDashboard/DoctorTabs';
 import PatientTabs from '../Dashboard/PatientDashboard/PatientTabs';
 import HealthOfficialTabs from '../Dashboard/HealthOfficialDashboard/HealthOfficialTabs'
 import ImmigrationOfficialTabs from '../Dashboard/ImmigrantOfficerDashboard/ImmigrationOfficialTabs'

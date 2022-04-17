@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import awsConfig from "../../aws-config.json";
+import awsConfig from "../../../aws-config.json";
 
 export async function retrieveNotifications(email) {
     try {

@@ -120,7 +120,6 @@ export default function DoctorProfile(url) {
             streetNumber: editFormData.streetNumber
         };
         const newDoctors = [...doctors];
-        const index = doctors.findIndex((doctor) => doctor.id === editDoctorId);
         newDoctors[0] = editedDoctor;
         setDoctors(newDoctors);
         const user = JSON.parse(localStorage.getItem("email"))

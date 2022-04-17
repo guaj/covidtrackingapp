@@ -2,7 +2,7 @@ describe('As a patient, I want to be able to contact my doctor', () => {
 
     it('A patient can access the contact my doctor button', () => {
         cy.visit('http://localhost:3000/');
-        cy.findByRole('textbox', { name: /this\.example@email\.com/i }).type('patient@gmail.com')// select email field and enter email : patient@gmail.com
+        cy.findByRole('textbox', { name: /this\.example@email\.com/i }).type('mariajordan@gmail.com')// select email field and enter email : patient@gmail.com
         cy.findByTestId('sign-up-password').type('Patient1!')// select passeword field and enter password :  Patient1!
         cy.findByText(/login/i).click()// click on login
         cy.findByRole('button', { name: /account of current user/i }).click() // click on profile icon
