@@ -156,10 +156,10 @@ export default function UsersLogin() {
 
 
     return (
-        <Grid container component="main">
+        <Grid container component="main" style={{height: "100vh"}}  >
             <CssBaseline />
-            <Grid item xs={false} sm={false} md={4} className={classes.image} />
-            <Grid item xs={12} sm={12} md={8} component={Paper} elevation={6} square>
+            <Grid item xs={false} sm={false} md={4} className={classes.image}   />
+            <Grid item xs={12} sm={12} md={8} component={Paper}   elevation={6} square>
                 <div className={classes.paper}>
                     <LoginForm Login={Login} error={error} />
                     {/*<Button onClick={Logout} disabled={user.email === "" && user.password === ""}>Logout</Button>*/}
