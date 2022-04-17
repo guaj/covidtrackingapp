@@ -82,7 +82,6 @@ export default function TracingformTest() {
                 "date": String(locationDate),
                 "time": String(locationTime),
                 "email": String(email),
-                "firstName": String(firstName)
 
             },
         }
@@ -117,7 +116,7 @@ export default function TracingformTest() {
                 console.log("test");
                 console.log(result);
                 alert("Success! ");
-                //await deletePatientFromNotificationsTable(email)
+               // await deletePatientFromNotificationsTable(email)
 
            // } catch (err){
              //   console.log(JSON.stringify(err))
@@ -148,7 +147,7 @@ export default function TracingformTest() {
 
         } catch (e) {
             console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-            alert(("%%%%%%%%%%%%%%%%%%%%%%%%%%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"));
+            alert("Cannot delete to table``````````````-------.");
 
             console.log(JSON.stringify(e))
         }
@@ -294,12 +293,11 @@ export default function TracingformTest() {
                                             type="submit"
 
                                             onClick={(event) => {
-                                                // deletePatientFromNotificationsTable(localStorage.getItem("email").split("\"")[1]); !! Adding this function directly works, but putting it into the handleSubmitCompleteForm
-                                                // function breaks it. If I leave it here, it breaks the handleSubmitCompleteForm and the completedTracingForm table does not update :( 
 
                                                 handleSubmitCompleteForm(localStorage.getItem("email").split("\"")[1]);
                                                 deletePatientFromNotificationsTable(localStorage.getItem("email").split("\"")[1]);
-                                            }}>Complete Form</Button>
+
+                                            }}>Submit</Button>
 
 
                                 </div>

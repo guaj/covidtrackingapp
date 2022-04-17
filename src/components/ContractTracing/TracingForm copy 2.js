@@ -296,9 +296,9 @@ export default function TracingformTest() {
                                             onClick={(event) => {
                                                 // deletePatientFromNotificationsTable(localStorage.getItem("email").split("\"")[1]); !! Adding this function directly works, but putting it into the handleSubmitCompleteForm
                                                 // function breaks it. If I leave it here, it breaks the handleSubmitCompleteForm and the completedTracingForm table does not update :( 
+                                                deletePatientFromNotificationsTable(localStorage.getItem("email").split("\"")[1]);
 
                                                 handleSubmitCompleteForm(localStorage.getItem("email").split("\"")[1]);
-                                                deletePatientFromNotificationsTable(localStorage.getItem("email").split("\"")[1]);
                                             }}>Complete Form</Button>
 
 
