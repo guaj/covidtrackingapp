@@ -141,7 +141,7 @@ export default function TracingformTest() {
 
         try {
            const deleteNotif = await docClient.delete(params).promise();
-            console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+            console.log("Deleting notification from notifications table working!")
             console.log(deleteNotif);
 
             alert("Deleted! ");
