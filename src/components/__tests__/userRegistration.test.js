@@ -1,6 +1,6 @@
 import {render,screen,cleanup} from "@testing-library/react";
 import SignUpPatient from "../Authentification/UserRegistration/PatientRegistration";
-import { DisplayProfilePage } from "../UserProfile/PatientProfile/PatientProfilePage";
+
 
 test('password should be the same', () =>{
     render(<SignUpPatient />);

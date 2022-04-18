@@ -5,10 +5,10 @@ import ImmigrationOfficerTabs from "../Dashboard/ImmigrantOfficerDashboard/Immig
 import HealthOfficialTabs from "../Dashboard/HealthOfficialDashboard/HealthOfficialTabs";
 
 
-describe("Test if the buttons is generated in the Components",()=>{
+describe("Test if the buttons is generated in the Components",()=> {
   it("renders Doctor tabs with the buttons", function(){
     render(<DoctorTabs/>);
-    const button = screen.getByText("Generate Pdf");
+    const button = screen.getByRole('button', { name: /generate pdf/i })
     expect(button).toBeTruthy()
   });
 

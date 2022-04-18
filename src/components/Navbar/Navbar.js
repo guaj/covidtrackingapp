@@ -5,16 +5,13 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import HomeIcon from '@mui/icons-material/Home';
-import NotificationMenu from "./Notification";
+import NotificationMenu from "./Notifications/Notification";
 import PatientSearch from "../SearchEngine/PatientSearch/PatientSearch"
 
 
@@ -44,19 +41,6 @@ const SearchIconWrapper = styled('div')(({theme}) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({theme}) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
-        },
-    },
-}));
 
 const usersWithSearchbar = [
     "doctor",
@@ -76,6 +60,7 @@ const usersWithProfilePage = [
 ]
 
 export default function PrimarySearchAppBar() {
+    const userEmail = JSON.parse(localStorage.getItem("email"));
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -151,7 +136,7 @@ export default function PrimarySearchAppBar() {
             {/*Conditional rendering for notifications feature */}
             {hasNotification() ?
                 <MenuItem>
-                    <NotificationMenu isMobile={true}/>
+                    <NotificationMenu data={userEmail} isMobile={true}/>
                     <p>Notifications</p>
                 </MenuItem>
                 : <></>
@@ -239,7 +224,7 @@ export default function PrimarySearchAppBar() {
 
                         {/*conditional rendering for notifications */}
                         {hasNotification() ?
-                            <NotificationMenu isMobile={false} data-testid="notification"/>
+                            <NotificationMenu  data={userEmail} isMobile={false} data-testid="notification"/>
                             : <></>
                         }
                         <IconButton

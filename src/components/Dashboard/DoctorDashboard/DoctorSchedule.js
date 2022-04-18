@@ -3,13 +3,14 @@ import DoctorScheduleSelector from "./DoctorScheduleSelector";
 
 export default class DoctorSchedule extends React.Component {
 
+    email = JSON.parse(localStorage.getItem("email"));
     render() {
-        const email = JSON.parse(localStorage.getItem("email"));
+
 
         return (
 
             <div>
-                <DoctorScheduleSelector data={String(email)} />
+                <DoctorScheduleSelector data={String(this.email)} />
             </div>
 
 

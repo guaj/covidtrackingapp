@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -7,15 +8,28 @@ import Navbar from "../../components/Navbar/Navbar";
 import "./AppointmentScheduler.css";
 import Button from "@material-ui/core/Button";
 import {ButtonGroup} from "@mui/material";
-import {useEffect} from "react";
-import {findAvailAppointments, createAppointment} from "./AppointmentSchedulerAdapter";
+import {createAppointment, findAvailAppointments} from "./AppointmentSchedulerAdapter";
 import {makeStyles} from "@material-ui/core/styles";
-
 
 
 const useStyles = makeStyles((theme) => {});
 
-export default function StaticDatePickerLandscape() {
+
+export const AvailableTimes = ({data, onClick}) => {
+    return (
+        data.map((item, i) =>
+            <Button
+                key={i}
+                size="large"
+                value={item}
+                onClick={onClick}
+            >{item}</Button>
+        )
+    )
+}
+
+
+export default function AppointmentScheduler() {
     useStyles();
     const todayDate = new Date();
     const [value, setValue] = React.useState(todayDate);
@@ -32,16 +46,7 @@ export default function StaticDatePickerLandscape() {
 
     },[]);
 
-    let timeButtons = [
-        availTimes.map((item,i) =>
-            <Button
-                key={i}
-                size="large"
-                value={item}
-                onClick={setTime}
-            >{item}</Button>
-        )
-    ];
+    let timeButtons = <AvailableTimes data={availTimes} onClick={setTime}/>
 
 
 
@@ -69,7 +74,7 @@ export default function StaticDatePickerLandscape() {
     }
 
     return (
-        <>
+        <div>
             <Navbar/>
             <div>
                 <div className="row">
@@ -120,7 +125,7 @@ export default function StaticDatePickerLandscape() {
 
             </div>
 
-        </>
+        </div>
 
     );
 }

@@ -2,7 +2,7 @@ describe('Admin can add/update/delete doctor/patient or their information', () =
     it('Admin can add a doctor', () => {
         cy.visit("http://localhost:3000/") // open browser to localhost:3000
         cy.findByRole('textbox', {name: /this.example@email.com/i}).clear().type('admin@gmail.com') //select email field and admin email : admin@gmail.com
-        cy.findByTestId('sign-up-password').clear().type('Admin1234!') //select password field and enter admin password :  Admin1234!
+        cy.findByTestId('sign-up-password').clear().type('ThePassword1!') //select password field and enter admin password :  Admin1234!
         cy.findByText(/login/i).click() //click on login
         cy.findByRole('tab', {name: /user management/i}).click() //click on user management tab
         cy.findByRole('tab', {name: /doctors/i}).click() //click on doctors tab

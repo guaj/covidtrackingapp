@@ -13,18 +13,8 @@ import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
-import LinkIcon from '@mui/icons-material/Link';
-import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
-import {fetchPatientName, getAllLocations, getAllPatients, isInNotificationList} from '../../databaseServices';
+import {fetchPatientName, getAllLocations} from '../../databaseServices';
 import { useState, useEffect } from 'react';
-import FlagIcon from "@mui/icons-material/Flag";
-import Link from "@material-ui/core/Link";
-import Button from "@mui/material/Button";
-import { SendNotificationButton } from "./SendNotificationButton";
-import { formatDate } from "../Navbar/Notification";
-import AWS from "aws-sdk";
-import awsConfig from "../../aws-config.json";
-
 
 
 function descendingComparator(a, b, orderBy) {
@@ -44,10 +34,6 @@ function getComparator(order, orderBy) {
 }
 
 
-function profileLink(email) {
-    let url = email.split("@");
-    return  url[0];
-}
 
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
@@ -171,13 +157,6 @@ export default function LocationListTable() {
         setDense(event.target.checked);
     };
 
-    const [tableValues, setTableValues] = useState([{ firstName: '', patientEmail: '', locationName: '', locationNumber: "", locationDate: "", locationTime: "" }]);
-
-    const handleElementsRemove = (index) => {
-        const list = [...tableValues];
-        list.splice(index, 1);
-        setTableValues(list);
-    };
 
     const setPatientName = async(email) => {
         const patientName = await fetchPatientName(email)
@@ -217,7 +196,6 @@ export default function LocationListTable() {
                                 {stableSort(data, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((item) => {
-                                       
 
                                         return (
                                             <TableRow
@@ -227,16 +205,12 @@ export default function LocationListTable() {
                                                
                                                 key={item.email}
                                             >
-
-
-                                                <TableCell id={item.email} onLoad={setPatientName(item.email)}></TableCell>
+                                                <TableCell id={item.email} onLoad={setPatientName(item.email)}/>
                                                 <TableCell>{item.email}</TableCell>
                                                 <TableCell>{item.locationName}</TableCell>
                                                 <TableCell>{item.date}</TableCell>
                                                 <TableCell>{item.time}</TableCell>
                                                 <TableCell>{item.locationNumber}</TableCell>
-                                                
-                                              
                                             </TableRow>
                                         );
                                     })}

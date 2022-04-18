@@ -6,9 +6,9 @@ describe("Patient can find a link to the Quebec prevention website", () => {
         cy.visit("http://localhost:3000/")
 
         // select email field and enter email : patient@gmail.com
-        cy.findByRole('textbox', { name: /this.example@email.com/i }).type('patient@gmail.com')
+        cy.findByRole('textbox', { name: /this.example@email.com/i }).type('mariajordan@gmail.com')
         // select password field and enter password :  Patient1!
-        cy.findByTestId('sign-up-password').type('Patient1!')
+        cy.findByTestId('sign-up-password').type('ThePassword1!')
         // click on login
         cy.findByText(/login/i).click()
         cy.wait(600)

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -10,8 +9,8 @@ import {useEffect} from "react";
 import {retrieveNotifications} from "./NotificationsService";
 import {makeStyles} from "@material-ui/styles";
 import "./Notifications.css";
-import {useNavigate} from 'react-router-dom';
 import Typography from "@mui/material/Typography";
+import {NotificationsItems} from "./NotificationsItems";
 
 const useStyles = makeStyles({
         listItem: {
@@ -32,14 +31,13 @@ const useStyles = makeStyles({
     }
 );
 
-export default function NotificationList() {
+export default function NotificationList(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [notificationList, setNotificationList] = React.useState([])
     const [numberOfNotifications, setNumberOfNotifications] = React.useState(0)
     const open = Boolean(anchorEl);
     const ITEM_HEIGHT = 48;
-    const classes = useStyles();
-    const navigate = useNavigate();
+    useStyles();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -48,54 +46,17 @@ export default function NotificationList() {
         setAnchorEl(null);
     };
 
-    function notificationRedirect(item) {
-        // const { myValue } = item.currentTarget.dataset;
-        if (item.type === "quarantine information") {
-            navigate("/quarantine");
-        }
-        // const { myValue } = item.currentTarget.dataset;
-        // alert(myValue);
-
-        if (item.type === "contact tracing")
-            window.location.href = '/tracing-form'
-
-        if (item.type === "patient profile update" || item.type === "patient symptoms update")
-            window.location.href = '/profile/' + item.patientemail.split('@')[0]
-    }
-
-    function formatDate(date) {
-        let temp = date.split("GMT")
-        return temp[0];
-    }
 
     useEffect(() => {
         (async () => {
-            const dbData = await retrieveNotifications();
+            const dbData = await retrieveNotifications(String(props.data));
             setNumberOfNotifications(dbData.length);
             setNotificationList(dbData);
         })();
 
     }, []);
-    let notificationItems = [
-        notificationList.map((item, i) =>
-            <>
-                <MenuItem
-                    key={i}
-                    data-my-value={item.type}
-                    onClick={(event) => {
-                        event.preventDefault();
-                        notificationRedirect(item)
-                    }}
-                    style={{whiteSpace: 'normal'}}
-                >
-                    <p className="notif-text">{item.content}
-                        <br/><span className="date-text">{formatDate(item.date)}</span>
-                    </p>
+    let notificationItems = <NotificationsItems data={notificationList} />;
 
-                </MenuItem>
-            </>
-        )
-    ];
     return (
         <React.Fragment>
             <Box sx={{display: 'flex', alignItems: 'center', textAlign: 'center'}}>
