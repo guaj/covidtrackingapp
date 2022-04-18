@@ -13,12 +13,14 @@ import {CircularProgress} from "@mui/material";
 
 const useStyles = makeStyles((theme) => {});
 
-function DiplayUserProfile(userType) {
-    switch (userType) {
+function DisplayUserProfile(userType) {
+
+    const email = JSON.parse(localStorage.getItem("email"));
+    switch (userType.data) {
         case "doctor":
-            return <DoctorProfilePage/>;
+            return <DoctorProfilePage data={email}/>;
         case "patient":
-            return <DisplayProfilePage />
+            return <DisplayProfilePage data={email} />
         default:
             return <ErrorProfilePage />
 
@@ -142,7 +144,7 @@ export default function UserProfileFacade() {
                 <Box sx={{width: '80%', margin: '5% auto'}}>
                     <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                         {isLoading ? <CircularProgress /> :
-                            <>{DiplayUserProfile(userType)}</>
+                            <DisplayUserProfile data={userType} />
                         }
                     </Box>
                 </Box>

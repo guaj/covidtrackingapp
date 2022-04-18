@@ -12,6 +12,8 @@ import EmailFormDialog from "../../../Services/EmailService/EmailDialog";
 import QRCode from "react-qr-code";
 import {makeStyles} from "@material-ui/core/styles";
 import {HealthStatusView} from "./HealthStatusView";
+import {getEmailFromUrl, getSpecificDoctor, getSpecificPatient} from "../../../databaseServices";
+import {formatAddress, formatPhoneNumber} from "../DoctorProfile/DoctorProfilePage";
 
 
 
@@ -34,7 +36,14 @@ class PatientProfilePage extends React.Component {
 
     state = {
         flag: this.isFlagged(),
-        open: false
+        open: false,
+        name: "",
+        address: "",
+        phoneNumber: "",
+        email: "",
+        insurance: "",
+        insuranceNumber: "",
+        doctor: "",
     }
     editSymptomsRedirect() {
         window.location = '/patient-symptoms-edit'
@@ -60,11 +69,11 @@ class PatientProfilePage extends React.Component {
         window.location = "/patient-profile-edit"
     }
 
-   redirectSymptomsRequired() {
-       const user = window.location.href.split("/")[4];
+    redirectSymptomsRequired() {
+        const user = window.location.href.split("/")[4];
 
-       window.location = "/update-required-symptoms/" + user
-   }
+        window.location = "/update-required-symptoms/" + user
+    }
 
     scheduleRedirect() {
         window.location = "/schedule-appointment"
@@ -72,6 +81,27 @@ class PatientProfilePage extends React.Component {
 
     canScheduleMeeting() {
         return ((this.userType === "patient") && this.userFetch === this.userEmail.split("@")[0]);
+    }
+
+    async componentDidMount() {
+        try {
+            const userEmail = await getEmailFromUrl(this.userFetch, "patients");
+
+
+            const data = await getSpecificPatient(userEmail)
+            console.log(data.Items[0])
+            this.setState({
+                name: data.Items[0].firstName + " " + data.Items[0].lastName,
+                address: formatAddress(data.Items[0].address),
+                phoneNumber: formatPhoneNumber(data.Items[0].phoneNumber),
+                email: data.Items[0].email,
+                insurance: data.Items[0].insurance,
+                insuranceNumber: data.Items[0].insuranceNumber,
+                doctor : data.Items[0].doctor
+            })
+        }catch (e) {
+            console.log(e)
+        }
     }
 
     async flagPatient(flag) {
@@ -144,22 +174,23 @@ class PatientProfilePage extends React.Component {
                         />
                         {/* eslint-disable-next-line no-undef */}
                         <div className="myName">
-                            <h2>{PatientMock.name}</h2>
+                            <h2>{this.state.name}</h2>
                         </div>
                         <div className="infoButtons">
                             <Button
                                 variant="outlined"
                                 aria-label="address"
                                 disabled>
-                                {PatientMock.address}
+                                {this.state.address}
                             </Button>
                         </div>
                         <div className="infoButtons">
                             <Button
+                                className="btn"
                                 variant="outlined"
                                 aria-label="email"
                                 disabled>
-                                {PatientMock.email}
+                                {this.state.email}
                             </Button>
                         </div>
                         <div className="infoButtons">
@@ -167,7 +198,7 @@ class PatientProfilePage extends React.Component {
                                 variant="outlined"
                                 aria-label="phone_number"
                                 disabled>
-                                {PatientMock.phone}
+                                {this.state.phoneNumber}
                             </Button>
                         </div>
                         <div className="infoButtons">
@@ -175,7 +206,7 @@ class PatientProfilePage extends React.Component {
                                 variant="outlined"
                                 aria-label="license"
                                 disabled>
-                                {PatientMock.ramqNum}
+                                {this.state.insurance}
                             </Button>
                         </div>
                         <div className="infoButtons">
@@ -183,15 +214,7 @@ class PatientProfilePage extends React.Component {
                                 variant="outlined"
                                 aria-label="license"
                                 disabled>
-                                {PatientMock.insurance}
-                            </Button>
-                        </div>
-                        <div className="infoButtons">
-                            <Button
-                                variant="outlined"
-                                aria-label="license"
-                                disabled>
-                                {PatientMock.insuranceNumber}
+                                {this.state.insuranceNumber}
                             </Button>
                         </div>
 
@@ -207,57 +230,58 @@ class PatientProfilePage extends React.Component {
                         </div>
 
                     </div>
-                    <div className="col-md-4" style={{ position: "bottom" }}>
+                    <div className="col-md-8" style={{ position: "bottom" }}>
                         <Box className="infoBox">
                             <div className="boxText">
-                                <p>My doctor : Dr. {PatientMock.doctorName} </p>
+                                <p>Assigned doctor : {this.state.doctor} </p>
                             </div>
 
+                            <div className="row">
+                                <div className="menuButton col-md-6">
+                                    <div className="button">
+                                        {this.canScheduleMeeting() ?
+                                            <Button variant="contained" onClick={this.scheduleRedirect}>Make
+                                                Appointment </Button>
+                                            : <></>}
+                                    </div>
 
-                            <div className="menuButton">
-                                <div className="button">
-                                    {this.canScheduleMeeting() ?
-                                        <Button variant="contained" onClick={this.scheduleRedirect}>Make
-                                            Appointment </Button>
-                                        : <></>}
+                                    <div className="button">
+                                        {this.canScheduleMeeting() ?
+                                            <EmailFormDialog />
+                                            : <></>}
+                                    </div>
+
+
+                                    <div className="button">
+                                        {JSON.parse(localStorage.getItem("type")) !== "patient" ?
+                                            <Button variant="contained" onClick={() => {
+                                                this.flagPatient(this.state.flag);
+                                            }}>{this.state.flag ? 'Unflag' : 'Flag'}</Button>
+                                            : <></>}
+                                    </div>
+                                    <div className="button">
+                                        {JSON.parse(localStorage.getItem("type")) !== "patient" ?
+                                            <Button
+                                                variant="contained"
+                                                name="update-required-symptoms"
+                                                onClick={this.redirectSymptomsRequired}>Update Symptoms</Button>  : <></> }
+                                    </div>
+
+                                    <div className="button">
+                                        {JSON.parse(localStorage.getItem("type")) !== "patient" ?
+                                            <Button variant="contained"
+                                                    onClick={this.handleClickOpen}
+                                            >View health status</Button> : <></> }
+                                    </div>
                                 </div>
 
-                                <div className="button">
-                                    {this.canScheduleMeeting() ?
-                                        <EmailFormDialog />
-                                        : <></>}
+                                <div className="col-md-6">
+                                    <Box sx={{pb:5}}>
+                                        <QRCode value={"https://main.d1mmulvvzymdin.amplifyapp.com/" + this.userEmail + "/summary"} style={{ display: "block", margin: "5% auto", }} />
+                                    </Box>
                                 </div>
 
-
-                                <div className="button">
-                                {JSON.parse(localStorage.getItem("type")) !== "patient" ?
-                                    <Button variant="contained" onClick={() => {
-                                        this.flagPatient(this.state.flag);
-                                    }}>{this.state.flag ? 'Unflag' : 'Flag'}</Button>
-                                    : <></>}
                             </div>
-                                <div className="button">
-                                    {JSON.parse(localStorage.getItem("type")) !== "patient" ?
-                                        <Button
-                                            variant="contained"
-                                            name="update-required-symptoms"
-                                            onClick={this.redirectSymptomsRequired}>Update Symptoms</Button>  : <></> }
-                                </div>
-
-                            <div className="button">
-                                {JSON.parse(localStorage.getItem("type")) !== "patient" ?
-                                    <Button variant="contained"
-                                            onClick={this.handleClickOpen}
-                                    >View health status</Button> : <></> }
-                            </div>
-</div>
-
-                            <Box sx={{pb:5}}>
-                                <QRCode value={"https://main.d1mmulvvzymdin.amplifyapp.com/" + this.userEmail + "/summary"} style={{ display: "block", margin: "5% auto", }} />
-                            </Box>
-
-
-
                         </Box>
 
                     </div>

@@ -27,7 +27,7 @@ export const addDoctorSchedule = (tableName , data) => {
     })
 }
 
-export async function retrieveDoctorSchedule(tableName) {
+export async function retrieveDoctorSchedule(tableName, email) {
     try {
         AWS.config.update(awsConfig);
         var docClient = new AWS.DynamoDB.DocumentClient();
@@ -35,7 +35,7 @@ export async function retrieveDoctorSchedule(tableName) {
         var params = {
             TableName: tableName,
             Key: {
-                "email": String(doctorEmail),
+                "email": String(email),
             }
         };
 

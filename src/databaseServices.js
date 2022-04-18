@@ -2,10 +2,33 @@ import awsConfig from './aws-config.json'
 import AWS from 'aws-sdk'
 
 AWS.config.update(awsConfig);
+
+// Fix for Cypress testing.
 AWS.config.update({
   dynamoDbCrc32: false
 });
+
 const docClient = new AWS.DynamoDB.DocumentClient()
+
+export async function getDoctorAppointments(doctorEmail) {
+    let queryEmail = doctorEmail;
+    queryEmail = 'maria.collins@gmail.com'; //for testing
+
+    var params = {
+        TableName: 'appointments',
+        FilterExpression: '#email = :query', // optional
+        ExpressionAttributeValues: { ':query': queryEmail }, // optional
+        ExpressionAttributeNames: { '#email': 'doctorEmail' }, // optional
+    }
+    try {
+        const data = await docClient.scan(params).promise()
+        return data.Items
+    } catch (err) {
+        return err
+    }
+
+
+}
 
 
 export async function getAvailableDoctors() {
@@ -37,6 +60,21 @@ export async function getAllPatients(setter) {
         setter(data.Items)
     } catch (err) {
         alert(JSON.stringify(err))
+    }
+}
+
+export async function getEmailFromUrl(userFetch, tableName) {
+    try {
+        const data = await docClient.scan({TableName: tableName}).promise()
+        let email;
+        for (const user of data.Items)
+        {
+            if (JSON.stringify(user.email).indexOf(userFetch) !== -1)
+                email = user.email;
+        }
+        return email
+    }catch (e) {
+        console.log(e)
     }
 }
 
@@ -94,6 +132,8 @@ export async function addSentContactTracingFormTime(email) {
     }
 
 }
+
+
 
 export async function getAllCovidPositivePatients(setter) {
     try {
@@ -396,7 +436,6 @@ export async function getPatientInfo(setter, email) {
   };
   try {
     let scanresult = await docClient.scan(params).promise();
-    console.log(scanresult.Items)
     setter(scanresult.Items[0]) //setter modifies the instance of the passed paremeter
   } catch (e) {
     alert(JSON.stringify(e))

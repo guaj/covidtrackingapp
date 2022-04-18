@@ -1,4 +1,6 @@
 {
+  "firstName": "test",
+  "lastName": "Test",
   "address": "1600 Pensylvania Avenue, H5F 9T2, Qc, Montreal",
   "phone_number": "514-676-6405",
   "email": "aDoctor@gmail.com",
