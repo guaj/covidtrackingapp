@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import {unmountComponentAtNode} from "react-dom";
 import {NotificationsItems} from "../Navbar/Notifications/NotificationsItems";
 import * as React from "react";
+import {retrieveNotifications} from "../Navbar/NotificationsService";
 
 let container = null;
 beforeEach(() => {
@@ -28,3 +29,11 @@ it("Check if contact tracing notification redirects to form", () => {
     const tracingFormText = screen.getByText("Please fill the contact tracing form");
     expect(tracingFormText).toBeTruthy()
 })
+
+
+test("Check if notification list retrieves a notification ", async () => {
+    const email = "jason_caldwell@gmail.com"
+    const result = await retrieveNotifications(email);
+    expect(result).toBeTruthy();
+})
+

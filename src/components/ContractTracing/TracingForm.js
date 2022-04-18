@@ -5,18 +5,17 @@ import AWS from "aws-sdk";
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Box from '@material-ui/core/Box';
-import {Card, Typography} from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import Navbar from "../Navbar/Navbar";
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
 import {
-    addSentContactTracingFormTime,
-    getAllCovidPositivePatients, getAllLocations,
-    isInNotificationList, getCompletedCovidTracingForm, isInTracingList
+  
+    getAllLocations,
+    
 } from '../../databaseServices';
-import {hi} from "date-fns/locale";
 
 
 AWS.config.update(awsConfig);
@@ -55,7 +54,7 @@ export default function TracingformTest() {
         setLocationTime(e.target.value)
     }
     const handleServiceChange = (e, index) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         const list = [...formValues];
         list[index][name] = value;
         setFormList(list);
@@ -68,9 +67,15 @@ export default function TracingformTest() {
     };
     // Add Button
     const handleElementAdd = () => {
-        setFormList([...formValues, {locationName: "", locationNumber: "", locationDate: "", locationTime: ""}]);
+        setFormList([...formValues, { locationName: "", locationNumber: "", locationDate: "", locationTime: "" }]);
     };
+    const handleClick = (email) => {
+        deletePatientFromNotificationsTable(email)
+        handleSubmitCompleteForm(email)
 
+
+
+    };
     // Submit button that adds items one at a time
     const handleAdd = async (email) => {
 
@@ -90,12 +95,14 @@ export default function TracingformTest() {
         try {
             await docClient.put(params).promise()
             console.log(params)
-            alert("Success! You added the following location(s)" + JSON.stringify(locationName) + " on date " + JSON.stringify(locationDate) + ".");
+            alert("Success! You added the following location" + JSON.stringify(locationName) + " on date " + JSON.stringify(locationDate) + ".");
         } catch (err) {
             alert("Please enter at least the location name and date.");
             alert(err);
         }
     }
+
+
 
     //click this when you want to signal that you finished with the form
     const handleSubmitCompleteForm = async (email) => {
@@ -112,14 +119,9 @@ export default function TracingformTest() {
             const result = await docClient.put(params).promise()
             console.log(params)
             //try {
-                console.log("test");
-                console.log(email);
-                alert("Success! ");
-                await deletePatientFromNotificationsTable(email)
-
-           // } catch (err){
-             //   console.log(JSON.stringify(err))
-          //  }
+            console.log("test");
+            console.log(result);
+            alert("Success! ");
         } catch (err) {
             alert("Cannot add to table``````````````-------.");
             alert(err);
@@ -132,14 +134,22 @@ export default function TracingformTest() {
         const params = {
             TableName: "notifications",
             Key: {
-                "email": email,
-                "type": type
-            }
+                "email": String(email),
+                "type": type,
+            },
         }
 
         try {
-            await docClient.delete(params).promise();
+            const deleteNotif = await docClient.delete(params).promise();
+            console.log("Deleting Notification")
+            console.log(deleteNotif);
+
+            alert("Deleted! ");
+
         } catch (e) {
+            console.log("Cannot Delete Notification")
+            alert(("Error on delete!"));
+
             console.log(JSON.stringify(e))
         }
     }
@@ -160,16 +170,16 @@ export default function TracingformTest() {
 
     return (
         <>
-            <Navbar/>
+            <Navbar />
             <Box>
                 <Grid container
-                      spacing={0}
-                      direction="column"
-                      alignItems="center"
-                      justify="center"
+                    spacing={0}
+                    direction="column"
+                    alignItems="center"
+                    justify="center"
                 >
 
-                    <Typography sx={{fontWeight: 'bold', color: '#724a7b', paddingLeft: 4, paddingRight: 4}}>
+                    <Typography sx={{ fontWeight: 'bold', color: '#724a7b', paddingLeft: 4, paddingRight: 4 }}>
                         <h1>
                             Patient Contact Tracing Form
 
@@ -177,12 +187,12 @@ export default function TracingformTest() {
                     </Typography>
                 </Grid>
                 <Grid container
-                      direction="column"
-                      alignItems="center"
-                      justify="center"
+                    direction="column"
+                    alignItems="center"
+                    justify="center"
                 >
 
-                    <Card position="static" sx={{minWidth: 275}} style={{backgroundColor: '#ffff'}}>
+                    <Card position="static" sx={{ minWidth: 275 }} style={{ backgroundColor: '#ffff' }}>
                         <Typography sx={{
                             fontWeight: 'medium',
                             paddingLeft: 4,
@@ -202,7 +212,6 @@ export default function TracingformTest() {
                         </Typography>
                         <CardContent>
 
-                            {/* make an array to add multiple items */}
 
                             <form className="TracingformTest" autoComplete="off">
                                 {formValues.map((element, index) => (
@@ -218,7 +227,7 @@ export default function TracingformTest() {
                                             name="locationName"
                                             value={element.handleLocationName}
                                             onChange={handleLocationName}
-                                            sx={{m: 2}}
+                                            sx={{ m: 2 }}
                                             required
                                         />
                                         <TextField
@@ -229,7 +238,7 @@ export default function TracingformTest() {
                                             name="locationNumber"
                                             value={element.handleLocationNumber}
                                             onChange={handleLocationNumber}
-                                            sx={{m: 2}}
+                                            sx={{ m: 2 }}
                                             required
                                         />
 
@@ -241,7 +250,7 @@ export default function TracingformTest() {
                                             name="locationDate"
                                             value={element.handleLocationDate}
                                             onChange={handleLocationDate}
-                                            sx={{m: 2}}
+                                            sx={{ m: 2 }}
                                             required
                                         />
 
@@ -254,13 +263,13 @@ export default function TracingformTest() {
                                             name="locationTime"
                                             value={element.handleLocationName}
                                             onChange={handleLocationTime}
-                                            sx={{m: 2}}
+                                            sx={{ m: 2 }}
                                             required
                                         />
                                         {
                                             index ?
                                                 <Button type="button" className="button remove" color="secondary"
-                                                        onClick={handleElementsRemove}>Remove</Button>
+                                                    onClick={handleElementsRemove}>Remove</Button>
                                                 : null
                                         }
 
@@ -268,24 +277,25 @@ export default function TracingformTest() {
                                 ))}
                                 <div className="button-section">
                                     <Button label="buttonAdd" name="buttonadd2" key={1} className="buttonAdd"
-                                            sx={{m: 6}} style={{backgroundColor: '#cbacd7', borderRadius: 15}}
-                                            variant="contained" type="button"
-                                            onClick={() => {
-                                                console.log(email)
-                                                handleAdd(localStorage.getItem("email").split("\"")[1]);
-                                                console.log(firstName)
+                                        sx={{ m: 6 }} style={{ backgroundColor: '#cbacd7', borderRadius: 15 }}
+                                        variant="contained" type="button"
+                                        onClick={() => {
+                                            console.log(email)
+                                            handleAdd(localStorage.getItem("email").split("\"")[1]);
+                                            console.log(firstName)
 
-                                            }}>Add</Button>
+                                        }}>Add</Button>
 
                                     <Button className="button submit"
-                                            label="buttonsubmit" name="buttonsubmit2" key={2}
-                                            sx={{m: 6}} style={{backgroundColor: '#cbacd7', borderRadius: 15}}
-                                            variant="contained"
-                                            type="submit"
+                                        label="buttonsubmit" name="buttonsubmit2" key={2}
+                                        sx={{ m: 6 }} style={{ backgroundColor: '#cbacd7', borderRadius: 15 }}
+                                        variant="contained"
+                                        type="submit"
 
-                                            onClick={(event) => {
-                                                handleSubmitCompleteForm(localStorage.getItem("email").split("\"")[1]);
-                                            }}>Submit</Button>
+                                        onClick={(event) => {
+                                            
+                                            handleClick(localStorage.getItem("email").split("\"")[1])
+                                        }}>Complete Form</Button>
 
 
                                 </div>
