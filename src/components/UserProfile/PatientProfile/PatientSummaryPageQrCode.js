@@ -19,7 +19,7 @@ export default function PatientSummaryPageQrCode() {
     }, []);
 
     return (
-        <Container maxWidth="md" >
+        <Container data-testid="patientSummary" maxWidth="md" >
             <Card sx={{ minWidth: "25%", minHeight: "700px", marginTop: "10%", boxShadow: 3, height: "700px" }}>
                 <CardContent sx={{ display: 'flex', alignItems: "center", flexDirection: "column", justifyContent: "center", paddingBottom: "10%", marginTop: "2%", height: "100%" }}>
                     <Typography variant="h4" component="div" color="#3f51b5">
@@ -30,7 +30,7 @@ export default function PatientSummaryPageQrCode() {
                         <Grid item md={6} sx={{ height: "60%" }}>
                             <Typography variant="h5" component="div" color="text.secondary" sx={{ textAlign: "center" }}>Patient Information<hr style={{ width: "70%" }}></hr></Typography>
                             <div style={{paddingLeft: "15%", margin: "2% auto", lineHeight: "2", width: "80%", color: "#666666" }}>
-                                <div>
+                                <div >
                                     <b>covid result </b>
                                     <br></br>
                                     {data.covidResult === "positive" ? <a style={{color: '#DB4120'}}>positive</a> : <a style={{color: '#4CAF50'}}>negative</a>}
