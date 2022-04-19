@@ -15,7 +15,6 @@ test("Check that the admin's user management's patients subtab renders", () => {
 })
 
 test("Check that the admin's user management's doctors subtab renders", () => {
-    // render(<AdminDashboard/>);
     render(<DoctorManagement/>)
     expect(screen.getByText("Doctors")).toBeInTheDocument();
 })
