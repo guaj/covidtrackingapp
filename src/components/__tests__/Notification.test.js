@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import {unmountComponentAtNode} from "react-dom";
 import {NotificationsItems} from "../Navbar/Notifications/NotificationsItems";
 import * as React from "react";
-import {retrieveNotifications} from "../Navbar/NotificationsService";
+import {retrieveNotifications} from "../Navbar/Notifications/NotificationsService";
 
 let container = null;
 beforeEach(() => {
