@@ -12,7 +12,7 @@ export default function QuarantineTab() {
     return (
         <div>
             <Navbar />
-            <div>
+            <div data-testid="QuarantineTab">
                 <Box sx={{ width: '90%', margin: '2% auto' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                          <QuarantineInfo />
