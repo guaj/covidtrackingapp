@@ -68,7 +68,7 @@ export default function AdminTabs() {
                 <Tab label="Doctor List" {...a11yProps(1)} />
                 <Tab label="New Patients Pairing" {...a11yProps(2)} />
                 <Tab label="Doctor Emergency Pairing" {...a11yProps(3)} />
-                <Tab label="User Management" {...a11yProps(3)} />
+                <Tab label="User Management" {...a11yProps(4)} />
             </Tabs>
 
             <TabPanel value={value} index={0}>
