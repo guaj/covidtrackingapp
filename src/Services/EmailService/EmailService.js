@@ -10,7 +10,7 @@ export async function sendMail(mailText, mailSubject) {
             ToAddresses: [
                 // define email to send address to here!!
                 // need to be a verified aws email, see https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html
-                'jasmingm98@gmail.com',
+                'eyalazimov@gmail.com',
                 /* more items */
             ]
         },
@@ -42,7 +42,7 @@ export async function sendMail(mailText, mailSubject) {
         sendPromise.then(
             function(data) {
                 console.log(data.MessageId);
-                alert("Email sent to jasmingm98@gmail.com!!");
+                alert("Email sent to your doctor!");
             }).catch(
             function(err) {
                 console.error(err, err.stack);
