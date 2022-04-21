@@ -29,7 +29,7 @@ class PatientProfilePage extends React.Component {
 
     userType = JSON.parse(localStorage.getItem("type"));
     userFetch = window.location.href.split("/")[4];
-    userEmail = JSON.parse(localStorage.getItem("email"));
+    userEmail = this.getEmailAWS();
     user = JSON.parse(localStorage.getItem("email"));
     url = this.user.split("@");
 
@@ -45,6 +45,7 @@ class PatientProfilePage extends React.Component {
         insuranceNumber: "",
         doctor: "",
     }
+
     editSymptomsRedirect() {
         window.location = '/patient-symptoms-edit'
     }
@@ -155,6 +156,26 @@ class PatientProfilePage extends React.Component {
         let scanresult = await docClient.scan(params).promise();
 
         this.setState({ flag: scanresult.Items.at(0).flag !== undefined ? (scanresult.Items.at(0).flag ? true : false) : false });
+    }
+
+    async getEmailAWS() {
+
+        AWS.config.update(awsConfig);
+        const docClient = new AWS.DynamoDB.DocumentClient();
+
+        let params = {
+            TableName: "patients",
+            ScanFilter: {
+                "email": {
+                    ComparisonOperator: "CONTAINS",
+                    AttributeValueList: [this.userFetch]
+                }
+            }
+        };
+
+        let scanresult = await docClient.scan(params).promise();
+
+        this.userEmail = scanresult.Items.at(0).email;
     }
 
     render() {
