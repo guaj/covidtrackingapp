@@ -176,7 +176,7 @@ class PatientProfilePage extends React.Component {
 
         let scanresult = await docClient.scan(params).promise();
 
-        this.userEmail = scanresult.Items.at(0).email;
+        this.qrCodeEmail = scanresult.Items.at(0).email;
     }
 
     render() {
