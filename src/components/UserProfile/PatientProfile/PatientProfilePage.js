@@ -29,9 +29,10 @@ class PatientProfilePage extends React.Component {
 
     userType = JSON.parse(localStorage.getItem("type"));
     userFetch = window.location.href.split("/")[4];
-    userEmail = this.getEmailAWS();
+    userEmail = JSON.parse(localStorage.getItem("email"));
     user = JSON.parse(localStorage.getItem("email"));
     url = this.user.split("@");
+    qrCodeEmail = this.getEmailAWS();
 
 
     state = {
@@ -298,7 +299,7 @@ class PatientProfilePage extends React.Component {
 
                                 <div className="col-md-6">
                                     <Box sx={{pb:5}}>
-                                        <QRCode value={"https://main.d1mmulvvzymdin.amplifyapp.com/" + this.userEmail + "/summary"} style={{ display: "block", margin: "5% auto", }} />
+                                        <QRCode value={"https://main.d1mmulvvzymdin.amplifyapp.com/" + this.qrCodeEmail + "/summary"} style={{ display: "block", margin: "5% auto", }} />
                                     </Box>
                                 </div>
 
