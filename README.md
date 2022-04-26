@@ -28,10 +28,7 @@ The goal of this project is to simulate a Software development process through t
 
 ## Once you havew installed the project, you need to install all the dependencies with the following command
 * install React packages and dependencies: **npm install** 
-
-
-
-### Run the app on the following website: https://main.d1mmulvvzymdin.amplifyapp.com/ 
+ 
 
 ## Available Scripts
 
