@@ -33,7 +33,7 @@ describe('Admin can add/update/delete doctor/patient or their information', () =
     it('Admin can update a doctor\'s information', () => {
         cy.visit("http://localhost:3000/") //open browser to localhost:3000
         cy.findByRole('textbox', {name: /this.example@email.com/i}).clear().type('admin@gmail.com')//select email field and admin email : admin@gmail.com
-        cy.findByTestId('sign-up-password').clear().type('Admin1234!') //select password field and enter admin password :  Admin1234!
+        cy.findByTestId('sign-up-password').clear().type('ThePassword1!') //select password field and enter admin password :  Admin1234!
         cy.findByText(/login/i).click() // click on login
         cy.findByRole('tab', {name: /user management/i}).click() //click on user management tab
         cy.findByRole('tab', {name: /doctors/i}).click() //click on doctors tab
@@ -57,7 +57,7 @@ describe('Admin can add/update/delete doctor/patient or their information', () =
     it('Admin can delete a doctor', () => {
         cy.visit("http://localhost:3000/") // open browser to localhost:3000
         cy.findByRole('textbox', {name: /this.example@email.com/i}).clear().type('admin@gmail.com') //select email field and admin email : admin@gmail.com
-        cy.findByTestId('sign-up-password').clear().type('Admin1234!') //select password field and enter admin password :  Admin1234!
+        cy.findByTestId('sign-up-password').clear().type('ThePassword1!') //select password field and enter admin password :  Admin1234!
         cy.findByText(/login/i).click() //click on login
         cy.findByRole('tab', {name: /user management/i}).click() //click on user management tab
         cy.findByRole('tab', {name: /doctors/i}).click() //click on doctors tab
@@ -73,7 +73,7 @@ describe('Admin can add/update/delete doctor/patient or their information', () =
     it('Admin can add a patient', () => {
         cy.visit("http://localhost:3000/") // open browser to localhost:3000
         cy.findByRole('textbox', {name: /this.example@email.com/i}).clear().type('admin@gmail.com') //select email field and admin email : admin@gmail.com
-        cy.findByTestId('sign-up-password').clear().type('Admin1234!') //select password field and enter admin password :  Admin1234!
+        cy.findByTestId('sign-up-password').clear().type('ThePassword1!') //select password field and enter admin password :  Admin1234!
         cy.findByText(/login/i).click() //click on login
         cy.findByRole('tab', {name: /user management/i}).click() //click on user management tab
         // cy.findByRole('tab', {name: /patients/i}).click() //click on doctors tab
@@ -106,7 +106,7 @@ describe('Admin can add/update/delete doctor/patient or their information', () =
     it('Admin can update a patient\'s information', () => {
         cy.visit("http://localhost:3000/") //open browser to localhost:3000
         cy.findByRole('textbox', {name: /this.example@email.com/i}).clear().type('admin@gmail.com')//select email field and admin email : admin@gmail.com
-        cy.findByTestId('sign-up-password').clear().type('Admin1234!') //select password field and enter admin password :  Admin1234!
+        cy.findByTestId('sign-up-password').clear().type('ThePassword1!') //select password field and enter admin password :  Admin1234!
         cy.findByText(/login/i).click() // click on login
         cy.findByRole('tab', {name: /user management/i}).click() //click on user management tab
         // cy.findByRole('tab', {name: /doctors/i}).click() //click on doctors tab
@@ -133,7 +133,7 @@ describe('Admin can add/update/delete doctor/patient or their information', () =
     it('Admin can delete a patient', () => {
         cy.visit("http://localhost:3000/") // open browser to localhost:3000
         cy.findByRole('textbox', {name: /this.example@email.com/i}).clear().type('admin@gmail.com') //select email field and admin email : admin@gmail.com
-        cy.findByTestId('sign-up-password').clear().type('Admin1234!') //select password field and enter admin password :  Admin1234!
+        cy.findByTestId('sign-up-password').clear().type('ThePassword1!') //select password field and enter admin password :  Admin1234!
         cy.findByText(/login/i).click() //click on login
         cy.findByRole('tab', {name: /user management/i}).click() //click on user management tab
         cy.findByRole('button', {
@@ -151,7 +151,7 @@ describe('Admin can add/update/delete doctor/patient or their information', () =
     it('Admin can add an organizational official', () => {
         cy.visit("http://localhost:3000/") // open browser to localhost:3000
         cy.findByRole('textbox', {name: /this.example@email.com/i}).clear().type('admin@gmail.com') //select email field and admin email : admin@gmail.com
-        cy.findByTestId('sign-up-password').clear().type('Admin1234!') //select password field and enter admin password :  Admin1234!
+        cy.findByTestId('sign-up-password').clear().type('ThePassword1!') //select password field and enter admin password :  Admin1234!
         cy.findByText(/login/i).click() //click on login
         cy.findByRole('tab', {name: /user management/i}).click() //click on user management tab
         cy.findByRole('tab', {name: /organizational officials/i}).click() //click on doctors tab
@@ -182,7 +182,7 @@ describe('Admin can add/update/delete doctor/patient or their information', () =
     it('Admin can update an organizational official\'s information', () => {
         cy.visit("http://localhost:3000/") //open browser to localhost:3000
         cy.findByRole('textbox', {name: /this.example@email.com/i}).clear().type('admin@gmail.com')//select email field and admin email : admin@gmail.com
-        cy.findByTestId('sign-up-password').clear().type('Admin1234!') //select password field and enter admin password :  Admin1234!
+        cy.findByTestId('sign-up-password').clear().type('ThePassword1!') //select password field and enter admin password :  Admin1234!
         cy.findByText(/login/i).click() // click on login
         cy.findByRole('tab', {name: /user management/i}).click() //click on user management tab
         cy.findByRole('tab', {name: /organizational officials/i}).click() //click on organizational officials tab
@@ -206,7 +206,7 @@ describe('Admin can add/update/delete doctor/patient or their information', () =
     it('Admin can delete an organizational official', () => {
         cy.visit("http://localhost:3000/") // open browser to localhost:3000
         cy.findByRole('textbox', {name: /this.example@email.com/i}).clear().type('admin@gmail.com') //select email field and admin email : admin@gmail.com
-        cy.findByTestId('sign-up-password').clear().type('Admin1234!') //select password field and enter admin password :  Admin1234!
+        cy.findByTestId('sign-up-password').clear().type('ThePassword1!') //select password field and enter admin password :  Admin1234!
         cy.findByText(/login/i).click() //click on login
         cy.findByRole('tab', {name: /user management/i}).click() //click on user management tab
         cy.findByRole('tab', {name: /organizational officials/i}).click() //click on organizational officials tab
