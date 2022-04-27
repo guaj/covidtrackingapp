@@ -12,7 +12,7 @@ The goal of this project is to simulate a Software development process through t
 |-------------- |--------------- |
 |kikkiii21      |Judith Lombardo |
 |klivree     | Meline Deneuve      |
-|antistarM   |Ma-Ya McRae |
+|c0rnkrump3t   |Ma-Ya McRae |
 |guaj |Jasmin Guay|
 |LucasCatchlove| Lucas Catchlove|
 |mnashat |Mahmoud Elsayed|
